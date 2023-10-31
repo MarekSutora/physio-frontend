@@ -13,6 +13,7 @@ const config: Config = {
         secondary: "#248277",
         tertiary: "#469D89",
         complementary: "#78C6A3",
+        primarydk: "#18392B",
       },
     },
   },

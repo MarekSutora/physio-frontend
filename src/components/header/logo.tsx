@@ -6,7 +6,7 @@ const Logo = () => {
   return (
     <Link href="/">
       <Image
-        className="pb-4 hover:cursor-pointer"
+        className="pb-3 hover:cursor-pointer"
         src="/logo_and_text.svg"
         alt="logo"
         width={250}
