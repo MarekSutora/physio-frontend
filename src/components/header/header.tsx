@@ -32,12 +32,12 @@ const Header = () => {
   return (
     <>
       <header
-        className={`fixed z-50 h-28 w-full  ${
+        className={`fixed z-50 w-full shadow-sm  ${
           isMenuToggled
             ? "h-full"
             : isTopOfPage
-            ? "opacity-100"
-            : "bg-opacity-70 shadow-sm"
+            ? "h-24 bg-opacity-100"
+            : "h-24 bg-opacity-70"
         }`}
       >
         <div className="mx-auto flex h-28 w-5/6 items-center">
