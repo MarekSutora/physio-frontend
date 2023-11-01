@@ -7,9 +7,9 @@ export const basicLinks = [
   {
     text: "Služby",
     subMenuItems: [
-      { text: "Služba 1", path: "/" },
-      { text: "Služba 2", path: "/" },
-      { text: "Služba 3", path: "/" },
+      { text: "Služba 1aaaaaaa", path: "/" },
+      { text: "Služba2aaaaaaa", path: "/" },
+      { text: "Služba3aaaaaaa", path: "/" },
     ],
   },
   { text: "Rezervácia", path: "/rezervacia" },

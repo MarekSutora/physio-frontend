@@ -9,8 +9,9 @@ const Logo = () => {
         className="pb-3 hover:cursor-pointer"
         src="/logo_and_text.svg"
         alt="logo"
-        width={250}
-        height={200}
+        width={300}
+        height={250}
+        priority={true}
       />
     </Link>
   );
