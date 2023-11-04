@@ -8,6 +8,13 @@ import useMediaQuery from "@/lib/hooks/useMediaQuery";
 import NavbarDesktop from "./navbarDesktop";
 import NavbarMobile from "./navbarMobile";
 import ToggleNavbarButton from "./toggleNavbarButton";
+import {
+  basicLinks,
+  socialMediaLinks,
+  userLinks,
+} from "@/lib/shared/constants";
+import Link from "next/link";
+import SocialMediaLinks from "../socialMediaLinks";
 
 const Header = () => {
   const [isTopOfPage, setIsTopOfPage] = useState<boolean>(true);
@@ -30,20 +37,31 @@ const Header = () => {
   }, [isAboveMediumScreens]);
 
   return (
-    <>
-      <header
-        className={`fixed z-50 w-full shadow-sm  ${
-          isMenuToggled
-            ? "h-full"
-            : isTopOfPage
-            ? "h-24 bg-opacity-100"
-            : "h-24 bg-opacity-70"
+    <header className="fixed w-full">
+      <div
+        className={`z-50 h-24 w-full shadow-sm  ${
+          isTopOfPage ? "bg-opacity-100" : "h-24 bg-opacity-70"
         }`}
       >
-        <div className="mx-auto flex h-28 w-5/6 items-center">
+        <div className="mx-auto flex h-full w-5/6 items-center">
           <Logo />
           {isAboveMediumScreens ? (
-            <NavbarDesktop />
+            <>
+              <NavbarDesktop />
+              <nav>
+                <ul className="absolute right-2 top-2 flex h-full flex-col items-center gap-1">
+                  {socialMediaLinks.map((link, index) => (
+                    <li key={index}>
+                      <Link href={link.path}>
+                        <div className="h-auto w-5 text-2xl text-primary transition-all duration-300 ease-in-out hover:scale-125">
+                          {link.icon}
+                        </div>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </>
           ) : (
             <ToggleNavbarButton
               setIsMenuToggled={setIsMenuToggled}
@@ -51,9 +69,9 @@ const Header = () => {
             />
           )}
         </div>
-        {isMenuToggled && <NavbarMobile />}
-      </header>
-    </>
+      </div>
+      {isMenuToggled && <NavbarMobile />}
+    </header>
   );
 };
 

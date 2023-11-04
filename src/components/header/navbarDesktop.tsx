@@ -14,7 +14,7 @@ const NavbarDesktop = () => {
   const [hoveredLink, setHoveredLink] = useState<string>("");
 
   return (
-    <nav className="flex h-full w-full items-center justify-end">
+    <nav className="pt-6 flex h-full w-full items-center justify-end">
       <ul
         className="mr-6 flex items-center justify-evenly gap-6 text-base"
         onMouseLeave={() => setHoveredLink("")}
