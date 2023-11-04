@@ -7,6 +7,8 @@ import {
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { FaAngleDown } from "react-icons/fa";
+import LoginButton from "./loginButton";
+import RegisterButton from "./registerButton";
 
 const NavbarMobile = () => {
   const [toggledItemsWithSubMenu, setToggledItemsWithSubMenu] = useState<
@@ -24,21 +26,18 @@ const NavbarMobile = () => {
 
   return (
     <motion.nav
-      className="z-40 h-full w-full border bg-slate-50"
+      className="z-40 h-full w-full border-l border-r border-t bg-slate-50"
       initial={{ y: -1000, opacity: 0.8 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ type: "tween", duration: 0.4 }}
+      transition={{ type: "tween", duration: 0.3 }}
     >
       <ul className="flex w-full flex-col font-semibold">
         {basicLinks.map((link) => (
-          <li
-            key={link.text}
-            className="w-full cursor-pointer text-xl transition-all duration-700 ease-in-out"
-          >
+          <li key={link.text} className="w-full cursor-pointer text-xl">
             {link.subMenuItems ? (
               <div>
                 <button
-                  className="flex w-full items-center gap-1 px-9 py-3"
+                  className="flex w-full items-center gap-1 px-9 pt-3 mb-3 transition-all ease-in-out hover:bg-slate-200 active:bg-slate-200"
                   onClick={() => handleItemWithSubMenuClick(link.text)}
                 >
                   {link.text}
@@ -64,20 +63,41 @@ const NavbarMobile = () => {
                     {link.subMenuItems.map((subLink) => (
                       <li
                         key={subLink.text}
-                        className="w-auto whitespace-nowrap pl-14"
+                        className="w-auto whitespace-nowrap"
                       >
-                        <Link href={subLink.path}>{subLink.text}</Link>
+                        <Link href={subLink.path}>
+                          <div className="h-full w-full transition-all ease-in-out hover:bg-slate-200 focus:bg-slate-200 pl-14 py-1">
+                            {subLink.text}
+                          </div>
+                        </Link>
                       </li>
                     ))}
                   </motion.ul>
                 )}
               </div>
             ) : (
-              <div className="px-10 py-3">
-                <Link href={link.path}>{link.text}</Link>
-              </div>
+              <Link href={link.path}>
+                <div className="h-full w-full px-9 py-3 transition-all ease-in-out hover:bg-slate-200 focus:border focus:bg-slate-200">
+                  {link.text}
+                </div>
+              </Link>
             )}
             <div className="h-[1px] w-full bg-slate-200"></div>
+          </li>
+        ))}
+      </ul>
+      <ul className="mt-5 flex items-center justify-center gap-3">
+        <LoginButton text={userLinks[0].text} path={userLinks[0].path} />
+        <RegisterButton text={userLinks[1].text} path={userLinks[1].path} />
+      </ul>
+      <ul className="mt-5 flex h-full justify-center gap-8">
+        {socialMediaLinks.map((link, index) => (
+          <li key={index}>
+            <Link href={link.path}>
+              <div className="h-auto w-5 text-4xl text-primary transition-all duration-300 ease-in-out hover:scale-125">
+                {link.icon}
+              </div>
+            </Link>
           </li>
         ))}
       </ul>

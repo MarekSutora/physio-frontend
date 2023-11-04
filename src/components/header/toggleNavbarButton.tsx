@@ -1,7 +1,5 @@
 import React from "react";
-import { FaBars } from "react-icons/fa";
-import { FaXmark } from "react-icons/fa6";
-import { motion } from "framer-motion";
+import { Turn as Hamburger } from "hamburger-react";
 
 type ToggleNavbarButtonProps = {
   setIsMenuToggled: React.Dispatch<React.SetStateAction<boolean>>;
@@ -13,30 +11,14 @@ const ToggleNavbarButton = ({
   isMenuToggled,
 }: ToggleNavbarButtonProps) => {
   return (
-    <div className="flex w-full items-center justify-end">
-      <button
-        onClick={() => {
-          setIsMenuToggled(!isMenuToggled);
-        }}
-      >
-        {isMenuToggled ? (
-          <motion.div
-            animate={{ opacity: 1 }}
-            initial={{ opacity: 0 }}
-            transition={{ delay: 1 }}
-          >
-            <FaXmark className="h-auto w-8" />
-          </motion.div>
-        ) : (
-          <motion.div
-            animate={{ opacity: 1 }}
-            initial={{ opacity: 0 }}
-            transition={{ delay: 1 }}
-          >
-            <FaBars className="h-auto w-7" />
-          </motion.div>
-        )}
-      </button>
+    <div className="flex h-6 w-full items-center justify-end">
+      <Hamburger
+        rounded
+        toggled={isMenuToggled}
+        toggle={setIsMenuToggled}
+        distance="sm"
+        duration={0.3}
+      />
     </div>
   );
 };
