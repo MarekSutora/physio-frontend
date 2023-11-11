@@ -37,7 +37,7 @@ const NavbarMobile = () => {
             {link.subMenuItems ? (
               <div>
                 <button
-                  className="flex w-full items-center gap-1 px-9 pt-3 mb-3 transition-all ease-in-out hover:bg-slate-200 active:bg-slate-200"
+                  className="flex w-full items-center gap-1 px-9 py-3 transition-all ease-in-out hover:bg-slate-200 active:bg-slate-200"
                   onClick={() => handleItemWithSubMenuClick(link.text)}
                 >
                   {link.text}

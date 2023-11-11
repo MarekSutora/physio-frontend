@@ -35,3 +35,9 @@ export const socialMediaLinks = [
     path: "https://www.instagram.com/",
   },
 ] as const;
+
+export const contactInfo = {
+  email: "marek.sutora@gmail.com",
+  telephoneNumber: "+421 123 456 789",
+  address: "P. Sherman, 42 Wallaby Way, Sydney",
+} as const;

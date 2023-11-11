@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   basicLinks,
-  socialMediaLinks,
   userLinks,
 } from "@/lib/shared/constants";
 import Link from "next/link";
