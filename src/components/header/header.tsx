@@ -11,6 +11,7 @@ import {
   userLinks,
 } from "@/lib/shared/constants";
 import Link from "next/link";
+import Image from "next/image";
 import SocialMediaLinks from "../socialMediaLinks";
 import LogoImage from "../logo/logoImage";
 import LogoText from "../logo/logoText";
@@ -44,9 +45,14 @@ const Header = () => {
     >
       <div className="mx-auto flex h-full w-5/6 items-center">
         <Link href="/" className="flex h-full w-auto flex-col justify-center">
-          <div className="flex h-5/6">
-            <LogoImage fill="#14746F" style={"h-full"} />
-            <LogoText fill="#14746F" style={"h-full w-[260px]"} />
+          <div className="mt-auto pb-1">
+          <Image
+              src="/logo_textright_910_225.svg"
+              alt="MoveLife Logo"
+              width={350}
+              height={100}
+              priority
+            />
           </div>
         </Link>
         {isAboveMediumScreens ? (
