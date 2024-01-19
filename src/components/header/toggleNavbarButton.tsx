@@ -11,7 +11,7 @@ const ToggleNavbarButton = ({
   isMenuToggled,
 }: ToggleNavbarButtonProps) => {
   return (
-    <div className="flex h-6 w-full items-center justify-end">
+    <div className="flex h-6 w-auto items-center justify-end">
       <Hamburger
         rounded
         toggled={isMenuToggled}
