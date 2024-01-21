@@ -7,8 +7,8 @@ type Props = {};
 
 const Register = (props: Props) => {
   return (
-    <section className="h-[800px] w-full bg-white">
-      <div className="flex h-full justify-center gap-7 md:flex-row">
+    <section className="h-full w-full bg-white py-20">
+      <div className="flex h-full justify-center items-center gap-7 md:flex-row">
         <Image
           src={registerPic}
           alt="RegisterImage"

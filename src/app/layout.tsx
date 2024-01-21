@@ -17,11 +17,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} h-full bg-slate-50 text-gray-950`}>
-        {/* <div className="absolute right-[11rem] top-[-10rem] -z-10 h-[31.25rem] w-[31.25rem] rounded-full bg-emerald-200 blur-[25rem]  sm:w-[68.75rem]"></div> */}
+    <html lang="en" className="m-0 h-full p-0">
+      <body className={`${inter.className} m-0 h-full p-0 text-gray-950`}>
         <Header />
-        <main className="h-auto">{children}</main>
+        <main className="min-h-[var(--min-height-main-section)]">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>

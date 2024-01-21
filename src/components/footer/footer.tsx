@@ -10,14 +10,15 @@ import { FaPhone, FaLocationDot } from "react-icons/fa6";
 
 const Footer = () => {
   return (
-    <footer className="h-auto w-full bg-primarydk text-slate-50 md:pb-0">
+    <footer className="w-full bg-primary text-slate-50 h-auto">
       <div className="md:flex-start mx-auto flex h-5/6 w-5/6 flex-col gap-2 md:flex-row md:gap-10 md:pt-2">
-        <Link href="/" className="relative m-auto h-36 w-40 pt-2 md:m-0">
+        <Link href="/" className=" m-auto h-36 w-40 pt-2 md:m-0">
           <Image
             src="/image_textbelow_370_280.svg"
             alt="MoveLife Logo"
-            fill={true}
             priority
+            width={370}
+            height={280}
           />
         </Link>
         <div className="m-auto h-[1px] w-[100%] bg-slate-600 md:hidden"></div>

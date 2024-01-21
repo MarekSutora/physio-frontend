@@ -1,177 +1,211 @@
 "use client";
 
 import React from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "@components/ui/form";
+import { Input } from "@components/ui/input";
+import { Button } from "@components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
 
-// Define the type for your form fields
-interface IFormInput {
-  meno: string;
-  priezvisko: string;
-  predvolba: string;
-  telefonneCislo: string;
-  email: string;
-  heslo: string;
-  confirmedHeslo: string;
-}
+// Define the form schema using Zod
+
+const formSchema = z
+  .object({
+    meno: z
+      .string()
+      .min(1, "Meno je povinné. 🙄")
+      .max(50, "Meno nesmie mať viac ako 50 znakov. 🙄"),
+    priezvisko: z
+      .string()
+      .min(1, "Priezvisko je povinné. 🙄")
+      .max(50, "Priezvisko nesmie mať viac ako 50 znakov. 🙄"),
+    phoneNumber: z.string().min(1, "Telefónne číslo musí byť vyplnené. 🙄"),
+    email: z.string().email("Neplatná emailová adresa. 🙄"),
+    heslo: z.string().min(5, "Heslo musí mať aspoň 5 znakov. 🙄"),
+    confirmedHeslo: z.string(),
+    termsAndConditions: z
+      .boolean()
+      .refine((val) => val === true, "Musíte súhlasiť. 🙄"),
+  })
+  .refine((data) => data.heslo === data.confirmedHeslo, {
+    message: "Heslá sa musia zhodovať. 🙄",
+    path: ["confirmedHeslo"],
+  });
+
+type RegistrationFormData = z.infer<typeof formSchema>;
 
 const RegistrationForm: React.FC = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    watch,
-  } = useForm<IFormInput>();
+  const form = useForm<RegistrationFormData>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      meno: "",
+      priezvisko: "",
+      phoneNumber: "",
+      email: "",
+      heslo: "",
+      confirmedHeslo: "",
+      termsAndConditions: false,
+    },
+  });
 
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    // Handle registration logic here
-    console.log(data);
+  const handleSubmit = (values: RegistrationFormData) => {
+    console.log(values);
   };
 
-  const password = watch("heslo");
-
   return (
-    <div className="mt-10 flex w-96 flex-col justify-start md:mt-24">
-      <h1 className="text-center text-4xl font-bold text-gray-800">Vitajte!</h1>
-      <form className="mt-4 flex flex-col" onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex flex-col md:flex-row">
-          {/* Meno */}
-          <div className="flex flex-col md:mr-2 md:w-1/2">
-            <label htmlFor="meno" className="mb-1 ml-1 font-semibold">
-              Meno
-            </label>
-            <input
-              id="meno"
-              {...register("meno")} // Unrequired field
-              className="mb-2 rounded-md border-2 p-2"
-            />
-          </div>
-          {/* Priezvisko */}
-          <div className="flex flex-col md:ml-2 md:w-1/2">
-            <label htmlFor="priezvisko" className="mb-1 ml-1 font-semibold">
-              Priezvisko
-            </label>
-            <input
-              id="priezvisko"
-              {...register("priezvisko")} // Unrequired field
-              className="mb-2 rounded-md border-2 p-2"
-            />
-          </div>
-        </div>
-
-        <div className="flex flex-col md:flex-row">
-          {/* Predvolba */}
-          <div className="flex flex-col md:mr-2 md:w-1/3">
-            <label htmlFor="predvolba" className="mb-1 ml-1 font-semibold">
-              Predvoľba
-            </label>
-            <select
-              id="predvolba"
-              {...register("predvolba")} // Unrequired field
-              className="mb-2 rounded-md border-2 p-2"
-            >
-              <option value="+421">+421</option>
-              <option value="+420">+420</option>
-              {/* Add other area codes as needed */}
-            </select>
-          </div>
-          {/* Telefonne Cislo */}
-          <div className="flex flex-col md:ml-2 md:w-2/3">
-            <label htmlFor="telefonneCislo" className="mb-1 ml-1 font-semibold">
-              Telefónne číslo
-            </label>
-            <input
-              id="telefonneCislo"
-              {...register("telefonneCislo")} // Unrequired field
-              className="mb-2 rounded-md border-2 p-2"
-            />
-          </div>
-        </div>
-
-        {/* Email */}
-        <div className="flex flex-col">
-          <label htmlFor="email" className="mb-1 ml-1 font-semibold">
-            Email
-          </label>
-          <input
-            id="email"
-            type="email"
-            {...register("email", {
-              required: "Email je povinný",
-              pattern: {
-                value: /\S+@\S+\.\S+/,
-                message: "Email je neplatný",
-              },
-            })}
-            className={`mb-2 rounded-md border-2 p-2 ${
-              errors.email ? "border-red-500" : ""
-            }`}
-          />
-          {errors.email && (
-            <p className="ml-1 text-sm text-red-500">{errors.email.message}</p>
-          )}
-        </div>
-
-        {/* Heslo */}
-        <div className="flex flex-col">
-          <label htmlFor="heslo" className="mb-1 ml-1 font-semibold">
-            Heslo
-          </label>
-          <input
-            id="heslo"
-            type="password"
-            {...register("heslo", { required: "Heslo je povinné" })}
-            className={`mb-2 rounded-md border-2 p-2 ${
-              errors.heslo ? "border-red-500" : ""
-            }`}
-          />
-          {errors.heslo && (
-            <p className="ml-1 text-sm text-red-500">{errors.heslo.message}</p>
-          )}
-        </div>
-
-        {/* Confirmed Heslo */}
-        <div className="flex flex-col">
-          <label htmlFor="confirmedHeslo" className="mb-1 ml-1 font-semibold">
-            Potvrdenie hesla
-          </label>
-          <input
-            id="confirmedHeslo"
-            type="password"
-            {...register("confirmedHeslo", {
-              validate: (value) => value === password || "Heslá sa nezhodujú",
-            })}
-            className={`mb-2 rounded-md border-2 p-2 ${
-              errors.confirmedHeslo ? "border-red-500" : ""
-            }`}
-          />
-          {errors.confirmedHeslo && (
-            <p className="ml-1 text-sm text-red-500">
-              {errors.confirmedHeslo.message}
-            </p>
-          )}
-        </div>
-
-        {/* Submit Button */}
-        <button
-          type="submit"
-          className="m-auto mb-2 mt-1 w-5/6 rounded-md bg-secondary py-2 text-white hover:bg-primary focus:bg-primary"
+    <div className="flex w-96 flex-col justify-start">
+      <h1 className="text-center text-4xl font-bold text-gray-800 mb-2">
+        Registrácia 📝
+      </h1>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(handleSubmit)}
+          className="flex flex-col"
         >
-          Zaregistrovať sa
-        </button>
+          <div className="flex flex-row gap-5">
+            {/* Meno */}
+            <FormField
+              control={form.control}
+              name="meno"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Meno</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {/* Priezvisko */}
+            <FormField
+              control={form.control}
+              name="priezvisko"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Priezvisko</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
 
-        {/* Already have an account */}
-        <div className="mt-3 flex w-full flex-row items-center justify-between">
-          <div className="h-[1px] w-[33%] bg-slate-300"></div>
-          <Link
-            href="/prihlasenie"
-            className="text-sm text-slate-800 underline"
+          {/* Telefonne Cislo */}
+          <FormField
+            control={form.control}
+            name="phoneNumber"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Telefónne číslo</FormLabel>
+                <FormControl>
+                  <Input type="tel" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* Email */}
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input type="email" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* Heslo */}
+          <FormField
+            control={form.control}
+            name="heslo"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Heslo</FormLabel>
+                <FormControl>
+                  <Input
+                    type="password"
+                    autoComplete="new-password"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* Confirmed Heslo */}
+          <FormField
+            control={form.control}
+            name="confirmedHeslo"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Potvrdenie hesla</FormLabel>
+                <FormControl>
+                  <Input type="password" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* Terms and Conditions Checkbox */}
+          <FormField
+            control={form.control}
+            name="termsAndConditions"
+            render={({ field }) => (
+              <FormItem>
+                <div className="mt-3 flex flex-row gap-3">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormLabel className="leading-5">
+                    Súhlasím s{" "}
+                    <Link href="/obchodne-podmienky" className="text-blue-500">
+                      obchodnými podmienkami
+                    </Link>{" "}
+                    a{" "}
+                    <Link href="/ochrana-sukromia" className="text-blue-500">
+                      ochranou osobných údajov
+                    </Link>
+                    .
+                  </FormLabel>
+                </div>
+                <FormMessage className="mb-2" />
+              </FormItem>
+            )}
+          />
+
+          {/* Submit Button */}
+          <Button
+            className="mt-2 w-full bg-primary active:scale-95"
+            type="submit"
           >
-            Prihlásiť sa
-          </Link>
-          <div className="h-[1px] w-[33%] bg-slate-300"></div>
-        </div>
-      </form>
+            Zaregistrovať sa
+          </Button>
+        </form>
+      </Form>
     </div>
   );
 };

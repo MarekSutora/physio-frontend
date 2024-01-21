@@ -39,7 +39,7 @@ const Header = () => {
 
   return (
     <header
-      className={`sticky z-50 h-24 w-full bg-slate-50 ${
+      className={`z-1000 sticky top-0 h-24 w-full bg-white ${
         !isTopOfPage && "shadow-sm"
       }`}
     >
@@ -76,7 +76,7 @@ const Header = () => {
           />
         )}
       </div>
-      {isMenuToggled && <NavbarMobile setIsMenuToggled={setIsMenuToggled} />}
+      {isMenuToggled && <NavbarMobile />}
     </header>
   );
 };

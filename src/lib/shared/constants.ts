@@ -2,8 +2,6 @@ import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
 import React from "react";
 
 export const basicLinks = [
-  { text: "Úvod", path: "/uvod" },
-  { text: "O mne", path: "/o-mne" },
   {
     text: "Služby",
     subMenuItems: [
@@ -12,6 +10,7 @@ export const basicLinks = [
       { text: "Služba3aaaaaaa", path: "/" },
     ],
   },
+  { text: "O mne", path: "/o-mne" },
   { text: "Rezervácia", path: "/rezervacia" },
   { text: "Blog", path: "/blog" },
 ];

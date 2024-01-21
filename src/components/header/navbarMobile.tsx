@@ -26,7 +26,7 @@ const NavbarMobile = () => {
 
   return (
     <motion.nav
-      className="z-100 fixed h-screen w-full overflow-hidden border-l border-r border-t bg-slate-50"
+      className="z-1000 fixed h-screen w-full overflow-hidden border-l border-r border-t bg-slate-50"
       initial={{ y: -1000, opacity: 0.8 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ type: "tween", duration: 0.3 }}
