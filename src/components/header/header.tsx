@@ -76,7 +76,7 @@ const Header = () => {
           />
         )}
       </div>
-      {isMenuToggled && <NavbarMobile />}
+      {isMenuToggled && <NavbarMobile setIsMenuToggled={setIsMenuToggled} />}
     </header>
   );
 };
