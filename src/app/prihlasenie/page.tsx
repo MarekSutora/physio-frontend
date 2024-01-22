@@ -1,6 +1,6 @@
 "use client";
 
-import LoginForm from "@/components/auth/loginForm";
+import LoginForm from "@/components/auth/LoginForm";
 import loginPic from "@root/public/login.png";
 import Image from "next/image";
 

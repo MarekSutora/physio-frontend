@@ -2,6 +2,7 @@ import { userLinks } from "@/lib/shared/constants";
 import Link from "next/link";
 import React from "react";
 import { FaUserTie } from "react-icons/fa";
+import { signIn } from "next-auth/react";
 
 type LoginButtonProps = (typeof userLinks)[0];
 

@@ -2,9 +2,9 @@
 
 import React, { useEffect, useState, useRef } from "react";
 import useMediaQuery from "@/lib/hooks/useMediaQuery";
-import NavbarDesktop from "./navbarDesktop";
-import NavbarMobile from "./navbarMobile";
-import ToggleNavbarButton from "./toggleNavbarButton";
+import NavbarDesktop from "./NavbarDesktop";
+import NavbarMobile from "./NavbarMobile";
+import ToggleNavbarButton from "./ToggleNavbarButton";
 import {
   basicLinks,
   socialMediaLinks,
