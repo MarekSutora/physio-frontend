@@ -3,8 +3,8 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
-import LoginButton from "./LoginButton";
-import RegisterButton from "./RegisterButton";
+import LoginButton from "./LoginButton1";
+import RegisterButton from "./RegisterButton1";
 import { userLinks } from "@/lib/shared/constants";
 
 type Props = {};

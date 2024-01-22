@@ -2,15 +2,15 @@ import React from "react";
 import { basicLinks, socialMediaLinks } from "@/lib/shared/constants";
 import Link from "next/link";
 import Image from "next/image";
-import LogoImage from "../logo/logoImage";
-import LogoText from "../logo/logoText";
+import LogoImage from "../logo/LogoImage1";
+import LogoText from "../logo/LogoText1";
 import { IoIosMail } from "react-icons/io";
 import { contactInfo } from "@/lib/shared/constants";
 import { FaPhone, FaLocationDot } from "react-icons/fa6";
 
 const Footer = () => {
   return (
-    <footer className="w-full bg-primary text-slate-50 h-auto">
+    <footer className="h-auto w-full bg-primary text-slate-50">
       <div className="md:flex-start mx-auto flex h-5/6 w-5/6 flex-col gap-2 md:flex-row md:gap-10 md:pt-2">
         <Link href="/" className=" m-auto h-36 w-40 pt-2 md:m-0">
           <Image

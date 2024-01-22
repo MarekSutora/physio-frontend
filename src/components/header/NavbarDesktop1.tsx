@@ -3,8 +3,8 @@ import { basicLinks, userLinks } from "@/lib/shared/constants";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { FaAngleDown } from "react-icons/fa";
-import LoginButton from "@/components/header/LoginRegisterButtons/LoginButton";
-import RegisterButton from "@/components/header/LoginRegisterButtons/RegisterButton";
+import LoginButton from "@/components/header/LoginRegisterButtons/LoginButton1";
+import RegisterButton from "@/components/header/LoginRegisterButtons/RegisterButton1";
 
 const NavbarDesktop = () => {
   const [hoveredLink, setHoveredLink] = useState<string>("");

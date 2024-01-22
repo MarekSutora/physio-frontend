@@ -2,9 +2,9 @@
 
 import React, { useEffect, useState, useRef } from "react";
 import useMediaQuery from "@/lib/hooks/useMediaQuery";
-import NavbarDesktop from "@/components/header/NavbarDesktop";
-import NavbarMobile from "@/components/header/NavbarMobile";
-import ToggleNavbarButton from "@/components/header/ToggleNavbarButton";
+import NavbarDesktop from "@/components/header/NavbarDesktop1";
+import NavbarMobile from "@/components/header/NavbarMobile1";
+import ToggleNavbarButton from "@/components/header/ToggleNavbarButton1";
 import {
   basicLinks,
   socialMediaLinks,
@@ -12,9 +12,9 @@ import {
 } from "@/lib/shared/constants";
 import Link from "next/link";
 import Image from "next/image";
-import SocialMediaLinks from "../socialMediaLinks";
-import LogoImage from "../logo/logoImage";
-import LogoText from "../logo/logoText";
+import SocialMediaLinks from "../SocialMediaLinks1";
+import LogoImage from "../logo/LogoImage1";
+import LogoText from "../logo/LogoText1";
 import { useInView } from "framer-motion";
 
 const Header = () => {

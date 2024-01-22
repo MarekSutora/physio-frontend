@@ -1,5 +1,5 @@
-import GoogleMapLocation from "@/components/homePage/GoogleMaps/GoogleMapLocation";
-import ContactForm from "@/components/homePage/ContactForm";
+import GoogleMapLocation from "@/components/homePage/GoogleMaps/GoogleMapLocation1";
+import ContactForm from "@/components/homePage/ContactForm1";
 import React from "react";
 
 type Props = {};
