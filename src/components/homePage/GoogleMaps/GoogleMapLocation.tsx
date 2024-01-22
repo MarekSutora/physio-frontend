@@ -1,5 +1,5 @@
 import React from "react";
-import Map from "@components/homePage/GoogleMaps/Map";
+import Map from "@/components/homePage/GoogleMaps/Map";
 
 type Props = {};
 

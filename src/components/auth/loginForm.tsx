@@ -6,9 +6,9 @@ import {
   FormLabel,
   FormControl,
   FormField,
-} from "@components/ui/form"; // Import the required components from Shadcn
-import { Input } from "@components/ui/input";
-import { Button } from "@components/ui/button";
+} from "@/components/ui/form"; // Import the required components from Shadcn
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";

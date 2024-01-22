@@ -11,9 +11,9 @@ import {
   FormLabel,
   FormControl,
   FormMessage,
-} from "@components/ui/form";
-import { Input } from "@components/ui/input";
-import { Button } from "@components/ui/button";
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
 
@@ -64,7 +64,7 @@ const RegistrationForm: React.FC = () => {
 
   return (
     <div className="flex w-96 flex-col justify-start">
-      <h1 className="text-center text-4xl font-bold text-gray-800 mb-2">
+      <h1 className="mb-2 text-center text-4xl font-bold text-gray-800">
         Registrácia 📝
       </h1>
       <Form {...form}>

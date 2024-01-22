@@ -11,10 +11,10 @@ import {
   FormLabel,
   FormControl,
   FormMessage,
-} from "@components/ui/form"; // Adjust the import paths based on your project structure
+} from "@/components/ui/form"; // Adjust the import paths based on your project structure
 
-import { Input } from "@components/ui/input";
-import { Button } from "@components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { Select } from "@/components/ui/select";
 
 // Define form schema using Zod
@@ -43,10 +43,10 @@ const ContactForm = () => {
         Kontaktný formulár
       </h1>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          
-          
-        </form>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-4"
+        ></form>
       </Form>
     </div>
   );

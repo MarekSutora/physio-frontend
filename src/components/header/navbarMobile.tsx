@@ -7,8 +7,8 @@ import {
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { FaAngleDown } from "react-icons/fa";
-import LoginButton from "./LoginRegisterButtons/LoginButton";
-import RegisterButton from "./LoginRegisterButtons/RegisterButton";
+import LoginButton from "@/components/header/LoginRegisterButtons/LoginButton";
+import RegisterButton from "@/components/header/LoginRegisterButtons/RegisterButton";
 
 const NavbarMobile = () => {
   const [toggledItemsWithSubMenu, setToggledItemsWithSubMenu] = useState<
