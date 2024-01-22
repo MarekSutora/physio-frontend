@@ -1,7 +1,7 @@
 import React from "react";
 import registerPic from "@/root/public/login.png";
 import Image from "next/image";
-import RegistrationForm from "@/components/auth/RegistrationForm1";
+import RegistrationForm from "@/components/auth/RegistrationForm";
 
 type Props = {};
 
