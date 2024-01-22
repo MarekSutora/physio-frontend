@@ -14,7 +14,7 @@ const center = {
 };
 
 const Map = () => {
-  const apiKey = "AIzaSyD-hleDidfQ4s-QBvXwg4CaenzQaWpdZSc";
+  const apiKey = process.env.GOOGLE_MAPS_API_KEY;
 
   if (!apiKey) {
     return <div>API key for Google Maps is not set.</div>;
