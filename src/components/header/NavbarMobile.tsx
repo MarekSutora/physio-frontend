@@ -7,8 +7,8 @@ import {
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { FaAngleDown } from "react-icons/fa";
-import LoginButton from "./loginButton";
-import RegisterButton from "./registerButton";
+import LoginButton from "@/components/header/LoginRegisterButtons/LoginButton";
+import RegisterButton from "@/components/header/LoginRegisterButtons/RegisterButton";
 
 const NavbarMobile = () => {
   const [toggledItemsWithSubMenu, setToggledItemsWithSubMenu] = useState<
@@ -26,7 +26,7 @@ const NavbarMobile = () => {
 
   return (
     <motion.nav
-      className="z-40 h-full w-full border-l border-r border-t bg-slate-50"
+      className="z-1000 fixed h-screen w-full overflow-hidden border-l border-r border-t bg-slate-50"
       initial={{ y: -1000, opacity: 0.8 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ type: "tween", duration: 0.3 }}
@@ -66,7 +66,7 @@ const NavbarMobile = () => {
                         className="w-auto whitespace-nowrap"
                       >
                         <Link href={subLink.path}>
-                          <div className="h-full w-full transition-all ease-in-out hover:bg-slate-200 focus:bg-slate-200 pl-14 py-1">
+                          <div className="h-full w-full py-1 pl-14 transition-all ease-in-out hover:bg-slate-200 focus:bg-slate-200">
                             {subLink.text}
                           </div>
                         </Link>

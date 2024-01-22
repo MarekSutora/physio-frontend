@@ -2,9 +2,9 @@
 
 import React, { useEffect, useState, useRef } from "react";
 import useMediaQuery from "@/lib/hooks/useMediaQuery";
-import NavbarDesktop from "./navbarDesktop";
-import NavbarMobile from "./navbarMobile";
-import ToggleNavbarButton from "./toggleNavbarButton";
+import NavbarDesktop from "@/components/header/NavbarDesktop";
+import NavbarMobile from "@/components/header/NavbarMobile";
+import ToggleNavbarButton from "@/components/header/ToggleNavbarButton";
 import {
   basicLinks,
   socialMediaLinks,
@@ -12,15 +12,15 @@ import {
 } from "@/lib/shared/constants";
 import Link from "next/link";
 import Image from "next/image";
-import SocialMediaLinks from "../socialMediaLinks";
-import LogoImage from "../logo/logoImage";
-import LogoText from "../logo/logoText";
+import SocialMediaLinks from "../SocialMediaLinks";
+import LogoImage from "../logo/LogoImage";
+import LogoText from "../logo/LogoText";
 import { useInView } from "framer-motion";
 
 const Header = () => {
   const [isTopOfPage, setIsTopOfPage] = useState<boolean>(true);
   const [isMenuToggled, setIsMenuToggled] = useState<boolean>(true);
-  const isAboveMediumScreens = useMediaQuery("(min-width: 1060px)");
+  const isAboveMediumScreens = useMediaQuery("(min-width: 1020px)");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,21 +39,18 @@ const Header = () => {
 
   return (
     <header
-      className={`sticky top-0 h-24 w-full bg-slate-50 ${
+      className={`z-1000 sticky top-0 h-24 w-full bg-white ${
         !isTopOfPage && "shadow-sm"
       }`}
     >
-      <div className="mx-auto flex h-full w-5/6 items-center">
-        <Link href="/" className="flex h-full w-auto flex-col justify-center">
-          <div className="mt-auto pb-1">
+      <div className="mx-auto flex h-full w-5/6 items-center justify-between">
+        <Link href="/" className="relative flex h-full w-52 md:mt-4  lg:w-96">
           <Image
-              src="/logo_textright_910_225.svg"
-              alt="MoveLife Logo"
-              width={350}
-              height={100}
-              priority
-            />
-          </div>
+            src="/logo_textright_910_225.svg"
+            alt="MoveLife Logo"
+            fill={true}
+            priority
+          />
         </Link>
         {isAboveMediumScreens ? (
           <>
