@@ -1,18 +1,21 @@
-import { NextAuthOptions } from "next-auth";
+import { AuthOptions } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 async function refreshToken(token: JWT): Promise<JWT> {
-  const res = await fetch(process.env.B + "/auth/refresh", {
-    method: "POST",
-    headers: {
-      authorization: `Refresh ${token.backendTokens.refreshToken}`,
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/auth/refreshToken`,
+    {
+      method: "POST",
+      body: JSON.stringify({ refreshToken: token.backendTokens.refreshToken }),
+      headers: { "Content-Type": "application/json" },
     },
-  });
-  console.log("refreshed");
+  );
 
   const response = await res.json();
+
+  console.log("refreshed", response);
 
   return {
     ...token,
@@ -20,7 +23,7 @@ async function refreshToken(token: JWT): Promise<JWT> {
   };
 }
 
-export const authOptions: NextAuthOptions = {
+const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -29,20 +32,26 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        if (!credentials?.email || !credentials?.password) return null;
-        console.log("logging in");
-        const res = await fetch(process.env.BACKEND_API_URL + "/login", {
-          method: "POST",
-          body: JSON.stringify(credentials),
-          headers: { "Content-Type": "application/json" },
-        });
-        const user = await res.json();
+        try {
+          if (!credentials?.email || !credentials?.password) return null;
+          const res = await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/auth/refreshToken`,
+            {
+              method: "POST",
+              body: JSON.stringify(credentials),
+              headers: { "Content-Type": "application/json" },
+            },
+          );
 
-        if (res.ok && user) {
+          if (!res.ok) {
+            return null;
+          }
+
+          const user = await res.json();
           return user;
+        } catch (error) {
+          return null;
         }
-
-        return null;
       },
     }),
   ],

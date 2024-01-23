@@ -1,26 +1,34 @@
-import { getServerSession } from "next-auth";
-import Link from "next/link";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import Header from "@/components/header/Header";
+import "@/app/globals.css";
+import Footer from "@/components/footer/Footer";
+import Providers from "@/components/Providers";
 
-type Props = {
+const inter = Inter({ subsets: ["latin"] });
+
+export const metadata: Metadata = {
+  title: "Diplomovka",
+  description: "Created by Marek",
+};
+
+export default function RootLayout({
+  children,
+}: {
   children: React.ReactNode;
-};
-
-const DashBoardLayout = async (props: Props) => {
-  const session = await getServerSession(authOptions);
+}) {
   return (
-    <div className=" grid grid-cols-12">
-      <div className="h-screen grid-cols-4 border-r p-2 shadow">
-        <Link
-          className="rounded p-3 transition hover:bg-emerald-600 hover:text-white hover:shadow "
-          href={`/dashboard/user/${session?.user.id}`}
-        >
-          User Profile
-        </Link>
-      </div>
-      <div className="col-span-4">{props.children}</div>
-    </div>
+    <html lang="en" className="m-0 h-full p-0">
+      <body
+        className={`${inter.className} m-0 h-full bg-white p-0 text-gray-950`}
+      >
+        <Providers>
+          <div className="flex h-full w-full flex-row justify-start">
+            <div className="w-1/6 bg-primary"></div>
+            <div>{children}</div>
+          </div>
+        </Providers>
+      </body>
+    </html>
   );
-};
-
-export default DashBoardLayout;
+}

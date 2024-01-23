@@ -32,15 +32,14 @@ const LoginForm = (props: Props) => {
   });
 
   const handleSubmit = async (values: LoginForm) => {
-    console.log(values);
     const res = await signIn("credentials", {
       email: values.email,
       password: values.password,
       redirect: false,
     });
-    console.log(res);
+
     if (!res?.error) {
-      //router.push("http://localhost:3000");
+      router.push("https://localhost:3000/dashboard");
     }
   };
 

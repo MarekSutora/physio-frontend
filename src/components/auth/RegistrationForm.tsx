@@ -59,7 +59,7 @@ const RegistrationForm: React.FC = () => {
   });
 
   const handleSubmit = (values: RegistrationFormData) => {
-    console.log(values);
+
   };
 
   return (

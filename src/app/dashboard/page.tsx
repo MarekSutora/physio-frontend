@@ -1,6 +1,15 @@
+// src/app/dashboard/page.tsx
+
 import React from "react";
-const DashboardPage = () => {
-  return <div>DashboardPage</div>;
+import DashboardLayout from "./layout";
+
+const DashboardPage: React.FC = () => {
+  return (
+    <DashboardLayout>
+      <div></div>
+      {/* Your dashboard page content goes here */}
+    </DashboardLayout>
+  );
 };
 
 export default DashboardPage;
