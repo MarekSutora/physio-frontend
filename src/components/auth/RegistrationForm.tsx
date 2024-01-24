@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -45,6 +46,8 @@ const formSchema = z
 type RegistrationFormData = z.infer<typeof formSchema>;
 
 const RegistrationForm: React.FC = () => {
+  const router = useRouter();
+
   const form = useForm<RegistrationFormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -58,8 +61,36 @@ const RegistrationForm: React.FC = () => {
     },
   });
 
-  const handleSubmit = (values: RegistrationFormData) => {
+  const handleSubmit = async (values: RegistrationFormData) => {
+    const payload = {
+      email: values.email,
+      password: values.heslo,
+      firstName: values.meno,
+      lastName: values.priezvisko,
+      phoneNumber: values.phoneNumber,
+    };
 
+    // Send the request to the server
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/auth/registerPatient`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      },
+    );
+
+    // Check if the request was successful
+    if (!response.ok) {
+      console.log(response);
+      // Throw an error if the request was not successful
+      console.log("Something went wrong.");
+    }
+
+    // Redirect the user to the login page
+    router.push("/prihlasenie");
   };
 
   return (
@@ -126,7 +157,7 @@ const RegistrationForm: React.FC = () => {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input type="email" {...field} />
+                  <Input type="email" autoComplete="username" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -160,7 +191,11 @@ const RegistrationForm: React.FC = () => {
               <FormItem>
                 <FormLabel>Potvrdenie hesla</FormLabel>
                 <FormControl>
-                  <Input type="password" {...field} />
+                  <Input
+                    type="password"
+                    autoComplete="new-password"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

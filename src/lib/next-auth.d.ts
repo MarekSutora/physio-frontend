@@ -10,7 +10,7 @@ declare module "next-auth" {
     backendTokens: {
       accessToken: string;
       refreshToken: string;
-      accessTokenExpirationDate: date;
+      expirationDate: string;
     };
   }
 }
@@ -27,7 +27,7 @@ declare module "next-auth/jwt" {
     backendTokens: {
       accessToken: string;
       refreshToken: string;
-      accessTokenExpirationDate: date;
+      expirationDate: string;
     };
   }
 }

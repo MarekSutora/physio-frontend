@@ -1,21 +1,13 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import useMediaQuery from "@/lib/hooks/useMediaQuery";
 import NavbarDesktop from "@/components/header/NavbarDesktop";
 import NavbarMobile from "@/components/header/NavbarMobile";
 import ToggleNavbarButton from "@/components/header/ToggleNavbarButton";
-import {
-  basicLinks,
-  socialMediaLinks,
-  userLinks,
-} from "@/lib/shared/constants";
+import { socialMediaLinks } from "@/lib/shared/constants";
 import Link from "next/link";
 import Image from "next/image";
-import SocialMediaLinks from "../SocialMediaLinks";
-import LogoImage from "../logo/LogoImage";
-import LogoText from "../logo/LogoText";
-import { useInView } from "framer-motion";
 
 const Header = () => {
   const [isTopOfPage, setIsTopOfPage] = useState<boolean>(true);

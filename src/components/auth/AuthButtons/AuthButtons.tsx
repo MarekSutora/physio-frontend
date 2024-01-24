@@ -6,6 +6,7 @@ import React from "react";
 import LoginButton from "./LoginButton";
 import RegisterButton from "./RegisterButton";
 import { userLinks } from "@/lib/shared/constants";
+import LogoutButton from "./LogoutButton";
 
 type Props = {};
 
@@ -13,14 +14,7 @@ const AuthButtons = (props: Props) => {
   const { data: session } = useSession();
 
   if (session && session.user) {
-    return (
-      <div className="ml-auto flex gap-4">
-        <p className="text-sky-600">{session.user.fullName}</p>
-        <button onClick={() => signOut()} className="text-red-600">
-          Sign Out
-        </button>
-      </div>
-    );
+    return <LogoutButton />;
   }
   return (
     <>

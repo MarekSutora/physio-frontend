@@ -35,7 +35,7 @@ const authOptions: AuthOptions = {
         try {
           if (!credentials?.email || !credentials?.password) return null;
           const res = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/auth/refreshToken`,
+            `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/auth/login`,
             {
               method: "POST",
               body: JSON.stringify(credentials),
@@ -43,13 +43,18 @@ const authOptions: AuthOptions = {
             },
           );
 
-          if (!res.ok) {
+          if (res.status == 401) {
+            console.log(res.statusText);
+
             return null;
           }
-
           const user = await res.json();
+
+          console.log("authorize - user", user);
+
           return user;
         } catch (error) {
+          console.log(error);
           return null;
         }
       },
@@ -59,13 +64,22 @@ const authOptions: AuthOptions = {
     async jwt({ token, user }) {
       if (user) return { ...token, ...user };
 
-      if (new Date().getTime() < token.backendTokens.accessTokenExpirationDate)
+      console.log("jwt", token);
+      console.log("jwt", user);
+
+      if (
+        new Date().getTime() <
+        new Date(token.backendTokens.expirationDate).getTime()
+      )
         return token;
 
       return await refreshToken(token);
     },
 
     async session({ token, session }) {
+      console.log("session", token);
+      console.log("session", session);
+
       session.user = token.user;
       session.backendTokens = token.backendTokens;
 

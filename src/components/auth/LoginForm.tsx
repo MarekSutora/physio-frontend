@@ -60,7 +60,12 @@ const LoginForm = (props: Props) => {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input type="email" className="mb-2" {...field} />
+                  <Input
+                    type="email"
+                    className="mb-2"
+                    autoComplete="username"
+                    {...field}
+                  />
                 </FormControl>
               </FormItem>
             )}
