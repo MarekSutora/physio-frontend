@@ -2,12 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities {
-  .text-shadow {
-    text-shadow: 0 0 1px black;
-  }
-}
-
 @layer base {
   :root {
     --min-height-main-section: 579px;

@@ -3,7 +3,7 @@ import { basicLinks } from "@/lib/shared/constants";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { FaAngleDown } from "react-icons/fa";
-import AuthButtons from "@/components/auth/AuthButtons/AuthButtons";
+import AuthButtons from "@/components/auth/authButtons/AuthButtons";
 
 const NavbarDesktop = () => {
   const [hoveredLink, setHoveredLink] = useState<string>("");
@@ -23,7 +23,7 @@ const NavbarDesktop = () => {
             {link.subMenuItems ? (
               <div className="hover:text-shadow flex items-center gap-1">
                 {link.text}{" "}
-                <FaAngleDown className="duration-[400ms] transition-all ease-in-out group-hover:rotate-180" />
+                <FaAngleDown className="duration-[400] transition-all ease-in-out group-hover:rotate-180" />
               </div>
             ) : (
               <div className="relative flex flex-col">
