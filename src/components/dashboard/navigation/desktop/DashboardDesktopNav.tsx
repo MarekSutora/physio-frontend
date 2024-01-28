@@ -14,38 +14,39 @@ const DashboardDesktopNav = async (props: Props) => {
   return (
     <nav className="h-full w-[220px]">
       <ul className="flex flex-col py-8">
-        {dashboardLinks.admin.map((link) => {
-          return (
-            <SidePanelMenuItem
-              key={link.text}
-              text={link.text}
-              icon={link.icon}
-              path={link.path}
-            />
-          );
-        })}
-        {user?.role === "Physiotherapist" &&
-          dashboardLinks.physiotherapist.map((link) => {
-            return (
-              <SidePanelMenuItem
-                key={link.text}
-                text={link.text}
-                icon={link.icon}
-                path={link.path}
-              />
-            );
-          })}
-        {user?.role === "Patient" &&
-          dashboardLinks.physiotherapist.map((link) => {
-            return (
-              <SidePanelMenuItem
-                key={link.text}
-                text={link.text}
-                icon={link.icon}
-                path={link.path}
-              />
-            );
-          })}
+      {user?.roles.includes("Admin") &&
+                dashboardLinks.admin.map((link) => {
+                  return (
+                    <SidePanelMenuItem
+                      key={link.text}
+                      text={link.text}
+                      icon={link.icon}
+                      path={link.path}
+                    />
+                  );
+                })}
+              {user?.roles.includes("Physiotherapist") &&
+                dashboardLinks.physiotherapist.map((link) => {
+                  return (
+                    <SidePanelMenuItem
+                      key={link.text}
+                      text={link.text}
+                      icon={link.icon}
+                      path={link.path}
+                    />
+                  );
+                })}
+              {user?.roles.includes("Patient") &&
+                dashboardLinks.physiotherapist.map((link) => {
+                  return (
+                    <SidePanelMenuItem
+                      key={link.text}
+                      text={link.text}
+                      icon={link.icon}
+                      path={link.path}
+                    />
+                  );
+                })}
       </ul>
     </nav>
   );

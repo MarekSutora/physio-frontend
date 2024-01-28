@@ -36,7 +36,7 @@ const Header = () => {
         !isTopOfPage && "shadow-sm")}
     >
       <div className="mx-auto flex h-full w-5/6 items-center justify-between">
-        <Link href="/" className="relative flex h-full w-52  lg:w-96">
+        <Link href="/" className="relative flex h-full w-52">
           <Image
             src="/logo_textright_910_225.svg"
             alt="MoveLife Logo"

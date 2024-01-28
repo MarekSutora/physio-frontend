@@ -47,7 +47,7 @@ const formSchema = z
 
 type RegistrationFormData = z.infer<typeof formSchema>;
 
-const RegistrationForm: React.FC = () => {
+const RegistrationForm = () => {
   const router = useRouter();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);

@@ -22,8 +22,8 @@ const NavbarDesktop = () => {
           >
             {link.subMenuItems ? (
               <div className="hover:text-shadow flex items-center gap-1">
-                {link.text}{" "}
-                <FaAngleDown className="duration-[400] transition-all ease-in-out group-hover:rotate-180" />
+                {link.text}
+                <FaAngleDown className="transition-all duration-300 ease-in-out group-hover:rotate-180" />
               </div>
             ) : (
               <div className="relative flex flex-col">

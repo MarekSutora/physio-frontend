@@ -11,7 +11,7 @@ export const basicLinks = [
     ],
   },
   { text: "O mne", path: "/o-mne" },
-  { text: "Rezervácia", path: "/rezervacia" },
+  { text: "Rezervácia", path: "/rezervacie" },
   { text: "Blog", path: "/blog" },
 ];
 

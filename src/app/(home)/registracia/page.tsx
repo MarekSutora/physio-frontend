@@ -5,7 +5,7 @@ import RegistrationForm from "@/components/auth/RegistrationForm";
 
 type Props = {};
 
-const Register = (props: Props) => {
+const Registration = (props: Props) => {
   return (
     <section className="h-full w-full bg-white py-20">
       <div className="flex h-full items-center justify-center gap-7 md:flex-row">
@@ -22,4 +22,4 @@ const Register = (props: Props) => {
   );
 };
 
-export default Register;
+export default Registration;
