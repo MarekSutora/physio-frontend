@@ -7,7 +7,7 @@ import {
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { FaAngleDown } from "react-icons/fa";
-import AuthButtons from "@/components/auth/authButtons/AuthButtons";
+import AuthButtons from "@/components/auth/authButtonss/AuthButtons";
 
 const NavbarMobile = () => {
   const [toggledItemsWithSubMenu, setToggledItemsWithSubMenu] = useState<
