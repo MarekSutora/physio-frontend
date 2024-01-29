@@ -47,17 +47,17 @@ export const authOptions: AuthOptions = {
           );
 
           if (res.status == 401) {
-            console.log(res.statusText);
+            //console.log(res.statusText);
 
             return null;
           }
           const user = await res.json();
 
-          console.log("authorize - user", user);
+          //console.log("authorize - user", user);
 
           return user;
         } catch (error) {
-          console.log(error);
+          //console.log(error);
           return null;
         }
       },
@@ -67,8 +67,8 @@ export const authOptions: AuthOptions = {
     async jwt({ token, user }) {
       if (user) return { ...token, ...user };
 
-      console.log("jwt", token);
-      console.log("jwt", user);
+      //console.log("jwt", token);
+      //console.log("jwt", user);
 
       if (
         new Date().getTime() <
@@ -80,8 +80,8 @@ export const authOptions: AuthOptions = {
     },
 
     async session({ session, token }) {
-      console.log("session", token);
-      console.log("session", session);
+      //console.log("session", token);
+      //console.log("session", session);
 
       session.user = token.user;
       session.backendTokens = token.backendTokens;

@@ -25,7 +25,10 @@ export default function RootLayout({
         <Providers>
           <div className="flex h-full w-full flex-col md:flex-row">
             <DashboardNavigationPanel />
-            <div className="h-full w-full bg-slate-50 p-3">{children}</div>
+            <div className="flex h-full w-full flex-col items-start gap-3 bg-slate-50 p-3">
+              <section className="h-auto w-full border-slate-200 bg-white p-2 md:rounded-lg md:border-2"></section>
+              {children}
+            </div>
           </div>
         </Providers>
       </body>

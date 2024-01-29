@@ -7,13 +7,11 @@ type Props = {};
 const DashboardNavigationPanel = (props: Props) => {
   return (
     <>
-      <div>
-        <div className="block md:hidden">
-          <DashboardMobileNav />
-        </div>
-        <div className="hidden h-full bg-secondary md:block">
-          <DashboardDesktopNav />
-        </div>
+      <div className="block md:hidden">
+        <DashboardMobileNav />
+      </div>
+      <div className="hidden h-full md:block pt-3 pl-3 pb-3">
+        <DashboardDesktopNav />
       </div>
     </>
   );
