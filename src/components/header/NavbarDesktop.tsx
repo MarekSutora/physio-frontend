@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { basicLinks, userLinks } from "@/lib/shared/constants";
+import { basicLinks } from "@/lib/shared/constants";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { FaAngleDown } from "react-icons/fa";
-import LoginButton from "@/components/header/LoginRegisterButtons/LoginButton";
-import RegisterButton from "@/components/header/LoginRegisterButtons/RegisterButton";
+import AuthButtons from "@/components/auth/authButtons/AuthButtons";
 
 const NavbarDesktop = () => {
   const [hoveredLink, setHoveredLink] = useState<string>("");
@@ -23,8 +22,8 @@ const NavbarDesktop = () => {
           >
             {link.subMenuItems ? (
               <div className="hover:text-shadow flex items-center gap-1">
-                {link.text}{" "}
-                <FaAngleDown className="duration-[400ms] transition-all ease-in-out group-hover:rotate-180" />
+                {link.text}
+                <FaAngleDown className="transition-all duration-300 ease-in-out group-hover:rotate-180" />
               </div>
             ) : (
               <div className="relative flex flex-col">
@@ -77,8 +76,7 @@ const NavbarDesktop = () => {
         ))}
       </ul>
       <ul className="flex items-center gap-2">
-        <LoginButton text={userLinks[0].text} path={userLinks[0].path} />
-        <RegisterButton text={userLinks[1].text} path={userLinks[1].path} />
+        <AuthButtons />
       </ul>
     </nav>
   );

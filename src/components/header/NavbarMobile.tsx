@@ -7,8 +7,7 @@ import {
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { FaAngleDown } from "react-icons/fa";
-import LoginButton from "@/components/header/LoginRegisterButtons/LoginButton";
-import RegisterButton from "@/components/header/LoginRegisterButtons/RegisterButton";
+import AuthButtons from "@/components/auth/authButtons/AuthButtons";
 
 const NavbarMobile = () => {
   const [toggledItemsWithSubMenu, setToggledItemsWithSubMenu] = useState<
@@ -87,8 +86,7 @@ const NavbarMobile = () => {
         ))}
       </ul>
       <ul className="mt-5 flex items-center justify-center gap-3">
-        <LoginButton text={userLinks[0].text} path={userLinks[0].path} />
-        <RegisterButton text={userLinks[1].text} path={userLinks[1].path} />
+        <AuthButtons />
       </ul>
       <ul className="mt-5 flex h-full justify-center gap-8">
         {socialMediaLinks.map((link, index) => (

@@ -5,12 +5,13 @@ declare module "next-auth" {
     user: {
       id: number;
       fullName: string;
+      roles: string[];
     };
 
     backendTokens: {
       accessToken: string;
       refreshToken: string;
-      accessTokenExpirationDate: date;
+      expirationDate: string;
     };
   }
 }
@@ -22,12 +23,13 @@ declare module "next-auth/jwt" {
     user: {
       id: number;
       fullName: string;
+      roles: string[];
     };
 
     backendTokens: {
       accessToken: string;
       refreshToken: string;
-      accessTokenExpirationDate: date;
+      expirationDate: string;
     };
   }
 }

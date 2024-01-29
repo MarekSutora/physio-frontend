@@ -1,21 +1,14 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import useMediaQuery from "@/lib/hooks/useMediaQuery";
 import NavbarDesktop from "@/components/header/NavbarDesktop";
 import NavbarMobile from "@/components/header/NavbarMobile";
 import ToggleNavbarButton from "@/components/header/ToggleNavbarButton";
-import {
-  basicLinks,
-  socialMediaLinks,
-  userLinks,
-} from "@/lib/shared/constants";
+import { socialMediaLinks } from "@/lib/shared/constants";
 import Link from "next/link";
 import Image from "next/image";
-import SocialMediaLinks from "../SocialMediaLinks";
-import LogoImage from "../logo/LogoImage";
-import LogoText from "../logo/LogoText";
-import { useInView } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 const Header = () => {
   const [isTopOfPage, setIsTopOfPage] = useState<boolean>(true);
@@ -39,12 +32,11 @@ const Header = () => {
 
   return (
     <header
-      className={`z-1000 sticky top-0 h-24 w-full bg-white ${
-        !isTopOfPage && "shadow-sm"
-      }`}
+      className={cn("z-1000 sticky top-0 h-24 w-full bg-white",
+        !isTopOfPage && "shadow-sm")}
     >
       <div className="mx-auto flex h-full w-5/6 items-center justify-between">
-        <Link href="/" className="relative flex h-full w-52 md:mt-4  lg:w-96">
+        <Link href="/" className="relative flex h-full w-52">
           <Image
             src="/logo_textright_910_225.svg"
             alt="MoveLife Logo"
@@ -52,29 +44,28 @@ const Header = () => {
             priority
           />
         </Link>
-        {isAboveMediumScreens ? (
-          <>
-            <NavbarDesktop />
-            <nav>
-              <ul className="absolute right-2 top-2 flex h-full flex-col items-center gap-1">
-                {socialMediaLinks.map((link, index) => (
-                  <li key={index}>
-                    <Link href={link.path}>
-                      <div className="h-auto w-5 text-2xl text-primary transition-all duration-300 ease-in-out hover:scale-125">
-                        {link.icon}
-                      </div>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          </>
-        ) : (
+        <div className="hidden md:block">
+          <NavbarDesktop />
+          <nav>
+            <ul className="absolute right-2 top-2 flex h-full flex-col items-center gap-1">
+              {socialMediaLinks.map((link, index) => (
+                <li key={index}>
+                  <Link href={link.path}>
+                    <div className="h-auto w-5 text-2xl text-primary transition-all duration-300 ease-in-out hover:scale-125">
+                      {link.icon}
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+        <div className="block md:hidden">
           <ToggleNavbarButton
             setIsMenuToggled={setIsMenuToggled}
             isMenuToggled={isMenuToggled}
           />
-        )}
+        </div>
       </div>
       {isMenuToggled && <NavbarMobile />}
     </header>

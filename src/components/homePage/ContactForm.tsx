@@ -33,7 +33,7 @@ const ContactForm = () => {
   });
 
   const onSubmit: SubmitHandler<ContactFormData> = (data) => {
-    console.log(data);
+
     // Handle form data submission
   };
 

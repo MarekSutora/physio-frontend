@@ -11,8 +11,8 @@ const RegisterButton = ({ text, path }: RegisterButtonProps) => {
       <li key={text}>
         <Link
           href={path}
-          className="hover:complementary group flex items-center gap-1 rounded-md bg-primary hover:bg-secondary
-                     px-[6px] py-[6px] font-bold text-slate-50 shadow-xl transition-all ease-in-out hover:bg-complementary"
+          className="hover:complementary hover:bg-complementary group flex items-center gap-1 rounded-md bg-primary
+                     px-[6px] py-[6px] font-bold text-slate-50 shadow-xl transition-all ease-in-out hover:bg-secondary"
         >
           <FaUserPlus className="inline-block w-5 group-hover:scale-[1.10]" />
           {text}
