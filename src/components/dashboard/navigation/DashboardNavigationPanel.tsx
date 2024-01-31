@@ -10,7 +10,7 @@ const DashboardNavigationPanel = (props: Props) => {
       <div className="block md:hidden">
         <DashboardMobileNav />
       </div>
-      <div className="hidden h-full md:block pt-3 pl-3 pb-3">
+      <div className="hidden h-full md:block">
         <DashboardDesktopNav />
       </div>
     </>

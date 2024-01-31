@@ -44,40 +44,25 @@ export const contactInfo = {
 export const dashboardLinks = {
   admin: [
     {
-      text: "Manage Users",
-      path: "/dashboard/manage-users",
+      text: "Prehľad",
+      path: "/dashboard/prehlad",
       icon: React.createElement(FaFacebook),
     },
     {
-      text: "Analytics",
-      path: "/dashboard/analytics",
-      icon: React.createElement(FaFacebook),
-    },
-    {
-      text: "Settings",
-      path: "/dashboard/settings",
-      icon: React.createElement(FaFacebook),
-    },
-    {
-      text: "Rezervácie",
-      path: "/dashboard/rezervacie",
+      text: "Štatistiky",
+      path: "/dashboard/statistiky",
       icon: React.createElement(FaFacebook),
     },
   ],
   physiotherapist: [
     {
-      text: "Appointments",
-      path: "/dashboard/appointments",
+      text: "Správa rezervácií",
+      path: "/dashboard/sprava-rezervacii",
       icon: React.createElement(FaFacebook),
     },
     {
-      text: "Patients",
-      path: "/dashboard/patients",
-      icon: React.createElement(FaFacebook),
-    },
-    {
-      text: "Profile",
-      path: "/dashboard/profile",
+      text: "Správa pacientov",
+      path: "/dashboard/sprava-pacientov",
       icon: React.createElement(FaFacebook),
     },
   ],

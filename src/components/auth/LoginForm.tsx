@@ -39,7 +39,6 @@ const formSchema = z.object({
 });
 
 const LoginForm = (props: Props) => {
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
@@ -58,7 +57,7 @@ const LoginForm = (props: Props) => {
       const res = await signIn("credentials", {
         email: values.email,
         password: values.password,
-        redirect: false,
+        callbackUrl: "/dashboard/prehlad",
       });
 
       if (res?.error) {
@@ -68,8 +67,6 @@ const LoginForm = (props: Props) => {
           description: "Nesprávné prihlasovacie údaje. 🙄",
           className: "text-lg",
         });
-      } else {
-        router.push("/dashboard");
       }
     } catch (error) {
       toast({

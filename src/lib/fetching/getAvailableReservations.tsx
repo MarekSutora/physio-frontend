@@ -4,7 +4,6 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 
 export async function getAvailableReservations() {
-  console.log("getAvailableReservations");
   // Obtain the session from getServerSession
   const session = await getServerSession(authOptions);
 
@@ -17,9 +16,8 @@ export async function getAvailableReservations() {
     headers: {
       Authorization: `Bearer ${session?.backendTokens.accessToken}`,
     },
+    next: { tags: ["available-reservations"] },
   });
-
-  console.log(res);
 
   // If the fetch was unsuccessful, throw an error
   if (!res.ok) {

@@ -8,6 +8,8 @@ import {
   endOfMonth,
   format,
   getDay,
+  getMonth,
+  isAfter,
   isEqual,
   isSameDay,
   isSameMonth,
@@ -26,10 +28,16 @@ type Props = {
 };
 
 const Calendar = ({ data }: Props) => {
-  let today = startOfToday();
-  let [selectedDay, setSelectedDay] = useState(today);
+  const today = startOfToday();
+  const closestReservationDate = data
+    .map((reservation) => parseISO(reservation.date))
+    .filter((date) => isToday(date) || isAfter(date, today))
+    .sort((a, b) => a.getTime() - b.getTime())[0]; // Get the earliest date after sorting
+
+  // Initialize selectedDay with the closest reservation date or today if none is found
+  let [selectedDay, setSelectedDay] = useState(closestReservationDate || today);
   let [currentMonth, setCurrentMonth] = useState(
-    format(today, "MMM-yyyy", { locale: enUS }),
+    format(selectedDay, "MMM-yyyy", { locale: enUS }),
   );
   let firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
 
@@ -37,6 +45,11 @@ const Calendar = ({ data }: Props) => {
     start: firstDayCurrentMonth,
     end: endOfMonth(firstDayCurrentMonth),
   });
+
+  const isCurrentMonth = isEqual(
+    getMonth(firstDayCurrentMonth),
+    getMonth(selectedDay),
+  );
 
   const selectedDayReservations = data.filter((reservation) =>
     isSameDay(parseISO(reservation.date), selectedDay),
@@ -64,8 +77,13 @@ const Calendar = ({ data }: Props) => {
           </h2>
           <button
             type="button"
+            disabled={isCurrentMonth}
             onClick={previousMonth}
-            className="-my-1.5 flex flex-none items-center justify-center rounded-lg p-1.5 text-gray-400 hover:bg-slate-200 hover:text-gray-900"
+            className={cn(
+              !isCurrentMonth &&
+                "-my-1.5 flex flex-none items-center justify-center rounded-lg p-1.5 text-gray-700 hover:bg-slate-200 hover:text-gray-900",
+              isCurrentMonth && "cursor-default opacity-0",
+            )}
           >
             <span className="sr-only">Predosli mesiac</span>
             <FaAngleLeft className="h-5 w-5" aria-hidden="true" />
@@ -73,7 +91,7 @@ const Calendar = ({ data }: Props) => {
           <button
             onClick={nextMonth}
             type="button"
-            className="-my-1.5 -mr-1.5 ml-2 flex flex-none items-center justify-center rounded-lg p-1.5 text-gray-400 hover:bg-slate-200 hover:text-gray-900"
+            className="-my-1.5 -mr-1.5 ml-2 flex flex-none items-center justify-center rounded-lg p-1.5 text-gray-700 hover:bg-slate-200 hover:text-gray-900"
           >
             <span className="sr-only">Dalsi mesiac</span>
             <FaAngleRight className="h-5 w-5" aria-hidden="true" />
@@ -89,47 +107,47 @@ const Calendar = ({ data }: Props) => {
           <div>Ne</div>
         </div>
         <div className="mt-2 grid grid-cols-7 text-sm">
-          {days.map((day, dayIdx) => (
-            <div
-              key={day.toString()}
-              className={cn(
-                dayIdx === 0 && colStartClasses[getDay(day)],
-                "border-b border-gray-100 py-1.5",
-              )}
-            >
-              <button
-                type="button"
-                onClick={() => setSelectedDay(day)}
+          {days.map((day, dayIdx) => {
+            const isReservationOnDay = data.some((res) => {
+              return isSameDay(parseISO(res.date), day);
+            });
+
+            return (
+              <div
+                key={day.toString()}
                 className={cn(
-                  isEqual(day, selectedDay) && "text-white",
-                  !isEqual(day, selectedDay) &&
-                    isToday(day) &&
-                    "bg-green-50 text-[#14746F]",
-                  !isEqual(day, selectedDay) &&
-                    !isToday(day) &&
-                    isSameMonth(day, firstDayCurrentMonth) &&
-                    "text-gray-900",
-                  !isEqual(day, selectedDay) &&
-                    !isToday(day) &&
-                    !isSameMonth(day, firstDayCurrentMonth) &&
-                    "text-gray-400",
-                  isEqual(day, selectedDay) && isToday(day) && "bg-primary",
-                  isEqual(day, selectedDay) && !isToday(day) && "bg-gray-900",
-                  !isEqual(day, selectedDay) && "hover:bg-gray-200",
-                  (isEqual(day, selectedDay) || isToday(day)) &&
-                    "font-semibold",
-                  "mx-auto flex h-8 w-8 items-center justify-center rounded-full",
+                  dayIdx === 0 && colStartClasses[getDay(day)],
+                  "border-b border-gray-100 py-1.5",
                 )}
               >
-                <time dateTime={format(day, "yyyy-MM-dd")}>
-                  {format(day, "d")}
-                </time>
-              </button>
-              {data.some((res) => isSameDay(parseISO(res.date), day)) && (
-                <div className="m-auto mt-1 h-1 w-1/2 rounded-lg bg-primary"></div>
-              )}
-            </div>
-          ))}
+                <button
+                  disabled={!isReservationOnDay}
+                  type="button"
+                  onClick={() => setSelectedDay(day)}
+                  className={cn(
+                    isEqual(day, selectedDay) && "text-white",
+                    !isEqual(day, selectedDay) && isToday(day) && "bg-green-50",
+                    !isEqual(day, selectedDay) &&
+                      !isToday(day) &&
+                      isSameMonth(day, firstDayCurrentMonth) &&
+                      "text-gray-900",
+                    isEqual(day, selectedDay) && "bg-primary",
+                    !isEqual(day, selectedDay) &&
+                      isReservationOnDay &&
+                      "bg-tertiary bg-opacity-30 font-semibold hover:bg-gray-200",
+                    "mx-auto flex h-8 w-8 items-center justify-center rounded-full",
+                  )}
+                >
+                  <time dateTime={format(day, "yyyy-MM-dd")}>
+                    {format(day, "d")}
+                  </time>
+                </button>
+                {data.some((res) => isSameDay(parseISO(res.date), day)) && (
+                  <div className="m-auto mt-1 h-1 w-1/2 rounded-lg bg-primary"></div>
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
       <ScheduleForTheDay

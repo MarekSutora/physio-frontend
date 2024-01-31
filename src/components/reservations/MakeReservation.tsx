@@ -10,8 +10,6 @@ const MakeReservation = async (props: Props) => {
   const availableReservationsData =
     (await getAvailableReservations()) as AvailableReservation[];
 
-  console.log(availableReservationsData);
-
   return <Calendar data={availableReservationsData} />;
 };
 

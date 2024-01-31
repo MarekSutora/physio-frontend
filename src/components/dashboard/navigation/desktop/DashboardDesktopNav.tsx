@@ -11,8 +11,10 @@ const DashboardDesktopNav = async (props: Props) => {
 
   const user = session?.user;
 
+  //console.log(user);
+
   return (
-    <nav className="h-full w-[240px] rounded-lg bg-secondary border-primary border-2">
+    <nav className="h-full w-[240px] bg-secondary">
       <ul className="flex h-full flex-col py-8">
         {user?.roles.includes("Admin") &&
           dashboardLinks.admin.map((link) => {
