@@ -14,12 +14,14 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import ClipLoader from "react-spinners/ClipLoader";
+import router from "next/router";
+import { getErrorMessage } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 type Props = {};
 
@@ -41,6 +43,7 @@ const formSchema = z.object({
 const LoginForm = (props: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  const router = useRouter();
 
   const form = useForm<LoginFormData>({
     resolver: zodResolver(formSchema),
@@ -54,28 +57,29 @@ const LoginForm = (props: Props) => {
     try {
       setIsLoading(true);
 
-      const res = await signIn("credentials", {
+      const res = await signIn<"credentials">("credentials", {
         email: values.email,
         password: values.password,
-        callbackUrl: "/dashboard/prehlad",
+        redirect: false,
       });
-
       if (res?.error) {
         toast({
           variant: "destructive",
-          title: "Chyba pri prihlasovaní. 🙁",
-          description: "Nesprávné prihlasovacie údaje. 🙄",
+          title: "Chyba pri prihlasovani. 🙁",
+          description: getErrorMessage(res?.error) + " 🙄",
           className: "text-lg",
         });
+      } else {
+        router.push("/dashboard/prehlad");
       }
+      setIsLoading(false);
     } catch (error) {
       toast({
         variant: "destructive",
         title: "Chyba pri prihlasovani. 🙁",
-        description: "Nepodarilo sa spracovať prihlásenie. Skúste to znova. 🙄",
+        description: getErrorMessage(error) + " 🙄",
         className: "text-lg",
       });
-    } finally {
       setIsLoading(false);
     }
   };

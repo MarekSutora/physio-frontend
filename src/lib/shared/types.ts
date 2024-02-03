@@ -1,16 +1,22 @@
-export type AvailableReservation = {
+//TODO types zacinat s T
+
+export type TAvailableReservation = {
   id: number;
   date: string;
   capacity: number;
   reservedAmount: number;
-  activityTypes: ActivityType[];
+  activityTypes: TServiceType[];
 };
 
-export type ActivityType = {
+export type TServiceTypeDurationCost = {
+  durationMinutes: number;
+  cost: number;
+};
+
+export type TServiceType = {
   id: number;
   name: string;
   description: string;
-  cost: number;
-  duration: number;
   hexColor: string;
+  serviceTypeDurationCosts: TServiceTypeDurationCost[];
 };

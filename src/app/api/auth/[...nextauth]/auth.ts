@@ -2,6 +2,7 @@ import { AuthOptions } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials";
 import NextAuth from "next-auth/next";
+import { getErrorMessage } from "@/lib/utils";
 
 async function refreshToken(token: JWT): Promise<JWT> {
   const res = await fetch(
@@ -15,7 +16,7 @@ async function refreshToken(token: JWT): Promise<JWT> {
 
   const response = await res.json();
 
-  console.log("refreshed", response);
+  //console.log("refreshed", response);
 
   return {
     ...token,
@@ -24,9 +25,6 @@ async function refreshToken(token: JWT): Promise<JWT> {
 }
 
 export const authOptions: AuthOptions = {
-  pages: {
-    signIn: "/prihlasenie",
-  },
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -35,8 +33,9 @@ export const authOptions: AuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
+        if (!credentials?.email || !credentials?.password) return null;
+
         try {
-          if (!credentials?.email || !credentials?.password) return null;
           const res = await fetch(
             `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/auth/login`,
             {
@@ -46,19 +45,19 @@ export const authOptions: AuthOptions = {
             },
           );
 
-          if (res.status == 401) {
-            //console.log(res.statusText);
-
-            return null;
+          if (res.ok) {
+            const user = await res.json();
+            return user;
+          } else {
+            const error = await res.text(); // Získame chybovú správu ako text
+            if (error === "Nesprávne prihlasovacie údaje.") {
+              throw new Error(error);
+            } else {
+              throw new Error("Nastala chyba pri prihlasovaní.");
+            }
           }
-          const user = await res.json();
-
-          //console.log("authorize - user", user);
-
-          return user;
         } catch (error) {
-          //console.log(error);
-          return null;
+          throw new Error(getErrorMessage(error));
         }
       },
     }),

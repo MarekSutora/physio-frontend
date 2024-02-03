@@ -65,6 +65,11 @@ export const dashboardLinks = {
       path: "/dashboard/sprava-pacientov",
       icon: React.createElement(FaFacebook),
     },
+    {
+      text: "Správa služieb",
+      path: "/dashboard/sprava-sluzieb",
+      icon: React.createElement(FaFacebook),
+    },
   ],
   patient: [
     {
@@ -84,3 +89,6 @@ export const dashboardLinks = {
     },
   ],
 } as const;
+
+export const DesktopDashboardSectionStyle =
+  "border-slate-200 bg-white p-2 md:rounded-lg md:border-2" as const;

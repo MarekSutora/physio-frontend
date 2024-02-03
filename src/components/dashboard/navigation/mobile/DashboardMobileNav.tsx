@@ -6,7 +6,7 @@ import { dashboardLinks } from "@/lib/shared/constants";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import React, { useState } from "react";
-import SidePanelMenuItem from "../SidePanelMenuItem";
+import SidePanelMenuItem from "../DashboardMenuItem";
 import { useSession } from "next-auth/react";
 
 type Props = {};

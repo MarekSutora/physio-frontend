@@ -1,6 +1,6 @@
 import { dashboardLinks } from "@/lib/shared/constants";
 import React from "react";
-import SidePanelMenuItem from "../SidePanelMenuItem";
+import SidePanelMenuItem from "../DashboardMenuItem";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 

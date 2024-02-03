@@ -4,6 +4,9 @@ import "@/app/globals.css";
 import Providers from "@/components/Providers";
 import DashboardNavigationPanel from "@/components/dashboard/navigation/DashboardNavigationPanel";
 import { cn } from "@/lib/utils";
+import LogoImage from "@/components/logo/LogoImage";
+import DashboardDesktopHeader from "@/components/dashboard/navigation/desktop/DashboardDesktopHeader";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,10 +29,11 @@ export default function RootLayout({
           <div className="flex h-full w-full flex-col md:flex-row">
             <DashboardNavigationPanel />
             <div className="flex h-full w-full flex-col items-start gap-3 bg-slate-50 p-3">
-              <section className="h-auto w-full border-slate-200 bg-white p-2 md:rounded-lg md:border-2"></section>
+              <DashboardDesktopHeader />
               {children}
             </div>
           </div>
+          <Toaster />
         </Providers>
       </body>
     </html>

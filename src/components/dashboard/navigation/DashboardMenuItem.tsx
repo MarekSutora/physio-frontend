@@ -11,7 +11,7 @@ type Props = {
   path: string;
 };
 
-const SidePanelMenuItem = ({ text, icon, path }: Props) => {
+const DashboardMenuItem = ({ text, icon, path }: Props) => {
   const currentPath = usePathname();
   const isActive = currentPath === path;
 
@@ -36,4 +36,4 @@ const SidePanelMenuItem = ({ text, icon, path }: Props) => {
   );
 };
 
-export default SidePanelMenuItem;
+export default DashboardMenuItem;

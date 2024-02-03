@@ -3,6 +3,7 @@ import React from "react";
 
 type Props = {};
 
+
 const Page = (props: Props) => {
   return (
     <div className="flex h-full w-full flex-col gap-2 text-black lg:flex-row">
