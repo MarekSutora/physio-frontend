@@ -27,6 +27,8 @@ type Props = {
   data: AvailableReservation[];
 };
 
+//TODO bug ked sa dostanem na rovnaky mesiac ako je teraz ale o rok neskor
+
 const Calendar = ({ data }: Props) => {
   const today = startOfToday();
   const closestReservationDate = data

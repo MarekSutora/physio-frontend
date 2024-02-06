@@ -4,9 +4,10 @@ import "@/app/globals.css";
 import Providers from "@/components/Providers";
 import DashboardNavigationPanel from "@/components/dashboard/navigation/DashboardNavigationPanel";
 import { cn } from "@/lib/utils";
-import LogoImage from "@/components/logo/LogoImage";
+import LogoImage from "@/components/mainPage/common/logo/LogoImage";
 import DashboardDesktopHeader from "@/components/dashboard/navigation/desktop/DashboardDesktopHeader";
 import { Toaster } from "@/components/ui/toaster";
+import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,7 +31,7 @@ export default function RootLayout({
             <DashboardNavigationPanel />
             <div className="flex h-full w-full flex-col items-start gap-3 bg-slate-50 p-3">
               <DashboardDesktopHeader />
-              {children}
+              <Suspense fallback={<p>Loading...</p>}>{children}</Suspense>
             </div>
           </div>
           <Toaster />

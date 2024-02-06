@@ -11,8 +11,6 @@ const DashboardDesktopNav = async (props: Props) => {
 
   const user = session?.user;
 
-  //console.log(user);
-
   return (
     <nav className="h-full w-[240px] bg-secondary">
       <ul className="flex h-full flex-col py-8">

@@ -1,13 +1,13 @@
 "use client";
 
-import ToggleNavbarButton from "@/components/header/ToggleNavbarButton";
-import LogoImage from "@/components/logo/LogoImage";
+import LogoImage from "@/components/mainPage/common/logo/LogoImage";
 import { dashboardLinks } from "@/lib/shared/constants";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import React, { useState } from "react";
 import SidePanelMenuItem from "../DashboardMenuItem";
 import { useSession } from "next-auth/react";
+import ToggleNavbarButton from "@/components/mainPage/common/header/ToggleNavbarButton";
 
 type Props = {};
 

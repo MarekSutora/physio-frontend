@@ -1,5 +1,3 @@
-//TODO types zacinat s T
-
 export type TAvailableReservation = {
   id: number;
   date: string;
@@ -9,6 +7,7 @@ export type TAvailableReservation = {
 };
 
 export type TServiceTypeDurationCost = {
+  id: number;
   durationMinutes: number;
   cost: number;
 };

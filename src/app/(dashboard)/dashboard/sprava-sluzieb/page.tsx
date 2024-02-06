@@ -1,5 +1,5 @@
-import AddServiceTypeForm from "@/components/dashboard/admin/AddServiceTypeForm";
-import UpdateOrDeleteServiceTypeForm from "@/components/dashboard/admin/UpdateOrDeleteServiceTypeForm";
+import AddServiceTypeForm from "@/components/dashboard/admin/serviceTypes/AddServiceTypeForm";
+import UpdateOrDeleteServiceTypeForm from "@/components/dashboard/admin/serviceTypes/UpdateOrDeleteServiceTypeForm";
 import { getServiceTypesAction } from "@/lib/actions/serviceTypeActions";
 import { DesktopDashboardSectionStyle } from "@/lib/shared/constants";
 import { TServiceType } from "@/lib/shared/types";
@@ -25,7 +25,7 @@ const Page = async (props: Props) => {
         <UpdateOrDeleteServiceTypeForm serviceTypes={serviceTypes} />
       </section>
       <section className={cn("h-auto w-full", DesktopDashboardSectionStyle)}>
-        <h1 className="mb-2 border-b-2 border-slate-200 pb-1 text-center text-lg font-medium">
+        <h1 className="mb-12 border-b-2 border-slate-200 pb-1 text-center text-lg font-medium">
           Pridať novú službu
         </h1>
         <AddServiceTypeForm />

@@ -2,6 +2,8 @@ import LoginForm from "@/components/auth/LoginForm";
 import loginPic from "@/root/public/login.png";
 import Image from "next/image";
 
+//TODO ked nejde api tak ukazuje fetch failed - treba nejaku inu message
+
 const Page = () => {
   return (
     <section className="h-[var(--min-height-main-section)] w-full bg-white">

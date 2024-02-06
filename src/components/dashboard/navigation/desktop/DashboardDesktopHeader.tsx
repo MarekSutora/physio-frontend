@@ -1,4 +1,4 @@
-import LogoImage from "@/components/logo/LogoImage";
+import LogoImage from "@/components/mainPage/common/logo/LogoImage";
 import React from "react";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth";

@@ -1,15 +1,43 @@
+"use server";
+
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 import { TServiceType } from "../shared/types";
+import { revalidateTag } from "next/cache";
+import { getErrorMessage } from "../utils";
+import { get } from "http";
 
-// Helper function to extract error messages
-function getErrorMessage(error: any): string {
-  if (typeof error === "string") {
-    return error;
-  } else if (error instanceof Error) {
-    return error.message;
+export async function getServiceTypesAction(): Promise<TServiceType[]> {
+  try {
+    const session = await getServerSession(authOptions);
+
+    if (!session) {
+      throw new Error(
+        "Session not found. User must be logged in to perform this action.",
+      );
+    }
+
+    const url = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/service-types`;
+
+    const res = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+      },
+      next: { tags: ["service-types"] },
+    });
+
+    if (!res.ok) {
+      const errorData = await res.text();
+      throw new Error(errorData);
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    throw new Error(getErrorMessage(error));
   }
-  return "An unexpected error occurred";
 }
 
 export async function createNewServiceTypeAction(formData: TServiceType) {
@@ -38,40 +66,9 @@ export async function createNewServiceTypeAction(formData: TServiceType) {
       throw new Error(errorData);
     }
 
-    const data = await res.json();
-    return data;
-  } catch (error) {
-    throw new Error(getErrorMessage(error));
-  }
-}
+    revalidateTag("service-types");
 
-export async function getServiceTypesAction(): Promise<TServiceType[]> {
-  try {
-    const session = await getServerSession(authOptions);
-
-    if (!session) {
-      throw new Error(
-        "Session not found. User must be logged in to perform this action.",
-      );
-    }
-
-    const url = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/service-types`;
-
-    const res = await fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
-      },
-    });
-
-    if (!res.ok) {
-      const errorData = await res.text();
-      throw new Error(errorData);
-    }
-
-    const data = await res.json();
-    return data;
+    return true;
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }
@@ -100,11 +97,11 @@ export async function updateServiceTypeAction(formData: TServiceType) {
 
     if (!res.ok) {
       const errorData = await res.text();
+
       throw new Error(errorData);
     }
 
-    const data = await res.json();
-    return data;
+    revalidateTag("service-types");
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }
@@ -131,12 +128,11 @@ export async function deleteServiceTypeAction(id: number) {
     });
 
     if (!res.ok) {
-      const errorData = await res.text();
+      const errorData = await res.json();
       throw new Error(errorData);
     }
 
-    const data = await res.json();
-    return data;
+    revalidateTag("service-types");
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }

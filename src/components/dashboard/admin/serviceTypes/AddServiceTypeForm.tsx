@@ -25,7 +25,6 @@ const AddServiceTypeForm = (props: Props) => {
 
   const handleSubmit = async (values: TServiceType) => {
     try {
-      console.log(values);
       await createNewServiceTypeAction(values);
       toast({
         variant: "success",

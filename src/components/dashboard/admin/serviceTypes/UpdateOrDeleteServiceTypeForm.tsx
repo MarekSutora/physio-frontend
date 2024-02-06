@@ -28,8 +28,7 @@ import {
   CommandItem,
 } from "@/components/ui/command";
 import { ChevronsUpDown } from "lucide-react";
-import { set } from "date-fns";
-import { ca } from "date-fns/locale";
+import { getErrorMessage } from "@/lib/utils";
 
 //TODO diakritika
 
@@ -38,20 +37,54 @@ type Props = {
 };
 
 const UpdateOrDeleteServiceTypeForm = ({ serviceTypes }: Props) => {
-  const [selectedServiceType, setSelectedServiceType] =
-    useState<TServiceType | null>(null);
-  const [value, setValue] = React.useState("");
+  const [value, setValue] = React.useState(
+    serviceTypes.length > 0 ? serviceTypes[0].name : "",
+  );
   const [open, setOpen] = React.useState(false);
+  const { toast } = useToast();
 
-  const handleSubmit = async (values: TServiceType) => {};
+  const selectedServiceType = serviceTypes.find(
+    (serviceType) => serviceType.name === value,
+  )!;
+
+  const handleSubmit = async (values: TServiceType) => {
+    console.log("handleSubmit", values);
+    try {
+      if (selectedServiceType) {
+        await updateServiceTypeAction(values);
+
+        toast({
+          variant: "success",
+          title: "Úspešne upravena sluzba. 🎉",
+          className: "text-lg",
+        });
+      }
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        description: getErrorMessage(error) + " 🙄",
+        className: "text-lg",
+      });
+    }
+  };
 
   const handleDelete = async () => {
+    console.log("handleDelete");
     try {
       if (selectedServiceType) {
         await deleteServiceTypeAction(selectedServiceType.id);
       }
+      toast({
+        variant: "success",
+        title: "Úspešne odstranena sluzba. 🎉",
+        className: "text-lg",
+      });
     } catch (error) {
-      console.error(error);
+      toast({
+        variant: "destructive",
+        description: getErrorMessage(error) + " 🙄",
+        className: "text-lg",
+      });
     }
   };
 
@@ -66,9 +99,7 @@ const UpdateOrDeleteServiceTypeForm = ({ serviceTypes }: Props) => {
             className="w-[200px] justify-between"
           >
             {selectedServiceType
-              ? serviceTypes.find(
-                  (service) => service.name === selectedServiceType.name,
-                )?.name
+              ? selectedServiceType.name
               : "Vyber typ sluzby..."}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
@@ -76,32 +107,39 @@ const UpdateOrDeleteServiceTypeForm = ({ serviceTypes }: Props) => {
         <PopoverContent className="w-[200px] p-0">
           <Command>
             <CommandInput placeholder="Vyber typ sluzby..." />
-            <CommandEmpty>Nenasla sa ziadna sluzba.</CommandEmpty>
             <CommandGroup>
               {serviceTypes.map((serviceType) => (
                 <CommandItem
                   key={serviceType.id}
                   value={serviceType.name}
                   onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue);
+                    setValue(currentValue);
                     setOpen(false);
-                    setSelectedServiceType(serviceType);
                   }}
                 >
-                  {serviceType.name}\
+                  {serviceType.name}
                 </CommandItem>
               ))}
             </CommandGroup>
           </Command>
         </PopoverContent>
       </Popover>
-      <ServiceTypeForm
-        serviceType={selectedServiceType}
-        onSubmit={handleSubmit}
-      >
-        <Button type="submit">Update</Button>
-        <Button onClick={handleDelete}></Button>
-      </ServiceTypeForm>
+
+      {selectedServiceType && ( // This line checks if selectedServiceType is defined
+        <ServiceTypeForm
+          serviceType={selectedServiceType}
+          onSubmit={handleSubmit}
+        >
+          <Button type="submit">Update</Button>
+          <Button
+            type="button"
+            className="bg-destructive hover:bg-red-400"
+            onClick={handleDelete}
+          >
+            Odstranit sluzbu
+          </Button>
+        </ServiceTypeForm>
+      )}
     </>
   );
 };
