@@ -21,10 +21,11 @@ import {
 import { enUS } from "date-fns/locale";
 import { useState } from "react";
 import ScheduleForTheDay from "./ScheduleForTheDay";
-import { AvailableReservation } from "@/lib/shared/types";
+// import { AvailableReservation } from "@/lib/shared/types";
 
 type Props = {
-  data: AvailableReservation[];
+  // data: AvailableReservation[];
+  data: any[];
 };
 
 //TODO bug ked sa dostanem na rovnaky mesiac ako je teraz ale o rok neskor

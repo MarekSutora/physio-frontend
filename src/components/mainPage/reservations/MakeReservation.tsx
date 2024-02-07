@@ -1,4 +1,3 @@
-import Calendar from "@/components/reservations/Calendar";
 import React from "react";
 import ScheduleForTheDay from "./ScheduleForTheDay";
 import { getAvailableReservationsAction } from "@/lib/actions/getAvailableReservations";
@@ -6,9 +5,10 @@ import { getAvailableReservationsAction } from "@/lib/actions/getAvailableReserv
 type Props = {};
 
 const MakeReservation = async (props: Props) => {
-  const availableReservationsData = [];
+  //const availableReservationsData = [];
 
-  return <Calendar data={availableReservationsData} />;
+  //return <Calendar data={availableReservationsData} />;
+  return <div>MakeReservation</div>;
 };
 
 export default MakeReservation;

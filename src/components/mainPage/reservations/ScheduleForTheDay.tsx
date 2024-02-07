@@ -1,10 +1,10 @@
-import { AvailableReservation } from "@/lib/shared/types";
 import { format } from "date-fns";
 import { sk } from "date-fns/locale";
 import React from "react";
 
 type Props = {
-  selectedDayReservations: AvailableReservation[];
+  // selectedDayReservations: AvailableReservation[];
+  selectedDayReservations: any[];
   selectedDay: Date;
 };
 
@@ -29,7 +29,8 @@ const ScheduleForTheDay = ({ selectedDayReservations, selectedDay }: Props) => {
 };
 
 type ReservationCardProps = {
-  reservation: AvailableReservation;
+  // reservation: AvailableReservation;
+  reservation: any;
 };
 
 const ReservationCard = ({ reservation }: ReservationCardProps) => {
@@ -38,7 +39,7 @@ const ReservationCard = ({ reservation }: ReservationCardProps) => {
       <div className="pl-2 text-lg font-semibold">
         {format(new Date(reservation.date), "HH:mm", { locale: sk })}
       </div>
-      {reservation.activityTypes.map((activityType, index) => (
+      {reservation.activityTypes.map((activityType: any, index: any) => (
         <div
           key={index}
           className="flex flex-col gap-2 rounded-lg p-2"

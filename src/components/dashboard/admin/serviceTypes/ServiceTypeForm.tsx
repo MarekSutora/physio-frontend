@@ -15,6 +15,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { TServiceType } from "@/lib/shared/types";
+import { createNewServiceTypeAction } from "@/lib/actions/serviceTypeActions";
+import { toast, useToast } from "@/components/ui/use-toast";
 
 const durationCostSchema = z.object({
   durationMinutes: z.coerce
@@ -29,7 +31,6 @@ const formSchema = z.object({
   name: z.string().min(1, { message: "Name is required" }),
   description: z.string().min(1, { message: "Description is required" }),
   hexColor: z.string().min(1, { message: "Hex color is required" }),
-  serviceTypeDurationCosts: z.array(durationCostSchema),
 });
 
 type Props = {
@@ -39,10 +40,12 @@ type Props = {
 };
 
 const ServiceTypeForm = ({ serviceType, children, onSubmit }: Props) => {
+  const { toast } = useToast();
+
   const form = useForm<TServiceType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      id: serviceType?.id,
+      id: serviceType?.id ?? -1,
       name: serviceType?.name ?? "",
       description: serviceType?.description ?? "",
       hexColor: serviceType?.hexColor ?? "#aabbcc",
@@ -54,7 +57,7 @@ const ServiceTypeForm = ({ serviceType, children, onSubmit }: Props) => {
 
   useEffect(() => {
     form.reset({
-      id: serviceType?.id,
+      id: serviceType?.id ?? -1,
       name: serviceType?.name ?? "",
       description: serviceType?.description ?? "",
       hexColor: serviceType?.hexColor ?? "#aabbcc",
@@ -62,6 +65,7 @@ const ServiceTypeForm = ({ serviceType, children, onSubmit }: Props) => {
         { durationMinutes: 0, cost: 0 },
       ],
     });
+    console.log("Form errors:", form.formState.errors);
   }, [serviceType, form.reset, form]);
 
   const { fields, append, remove } = useFieldArray({
@@ -158,7 +162,7 @@ const ServiceTypeForm = ({ serviceType, children, onSubmit }: Props) => {
       <Button
         type="button"
         variant="outline"
-        onClick={() => append({ durationMinutes: 0, cost: 0 })}
+        onClick={() => append({ durationMinutes: 0, cost: 0, id: null })}
       >
         Pridať ďalšie
       </Button>

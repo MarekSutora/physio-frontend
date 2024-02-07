@@ -1,11 +1,12 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import { TServiceType } from "@/lib/shared/types";
 import { Label } from "@/components/ui/label";
+import "react-datepicker/dist/react-datepicker.css";
+import DatePickerComponent from "./DatePickerComponent";
 
-// Type definitions
 export type OptionType = {
   label: string;
   value: string;
@@ -17,13 +18,13 @@ export type GroupedOptionType = {
   options: OptionType[];
 };
 
-// ... (rest of your imports)
-
 type Props = {
   serviceTypes: TServiceType[];
 };
 
 const CreateNewAvailableReservationForm = ({ serviceTypes }: Props) => {
+  const [date, setDate] = useState(new Date());
+
   console.log(serviceTypes);
 
   // Convert service types and their duration costs to select options
@@ -40,13 +41,22 @@ const CreateNewAvailableReservationForm = ({ serviceTypes }: Props) => {
   const customStyles = {
     option: (provided: any, { data }: any) => ({
       ...provided,
-      backgroundColor: data.color && `${data.color}20`, // Lighten the color for background
-      color: "black", // Text color
+      backgroundColor: data.color && `${data.color}30`,
+      color: "black",
       ":hover": {
         ...provided[":hover"],
-        backgroundColor: data.color && `${data.color}40`, // Slightly darken on hover
+        backgroundColor: data.color && `${data.color}40`,
       },
     }),
+    multiValue: (styles: any, { data }: any) => ({
+      ...styles,
+      backgroundColor: data.color && `${data.color}40`,
+    }),
+    multiValueLabel: (styles: any, { data }: any) => ({
+      ...styles,
+      color: "black",
+    }),
+    // ... other styles
   };
 
   const handleSubmit = () => {
@@ -55,8 +65,8 @@ const CreateNewAvailableReservationForm = ({ serviceTypes }: Props) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div>
-        <Label htmlFor="serviceTypes">Service Types</Label>
+      <div className="space-y-1">
+        <Label htmlFor="serviceTypes">Typ sluzby</Label>
         <Select
           id="serviceTypes"
           instanceId="serviceTypes"
@@ -65,10 +75,14 @@ const CreateNewAvailableReservationForm = ({ serviceTypes }: Props) => {
           closeMenuOnSelect={false}
           options={options}
           styles={customStyles}
-          components={makeAnimated()} // Using the makeAnimated function directly
+          components={makeAnimated()}
         />
       </div>
-      {/* ... other form inputs ... */}
+      <div className="mt-4 flex w-[220px] flex-col gap-1 space-y-1">
+        <Label htmlFor="date">Dátum a čas</Label>
+        <DatePickerComponent date={date} setDate={setDate} />
+      </div>
+    
     </form>
   );
 };

@@ -7,7 +7,7 @@ export type TAvailableReservation = {
 };
 
 export type TServiceTypeDurationCost = {
-  id: number;
+  id: number | null;
   durationMinutes: number;
   cost: number;
 };

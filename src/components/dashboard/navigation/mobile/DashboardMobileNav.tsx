@@ -33,7 +33,7 @@ const DashboardMobileNav = (props: Props) => {
 
       {isMenuToggled && (
         <motion.nav
-          className="z-100 fixed top-[75px] h-screen w-full overflow-hidden  bg-primary"
+          className="fixed top-[75px] z-50 h-screen w-full overflow-hidden  bg-primary"
           initial={{ y: -1000, opacity: 0.8 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ type: "tween", duration: 0.3 }}

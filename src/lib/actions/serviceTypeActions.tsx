@@ -10,22 +10,18 @@ import { get } from "http";
 export async function getServiceTypesAction(): Promise<TServiceType[]> {
   try {
     const session = await getServerSession(authOptions);
-
     if (!session) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
     }
-
     const url = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/service-types`;
-
     const res = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${session.backendTokens.accessToken}`,
       },
-      next: { tags: ["service-types"] },
     });
 
     if (!res.ok) {
@@ -34,7 +30,10 @@ export async function getServiceTypesAction(): Promise<TServiceType[]> {
     }
 
     const data = await res.json();
-    return data;
+
+    console.log("data", data);
+
+    return data.length > 0 ? data : [];
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }
