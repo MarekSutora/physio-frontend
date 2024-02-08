@@ -72,7 +72,7 @@ const UpdateOrDeleteServiceTypeForm = ({ serviceTypes }: Props) => {
     console.log("handleDelete");
     try {
       if (selectedServiceType) {
-        await deleteServiceTypeAction(selectedServiceType.id);
+        await deleteServiceTypeAction(selectedServiceType.id!);
       }
       toast({
         variant: "success",

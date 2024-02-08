@@ -1,11 +1,14 @@
 "use client";
+
 import React, { useState } from "react";
-import Select from "react-select";
+import Select, { MultiValue } from "react-select";
 import makeAnimated from "react-select/animated";
 import { TServiceType } from "@/lib/shared/types";
 import { Label } from "@/components/ui/label";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePickerComponent from "./DatePickerComponent";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export type OptionType = {
   label: string;
@@ -24,8 +27,8 @@ type Props = {
 
 const CreateNewAvailableReservationForm = ({ serviceTypes }: Props) => {
   const [date, setDate] = useState(new Date());
-
-  console.log(serviceTypes);
+  const [selectedOptions, setSelectedOptions] = useState<OptionType[]>([]);
+  const [capacity, setCapacity] = useState<number>(1);
 
   // Convert service types and their duration costs to select options
   const options = serviceTypes.flatMap((serviceType) =>
@@ -35,8 +38,6 @@ const CreateNewAvailableReservationForm = ({ serviceTypes }: Props) => {
       color: serviceType.hexColor, // Use the hex color for option styling
     })),
   );
-
-  console.log(options);
 
   const customStyles = {
     option: (provided: any, { data }: any) => ({
@@ -59,8 +60,24 @@ const CreateNewAvailableReservationForm = ({ serviceTypes }: Props) => {
     // ... other styles
   };
 
-  const handleSubmit = () => {
-    // Handle submit logic here
+  const handleSelectChange = (selected: MultiValue<OptionType>) => {
+    setSelectedOptions(selected.map(option => ({ ...option })));
+    if (selected.length > 1) {
+      setCapacity(1); // Automatically set capacity to 1 if more than one item is selected
+    }
+  };
+
+  const handleCapacityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCapacity(Number(event.target.value));
+  };
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    console.log("handleSubmit", {
+      date,
+      capacity,
+      serviceTypeIds: selectedOptions.map((option) => Number(option.value.split("-")[0])),
+    });
   };
 
   return (
@@ -76,13 +93,34 @@ const CreateNewAvailableReservationForm = ({ serviceTypes }: Props) => {
           options={options}
           styles={customStyles}
           components={makeAnimated()}
+          onChange={handleSelectChange}
+          value={selectedOptions}
+          required
         />
       </div>
       <div className="mt-4 flex w-[220px] flex-col gap-1 space-y-1">
         <Label htmlFor="date">Dátum a čas</Label>
         <DatePickerComponent date={date} setDate={setDate} />
       </div>
-    
+      <div className="mt-4">
+        <Label htmlFor="capacity">Kapacita</Label>
+        <Input
+          type="number"
+          required
+          min={1}
+          id="capacity"
+          name="capacity"
+          value={capacity}
+          onChange={handleCapacityChange}
+          disabled={selectedOptions.length > 1}
+          className="input disabled:opacity-50"
+        />
+      </div>
+      <div className="mt-4">
+        <Button type="submit" className="btn">
+          Odoslať
+        </Button>
+      </div>
     </form>
   );
 };

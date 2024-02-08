@@ -5,7 +5,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 import { TServiceType } from "../shared/types";
 import { revalidateTag } from "next/cache";
 import { getErrorMessage } from "../utils";
-import { get } from "http";
+
 
 export async function getServiceTypesAction(): Promise<TServiceType[]> {
   try {

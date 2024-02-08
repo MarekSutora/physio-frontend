@@ -1,11 +1,3 @@
-export type TAvailableReservation = {
-  id: number;
-  date: string;
-  capacity: number;
-  reservedAmount: number;
-  activityTypes: TServiceType[];
-};
-
 export type TServiceTypeDurationCost = {
   id: number | null;
   durationMinutes: number;
@@ -13,9 +5,17 @@ export type TServiceTypeDurationCost = {
 };
 
 export type TServiceType = {
-  id: number;
+  id: number | null;
   name: string;
   description: string;
   hexColor: string;
   serviceTypeDurationCosts: TServiceTypeDurationCost[];
+};
+
+export type TAvailableReservation = {
+  id: number | null;
+  date: Date;
+  capacity: number;
+  serviceTypeIds: number[];
+  reservedAmount: number;
 };

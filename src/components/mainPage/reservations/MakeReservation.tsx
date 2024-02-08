@@ -1,6 +1,6 @@
 import React from "react";
 import ScheduleForTheDay from "./ScheduleForTheDay";
-import { getAvailableReservationsAction } from "@/lib/actions/getAvailableReservations";
+import { getAvailableReservationsAction } from "@/lib/actions/reservationActions";
 
 type Props = {};
 

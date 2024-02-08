@@ -27,10 +27,11 @@ const durationCostSchema = z.object({
 });
 
 const formSchema = z.object({
-  id: z.number(),
+  id: z.any().optional(),
   name: z.string().min(1, { message: "Name is required" }),
   description: z.string().min(1, { message: "Description is required" }),
   hexColor: z.string().min(1, { message: "Hex color is required" }),
+  serviceTypeDurationCosts: z.array(durationCostSchema),
 });
 
 type Props = {
@@ -45,7 +46,7 @@ const ServiceTypeForm = ({ serviceType, children, onSubmit }: Props) => {
   const form = useForm<TServiceType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      id: serviceType?.id ?? -1,
+      id: serviceType?.id ?? null,
       name: serviceType?.name ?? "",
       description: serviceType?.description ?? "",
       hexColor: serviceType?.hexColor ?? "#aabbcc",
@@ -57,7 +58,7 @@ const ServiceTypeForm = ({ serviceType, children, onSubmit }: Props) => {
 
   useEffect(() => {
     form.reset({
-      id: serviceType?.id ?? -1,
+      id: serviceType?.id ?? null,
       name: serviceType?.name ?? "",
       description: serviceType?.description ?? "",
       hexColor: serviceType?.hexColor ?? "#aabbcc",
@@ -65,7 +66,6 @@ const ServiceTypeForm = ({ serviceType, children, onSubmit }: Props) => {
         { durationMinutes: 0, cost: 0 },
       ],
     });
-    console.log("Form errors:", form.formState.errors);
   }, [serviceType, form.reset, form]);
 
   const { fields, append, remove } = useFieldArray({
