@@ -3,12 +3,15 @@
 import React, { useState } from "react";
 import Select, { MultiValue } from "react-select";
 import makeAnimated from "react-select/animated";
-import { TServiceType } from "@/lib/shared/types";
+import { TC_AvailableReservation, TG_ServiceType } from "@/lib/shared/types";
 import { Label } from "@/components/ui/label";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePickerComponent from "./DatePickerComponent";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { createAvailableReservationAction } from "@/lib/actions/reservationActions";
+import { toast } from "@/components/ui/use-toast";
+import { getErrorMessage } from "@/lib/utils";
 
 export type OptionType = {
   label: string;
@@ -22,17 +25,17 @@ export type GroupedOptionType = {
 };
 
 type Props = {
-  serviceTypes: TServiceType[];
+  serviceTypes: TG_ServiceType[];
 };
 
 const CreateNewAvailableReservationForm = ({ serviceTypes }: Props) => {
-  const [date, setDate] = useState(new Date());
+  const [startTime, setStartTime] = useState(new Date());
   const [selectedOptions, setSelectedOptions] = useState<OptionType[]>([]);
   const [capacity, setCapacity] = useState<number>(1);
 
   // Convert service types and their duration costs to select options
   const options = serviceTypes.flatMap((serviceType) =>
-    serviceType.serviceTypeDurationCosts.map((cost) => ({
+    serviceType.stdcs.map((cost) => ({
       label: `${serviceType.name} - ${cost.durationMinutes}min - ${cost.cost}e`,
       value: `${serviceType.id}-${cost.id}`, // Unique value using both IDs
       color: serviceType.hexColor, // Use the hex color for option styling
@@ -61,7 +64,7 @@ const CreateNewAvailableReservationForm = ({ serviceTypes }: Props) => {
   };
 
   const handleSelectChange = (selected: MultiValue<OptionType>) => {
-    setSelectedOptions(selected.map(option => ({ ...option })));
+    setSelectedOptions(selected.map((option) => ({ ...option })));
     if (selected.length > 1) {
       setCapacity(1); // Automatically set capacity to 1 if more than one item is selected
     }
@@ -71,13 +74,36 @@ const CreateNewAvailableReservationForm = ({ serviceTypes }: Props) => {
     setCapacity(Number(event.target.value));
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("handleSubmit", {
-      date,
-      capacity,
-      serviceTypeIds: selectedOptions.map((option) => Number(option.value.split("-")[0])),
+
+    const stdcIds = selectedOptions.map((option) => {
+      const parts = option.value.split("-");
+      return parseInt(parts[1]); // Extracting the stdcId part
     });
+
+    const reservationData: TC_AvailableReservation = {
+      startTime,
+      capacity,
+      stdcIds,
+    };
+
+    try {
+      const success = await createAvailableReservationAction(reservationData);
+      if (success) {
+        toast({
+          variant: "success",
+          title: "Available reservation created successfully!",
+        });
+        // Optionally reset form or perform other success actions
+      }
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        description: getErrorMessage(error),
+      });
+      // Optionally handle error actions
+    }
   };
 
   return (
@@ -99,8 +125,8 @@ const CreateNewAvailableReservationForm = ({ serviceTypes }: Props) => {
         />
       </div>
       <div className="mt-4 flex w-[220px] flex-col gap-1 space-y-1">
-        <Label htmlFor="date">Dátum a čas</Label>
-        <DatePickerComponent date={date} setDate={setDate} />
+        <Label htmlFor="startTime">Dátum a čas</Label>
+        <DatePickerComponent startTime={startTime} setStartTime={setStartTime} />
       </div>
       <div className="mt-4">
         <Label htmlFor="capacity">Kapacita</Label>

@@ -1,7 +1,7 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-import { FaAngleRight, FaAngleLeft } from "react-icons/fa6";
+import React, { useState } from "react";
+import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 import {
   add,
   eachDayOfInterval,
@@ -19,21 +19,21 @@ import {
   startOfToday,
 } from "date-fns";
 import { enUS } from "date-fns/locale";
-import { useState } from "react";
+import { TG_AvailableReservation } from "@/lib/shared/types"; // Update the import path as needed
+import { cn } from "@/lib/utils";
 import ScheduleForTheDay from "./ScheduleForTheDay";
-// import { AvailableReservation } from "@/lib/shared/types";
 
 type Props = {
   // data: AvailableReservation[];
-  data: any[];
+  availableReservations: TG_AvailableReservation[];
 };
 
 //TODO bug ked sa dostanem na rovnaky mesiac ako je teraz ale o rok neskor
 
-const Calendar = ({ data }: Props) => {
+const BookReservationCalendar = ({ availableReservations }: Props) => {
   const today = startOfToday();
-  const closestReservationDate = data
-    .map((reservation) => parseISO(reservation.date))
+  const closestReservationDate = availableReservations
+    .map((reservation) => parseISO(reservation.startTime))
     .filter((date) => isToday(date) || isAfter(date, today))
     .sort((a, b) => a.getTime() - b.getTime())[0]; // Get the earliest date after sorting
 
@@ -54,8 +54,8 @@ const Calendar = ({ data }: Props) => {
     getMonth(selectedDay),
   );
 
-  const selectedDayReservations = data.filter((reservation) =>
-    isSameDay(parseISO(reservation.date), selectedDay),
+  const selectedDayReservations = availableReservations.filter((reservation) =>
+    isSameDay(parseISO(reservation.startTime), selectedDay),
   );
 
   function previousMonth() {
@@ -111,8 +111,8 @@ const Calendar = ({ data }: Props) => {
         </div>
         <div className="mt-2 grid grid-cols-7 text-sm">
           {days.map((day, dayIdx) => {
-            const isReservationOnDay = data.some((res) => {
-              return isSameDay(parseISO(res.date), day);
+            const isReservationOnDay = availableReservations.some((res) => {
+              return isSameDay(parseISO(res.startTime), day);
             });
 
             return (
@@ -145,7 +145,7 @@ const Calendar = ({ data }: Props) => {
                     {format(day, "d")}
                   </time>
                 </button>
-                {data.some((res) => isSameDay(parseISO(res.date), day)) && (
+                {availableReservations.some((res) => isSameDay(parseISO(res.startTime), day)) && (
                   <div className="m-auto mt-1 h-1 w-1/2 rounded-lg bg-primary"></div>
                 )}
               </div>
@@ -190,4 +190,4 @@ function getMonthNameSk(month: string): string {
   return monthNamesSk[month] || month;
 }
 
-export default Calendar;
+export default BookReservationCalendar;

@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { TServiceType } from "@/lib/shared/types";
+import { TAU_ServiceType } from "@/lib/shared/types";
 import { createNewServiceTypeAction } from "@/lib/actions/serviceTypeActions";
 import { toast, useToast } from "@/components/ui/use-toast";
 
@@ -31,26 +31,26 @@ const formSchema = z.object({
   name: z.string().min(1, { message: "Name is required" }),
   description: z.string().min(1, { message: "Description is required" }),
   hexColor: z.string().min(1, { message: "Hex color is required" }),
-  serviceTypeDurationCosts: z.array(durationCostSchema),
+  durationCosts: z.array(durationCostSchema),
 });
 
 type Props = {
-  serviceType: TServiceType | null;
+  serviceType: TAU_ServiceType | null;
   children: React.ReactNode;
-  onSubmit: SubmitHandler<TServiceType>;
+  onSubmit: SubmitHandler<TAU_ServiceType>;
 };
 
 const ServiceTypeForm = ({ serviceType, children, onSubmit }: Props) => {
   const { toast } = useToast();
 
-  const form = useForm<TServiceType>({
+  const form = useForm<TAU_ServiceType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       id: serviceType?.id ?? null,
       name: serviceType?.name ?? "",
       description: serviceType?.description ?? "",
       hexColor: serviceType?.hexColor ?? "#aabbcc",
-      serviceTypeDurationCosts: serviceType?.serviceTypeDurationCosts ?? [
+      durationCosts: serviceType?.durationCosts ?? [
         { durationMinutes: 0, cost: 0 },
       ],
     },
@@ -62,7 +62,7 @@ const ServiceTypeForm = ({ serviceType, children, onSubmit }: Props) => {
       name: serviceType?.name ?? "",
       description: serviceType?.description ?? "",
       hexColor: serviceType?.hexColor ?? "#aabbcc",
-      serviceTypeDurationCosts: serviceType?.serviceTypeDurationCosts ?? [
+      durationCosts: serviceType?.durationCosts ?? [
         { durationMinutes: 0, cost: 0 },
       ],
     });
@@ -70,7 +70,7 @@ const ServiceTypeForm = ({ serviceType, children, onSubmit }: Props) => {
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
-    name: "serviceTypeDurationCosts",
+    name: "durationCosts",
   });
 
   return (
@@ -116,17 +116,16 @@ const ServiceTypeForm = ({ serviceType, children, onSubmit }: Props) => {
             <Input
               type="number"
               {...form.register(
-                `serviceTypeDurationCosts.${index}.durationMinutes` as const,
+                `durationCosts.${index}.durationMinutes` as const,
               )}
             />
-            {form.formState.errors.serviceTypeDurationCosts &&
-              form.formState.errors.serviceTypeDurationCosts[index] &&
-              form.formState.errors.serviceTypeDurationCosts[index]!
-                .durationMinutes && (
+            {form.formState.errors.durationCosts &&
+              form.formState.errors.durationCosts[index] &&
+              form.formState.errors.durationCosts[index]!.durationMinutes && (
                 <span className="text-sm font-medium text-destructive">
                   {
-                    form.formState.errors.serviceTypeDurationCosts[index]!
-                      .durationMinutes!.message
+                    form.formState.errors.durationCosts[index]!.durationMinutes!
+                      .message
                   }
                 </span>
               )}
@@ -135,18 +134,13 @@ const ServiceTypeForm = ({ serviceType, children, onSubmit }: Props) => {
             <Label>Cena</Label>
             <Input
               type="number"
-              {...form.register(
-                `serviceTypeDurationCosts.${index}.cost` as const,
-              )}
+              {...form.register(`durationCosts.${index}.cost` as const)}
             />
-            {form.formState.errors.serviceTypeDurationCosts &&
-              form.formState.errors.serviceTypeDurationCosts[index] &&
-              form.formState.errors.serviceTypeDurationCosts[index]!.cost && (
+            {form.formState.errors.durationCosts &&
+              form.formState.errors.durationCosts[index] &&
+              form.formState.errors.durationCosts[index]!.cost && (
                 <span className="text-sm font-medium text-destructive">
-                  {
-                    form.formState.errors.serviceTypeDurationCosts[index]!.cost!
-                      .message
-                  }
+                  {form.formState.errors.durationCosts[index]!.cost!.message}
                 </span>
               )}
           </div>
@@ -162,7 +156,7 @@ const ServiceTypeForm = ({ serviceType, children, onSubmit }: Props) => {
       <Button
         type="button"
         variant="outline"
-        onClick={() => append({ durationMinutes: 0, cost: 0, id: null })}
+        onClick={() => append({ durationMinutes: 0, cost: 0 })}
       >
         Pridať ďalšie
       </Button>

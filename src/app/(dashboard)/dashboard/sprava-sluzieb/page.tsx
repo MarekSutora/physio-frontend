@@ -1,17 +1,15 @@
-
-
 import AddServiceTypeForm from "@/components/dashboard/admin/serviceTypes/AddServiceTypeForm";
 import UpdateOrDeleteServiceTypeForm from "@/components/dashboard/admin/serviceTypes/UpdateOrDeleteServiceTypeForm";
 import { getServiceTypesAction } from "@/lib/actions/serviceTypeActions";
 import { DesktopDashboardSectionStyle } from "@/lib/shared/constants";
-import { TServiceType } from "@/lib/shared/types";
+import { TG_ServiceType } from "@/lib/shared/types";
 import { cn } from "@/lib/utils";
 import React from "react";
 
 type Props = {};
 
 const Page = async (props: Props) => {
-  let serviceTypes: TServiceType[] = [];
+  let serviceTypes: TG_ServiceType[] = [];
   try {
     serviceTypes = await getServiceTypesAction();
   } catch (error) {

@@ -3,18 +3,18 @@ import DatePicker, { CalendarContainer } from "react-datepicker";
 import { sk } from "date-fns/locale";
 
 type Props = {
-  date: Date;
-  setDate: (date: Date) => void;
+  startTime: Date;
+  setStartTime: (date: Date) => void;
 };
 
-const DatePickerComponent = ({ date, setDate }: Props) => {
+const DatePickerComponent = ({ startTime, setStartTime }: Props) => {
   return (
     <div>
       <DatePicker
         className="w-full cursor-pointer rounded border border-slate-300 bg-transparent p-1 text-end text-base outline-none focus:outline-blue-400 focus:ring focus:ring-blue-400 focus:ring-opacity-50"
-        id="date"
-        selected={date}
-        onChange={(date: Date) => setDate(date)}
+        id="startTime"
+        selected={startTime}
+        onChange={(startTime: Date) => setStartTime(startTime)}
         timeFormat="HH:mm"
         timeIntervals={15}
         dateFormat="dd.MM.yyyy HH:mm"

@@ -1,12 +1,10 @@
-
-
 import CreateNewAvailableReservationForm from "@/components/dashboard/admin/reservations/CreateNewAvailableReservationForm";
 import { getServiceTypesAction } from "@/lib/actions/serviceTypeActions";
-import { TServiceType } from "@/lib/shared/types";
+import { TG_ServiceType } from "@/lib/shared/types";
 import React from "react";
 
 const Page = async () => {
-  let serviceTypes: TServiceType[] = [];
+  let serviceTypes: TG_ServiceType[] = [];
   try {
     serviceTypes = await getServiceTypesAction();
   } catch (error) {

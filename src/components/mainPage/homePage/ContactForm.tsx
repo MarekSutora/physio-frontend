@@ -39,7 +39,7 @@ const ContactForm = () => {
 
   return (
     <div className="p-4">
-      <h1 className="text-center text-4xl font-bold text-gray-800">
+      <h1 className="text-center text-4xl font-semibold text-gray-800">
         Kontaktný formulár
       </h1>
       <Form {...form}>

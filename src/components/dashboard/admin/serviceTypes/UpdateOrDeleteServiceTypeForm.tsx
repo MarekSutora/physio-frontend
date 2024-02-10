@@ -12,7 +12,7 @@ import {
   deleteServiceTypeAction,
 } from "@/lib/actions/serviceTypeActions";
 import ServiceTypeForm from "./ServiceTypeForm";
-import { TServiceType } from "@/lib/shared/types";
+import { TAU_ServiceType, TG_ServiceType } from "@/lib/shared/types";
 import { Select } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import {
@@ -33,7 +33,7 @@ import { getErrorMessage } from "@/lib/utils";
 //TODO diakritika
 
 type Props = {
-  serviceTypes: TServiceType[];
+  serviceTypes: TG_ServiceType[];
 };
 
 const UpdateOrDeleteServiceTypeForm = ({ serviceTypes }: Props) => {
@@ -45,10 +45,13 @@ const UpdateOrDeleteServiceTypeForm = ({ serviceTypes }: Props) => {
 
   const selectedServiceType = serviceTypes.find(
     (serviceType) => serviceType.name === value,
-  )!;
+  );
 
-  const handleSubmit = async (values: TServiceType) => {
-    console.log("handleSubmit", values);
+  const updateServiceTypeData = selectedServiceType
+    ? transformServiceTypeForUpdate(selectedServiceType)
+    : null;
+
+  const handleSubmit = async (values: TAU_ServiceType) => {
     try {
       if (selectedServiceType) {
         await updateServiceTypeAction(values);
@@ -69,7 +72,6 @@ const UpdateOrDeleteServiceTypeForm = ({ serviceTypes }: Props) => {
   };
 
   const handleDelete = async () => {
-    console.log("handleDelete");
     try {
       if (selectedServiceType) {
         await deleteServiceTypeAction(selectedServiceType.id!);
@@ -112,7 +114,7 @@ const UpdateOrDeleteServiceTypeForm = ({ serviceTypes }: Props) => {
                 <CommandItem
                   key={serviceType.id}
                   value={serviceType.name}
-                  onSelect={(currentValue) => {
+                  onSelect={(currentValue: string) => {
                     setValue(currentValue);
                     setOpen(false);
                   }}
@@ -127,7 +129,7 @@ const UpdateOrDeleteServiceTypeForm = ({ serviceTypes }: Props) => {
 
       {selectedServiceType && ( // This line checks if selectedServiceType is defined
         <ServiceTypeForm
-          serviceType={selectedServiceType}
+          serviceType={updateServiceTypeData}
           onSubmit={handleSubmit}
         >
           <Button type="submit">Update</Button>
@@ -144,4 +146,18 @@ const UpdateOrDeleteServiceTypeForm = ({ serviceTypes }: Props) => {
   );
 };
 
+const transformServiceTypeForUpdate = (
+  serviceType: TG_ServiceType,
+): TAU_ServiceType => {
+  return {
+    id: serviceType.id,
+    name: serviceType.name,
+    description: serviceType.description,
+    hexColor: serviceType.hexColor,
+    durationCosts: serviceType.stdcs.map((stdc) => ({
+      durationMinutes: stdc.durationMinutes,
+      cost: stdc.cost,
+    })),
+  };
+};
 export default UpdateOrDeleteServiceTypeForm;

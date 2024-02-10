@@ -2,6 +2,8 @@ import { getToken } from "next-auth/jwt";
 import { withAuth } from "next-auth/middleware";
 import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
 
+//TODO redirect client to dashboard/rezervacie, adming do dashboard/prehlad
+
 export default async function middleware(
   req: NextRequest,
   event: NextFetchEvent,

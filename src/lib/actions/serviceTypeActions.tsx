@@ -2,12 +2,11 @@
 
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
-import { TServiceType } from "../shared/types";
+import { TAU_ServiceType, TG_ServiceType } from "../shared/types";
 import { revalidateTag } from "next/cache";
 import { getErrorMessage } from "../utils";
 
-
-export async function getServiceTypesAction(): Promise<TServiceType[]> {
+export async function getServiceTypesAction(): Promise<TG_ServiceType[]> {
   try {
     const session = await getServerSession(authOptions);
     if (!session) {
@@ -15,6 +14,7 @@ export async function getServiceTypesAction(): Promise<TServiceType[]> {
         "Session not found. User must be logged in to perform this action.",
       );
     }
+
     const url = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/service-types`;
     const res = await fetch(url, {
       method: "GET",
@@ -31,15 +31,13 @@ export async function getServiceTypesAction(): Promise<TServiceType[]> {
 
     const data = await res.json();
 
-    console.log("data", data);
-
     return data.length > 0 ? data : [];
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }
 }
 
-export async function createNewServiceTypeAction(formData: TServiceType) {
+export async function createNewServiceTypeAction(formData: TAU_ServiceType) {
   try {
     const session = await getServerSession(authOptions);
 
@@ -73,7 +71,7 @@ export async function createNewServiceTypeAction(formData: TServiceType) {
   }
 }
 
-export async function updateServiceTypeAction(formData: TServiceType) {
+export async function updateServiceTypeAction(formData: TAU_ServiceType) {
   try {
     const session = await getServerSession(authOptions);
 

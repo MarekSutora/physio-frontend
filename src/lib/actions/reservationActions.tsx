@@ -4,37 +4,37 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 import { revalidateTag } from "next/cache";
 import { getErrorMessage } from "../utils";
-import { TAvailableReservation } from "../shared/types";
+import {
+  TC_AvailableReservation,
+  TG_AvailableReservation,
+} from "../shared/types";
 
-export async function getAvailableReservationsAction() {
-  // Obtain the session from getServerSession
-  const session = await getServerSession(authOptions);
-
-  // Construct the request URL
+export async function getAvailableReservationsAction(): Promise<
+  TG_AvailableReservation[]
+> {
   const url = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/reservations/available-reservations`;
 
   // Make the fetch call with the Authorization header
   const res = await fetch(url, {
     method: "GET",
-    headers: {
-      Authorization: `Bearer ${session?.backendTokens.accessToken}`,
-    },
-    next: { tags: ["available-reservations"] },
+    cache: "no-store",
+    //next: { tags: ["available-reservations"] },
   });
 
-  // If the fetch was unsuccessful, throw an error
   if (!res.ok) {
     throw new Error(`HTTP error! status: ${res.status}`);
   }
 
-  // Parse the JSON response
   const data = await res.json();
+
+  console.log("getAvailableReservationsAction", data);
+
   return data;
 }
 
-export async function createNewAvailableReservationsAction(
-  formData: TAvailableReservation,
-) {
+export async function createAvailableReservationAction(
+  reservationData: TC_AvailableReservation,
+): Promise<boolean> {
   try {
     const session = await getServerSession(authOptions);
 
@@ -45,23 +45,22 @@ export async function createNewAvailableReservationsAction(
     }
 
     const url = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/reservations/available-reservations`;
-
-    const res = await fetch(url, {
+    const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${session.backendTokens.accessToken}`,
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(reservationData),
     });
 
-    if (!res.ok) {
-      const errorData = await res.text();
+    if (!response.ok) {
+      const errorData = await response.text();
       throw new Error(errorData);
     }
 
     revalidateTag("available-reservations");
-
+    // Assuming a successful creation returns true or similar positive confirmation
     return true;
   } catch (error) {
     throw new Error(getErrorMessage(error));
