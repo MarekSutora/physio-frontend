@@ -1,6 +1,6 @@
 import { dashboardLinks } from "@/lib/shared/constants";
 import React from "react";
-import SidePanelMenuItem from "../SidePanelMenuItem";
+import SidePanelMenuItem from "../DashboardMenuItem";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 
@@ -11,8 +11,10 @@ const DashboardDesktopNav = async (props: Props) => {
 
   const user = session?.user;
 
+  console.log(user);
+
   return (
-    <nav className="h-full w-[240px] rounded-lg bg-secondary border-primary border-2">
+    <nav className="h-full w-[240px] bg-secondary">
       <ul className="flex h-full flex-col py-8">
         {user?.roles.includes("Admin") &&
           dashboardLinks.admin.map((link) => {
@@ -25,19 +27,8 @@ const DashboardDesktopNav = async (props: Props) => {
               />
             );
           })}
-        {user?.roles.includes("Physiotherapist") &&
-          dashboardLinks.physiotherapist.map((link) => {
-            return (
-              <SidePanelMenuItem
-                key={link.text}
-                text={link.text}
-                icon={link.icon}
-                path={link.path}
-              />
-            );
-          })}
         {user?.roles.includes("Patient") &&
-          dashboardLinks.physiotherapist.map((link) => {
+          dashboardLinks.patient.map((link) => {
             return (
               <SidePanelMenuItem
                 key={link.text}

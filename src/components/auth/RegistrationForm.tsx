@@ -102,7 +102,7 @@ const RegistrationForm = () => {
         router.push("/prihlasenie");
       }
     } catch (error) {
-      console.error("Failed to register:", error);
+      //console.error("Failed to register:", error);
       toast({
         variant: "destructive",
         title: "Chyba pri registrácii. 🙁",

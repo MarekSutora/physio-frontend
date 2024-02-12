@@ -1,13 +1,13 @@
 "use client";
 
-import ToggleNavbarButton from "@/components/header/ToggleNavbarButton";
-import LogoImage from "@/components/logo/LogoImage";
+import LogoImage from "@/components/mainPage/common/logo/LogoImage";
 import { dashboardLinks } from "@/lib/shared/constants";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import React, { useState } from "react";
-import SidePanelMenuItem from "../SidePanelMenuItem";
+import SidePanelMenuItem from "../DashboardMenuItem";
 import { useSession } from "next-auth/react";
+import ToggleNavbarButton from "@/components/mainPage/common/header/ToggleNavbarButton";
 
 type Props = {};
 
@@ -33,7 +33,7 @@ const DashboardMobileNav = (props: Props) => {
 
       {isMenuToggled && (
         <motion.nav
-          className="z-100 fixed top-[75px] h-screen w-full overflow-hidden  bg-primary"
+          className="fixed top-[75px] z-50 h-screen w-full overflow-hidden  bg-primary"
           initial={{ y: -1000, opacity: 0.8 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ type: "tween", duration: 0.3 }}
@@ -51,19 +51,8 @@ const DashboardMobileNav = (props: Props) => {
                     />
                   );
                 })}
-              {user?.roles.includes("Physiotherapist") &&
-                dashboardLinks.physiotherapist.map((link) => {
-                  return (
-                    <SidePanelMenuItem
-                      key={link.text}
-                      text={link.text}
-                      icon={link.icon}
-                      path={link.path}
-                    />
-                  );
-                })}
               {user?.roles.includes("Patient") &&
-                dashboardLinks.physiotherapist.map((link) => {
+                dashboardLinks.patient.map((link) => {
                   return (
                     <SidePanelMenuItem
                       key={link.text}

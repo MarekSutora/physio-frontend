@@ -2,13 +2,13 @@
 
 import React, { useEffect, useState } from "react";
 import useMediaQuery from "@/lib/hooks/useMediaQuery";
-import NavbarDesktop from "@/components/header/NavbarDesktop";
-import NavbarMobile from "@/components/header/NavbarMobile";
-import ToggleNavbarButton from "@/components/header/ToggleNavbarButton";
 import { socialMediaLinks } from "@/lib/shared/constants";
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import NavbarDesktop from "./NavbarDesktop";
+import ToggleNavbarButton from "./ToggleNavbarButton";
+import NavbarMobile from "./NavbarMobile";
 
 const Header = () => {
   const [isTopOfPage, setIsTopOfPage] = useState<boolean>(true);

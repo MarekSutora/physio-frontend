@@ -36,48 +36,40 @@ export const socialMediaLinks = [
 ] as const;
 
 export const contactInfo = {
+  companyName: "Meno firmy s.r.o.",
+  name: "Marek Šútora",
   email: "marek.sutora@gmail.com",
   telephoneNumber: "+421 123 456 789",
-  address: "P. Sherman, 42 Wallaby Way, Sydney",
+  address: "P. Sherman, 42 Wallaby Way",
+  zip: "958 03",
+  city: "Sydney",
 } as const;
 
 export const dashboardLinks = {
   admin: [
     {
-      text: "Manage Users",
-      path: "/dashboard/manage-users",
+      text: "Prehľad",
+      path: "/dashboard/prehlad",
       icon: React.createElement(FaFacebook),
     },
     {
-      text: "Analytics",
-      path: "/dashboard/analytics",
+      text: "Štatistiky",
+      path: "/dashboard/statistiky",
       icon: React.createElement(FaFacebook),
     },
     {
-      text: "Settings",
-      path: "/dashboard/settings",
+      text: "Správa rezervácií",
+      path: "/dashboard/sprava-rezervacii",
       icon: React.createElement(FaFacebook),
     },
     {
-      text: "Rezervácie",
-      path: "/dashboard/rezervacie",
-      icon: React.createElement(FaFacebook),
-    },
-  ],
-  physiotherapist: [
-    {
-      text: "Appointments",
-      path: "/dashboard/appointments",
+      text: "Správa pacientov",
+      path: "/dashboard/sprava-pacientov",
       icon: React.createElement(FaFacebook),
     },
     {
-      text: "Patients",
-      path: "/dashboard/patients",
-      icon: React.createElement(FaFacebook),
-    },
-    {
-      text: "Profile",
-      path: "/dashboard/profile",
+      text: "Správa služieb",
+      path: "/dashboard/sprava-sluzieb",
       icon: React.createElement(FaFacebook),
     },
   ],
@@ -99,3 +91,6 @@ export const dashboardLinks = {
     },
   ],
 } as const;
+
+export const DesktopDashboardSectionStyle =
+  "border-slate-200 bg-white p-2 md:rounded-lg md:border-2" as const;

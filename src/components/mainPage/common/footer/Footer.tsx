@@ -107,7 +107,7 @@ const Footer = () => {
 
       <div className="mx-auto mt-4 flex w-11/12 justify-between pb-1 text-sm text-slate-400">
         <div>
-          <p>&#169; 2023 MoveLife</p>
+          <p>&#169; 2024 MoveLife</p>
         </div>
         <div>
           Vytvoril{" "}

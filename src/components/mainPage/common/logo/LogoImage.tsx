@@ -12,7 +12,7 @@ const LogoImage = ({ fill = "", style = "" }: LogoImageProps) => {
       xmlns="http://www.w3.org/2000/svg"
       fill={fill}
       width="100%"
-      viewBox="0 0 500 500"
+      viewBox="0 20 500 500"
       overflow="visible"
       className={style}
     >
