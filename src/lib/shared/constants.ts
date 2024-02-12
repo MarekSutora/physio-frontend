@@ -36,9 +36,13 @@ export const socialMediaLinks = [
 ] as const;
 
 export const contactInfo = {
+  companyName: "Meno firmy s.r.o.",
+  name: "Marek Šútora",
   email: "marek.sutora@gmail.com",
   telephoneNumber: "+421 123 456 789",
-  address: "P. Sherman, 42 Wallaby Way, Sydney",
+  address: "P. Sherman, 42 Wallaby Way",
+  zip: "958 03",
+  city: "Sydney",
 } as const;
 
 export const dashboardLinks = {
@@ -53,8 +57,6 @@ export const dashboardLinks = {
       path: "/dashboard/statistiky",
       icon: React.createElement(FaFacebook),
     },
-  ],
-  physiotherapist: [
     {
       text: "Správa rezervácií",
       path: "/dashboard/sprava-rezervacii",

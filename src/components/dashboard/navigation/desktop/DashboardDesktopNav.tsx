@@ -11,6 +11,8 @@ const DashboardDesktopNav = async (props: Props) => {
 
   const user = session?.user;
 
+  console.log(user);
+
   return (
     <nav className="h-full w-[240px] bg-secondary">
       <ul className="flex h-full flex-col py-8">
@@ -25,19 +27,8 @@ const DashboardDesktopNav = async (props: Props) => {
               />
             );
           })}
-        {user?.roles.includes("Physiotherapist") &&
-          dashboardLinks.physiotherapist.map((link) => {
-            return (
-              <SidePanelMenuItem
-                key={link.text}
-                text={link.text}
-                icon={link.icon}
-                path={link.path}
-              />
-            );
-          })}
         {user?.roles.includes("Patient") &&
-          dashboardLinks.physiotherapist.map((link) => {
+          dashboardLinks.patient.map((link) => {
             return (
               <SidePanelMenuItem
                 key={link.text}

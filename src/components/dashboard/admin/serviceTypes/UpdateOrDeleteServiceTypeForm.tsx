@@ -61,6 +61,7 @@ const UpdateOrDeleteServiceTypeForm = ({ serviceTypes }: Props) => {
           title: "Úspešne upravena sluzba. 🎉",
           className: "text-lg",
         });
+        setValue(values.name);
       }
     } catch (error) {
       toast({
@@ -131,6 +132,7 @@ const UpdateOrDeleteServiceTypeForm = ({ serviceTypes }: Props) => {
         <ServiceTypeForm
           serviceType={updateServiceTypeData}
           onSubmit={handleSubmit}
+          key={selectedServiceType?.id || "new"}
         >
           <Button type="submit">Update</Button>
           <Button

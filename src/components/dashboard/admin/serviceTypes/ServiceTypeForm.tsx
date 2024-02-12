@@ -15,8 +15,6 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { TAU_ServiceType } from "@/lib/shared/types";
-import { createNewServiceTypeAction } from "@/lib/actions/serviceTypeActions";
-import { toast, useToast } from "@/components/ui/use-toast";
 
 const durationCostSchema = z.object({
   durationMinutes: z.coerce
@@ -41,8 +39,6 @@ type Props = {
 };
 
 const ServiceTypeForm = ({ serviceType, children, onSubmit }: Props) => {
-  const { toast } = useToast();
-
   const form = useForm<TAU_ServiceType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -56,17 +52,17 @@ const ServiceTypeForm = ({ serviceType, children, onSubmit }: Props) => {
     },
   });
 
-  useEffect(() => {
-    form.reset({
-      id: serviceType?.id ?? null,
-      name: serviceType?.name ?? "",
-      description: serviceType?.description ?? "",
-      hexColor: serviceType?.hexColor ?? "#aabbcc",
-      durationCosts: serviceType?.durationCosts ?? [
-        { durationMinutes: 0, cost: 0 },
-      ],
-    });
-  }, [serviceType, form.reset, form]);
+  // useEffect(() => {
+  //   form.reset({
+  //     id: serviceType?.id ?? null,
+  //     name: serviceType?.name ?? "",
+  //     description: serviceType?.description ?? "",
+  //     hexColor: serviceType?.hexColor ?? "#aabbcc",
+  //     durationCosts: serviceType?.durationCosts ?? [
+  //       { durationMinutes: 0, cost: 0 },
+  //     ],
+  //   });
+  // }, [serviceType, form.reset, form]);
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
@@ -160,7 +156,6 @@ const ServiceTypeForm = ({ serviceType, children, onSubmit }: Props) => {
       >
         Pridať ďalšie
       </Button>
-
       {children}
     </form>
   );

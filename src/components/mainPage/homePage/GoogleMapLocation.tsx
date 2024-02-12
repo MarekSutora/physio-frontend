@@ -17,14 +17,16 @@ const center = {
   lng: -109.2771494,
 };
 
+//TODO mobile view
+
 const App = () => {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY; // Make sure to set your API key
 
   return (
-    <div className="m-auto lg:w-5/6">
-      <div className="flex w-full flex-row gap-2">
+    <div className="m-auto">
+      <div className="flex w-full flex-row gap-3">
         <div className="m-auto hidden h-[1px] w-full bg-slate-200 lg:block"></div>
-        <h1 className="w-full pb-3 text-center text-4xl font-semibold">
+        <h1 className="w-full text-nowrap pb-3 text-center text-4xl font-semibold">
           Tu sa nachádzame
         </h1>
         <div className="m-auto hidden h-[1px] w-full bg-slate-200 lg:block"></div>
@@ -36,7 +38,6 @@ const App = () => {
             mapContainerStyle={containerStyle}
             center={center}
             zoom={10}
-            
           ></GoogleMap>
           <GoogleMap
             mapContainerStyle={containerStyle}

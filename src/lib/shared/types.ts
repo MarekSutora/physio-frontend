@@ -42,8 +42,44 @@ export type TG_AvailableReservation = {
 
 export type TG_ServiceTypeWithCost = {
   hexColor: string;
-  arstdcId: number; // ID of the AvailableReservationServiceTypeDc
-  serviceTypeName: string; // Name of the ServiceType
+  arstdcId: number;
+  serviceTypeName: string;
   durationMinutes: number;
   cost: number;
+};
+
+export type TG_PatientForBookedReservation = {
+  personId: number;
+  firstName: string;
+  secondName: string;
+};
+
+export type TC_AdminBookedReservation = {
+  patientId: number;
+  startTime: Date;
+  stdcId: number;
+};
+
+export type TC_ClientBookedReservation = {
+  arstdcId: number;
+  patientId: number;
+};
+
+export type TG_BookedReservation = {
+  id: number;
+  date: Date;
+  duration: number;
+  serviceTypeName: string;
+  person: string;
+  cost: number;
+  note: string;
+  hexColor: string;
+};
+
+//OTHER
+
+export type ServiceTypeOptionType = {
+  label: string;
+  value: string;
+  color: string | null;
 };

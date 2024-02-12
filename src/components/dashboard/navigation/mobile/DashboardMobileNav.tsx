@@ -51,19 +51,8 @@ const DashboardMobileNav = (props: Props) => {
                     />
                   );
                 })}
-              {user?.roles.includes("Physiotherapist") &&
-                dashboardLinks.physiotherapist.map((link) => {
-                  return (
-                    <SidePanelMenuItem
-                      key={link.text}
-                      text={link.text}
-                      icon={link.icon}
-                      path={link.path}
-                    />
-                  );
-                })}
               {user?.roles.includes("Patient") &&
-                dashboardLinks.physiotherapist.map((link) => {
+                dashboardLinks.patient.map((link) => {
                   return (
                     <SidePanelMenuItem
                       key={link.text}

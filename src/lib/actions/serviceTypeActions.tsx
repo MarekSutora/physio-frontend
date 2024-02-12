@@ -8,20 +8,13 @@ import { getErrorMessage } from "../utils";
 
 export async function getServiceTypesAction(): Promise<TG_ServiceType[]> {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session) {
-      throw new Error(
-        "Session not found. User must be logged in to perform this action.",
-      );
-    }
-
     const url = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/service-types`;
     const res = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
       },
+      next: { tags: ["service-types"] },
     });
 
     if (!res.ok) {

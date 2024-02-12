@@ -13,6 +13,10 @@ export const metadata: Metadata = {
   description: "Created by Marek",
 };
 
+//f0f9f6
+//#f7fffc
+//#f5fffc
+
 export default function RootLayout({
   children,
 }: {
@@ -21,13 +25,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="m-0 h-full p-0">
       <body
-        className={`${inter.className} m-0 h-full bg-white p-0 text-gray-950`}
+        className={`${inter.className} m-0 h-full bg-[#f8fffc] p-0 text-gray-950`}
       >
         <Providers>
           <Header />
-          <main className="min-h-[var(--min-height-main-section)]">
-            {children}
-          </main>
+          <main className="h-auto">{children}</main>
           <Footer />
           <Toaster />
         </Providers>

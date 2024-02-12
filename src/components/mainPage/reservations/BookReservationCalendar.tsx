@@ -19,18 +19,21 @@ import {
   startOfToday,
 } from "date-fns";
 import { enUS } from "date-fns/locale";
-import { TG_AvailableReservation } from "@/lib/shared/types"; // Update the import path as needed
+import { TG_AvailableReservation, TG_ServiceType } from "@/lib/shared/types"; // Update the import path as needed
 import { cn } from "@/lib/utils";
 import ScheduleForTheDay from "./ScheduleForTheDay";
 
 type Props = {
-  // data: AvailableReservation[];
   availableReservations: TG_AvailableReservation[];
+  serviceTypes: TG_ServiceType[];
 };
 
 //TODO bug ked sa dostanem na rovnaky mesiac ako je teraz ale o rok neskor
 
-const BookReservationCalendar = ({ availableReservations }: Props) => {
+const BookReservationCalendar = ({
+  availableReservations,
+  serviceTypes,
+}: Props) => {
   const today = startOfToday();
   const closestReservationDate = availableReservations
     .map((reservation) => parseISO(reservation.startTime))
@@ -145,7 +148,9 @@ const BookReservationCalendar = ({ availableReservations }: Props) => {
                     {format(day, "d")}
                   </time>
                 </button>
-                {availableReservations.some((res) => isSameDay(parseISO(res.startTime), day)) && (
+                {availableReservations.some((res) =>
+                  isSameDay(parseISO(res.startTime), day),
+                ) && (
                   <div className="m-auto mt-1 h-1 w-1/2 rounded-lg bg-primary"></div>
                 )}
               </div>
@@ -156,6 +161,7 @@ const BookReservationCalendar = ({ availableReservations }: Props) => {
       <ScheduleForTheDay
         selectedDayReservations={selectedDayReservations}
         selectedDay={selectedDay}
+        serviceTypes={serviceTypes}
       />
     </div>
   );
