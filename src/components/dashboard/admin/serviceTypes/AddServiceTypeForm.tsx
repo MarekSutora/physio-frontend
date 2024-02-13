@@ -3,7 +3,7 @@
 import { useToast } from "@/components/ui/use-toast";
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { createNewServiceTypeAction } from "@/lib/actions/serviceTypeActions";
+import { createNewServiceTypeAction } from "@/lib/actions/serviceTypesActions";
 import ServiceTypeForm from "./ServiceTypeForm";
 import { TAU_ServiceType } from "@/lib/shared/types";
 
@@ -15,7 +15,6 @@ const AddServiceTypeForm = (props: Props) => {
   const { toast } = useToast();
 
   const handleSubmit = async (values: TAU_ServiceType) => {
-
     try {
       await createNewServiceTypeAction(values);
       toast({

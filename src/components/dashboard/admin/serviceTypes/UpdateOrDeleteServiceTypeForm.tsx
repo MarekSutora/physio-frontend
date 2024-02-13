@@ -10,7 +10,7 @@ import {
   getServiceTypesAction,
   updateServiceTypeAction,
   deleteServiceTypeAction,
-} from "@/lib/actions/serviceTypeActions";
+} from "@/lib/actions/serviceTypesActions";
 import ServiceTypeForm from "./ServiceTypeForm";
 import { TAU_ServiceType, TG_ServiceType } from "@/lib/shared/types";
 import { Select } from "@/components/ui/select";

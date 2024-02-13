@@ -2,7 +2,7 @@ export const dynamic = "force-dynamic";
 
 import AddServiceTypeForm from "@/components/dashboard/admin/serviceTypes/AddServiceTypeForm";
 import UpdateOrDeleteServiceTypeForm from "@/components/dashboard/admin/serviceTypes/UpdateOrDeleteServiceTypeForm";
-import { getServiceTypesAction } from "@/lib/actions/serviceTypeActions";
+import { getServiceTypesAction } from "@/lib/actions/serviceTypesActions";
 import { DesktopDashboardSectionStyle } from "@/lib/shared/constants";
 import { TG_ServiceType } from "@/lib/shared/types";
 import { cn } from "@/lib/utils";

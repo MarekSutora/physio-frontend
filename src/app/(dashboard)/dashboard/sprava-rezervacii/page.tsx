@@ -1,8 +1,8 @@
-import CreateNewAvailableReservationForm from "@/components/dashboard/admin/reservations/CreateNewAvailableReservationForm";
-import { getServiceTypesAction } from "@/lib/actions/serviceTypeActions";
+import CreateNewAppointmentForm from "@/components/dashboard/admin/appointments/CreateNewAppointmentForm";
+import { getServiceTypesAction } from "@/lib/actions/serviceTypesActions";
 import {
-  TG_BookedReservation,
-  TG_PatientForBookedReservation,
+  TG_BookedAppointment,
+  TG_PatientForBookedAppointment,
   TG_ServiceType,
 } from "@/lib/shared/types";
 import { getServerSession } from "next-auth/next";
@@ -13,7 +13,7 @@ import DashboardSectionWrapper from "@/components/dashboard/DashboardSectionWrap
 
 //TODO aj na mobile nechat pri tych sekciach zaokruhlene okraje, skusit spravit ten wrapper
 
-const getPatientsForBookedReservationAction = async () => {
+const getPatientsForBookedAppointmentAction = async () => {
   "use server";
   try {
     const session = await getServerSession(authOptions);
@@ -23,7 +23,7 @@ const getPatientsForBookedReservationAction = async () => {
       );
     }
 
-    const url = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/patients/patients-for-booked-reservation`;
+    const url = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/patients/patients-for-booked-appointment`;
     const res = await fetch(url, {
       method: "GET",
       headers: {
@@ -45,7 +45,7 @@ const getPatientsForBookedReservationAction = async () => {
   }
 };
 
-const getBookedReservationsAction = async () => {
+const getBookedAppointmentsAction = async () => {
   "use server";
   try {
     const session = await getServerSession(authOptions);
@@ -55,7 +55,7 @@ const getBookedReservationsAction = async () => {
       );
     }
 
-    const url = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/reservations/booked-reservations`;
+    const url = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/appointments/booked-apointments`;
     const res = await fetch(url, {
       method: "GET",
       headers: {
@@ -85,17 +85,17 @@ const Page = async () => {
     console.error(error);
   }
 
-  let patientsForBookedReservation: TG_PatientForBookedReservation[] = [];
+  let patientsForBookedAppointment: TG_PatientForBookedAppointment[] = [];
   try {
-    patientsForBookedReservation =
-      await getPatientsForBookedReservationAction();
+    patientsForBookedAppointment =
+      await getPatientsForBookedAppointmentAction();
   } catch (error) {
     console.error(error);
   }
 
-  let bookedReservations: TG_BookedReservation[] = [];
+  let bookedAppointments: TG_BookedAppointment[] = [];
   try {
-    bookedReservations = await getBookedReservationsAction();
+    bookedAppointments = await getBookedAppointmentsAction();
   } catch (error) {
     console.error(error);
   }
@@ -106,14 +106,14 @@ const Page = async () => {
         title={"Vytvoriť nový termín"}
         width={"w-full lg:w-2/5"}
       >
-        <CreateNewAvailableReservationForm
+        <CreateNewAppointmentForm
           serviceTypes={serviceTypes}
-          patients={patientsForBookedReservation}
+          patients={patientsForBookedAppointment}
         />
       </DashboardSectionWrapper>
       <DashboardSectionWrapper title={"Zarezervované termíny"}>
         <div>
-          {bookedReservations.map((item) => (
+          {bookedAppointments.map((item) => (
             <div key={item.cost}>asd</div>
           ))}
         </div>

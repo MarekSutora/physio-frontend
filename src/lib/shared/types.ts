@@ -17,55 +17,55 @@ export type TG_ServiceType = {
   name: string;
   description: string;
   hexColor: string;
-  stdcs: TSTDC[];
+  stdcs: DurationCosts[];
 };
 
-export type TSTDC = {
-  id: number | null;
+export type DurationCosts = {
+  id?: number;
   durationMinutes: number;
   cost: number;
 };
 
-export type TC_AvailableReservation = {
+export type TC_Appointment = {
   startTime: Date;
   capacity: number;
   stdcIds: number[];
 };
 
-export type TG_AvailableReservation = {
+export type TG_UnbookedAppointment = {
   id: number;
   startTime: string;
   capacity: number;
-  reservedAmount: number;
-  serviceTypesWithCosts: TG_ServiceTypeWithCost[];
+  reservedCount: number;
+  serviceTypeInfos: TG_ServiceTypeInfo[];
 };
 
-export type TG_ServiceTypeWithCost = {
+export type TG_ServiceTypeInfo = {
+  astdcId: number;
+  name: string;
   hexColor: string;
-  arstdcId: number;
-  serviceTypeName: string;
   durationMinutes: number;
   cost: number;
 };
 
-export type TG_PatientForBookedReservation = {
+export type TG_PatientForBookedAppointment = {
   personId: number;
   firstName: string;
   secondName: string;
 };
 
-export type TC_AdminBookedReservation = {
+export type TC_AdminBookedAppointment = {
   patientId: number;
   startTime: Date;
   stdcId: number;
 };
 
-export type TC_ClientBookedReservation = {
+export type TC_ClientBookedAppointment = {
   arstdcId: number;
   patientId: number;
 };
 
-export type TG_BookedReservation = {
+export type TG_BookedAppointment = {
   id: number;
   date: Date;
   duration: number;

@@ -12,15 +12,6 @@ const Footer = () => {
   return (
     <footer className="h-auto w-full bg-primary text-slate-50">
       <div className="md:flex-start mx-auto flex h-5/6 w-5/6 flex-col gap-2 md:flex-row md:gap-10 md:pt-2">
-        <Link href="/" className=" m-auto h-36 w-40 pt-2 md:m-0">
-          <Image
-            src="/image_textbelow_370_280.svg"
-            alt="MoveLife Logo"
-            priority
-            width={370}
-            height={280}
-          />
-        </Link>
         <div className="m-auto h-[1px] w-[100%] bg-slate-600 md:hidden"></div>
         <div className="md:flex-start flex flex-col gap-2 md:w-full md:flex-row md:pt-4">
           <div className="md:w-full">

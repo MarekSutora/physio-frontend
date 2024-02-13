@@ -1,26 +1,25 @@
 import {
   ServiceTypeOptionType,
-  TG_AvailableReservation,
+  TG_UnbookedAppointment,
   TG_ServiceType,
-  TG_ServiceTypeWithCost,
 } from "@/lib/shared/types";
 import { format } from "date-fns";
 import { sk } from "date-fns/locale";
 import React, { useEffect, useState } from "react";
-import ReservationCard from "./ReservationCard";
+import AppointmentCard from "./AppointmentCard";
 import Select, { MultiValue, SingleValue } from "react-select";
 import makeAnimated from "react-select/animated";
 
 //TODO az potom mozno - filtrovanie sluzieb
 
 type Props = {
-  selectedDayReservations: TG_AvailableReservation[];
+  selectedDayAppointments: TG_UnbookedAppointment[];
   selectedDay: Date;
   serviceTypes: TG_ServiceType[];
 };
 
 const ScheduleForTheDay = ({
-  selectedDayReservations,
+  selectedDayAppointments,
   selectedDay,
   serviceTypes,
 }: Props) => {
@@ -44,10 +43,9 @@ const ScheduleForTheDay = ({
   //   handleServiceTypesSelectChange(selectedOptions);
   // }, [selectedOptions]); // Dependency array includes selectedOptions
 
-  const filteredReservations = selectedDayReservations.filter((reservation) =>
-    reservation.serviceTypesWithCosts.some(
-      (stwc) =>
-        selectedOptions.find((option) => option.value === stwc.serviceTypeName), // Match based on service type name
+  const filteredAppointments = selectedDayAppointments.filter((appointment) =>
+    appointment.serviceTypeInfos.some(
+      (arst) => selectedOptions.find((option) => option.value === arst.name), // Match based on service type name
     ),
   );
 
@@ -79,18 +77,18 @@ const ScheduleForTheDay = ({
         required
       />
       <div className="max-h-[500px] w-full overflow-scroll">
-        {filteredReservations.length > 0 ? (
-          filteredReservations.map((reservation) => (
-            <ReservationCard
-              key={reservation.id}
-              reservation={reservation}
+        {filteredAppointments.length > 0 ? (
+          filteredAppointments.map((appointment, index) => (
+            <AppointmentCard
+              key={index}
+              appointment={appointment}
               selectedServiceTypeNames={selectedOptions.map(
                 (option) => option.value,
               )} // Pass selected service type names
             />
           ))
         ) : (
-          <div>No reservations available for selected service types.</div>
+          <div>No Appointments available for selected service types.</div>
         )}
       </div>
     </section>

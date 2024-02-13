@@ -19,29 +19,26 @@ import {
   startOfToday,
 } from "date-fns";
 import { enUS } from "date-fns/locale";
-import { TG_AvailableReservation, TG_ServiceType } from "@/lib/shared/types"; // Update the import path as needed
+import { TG_UnbookedAppointment, TG_ServiceType } from "@/lib/shared/types"; // Update the import path as needed
 import { cn } from "@/lib/utils";
 import ScheduleForTheDay from "./ScheduleForTheDay";
 
 type Props = {
-  availableReservations: TG_AvailableReservation[];
+  appointments: TG_UnbookedAppointment[];
   serviceTypes: TG_ServiceType[];
 };
 
 //TODO bug ked sa dostanem na rovnaky mesiac ako je teraz ale o rok neskor
 
-const BookReservationCalendar = ({
-  availableReservations,
-  serviceTypes,
-}: Props) => {
+const AppointmentsCalendar = ({ appointments, serviceTypes }: Props) => {
   const today = startOfToday();
-  const closestReservationDate = availableReservations
-    .map((reservation) => parseISO(reservation.startTime))
+  const closestAppointmentDate = appointments
+    .map((appointment) => parseISO(appointment.startTime))
     .filter((date) => isToday(date) || isAfter(date, today))
     .sort((a, b) => a.getTime() - b.getTime())[0]; // Get the earliest date after sorting
 
-  // Initialize selectedDay with the closest reservation date or today if none is found
-  let [selectedDay, setSelectedDay] = useState(closestReservationDate || today);
+  // Initialize selectedDay with the closest Appointments date or today if none is found
+  let [selectedDay, setSelectedDay] = useState(closestAppointmentDate || today);
   let [currentMonth, setCurrentMonth] = useState(
     format(selectedDay, "MMM-yyyy", { locale: enUS }),
   );
@@ -57,8 +54,8 @@ const BookReservationCalendar = ({
     getMonth(selectedDay),
   );
 
-  const selectedDayReservations = availableReservations.filter((reservation) =>
-    isSameDay(parseISO(reservation.startTime), selectedDay),
+  const selectedDayAppointments = appointments.filter((appointment) =>
+    isSameDay(parseISO(appointment.startTime), selectedDay),
   );
 
   function previousMonth() {
@@ -72,7 +69,7 @@ const BookReservationCalendar = ({
   }
 
   return (
-    <div className="flex h-full w-full flex-col justify-between gap-9 lg:flex-row">
+    <section className="flex h-full w-full flex-col justify-between gap-9 border-slate-200 bg-white p-2 md:rounded-lg md:border-2 lg:flex-row">
       <div className="lg:w-[43%]">
         <div className="flex items-center">
           <h2 className="flex-auto select-none text-lg font-semibold text-gray-900">
@@ -114,7 +111,7 @@ const BookReservationCalendar = ({
         </div>
         <div className="mt-2 grid grid-cols-7 text-sm">
           {days.map((day, dayIdx) => {
-            const isReservationOnDay = availableReservations.some((res) => {
+            const isAppointmentOnDay = appointments.some((res) => {
               return isSameDay(parseISO(res.startTime), day);
             });
 
@@ -127,7 +124,7 @@ const BookReservationCalendar = ({
                 )}
               >
                 <button
-                  disabled={!isReservationOnDay}
+                  disabled={!isAppointmentOnDay}
                   type="button"
                   onClick={() => setSelectedDay(day)}
                   className={cn(
@@ -139,7 +136,7 @@ const BookReservationCalendar = ({
                       "text-gray-900",
                     isEqual(day, selectedDay) && "bg-primary",
                     !isEqual(day, selectedDay) &&
-                      isReservationOnDay &&
+                      isAppointmentOnDay &&
                       "bg-tertiary bg-opacity-30 font-semibold hover:bg-gray-200",
                     "mx-auto flex h-8 w-8 items-center justify-center rounded-full",
                   )}
@@ -148,7 +145,7 @@ const BookReservationCalendar = ({
                     {format(day, "d")}
                   </time>
                 </button>
-                {availableReservations.some((res) =>
+                {appointments.some((res) =>
                   isSameDay(parseISO(res.startTime), day),
                 ) && (
                   <div className="m-auto mt-1 h-1 w-1/2 rounded-lg bg-primary"></div>
@@ -159,11 +156,11 @@ const BookReservationCalendar = ({
         </div>
       </div>
       <ScheduleForTheDay
-        selectedDayReservations={selectedDayReservations}
+        selectedDayAppointments={selectedDayAppointments}
         selectedDay={selectedDay}
         serviceTypes={serviceTypes}
       />
-    </div>
+    </section>
   );
 };
 
@@ -196,4 +193,4 @@ function getMonthNameSk(month: string): string {
   return monthNamesSk[month] || month;
 }
 
-export default BookReservationCalendar;
+export default AppointmentsCalendar;

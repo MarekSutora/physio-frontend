@@ -5,9 +5,8 @@ import Select, { MultiValue, SingleValue } from "react-select";
 import makeAnimated from "react-select/animated";
 import {
   ServiceTypeOptionType,
-  TC_AdminBookedReservation,
-  TC_AvailableReservation,
-  TG_PatientForBookedReservation,
+  TC_Appointment,
+  TG_PatientForBookedAppointment,
   TG_ServiceType,
 } from "@/lib/shared/types";
 import { Label } from "@/components/ui/label";
@@ -15,9 +14,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import DatePickerComponent from "./DatePickerComponent";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  createAvailableReservationAction,
-} from "@/lib/actions/reservationActions";
+import { createAppointmentAction } from "@/lib/actions/appointmentsActions";
 import { toast } from "@/components/ui/use-toast";
 import { getErrorMessage } from "@/lib/utils";
 
@@ -30,10 +27,10 @@ import { getErrorMessage } from "@/lib/utils";
 
 type Props = {
   serviceTypes: TG_ServiceType[];
-  patients: TG_PatientForBookedReservation[];
+  patients: TG_PatientForBookedAppointment[];
 };
 
-const CreateNewAvailableReservationForm = ({
+const CreateNewAppointmentForm = ({
   serviceTypes,
   patients,
 }: Props) => {
@@ -105,17 +102,17 @@ const CreateNewAvailableReservationForm = ({
       parseInt(option.value.split("-")[1]),
     );
 
-    const reservationData: TC_AvailableReservation = {
+    const appointmentData: TC_Appointment = {
       startTime,
       capacity,
       stdcIds,
     };
     try {
-      const success = await createAvailableReservationAction(reservationData);
+      const success = await createAppointmentAction(appointmentData);
       if (success) {
         toast({
           variant: "success",
-          title: "Available reservation created successfully!",
+          title: "Available appointment created successfully!",
         });
       }
     } catch (error) {
@@ -191,4 +188,4 @@ const CreateNewAvailableReservationForm = ({
   );
 };
 
-export default CreateNewAvailableReservationForm;
+export default CreateNewAppointmentForm;
