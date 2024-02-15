@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { basicLinks } from "@/lib/shared/constants";
+import { basicLinks, socialMediaLinks } from "@/lib/shared/constants";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { FaAngleDown } from "react-icons/fa";
@@ -78,6 +78,19 @@ const NavbarDesktop = () => {
       <ul className="flex items-center gap-2">
         <AuthButtons />
       </ul>
+      {/* <nav>
+          <ul className="absolute right-2 top-2 flex h-full flex-col items-center gap-1">
+            {socialMediaLinks.map((link, index) => (
+              <li key={index}>
+                <Link href={link.path}>
+                  <div className="h-auto w-5 text-2xl text-primary transition-all duration-300 ease-in-out hover:scale-125">
+                    {link.icon}
+                  </div>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav> */}
     </nav>
   );
 };

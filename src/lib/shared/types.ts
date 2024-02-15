@@ -83,3 +83,16 @@ export type ServiceTypeOptionType = {
   value: string;
   color: string | null;
 };
+
+export type TRegistrationFormData = {
+  firstName: string;
+  secondName: string;
+  phoneNumber: string;
+  email: string;
+  password: string;
+};
+
+export type TResponseResult = {
+  success: boolean;
+  message: string;
+};

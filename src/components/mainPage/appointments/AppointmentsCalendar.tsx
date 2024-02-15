@@ -32,19 +32,22 @@ type Props = {
 
 const AppointmentsCalendar = ({ appointments, serviceTypes }: Props) => {
   const today = startOfToday();
-  const closestAppointmentDate = appointments
+  const closestAppointmentDateRaw = appointments
     .map((appointment) => parseISO(appointment.startTime))
     .filter((date) => isToday(date) || isAfter(date, today))
-    .sort((a, b) => a.getTime() - b.getTime())[0]; // Get the earliest date after sorting
+    .sort((a, b) => a.getTime() - b.getTime())[0];
 
-  // Initialize selectedDay with the closest Appointments date or today if none is found
-  let [selectedDay, setSelectedDay] = useState(closestAppointmentDate || today);
+  const initialSelectedDay = closestAppointmentDateRaw
+    ? new Date(closestAppointmentDateRaw.setHours(0, 0, 0, 0))
+    : today;
+
+  let [selectedDay, setSelectedDay] = useState(initialSelectedDay);
   let [currentMonth, setCurrentMonth] = useState(
     format(selectedDay, "MMM-yyyy", { locale: enUS }),
   );
   let firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
 
-  let days = eachDayOfInterval({
+  const days = eachDayOfInterval({
     start: firstDayCurrentMonth,
     end: endOfMonth(firstDayCurrentMonth),
   });
@@ -69,10 +72,10 @@ const AppointmentsCalendar = ({ appointments, serviceTypes }: Props) => {
   }
 
   return (
-    <section className="flex h-full w-full flex-col justify-between gap-9 border-slate-200 bg-white p-2 md:rounded-lg md:border-2 lg:flex-row">
-      <div className="lg:w-[43%]">
+    <section className="m-auto flex h-full min-h-[600px] w-5/6 flex-col justify-between gap-9 border-slate-200 bg-white py-2 md:rounded-lg md:border-2 lg:flex-row lg:p-6">
+      <div className="pt-12 lg:w-[40%]">
         <div className="flex items-center">
-          <h2 className="flex-auto select-none text-lg font-semibold text-gray-900">
+          <h2 className="flex-auto select-none pl-5 text-lg font-semibold text-gray-900">
             {getMonthNameSk(
               format(firstDayCurrentMonth, "MMMM", { locale: enUS }),
             )}{" "}
@@ -89,7 +92,7 @@ const AppointmentsCalendar = ({ appointments, serviceTypes }: Props) => {
             )}
           >
             <span className="sr-only">Predosli mesiac</span>
-            <FaAngleLeft className="h-5 w-5" aria-hidden="true" />
+            <FaAngleLeft className="h-6 w-6" aria-hidden="true" />
           </button>
           <button
             onClick={nextMonth}
@@ -97,10 +100,10 @@ const AppointmentsCalendar = ({ appointments, serviceTypes }: Props) => {
             className="-my-1.5 -mr-1.5 ml-2 flex flex-none items-center justify-center rounded-lg p-1.5 text-gray-700 hover:bg-slate-200 hover:text-gray-900"
           >
             <span className="sr-only">Dalsi mesiac</span>
-            <FaAngleRight className="h-5 w-5" aria-hidden="true" />
+            <FaAngleRight className="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
-        <div className="mt-10 grid grid-cols-7 text-center text-base leading-6 text-gray-500">
+        <div className="mt-10 grid grid-cols-7 text-center text-base leading-6 text-black">
           <div>Po</div>
           <div>Ut</div>
           <div>St</div>
@@ -128,17 +131,16 @@ const AppointmentsCalendar = ({ appointments, serviceTypes }: Props) => {
                   type="button"
                   onClick={() => setSelectedDay(day)}
                   className={cn(
-                    isEqual(day, selectedDay) && "text-white",
                     !isEqual(day, selectedDay) && isToday(day) && "bg-green-50",
                     !isEqual(day, selectedDay) &&
                       !isToday(day) &&
                       isSameMonth(day, firstDayCurrentMonth) &&
                       "text-gray-900",
-                    isEqual(day, selectedDay) && "bg-primary",
                     !isEqual(day, selectedDay) &&
                       isAppointmentOnDay &&
-                      "bg-tertiary bg-opacity-30 font-semibold hover:bg-gray-200",
-                    "mx-auto flex h-8 w-8 items-center justify-center rounded-full",
+                      "bg-tertiary bg-opacity-30 font-semibold hover:bg-tertiary hover:bg-opacity-70",
+                    isEqual(day, selectedDay) && "bg-primary text-white",
+                    "mx-auto my-[2px] flex h-8 w-8 items-center justify-center rounded-md",
                   )}
                 >
                   <time dateTime={format(day, "yyyy-MM-dd")}>
@@ -147,8 +149,10 @@ const AppointmentsCalendar = ({ appointments, serviceTypes }: Props) => {
                 </button>
                 {appointments.some((res) =>
                   isSameDay(parseISO(res.startTime), day),
-                ) && (
-                  <div className="m-auto mt-1 h-1 w-1/2 rounded-lg bg-primary"></div>
+                ) ? (
+                  <div className="m-auto h-1 w-8 rounded-lg bg-primary"></div>
+                ) : (
+                  <div className="m-auto h-1 w-8"></div>
                 )}
               </div>
             );

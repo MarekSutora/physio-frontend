@@ -80,27 +80,29 @@ const ReviewItem = ({ review }: any) => {
 
 const Reviews = () => {
   return (
-    <div>
-      <h2>Recenzie</h2>
-      <Carousel
-        opts={{
-          loop: true,
-          align: "start",
-        }}
-      >
-        <CarouselContent>
-          {dummyReviews.map((review) => (
-            <CarouselItem
-              key={review.id}
-              className="pl-1 md:basis-1/2 lg:basis-1/3"
-            >
-              <ReviewItem key={review.id} review={review} />
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
-      </Carousel>
+    <div className="bg-slate-50">
+      <section className="m-auto w-5/6 py-10 lg:w-[61.8%]">
+        <h2>Recenzie</h2>
+        <Carousel
+          opts={{
+            loop: true,
+            align: "start",
+          }}
+        >
+          <CarouselContent>
+            {dummyReviews.map((review) => (
+              <CarouselItem
+                key={review.id}
+                className="pl-1 md:basis-1/2 lg:basis-1/3"
+              >
+                <ReviewItem key={review.id} review={review} />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
+      </section>
     </div>
   );
 };

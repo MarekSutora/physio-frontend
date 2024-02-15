@@ -19,16 +19,18 @@ import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useToast } from "@/components/ui/use-toast";
+import { register } from "module";
+import { registerClientAction } from "@/lib/actions/registerClientAction";
 
 // Define the form schema using Zod
 
 const formSchema = z
   .object({
-    meno: z
+    firstName: z
       .string()
       .min(1, "Meno je povinné. 🙄")
       .max(50, "Meno nesmie mať viac ako 50 znakov. 🙄"),
-    priezvisko: z
+    secondName: z
       .string()
       .min(1, "Priezvisko je povinné. 🙄")
       .max(50, "Priezvisko nesmie mať viac ako 50 znakov. 🙄"),
@@ -55,8 +57,8 @@ const RegistrationForm = () => {
   const form = useForm<RegistrationFormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      meno: "",
-      priezvisko: "",
+      firstName: "",
+      secondName: "",
       phoneNumber: "",
       email: "",
       heslo: "",
@@ -65,52 +67,37 @@ const RegistrationForm = () => {
     },
   });
 
-  const handleSubmit = async (values: RegistrationFormData) => {
+  const handleSubmit = async (formData: RegistrationFormData) => {
     setIsLoading(true);
-    const payload = {
-      email: values.email,
-      password: values.heslo,
-      firstName: values.meno,
-      lastName: values.priezvisko,
-      phoneNumber: values.phoneNumber,
-    };
-
     try {
-      // Send the request to the server
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/auth/registerPatient`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payload),
-        },
-      );
+      const result = await registerClientAction({
+        email: formData.email,
+        password: formData.heslo,
+        firstName: formData.firstName,
+        secondName: formData.secondName,
+        phoneNumber: formData.phoneNumber,
+      });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        const errorMessage = data.message || "Skúste to prosím znova. 🙄";
+      if (!result.success) {
+        setIsLoading(false);
         toast({
           variant: "destructive",
           title: "Registrácia zlyhala. 🙁",
-          description: errorMessage,
+          description: result.message,
           className: "text-lg",
         });
       } else {
+        setIsLoading(false);
         router.push("/prihlasenie");
       }
     } catch (error) {
-      //console.error("Failed to register:", error);
+      setIsLoading(false);
       toast({
         variant: "destructive",
         title: "Chyba pri registrácii. 🙁",
         description: "Nepodarilo sa spracovať registráciu. Skúste to znova. 🙄",
         className: "text-lg",
       });
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -142,7 +129,7 @@ const RegistrationForm = () => {
                 {/* Meno */}
                 <FormField
                   control={form.control}
-                  name="meno"
+                  name="firstName"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Meno</FormLabel>
@@ -156,7 +143,7 @@ const RegistrationForm = () => {
                 {/* Priezvisko */}
                 <FormField
                   control={form.control}
-                  name="priezvisko"
+                  name="secondName"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Priezvisko</FormLabel>
@@ -289,3 +276,12 @@ const RegistrationForm = () => {
 };
 
 export default RegistrationForm;
+function registerPatientAction(payload: {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+}) {
+  throw new Error("Function not implemented.");
+}

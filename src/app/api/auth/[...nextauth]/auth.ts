@@ -6,7 +6,7 @@ import { getErrorMessage } from "@/lib/utils";
 
 async function refreshToken(token: JWT): Promise<JWT> {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/auth/refreshToken`,
+    `${process.env.BACKEND_API_URL}/auth/refreshToken`,
     {
       method: "POST",
       body: JSON.stringify({ refreshToken: token.backendTokens.refreshToken }),
@@ -37,7 +37,7 @@ export const authOptions: AuthOptions = {
 
         try {
           const res = await fetch(
-            `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/auth/login`,
+            `${process.env.BACKEND_API_URL}/auth/login`,
             {
               method: "POST",
               body: JSON.stringify(credentials),

@@ -25,15 +25,15 @@ const App = () => {
   return (
     <div className="m-auto">
       <div className="flex w-full flex-row gap-3">
-        <div className="m-auto hidden h-[1px] w-full bg-slate-200 lg:block"></div>
+        <div className="m-auto h-[1px] w-full bg-slate-200"></div>
         <h1 className="w-full text-nowrap pb-3 text-center text-4xl font-semibold">
           Tu sa nachádzame
         </h1>
-        <div className="m-auto hidden h-[1px] w-full bg-slate-200 lg:block"></div>
+        <div className="m-auto h-[1px] w-full bg-slate-200"></div>
       </div>
 
       <LoadScript googleMapsApiKey={apiKey!}>
-        <div className="flex flex-col shadow-2xl shadow-green-600/30 lg:flex-row">
+        <div className="flex flex-col shadow-xl lg:flex-row">
           <GoogleMap
             mapContainerStyle={containerStyle}
             center={center}

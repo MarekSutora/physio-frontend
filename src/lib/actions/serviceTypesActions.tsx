@@ -8,7 +8,7 @@ import { getErrorMessage } from "../utils";
 
 export async function getServiceTypesAction(): Promise<TG_ServiceType[]> {
   try {
-    const url = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/service-types`;
+    const url = `${process.env.BACKEND_API_URL}/service-types`;
     const res = await fetch(url, {
       method: "GET",
       headers: {
@@ -40,7 +40,7 @@ export async function createNewServiceTypeAction(formData: TAU_ServiceType) {
       );
     }
 
-    const url = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/service-types`;
+    const url = `${process.env.BACKEND_API_URL}/service-types`;
 
     const res = await fetch(url, {
       method: "POST",
@@ -74,7 +74,7 @@ export async function updateServiceTypeAction(formData: TAU_ServiceType) {
       );
     }
 
-    const url = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/service-types/${formData.id}`;
+    const url = `${process.env.BACKEND_API_URL}/service-types/${formData.id}`;
 
     const res = await fetch(url, {
       method: "PUT",
@@ -107,7 +107,7 @@ export async function deleteServiceTypeAction(id: number) {
       );
     }
 
-    const url = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/service-types/${id}`;
+    const url = `${process.env.BACKEND_API_URL}/service-types/${id}`;
 
     const res = await fetch(url, {
       method: "DELETE",

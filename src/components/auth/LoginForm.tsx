@@ -19,7 +19,6 @@ import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import ClipLoader from "react-spinners/ClipLoader";
-import router from "next/router";
 import { getErrorMessage } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 
@@ -63,6 +62,7 @@ const LoginForm = (props: Props) => {
         redirect: false,
       });
       if (res?.error) {
+        setIsLoading(false);
         toast({
           variant: "destructive",
           title: "Chyba pri prihlasovani. 🙁",
@@ -70,9 +70,9 @@ const LoginForm = (props: Props) => {
           className: "text-lg",
         });
       } else {
+        setIsLoading(false);
         router.push("/dashboard/prehlad");
       }
-      setIsLoading(false);
     } catch (error) {
       toast({
         variant: "destructive",

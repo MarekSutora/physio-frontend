@@ -20,19 +20,17 @@ const AppointmentCard = ({
   appointment,
   selectedServiceTypeNames,
 }: AppointmentCardProps) => {
-  const { data: session } = useSession();
+  const { data: session, status: isAuthenticated } = useSession();
   const { toast } = useToast();
 
   const visibleServiceTypes = appointment.serviceTypeInfos.filter(
     (asti) => selectedServiceTypeNames.includes(asti.name), // Match based on service type name
   );
 
-  console.log("appointment", appointment);
-
   //TODO style this
 
   const tryBookAppointment = async (astdcId: number) => {
-    if (session?.user && session.user.roles.includes("Patient")) {
+    if (isAuthenticated && session?.user.roles.includes("Patient")) {
       try {
         await createClientBookedAppointmentAction(astdcId);
 
@@ -66,31 +64,35 @@ const AppointmentCard = ({
             variant={"destructive"}
             onClick={handleDeleteButtonClick}
           >
-            Odstranit termin
+            Zrušiť termín
           </Button>
         )}
       </div>
       {visibleServiceTypes.map((item) => (
         <div
           key={item.astdcId}
-          className="flex flex-col gap-2 rounded-lg p-2"
-          style={{ backgroundColor: `${item.hexColor}20` }}
+          className="flex flex-col rounded-lg p-2"
+          style={{ backgroundColor: `${item.hexColor}18` }}
         >
-          <div className="flex flex-row items-center justify-between">
+          <div className="flex flex-row items-center justify-between pb-1">
             <span className="font-semibold">{item.name}</span>
-            <span className="text-base">Kapacita: {appointment.capacity}</span>
+            {}
           </div>
           <div className="text-sm">
-            Trvanie: {item.durationMinutes} min | Cena: {item.cost} €
+            Trvanie:{" "}
+            <span className="font-semibold">{item.durationMinutes} min </span> |
+            Cena: <span className="font-semibold">{item.cost + " €"}</span>
+            {appointment.capacity > 1 && (
+              <>
+                <span> | Obsadenosť: </span>{" "}
+                <span className="font-semibold">
+                  {appointment.reservedCount}/{appointment.capacity}
+                </span>
+              </>
+            )}
           </div>
           <div className="flex flex-row items-center justify-between">
-            <div className="text-sm">
-              Voľné miesta:{" "}
-              <span className="font-semibold">
-                {appointment.capacity - appointment.reservedCount}
-              </span>
-            </div>
-            {!session?.user.roles.includes("Admin") && (
+            {!session?.user.roles.includes("Admin") && session?.user && (
               <button
                 onClick={() => tryBookAppointment(item.astdcId)}
                 className="text-md rounded-sm border border-secondary bg-white px-[6px]

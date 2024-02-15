@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import CreateNewAppointmentForm from "@/components/dashboard/admin/appointments/CreateNewAppointmentForm";
 import { getServiceTypesAction } from "@/lib/actions/serviceTypesActions";
 import {
@@ -23,7 +25,7 @@ const getPatientsForBookedAppointmentAction = async () => {
       );
     }
 
-    const url = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/patients/patients-for-booked-appointment`;
+    const url = `${process.env.BACKEND_API_URL}/patients/patients-for-booked-appointment`;
     const res = await fetch(url, {
       method: "GET",
       headers: {
@@ -55,7 +57,7 @@ const getBookedAppointmentsAction = async () => {
       );
     }
 
-    const url = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/appointments/booked-apointments`;
+    const url = `${process.env.BACKEND_API_URL}/appointments/booked-apointments`;
     const res = await fetch(url, {
       method: "GET",
       headers: {

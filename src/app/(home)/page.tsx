@@ -7,7 +7,7 @@ type Props = {};
 
 const Home = (props: Props) => {
   return (
-    <div className="m-auto h-auto w-5/6 py-10 lg:w-[61.8%]">
+    <div className="m-auto h-auto">
       <Reviews />
       <Contact />
       <GoogleMapLocation />

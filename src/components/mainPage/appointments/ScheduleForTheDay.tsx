@@ -9,6 +9,7 @@ import React, { useEffect, useState } from "react";
 import AppointmentCard from "./AppointmentCard";
 import Select, { MultiValue, SingleValue } from "react-select";
 import makeAnimated from "react-select/animated";
+import { ScrollArea } from "@/components/ui/scrollArea";
 
 //TODO az potom mozno - filtrovanie sluzieb
 
@@ -50,11 +51,11 @@ const ScheduleForTheDay = ({
   );
 
   return (
-    <section className="w-full lg:w-[53%]">
+    <section className="w-full lg:w-[54%]">
       <h2 className="pb-4 text-center text-lg font-semibold text-gray-900">
-        Rozvrh pre
+        Voľné termíny -{" "}
         <time dateTime={format(selectedDay, "yyyy-MM-dd")}>
-          {format(selectedDay, "do MMMM yyyy", {
+          {format(selectedDay, "do M. yyyy", {
             locale: sk,
           })}
         </time>
@@ -76,20 +77,24 @@ const ScheduleForTheDay = ({
         value={selectedOptions}
         required
       />
-      <div className="max-h-[500px] w-full overflow-scroll">
-        {filteredAppointments.length > 0 ? (
-          filteredAppointments.map((appointment, index) => (
-            <AppointmentCard
-              key={index}
-              appointment={appointment}
-              selectedServiceTypeNames={selectedOptions.map(
-                (option) => option.value,
-              )} // Pass selected service type names
-            />
-          ))
-        ) : (
-          <div>No Appointments available for selected service types.</div>
-        )}
+      <div className="h-full w-full">
+        <ScrollArea className="h-[500px] w-full" type="always">
+          {filteredAppointments.length > 0 ? (
+            filteredAppointments.map((appointment, index) => (
+              <AppointmentCard
+                key={index}
+                appointment={appointment}
+                selectedServiceTypeNames={selectedOptions.map(
+                  (option) => option.value,
+                )} // Pass selected service type names
+              />
+            ))
+          ) : (
+            <p className="text-center">
+              Pre vybrané typy služieb nie sú k dispozícii žiadne termíny.
+            </p>
+          )}
+        </ScrollArea>
       </div>
     </section>
   );

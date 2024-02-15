@@ -9,12 +9,11 @@ import {
   TC_Appointment,
   TG_UnbookedAppointment,
 } from "../shared/types";
-import { ca } from "date-fns/locale";
 
 export async function getUnbookedAppointmentsAction(): Promise<
   TG_UnbookedAppointment[]
 > {
-  const url = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/appointments/unbooked-appointments`;
+  const url = `${process.env.BACKEND_API_URL}/appointments/unbooked-appointments`;
 
   // Make the fetch call with the Authorization header
   const res = await fetch(url, {
@@ -28,8 +27,6 @@ export async function getUnbookedAppointmentsAction(): Promise<
   }
 
   const data = await res.json();
-
-  console.log("getAvailableAppointmentsAction", data);
 
   return data;
 }
@@ -46,7 +43,7 @@ export async function createAppointmentAction(
       );
     }
 
-    const url = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/appointments/unbooked-appointments`;
+    const url = `${process.env.BACKEND_API_URL}/appointments/unbooked-appointments`;
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -81,7 +78,7 @@ export async function createAdminBookedAppointmentAction(
       );
     }
 
-    const url = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/appointments/admin-booked-appointments`;
+    const url = `${process.env.BACKEND_API_URL}/appointments/admin-booked-appointments`;
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -116,7 +113,7 @@ export async function createClientBookedAppointmentAction(
       );
     }
 
-    const url = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/appointments/client-booked-appointments`;
+    const url = `${process.env.BACKEND_API_URL}/appointments/client-booked-appointments`;
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -151,7 +148,7 @@ export async function deleteAppointmentAction(
       );
     }
 
-    const url = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/appointments/${appointmentId}`;
+    const url = `${process.env.BACKEND_API_URL}/appointments/${appointmentId}`;
     const response = await fetch(url, {
       method: "DELETE",
       headers: {
@@ -183,7 +180,7 @@ export async function getBookedAppointmentsAction(): Promise<TC_AdminBookedAppoi
       );
     }
 
-    const url = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/appointments/booked-appointments`;
+    const url = `${process.env.BACKEND_API_URL}/appointments/booked-appointments`;
     const response = await fetch(url, {
       method: "GET",
       headers: {
@@ -216,7 +213,7 @@ export async function cancelBookedAppointment(
       );
     }
 
-    const url = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/appointments/booked-appointments/${bookedAppointmentId}`;
+    const url = `${process.env.BACKEND_API_URL}/appointments/booked-appointments/${bookedAppointmentId}`;
     const response = await fetch(url, {
       method: "PUT",
       headers: {
