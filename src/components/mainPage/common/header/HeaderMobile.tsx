@@ -16,18 +16,16 @@ import useDimensions from "@/lib/hooks/useDimensions";
 import { useSelectedLayoutSegment } from "next/navigation";
 import useScroll from "@/lib/hooks/useScroll";
 import { cn } from "@/lib/utils";
-import ToggleNavbarButton from "./ToggleNavbarButton";
+import Hamburger from "hamburger-react";
 
 const HeaderMobile = () => {
   const pathname = usePathname();
   const containerRef = useRef(null);
   const { height } = useDimensions(containerRef);
-  const [isOpen, toggleOpen] = useCycle(false, true);
+  const [isOpen, toggleOpen] = useCycle<boolean>(false, true);
   const [toggledItemsWithSubMenu, setToggledItemsWithSubMenu] = useState<
     string[]
   >([]);
-  const scrolled = useScroll(5);
-  const selectedLayout = useSelectedLayoutSegment();
   const handleItemWithSubMenuClick = (item: string) => {
     if (toggledItemsWithSubMenu.includes(item)) {
       setToggledItemsWithSubMenu(
@@ -51,50 +49,41 @@ const HeaderMobile = () => {
       clipPath: "circle(0px at 100% 0)",
       transition: {
         type: "spring",
-        stiffness: 400,
+        stiffness: 300,
         damping: 40,
       },
     },
   };
 
-  const variants = {
-    open: {
-      transition: { staggerChildren: 0.02, delayChildren: 0.15 },
-    },
-    closed: {
-      transition: { staggerChildren: 0.01, staggerDirection: -1 },
-    },
-  };
-
   return (
-    <header className="flex flex-col">
-      <div
+    <>
+      <div className={cn(isOpen ? "block h-14 bg-white" : "hidden h-0")}></div>
+      <header
         className={cn(
-          `z-30 h-14 w-full border-b border-gray-200 transition-all md:hidden`,
-          {
-            "border-b border-gray-200 bg-white/75 backdrop-blur-lg":
-              scrolled && !isOpen,
-            "border-b border-gray-200 bg-white fixed": selectedLayout || isOpen,
-          },
+          "top-0 z-50 block h-14 w-full bg-white md:hidden",
+          isOpen ? "fixed" : "sticky ",
         )}
       >
-        <ToggleNavbarButton toggle={toggleOpen} />
-      </div>
-      <motion.nav
-        initial={false}
-        animate={isOpen ? "open" : "closed"}
-        custom={height}
-        className={`fixed top-14 z-50 h-full w-full md:hidden ${
-          isOpen ? "" : "pointer-events-none"
-        }`}
-        ref={containerRef}
-      >
-        <motion.div
-          className="absolute inset-0 right-0 w-full bg-white"
-          variants={sidebar}
-        />
-        <motion.ul variants={sidebar} className=" w-full bg-white">
-          <ul className="flex w-full flex-col font-semibold">
+        <div className="flex h-full w-full justify-end">
+          <HamburgerWrapper toggle={toggleOpen} />
+        </div>
+        <motion.nav
+          initial={false}
+          animate={isOpen ? "open" : "closed"}
+          custom={height}
+          className={`fixed top-14 z-50 h-full w-full md:hidden ${
+            isOpen ? "" : "pointer-events-none"
+          }`}
+          ref={containerRef}
+        >
+          <motion.div
+            variants={sidebar}
+            className="absolute inset-0 right-0 w-full bg-white"
+          />
+          <motion.ul
+            variants={sidebar}
+            className="flex w-full flex-col border-t border-slate-200 bg-white font-semibold"
+          >
             {basicLinks.map((link) => (
               <li key={link.text} className="w-full cursor-pointer text-xl">
                 {link.subMenuItems ? (
@@ -148,24 +137,24 @@ const HeaderMobile = () => {
                 <div className="h-[1px] w-full bg-slate-200"></div>
               </li>
             ))}
-          </ul>
-          <div className="mt-5 flex items-center justify-center gap-3">
-            <AuthButtons />
-          </div>
-          <ul className="mt-5 flex h-full justify-center gap-8">
-            {socialMediaLinks.map((link, index) => (
-              <li key={index}>
-                <Link href={link.path}>
-                  <div className="h-auto w-5 text-4xl text-primary transition-all duration-300 ease-in-out hover:scale-125">
-                    {link.icon}
-                  </div>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </motion.ul>
-      </motion.nav>
-    </header>
+            <div className="mt-5 flex items-center justify-center gap-3">
+              <AuthButtons />
+            </div>
+            <ul className="mt-5 flex h-full justify-center gap-8">
+              {socialMediaLinks.map((link, index) => (
+                <li key={index}>
+                  <Link href={link.path}>
+                    <div className="h-auto w-5 text-4xl text-primary transition-all duration-300 ease-in-out hover:scale-125">
+                      {link.icon}
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </motion.ul>
+        </motion.nav>
+      </header>
+    </>
   );
 };
 
@@ -179,34 +168,17 @@ const Path = (props: any) => (
   />
 );
 
-const MenuToggle = ({ toggle }: { toggle: any }) => (
-  <button
-    onClick={toggle}
-    className="pointer-events-auto absolute right-4 top-[14px] z-30"
-  >
-    <svg width="23" height="23" viewBox="0 0 23 23">
-      <Path
-        variants={{
-          closed: { d: "M 2 2.5 L 20 2.5" },
-          open: { d: "M 3 16.5 L 17 2.5" },
-        }}
-      />
-      <Path
-        d="M 2 9.423 L 20 9.423"
-        variants={{
-          closed: { opacity: 1 },
-          open: { opacity: 0 },
-        }}
-        transition={{ duration: 0.1 }}
-      />
-      <Path
-        variants={{
-          closed: { d: "M 2 16.346 L 20 16.346" },
-          open: { d: "M 3 2.5 L 17 16.346" },
-        }}
-      />
-    </svg>
-  </button>
-);
+const HamburgerWrapper = ({ toggle }: { toggle: any }) => {
+  return (
+    <Hamburger
+      size={20}
+      color="#000"
+      label="Show menu"
+      onToggle={toggle}
+      distance="sm"
+      duration={0.5}
+    />
+  );
+};
 
 export default HeaderMobile;

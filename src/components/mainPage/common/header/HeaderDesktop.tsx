@@ -1,19 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import useMediaQuery from "@/lib/hooks/useMediaQuery";
-import { socialMediaLinks } from "@/lib/shared/constants";
-import Link from "next/link";
-import Image from "next/image";
+import React from "react";
 import { cn } from "@/lib/utils";
 import NavbarDesktop from "./NavbarDesktop";
-import ToggleNavbarButton from "./ToggleNavbarButton";
-import NavbarMobile from "./HeaderMobile";
 import { useSelectedLayoutSegment } from "next/navigation";
 import useScroll from "@/lib/hooks/useScroll";
 
 const Header = () => {
-  const [isMenuToggled, setIsMenuToggled] = useState<boolean>(true);
   const scrolled = useScroll(5);
   const selectedLayout = useSelectedLayoutSegment();
 
