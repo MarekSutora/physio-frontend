@@ -60,8 +60,8 @@ const HeaderMobile = () => {
       <div className={cn(isOpen ? "block h-14 bg-white" : "hidden h-0")}></div>
       <header
         className={cn(
-          "top-0 z-50 block h-14 w-full bg-white md:hidden",
-          isOpen ? "fixed" : "sticky ",
+          "left-0 right-0 top-0 z-50 block h-14 w-full bg-white md:hidden",
+          isOpen ? "fixed" : "sticky",
         )}
       >
         <div className="flex h-full w-full justify-end">
@@ -157,16 +157,6 @@ const HeaderMobile = () => {
     </>
   );
 };
-
-const Path = (props: any) => (
-  <motion.path
-    fill="transparent"
-    strokeWidth="2"
-    stroke="hsl(0, 0%, 18%)"
-    strokeLinecap="round"
-    {...props}
-  />
-);
 
 const HamburgerWrapper = ({ toggle }: { toggle: any }) => {
   return (

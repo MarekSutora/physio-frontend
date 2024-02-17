@@ -9,7 +9,7 @@ const NavbarDesktop = () => {
   const [hoveredLink, setHoveredLink] = useState<string>("");
 
   return (
-    <nav className="flex h-full w-full items-center justify-end pt-6">
+    <nav className="flex h-full w-auto items-center">
       <ul
         className="mr-6 flex items-center justify-evenly gap-6 text-base"
         onMouseLeave={() => setHoveredLink("")}
@@ -75,22 +75,8 @@ const NavbarDesktop = () => {
           </li>
         ))}
       </ul>
-      <ul className="flex items-center gap-2">
+
         <AuthButtons />
-      </ul>
-      {/* <nav>
-          <ul className="absolute right-2 top-2 flex h-full flex-col items-center gap-1">
-            {socialMediaLinks.map((link, index) => (
-              <li key={index}>
-                <Link href={link.path}>
-                  <div className="h-auto w-5 text-2xl text-primary transition-all duration-300 ease-in-out hover:scale-125">
-                    {link.icon}
-                  </div>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav> */}
     </nav>
   );
 };

@@ -1,43 +1,49 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import NavbarDesktop from "./NavbarDesktop";
 import { useSelectedLayoutSegment } from "next/navigation";
 import useScroll from "@/lib/hooks/useScroll";
+import Link from "next/link";
+import Image from "next/image";
 
 const Header = () => {
   const scrolled = useScroll(5);
-  const selectedLayout = useSelectedLayoutSegment();
+  const [isTopOfPage, setIsTopOfPage] = useState<boolean>(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY === 0) {
+        setIsTopOfPage(true);
+      }
+      if (window.scrollY !== 0) setIsTopOfPage(false);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <header
       className={cn(
-        `sticky inset-x-0 top-0 z-30 h-14 w-full border-b border-gray-200 transition-all hidden md:block`,
-        {
-          "border-b border-gray-200 bg-white/75 backdrop-blur-lg": scrolled,
-          "border-b border-gray-200 bg-white": selectedLayout,
-        },
+        `sticky top-0 z-30 hidden h-14 w-full bg-slate-50 transition-all duration-200 ease-in md:block`,
+        !isTopOfPage && "h-16 bg-white shadow-sm",
       )}
     >
-      <div className="mx-auto flex h-full w-5/6 items-center justify-between">
-        {/* <Link href="/" className="flex h-full w-52">
-          <Image
-            src="/logo_textright_910_225.svg"
-            alt="MoveLife Logo"
-            fill={true}
-            priority
-          />
-        </Link> */}
+      <div className="m-auto flex h-full w-5/6 flex-row items-center justify-between">
+        <div className="w-52">
+          <Link href="/">
+            <Image
+              src="/logo_textright_910_225.svg"
+              alt="MoveLife Logo"
+              priority
+              width={200}
+              height={50}
+            />
+          </Link>
+        </div>
         <NavbarDesktop />
-        {/* <div className="block md:hidden">
-          <ToggleNavbarButton
-            setIsMenuToggled={setIsMenuToggled}
-            isMenuToggled={isMenuToggled}
-          />
-        </div> */}
       </div>
-      {/* {isMenuToggled && <NavbarMobile />} */}
     </header>
   );
 };

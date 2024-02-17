@@ -11,8 +11,6 @@ import Select, { MultiValue, SingleValue } from "react-select";
 import makeAnimated from "react-select/animated";
 import { ScrollArea } from "@/components/ui/scrollArea";
 
-//TODO az potom mozno - filtrovanie sluzieb
-
 type Props = {
   selectedDayAppointments: TG_UnbookedAppointment[];
   selectedDay: Date;

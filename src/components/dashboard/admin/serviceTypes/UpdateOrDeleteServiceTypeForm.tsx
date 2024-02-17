@@ -12,7 +12,7 @@ import {
   deleteServiceTypeAction,
 } from "@/lib/actions/serviceTypesActions";
 import ServiceTypeForm from "./ServiceTypeForm";
-import { TAU_ServiceType, TG_ServiceType } from "@/lib/shared/types";
+import { TCU_ServiceType, TG_ServiceType } from "@/lib/shared/types";
 import { Select } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import {
@@ -29,8 +29,6 @@ import {
 } from "@/components/ui/command";
 import { ChevronsUpDown } from "lucide-react";
 import { getErrorMessage } from "@/lib/utils";
-
-//TODO diakritika
 
 type Props = {
   serviceTypes: TG_ServiceType[];
@@ -51,14 +49,14 @@ const UpdateOrDeleteServiceTypeForm = ({ serviceTypes }: Props) => {
     ? transformServiceTypeForUpdate(selectedServiceType)
     : null;
 
-  const handleSubmit = async (values: TAU_ServiceType) => {
+  const handleSubmit = async (values: TCU_ServiceType) => {
     try {
       if (selectedServiceType) {
         await updateServiceTypeAction(values);
 
         toast({
           variant: "success",
-          title: "Úspešne upravena sluzba. 🎉",
+          title: "Úspešne upravená sluzba. 🎉",
           className: "text-lg",
         });
         setValue(values.name);
@@ -79,7 +77,7 @@ const UpdateOrDeleteServiceTypeForm = ({ serviceTypes }: Props) => {
       }
       toast({
         variant: "success",
-        title: "Úspešne odstranena sluzba. 🎉",
+        title: "Úspešne odstránená služba. 🎉",
         className: "text-lg",
       });
     } catch (error) {
@@ -103,13 +101,13 @@ const UpdateOrDeleteServiceTypeForm = ({ serviceTypes }: Props) => {
           >
             {selectedServiceType
               ? selectedServiceType.name
-              : "Vyber typ sluzby..."}
+              : "Vyber typ služby..."}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-[200px] p-0">
           <Command>
-            <CommandInput placeholder="Vyber typ sluzby..." />
+            <CommandInput placeholder="Vyber typ služby..." />
             <CommandGroup>
               {serviceTypes.map((serviceType) => (
                 <CommandItem
@@ -134,13 +132,13 @@ const UpdateOrDeleteServiceTypeForm = ({ serviceTypes }: Props) => {
           onSubmit={handleSubmit}
           key={selectedServiceType?.id || "new"}
         >
-          <Button type="submit">Update</Button>
+          <Button type="submit">Upraviť</Button>
           <Button
             type="button"
             className="bg-destructive hover:bg-red-400"
             onClick={handleDelete}
           >
-            Odstranit sluzbu
+            Odstrániť službu
           </Button>
         </ServiceTypeForm>
       )}
@@ -150,7 +148,7 @@ const UpdateOrDeleteServiceTypeForm = ({ serviceTypes }: Props) => {
 
 const transformServiceTypeForUpdate = (
   serviceType: TG_ServiceType,
-): TAU_ServiceType => {
+): TCU_ServiceType => {
   return {
     id: serviceType.id,
     name: serviceType.name,

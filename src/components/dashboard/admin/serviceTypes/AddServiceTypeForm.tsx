@@ -5,16 +5,14 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { createNewServiceTypeAction } from "@/lib/actions/serviceTypesActions";
 import ServiceTypeForm from "./ServiceTypeForm";
-import { TAU_ServiceType } from "@/lib/shared/types";
-
-//TODO layout pre md je zly, modal - ste si isty ze toto je spravne?
+import { TCU_ServiceType } from "@/lib/shared/types";
 
 type Props = {};
 
 const AddServiceTypeForm = (props: Props) => {
   const { toast } = useToast();
 
-  const handleSubmit = async (values: TAU_ServiceType) => {
+  const handleSubmit = async (values: TCU_ServiceType) => {
     try {
       await createNewServiceTypeAction(values);
       toast({

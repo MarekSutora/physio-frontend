@@ -50,16 +50,15 @@ const Contact = () => {
   };
 
   return (
-    <div className="bg-green-50">
-      <section className="w-full pb-10">
-        <div className="flex w-full flex-row gap-3 pb-6">
-          <div className="m-auto h-[1px] w-full bg-slate-200"></div>
-          <h1 className="w-full text-nowrap pb-3 text-center text-4xl font-semibold">
-            Kontakt
-          </h1>
-          <div className="m-auto h-[1px] w-full bg-slate-200"></div>
-        </div>
-
+    <div className="w-full bg-slate-50">
+      <div className="flex w-full flex-row gap-3 pb-6">
+        <div className="m-auto h-[1px] w-full bg-slate-200"></div>
+        <h1 className="w-full text-nowrap pb-3 text-center text-4xl font-semibold">
+          Kontakt
+        </h1>
+        <div className="m-auto h-[1px] w-full bg-slate-200"></div>
+      </div>
+      <section className="m-auto w-[61.8%] pb-10">
         <div className="flex w-full flex-col gap-10 lg:flex-row lg:gap-10">
           <section className="w-full lg:pr-32">
             <Form {...form}>
@@ -146,26 +145,26 @@ const Contact = () => {
           </section>
 
           <section className="flex w-full flex-col gap-2 text-nowrap text-center lg:w-1/3">
-            <h1 className="text-4xl font-bold text-gray-950 lg:pt-6">
+            <h1 className="text-3xl font-bold text-gray-950 lg:pt-6">
               {contactInfo.companyName}
             </h1>
             <section>
-              <h2 className="pt-6 text-3xl font-semibold text-gray-900">
-                Adresa
+              <h2 className="pt-6 text-2xl font-semibold text-gray-900">
+                Adresa:
               </h2>
-              <p className="pt-3 text-2xl text-green-950">
+              <p className="pt-3 text-xl text-green-950">
                 {contactInfo.address}
               </p>
-              <p className="pt-3  text-2xl text-green-950">
+              <p className="pt-3  text-xl text-green-950">
                 {contactInfo.zip} {contactInfo.city}
               </p>
             </section>
             <section>
-              <h2 className="pt-6 text-3xl font-semibold text-gray-900">
-                Kontaktné údaje
+              <h2 className="pt-6 text-2xl font-semibold text-gray-900">
+                Kontaktné údaje:
               </h2>
               <a
-                className="mx-auto flex justify-center gap-2 pt-3 text-center text-2xl md:mx-0"
+                className="mx-auto flex justify-center gap-2 pt-3 text-center text-xl md:mx-0"
                 href={`mailto:${contactInfo.email}`}
               >
                 <div className="mt-[1px] text-3xl text-green-950">
@@ -173,7 +172,7 @@ const Contact = () => {
                 </div>
                 <span>{contactInfo.email}</span>
               </a>
-              <div className="mx-auto flex items-center justify-center gap-2 pt-3 text-2xl text-green-950 md:mx-0">
+              <div className="mx-auto flex items-center justify-center gap-2 pt-3 text-xl text-green-950 md:mx-0">
                 <div className="text-3xl">
                   <FaPhone className="h-[25px] w-[30px]" />
                 </div>
@@ -181,14 +180,14 @@ const Contact = () => {
               </div>
             </section>
             <nav>
-              <h2 className="pb-1 pt-6 text-3xl font-semibold text-gray-950">
-                Sociálne siete
+              <h2 className="pb-1 pt-6 text-2xl font-semibold text-gray-950">
+                Sociálne siete:
               </h2>
-              <ul className="flex flex-row justify-around pt-9 lg:justify-between">
+              <ul className="flex flex-row justify-around pt-9 lg:justify-around">
                 {socialMediaLinks.map((link, index) => (
                   <li key={index}>
                     <Link href={link.path}>
-                      <div className="scale-[2.4] text-4xl text-green-950 transition-all duration-300 ease-in-out hover:scale-[2.7]">
+                      <div className="scale-[2.4] text-2xl text-green-950 transition-all duration-300 ease-in-out hover:scale-[2.7]">
                         {link.icon}
                       </div>
                     </Link>

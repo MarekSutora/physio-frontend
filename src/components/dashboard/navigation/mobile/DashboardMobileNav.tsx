@@ -7,7 +7,6 @@ import Link from "next/link";
 import React, { useState } from "react";
 import SidePanelMenuItem from "../DashboardMenuItem";
 import { useSession } from "next-auth/react";
-import ToggleNavbarButton from "@/components/mainPage/common/header/ToggleNavbarButton";
 
 type Props = {};
 
@@ -24,10 +23,10 @@ const DashboardMobileNav = (props: Props) => {
           <LogoImage style="w-16 h-16" fill="white" />
         </Link>
         <div className="text-white">
-          <ToggleNavbarButton
+          {/* <ToggleNavbarButton
             setIsMenuToggled={setIsMenuToggled}
             isMenuToggled={isMenuToggled}
-          />
+          /> */}
         </div>
       </div>
 

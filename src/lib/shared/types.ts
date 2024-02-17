@@ -3,8 +3,7 @@ export type TDurationCost = {
   cost: number;
 };
 
-export type TAU_ServiceType = {
-  //TODO TCU
+export type TCU_ServiceType = {
   id: number | null;
   name: string;
   description: string;

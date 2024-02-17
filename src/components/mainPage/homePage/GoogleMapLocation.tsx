@@ -23,7 +23,7 @@ const App = () => {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY; // Make sure to set your API key
 
   return (
-    <div className="m-auto">
+    <div className="w-full pb-10">
       <div className="flex w-full flex-row gap-3">
         <div className="m-auto h-[1px] w-full bg-slate-200"></div>
         <h1 className="w-full text-nowrap pb-3 text-center text-4xl font-semibold">
@@ -31,30 +31,31 @@ const App = () => {
         </h1>
         <div className="m-auto h-[1px] w-full bg-slate-200"></div>
       </div>
-
-      <LoadScript googleMapsApiKey={apiKey!}>
-        <div className="flex flex-col shadow-xl lg:flex-row">
-          <GoogleMap
-            mapContainerStyle={containerStyle}
-            center={center}
-            zoom={10}
-          ></GoogleMap>
-          <GoogleMap
-            mapContainerStyle={containerStyle}
-            center={center}
-            zoom={10}
-          >
-            {/* Child components, such as markers, info windows, etc. */}
-            <StreetViewPanorama
-              options={{
-                position: center,
-                pov: { heading: 95, pitch: 5 },
-                visible: true,
-              }}
-            />
-          </GoogleMap>
-        </div>
-      </LoadScript>
+      <section className="m-auto w-[61.8%]">
+        <LoadScript googleMapsApiKey={apiKey!}>
+          <div className="flex flex-col shadow-xl lg:flex-row">
+            <GoogleMap
+              mapContainerStyle={containerStyle}
+              center={center}
+              zoom={10}
+            ></GoogleMap>
+            <GoogleMap
+              mapContainerStyle={containerStyle}
+              center={center}
+              zoom={10}
+            >
+              {/* Child components, such as markers, info windows, etc. */}
+              <StreetViewPanorama
+                options={{
+                  position: center,
+                  pov: { heading: 95, pitch: 5 },
+                  visible: true,
+                }}
+              />
+            </GoogleMap>
+          </div>
+        </LoadScript>
+      </section>
     </div>
   );
 };

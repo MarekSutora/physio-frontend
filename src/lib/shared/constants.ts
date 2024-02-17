@@ -11,7 +11,7 @@ export const basicLinks = [
     ],
   },
   { text: "O mne", path: "/o-mne" },
-  { text: "Rezervácia", path: "/rezervacie" },
+  { text: "Rezervácia", path: "/rezervacia" },
   { text: "Blog", path: "/blog" },
 ];
 
@@ -49,44 +49,44 @@ export const dashboardLinks = {
   admin: [
     {
       text: "Prehľad",
-      path: "/dashboard/prehlad",
+      path: "/dashboard/admin/prehlad",
       icon: React.createElement(FaFacebook),
     },
     {
       text: "Štatistiky",
-      path: "/dashboard/statistiky",
+      path: "/dashboard/admin/statistiky",
       icon: React.createElement(FaFacebook),
     },
     {
       text: "Správa rezervácií",
-      path: "/dashboard/sprava-rezervacii",
+      path: "/dashboard/admin/sprava-rezervacii",
       icon: React.createElement(FaFacebook),
     },
     {
       text: "Správa pacientov",
-      path: "/dashboard/sprava-pacientov",
+      path: "/dashboard/admin/sprava-pacientov",
       icon: React.createElement(FaFacebook),
     },
     {
       text: "Správa služieb",
-      path: "/dashboard/sprava-sluzieb",
+      path: "/dashboard/admin/sprava-sluzieb",
       icon: React.createElement(FaFacebook),
     },
   ],
   patient: [
     {
       text: "My Appointments",
-      path: "/dashboard/my-appointments",
+      path: "/dashboard/client/my-appointments",
       icon: React.createElement(FaFacebook),
     },
     {
       text: "My Profile",
-      path: "/my-profile",
+      path: "/dashboard/client/my-profile",
       icon: React.createElement(FaFacebook),
     },
     {
       text: "Support",
-      path: "/support",
+      path: "/dashboard/client/support",
       icon: React.createElement(FaFacebook),
     },
   ],

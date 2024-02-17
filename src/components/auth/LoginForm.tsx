@@ -60,7 +60,7 @@ const LoginForm = (props: Props) => {
         email: values.email,
         password: values.password,
         redirect: false,
-      });
+      }, undefined);
       if (res?.error) {
         setIsLoading(false);
         toast({
@@ -71,7 +71,7 @@ const LoginForm = (props: Props) => {
         });
       } else {
         setIsLoading(false);
-        router.push("/dashboard/prehlad");
+        router.push("/dashboard");
       }
     } catch (error) {
       toast({

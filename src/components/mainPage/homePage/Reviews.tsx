@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Carousel,
   CarouselContent,
@@ -5,7 +7,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import React from "react";
+import React, { useState } from "react";
 
 type ReviewType = {
   id: number;
@@ -68,21 +70,60 @@ const dummyReviews: ReviewType[] = [
 ];
 
 const ReviewItem = ({ review }: any) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const maxTextLength = 100; // Maximum text length before showing "Read More"
+
+  const renderStars = () => {
+    let stars = [];
+    for (let i = 0; i < 5; i++) {
+      stars.push(
+        <span
+          key={i}
+          className={i < review.rating ? "text-yellow-500" : "text-gray-300"}
+        >
+          {i < review.rating ? "★" : "☆"}
+        </span>,
+      );
+    }
+    return stars;
+  };
+
   return (
-    <div className="m-auto w-48">
-      <p>{review.text}</p>
-      <p>
-        - {review.author}, {review.date}
+    <div className="m-auto h-52 w-64 bg-white p-2 px-3 md:rounded-lg md:border-2">
+      <div className="mb-2 flex items-center">{renderStars()}</div>
+      <p className="h-20 text-wrap text-sm">
+        {review.text.length > maxTextLength && !isExpanded
+          ? `${review.text.substring(0, maxTextLength)}...`
+          : review.text}
+        {review.text.length > maxTextLength && (
+          <button
+            className="pl-1 text-blue-500"
+            onClick={() => setIsExpanded(!isExpanded)}
+          >
+            {isExpanded ? "Read Less" : "Read More"}
+          </button>
+        )}
       </p>
+      <div className="mt-8 flex items-center">
+        <p className="text-sm">
+          - {review.author}, {review.date}
+        </p>
+      </div>
     </div>
   );
 };
 
 const Reviews = () => {
   return (
-    <div className="bg-slate-50">
+    <div className="w-full">
+      <div className="flex w-full flex-row gap-3 pb-6">
+        <div className="m-auto h-[1px] w-full bg-slate-200"></div>
+        <h1 className="w-full text-nowrap pb-3 text-center text-4xl font-semibold">
+          Recenzie
+        </h1>
+        <div className="m-auto h-[1px] w-full bg-slate-200"></div>
+      </div>
       <section className="m-auto w-5/6 py-10 lg:w-[61.8%]">
-        <h2>Recenzie</h2>
         <Carousel
           opts={{
             loop: true,
@@ -91,10 +132,7 @@ const Reviews = () => {
         >
           <CarouselContent>
             {dummyReviews.map((review) => (
-              <CarouselItem
-                key={review.id}
-                className="pl-1 md:basis-1/2 lg:basis-1/3"
-              >
+              <CarouselItem key={review.id} className="lg:basis-1/3">
                 <ReviewItem key={review.id} review={review} />
               </CarouselItem>
             ))}

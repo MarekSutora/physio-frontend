@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { createClientBookedAppointmentAction } from "@/lib/actions/appointmentsActions";
 import { getErrorMessage } from "@/lib/utils";
+import AuthButtons from "@/components/auth/authButtons/AuthButtons";
 
 type AppointmentCardProps = {
   appointment: TG_UnbookedAppointment;
@@ -45,7 +46,7 @@ const AppointmentCard = ({
         });
       }
     } else {
-      alert("You must be logged in as a patient to book a Appointment.");
+      alert("Musíte byť prihlásený.");
     }
   };
   const handleDeleteButtonClick = () => {
@@ -55,10 +56,10 @@ const AppointmentCard = ({
   return (
     <div className="flex w-full flex-col gap-1 rounded-lg border-l border-r border-t px-3 py-1 last:border-b">
       <div className=" flex flex-row justify-between">
-        <time className="pl-2 text-lg font-semibold">
+        <time className="pr-4 text-lg font-semibold">
           {format(new Date(appointment.startTime), "HH:mm", { locale: sk })}
         </time>
-        {session?.user.roles.includes("Admin") && (
+        {session?.user.roles.includes("Admin") ? (
           <Button
             className="h-7 p-1"
             variant={"destructive"}
@@ -66,6 +67,15 @@ const AppointmentCard = ({
           >
             Zrušiť termín
           </Button>
+        ) : (
+          !session?.user && (
+            <div className="flex flex-row">
+              <p className="text-sm text-destructive">
+                Pre rezervovanie termínu musíte byť prihlásený
+              </p>
+              <AuthButtons />
+            </div>
+          )
         )}
       </div>
       {visibleServiceTypes.map((item) => (

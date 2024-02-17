@@ -5,14 +5,11 @@ import NextAuth from "next-auth/next";
 import { getErrorMessage } from "@/lib/utils";
 
 async function refreshToken(token: JWT): Promise<JWT> {
-  const res = await fetch(
-    `${process.env.BACKEND_API_URL}/auth/refreshToken`,
-    {
-      method: "POST",
-      body: JSON.stringify({ refreshToken: token.backendTokens.refreshToken }),
-      headers: { "Content-Type": "application/json" },
-    },
-  );
+  const res = await fetch(`${process.env.BACKEND_API_URL}/auth/refreshToken`, {
+    method: "POST",
+    body: JSON.stringify({ refreshToken: token.backendTokens.refreshToken }),
+    headers: { "Content-Type": "application/json" },
+  });
 
   const response = await res.json();
 
@@ -36,14 +33,11 @@ export const authOptions: AuthOptions = {
         if (!credentials?.email || !credentials?.password) return null;
 
         try {
-          const res = await fetch(
-            `${process.env.BACKEND_API_URL}/auth/login`,
-            {
-              method: "POST",
-              body: JSON.stringify(credentials),
-              headers: { "Content-Type": "application/json" },
-            },
-          );
+          const res = await fetch(`${process.env.BACKEND_API_URL}/auth/login`, {
+            method: "POST",
+            body: JSON.stringify(credentials),
+            headers: { "Content-Type": "application/json" },
+          });
 
           if (res.ok) {
             const user = await res.json();

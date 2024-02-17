@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { TAU_ServiceType } from "@/lib/shared/types";
+import { TCU_ServiceType } from "@/lib/shared/types";
 
 const durationCostSchema = z.object({
   durationMinutes: z.coerce
@@ -33,13 +33,13 @@ const formSchema = z.object({
 });
 
 type Props = {
-  serviceType: TAU_ServiceType | null;
+  serviceType: TCU_ServiceType | null;
   children: React.ReactNode;
-  onSubmit: SubmitHandler<TAU_ServiceType>;
+  onSubmit: SubmitHandler<TCU_ServiceType>;
 };
 
 const ServiceTypeForm = ({ serviceType, children, onSubmit }: Props) => {
-  const form = useForm<TAU_ServiceType>({
+  const form = useForm<TCU_ServiceType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       id: serviceType?.id ?? null,
