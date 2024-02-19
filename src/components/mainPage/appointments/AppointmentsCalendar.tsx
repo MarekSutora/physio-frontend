@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 import {
   add,
@@ -22,15 +22,27 @@ import { enUS } from "date-fns/locale";
 import { TG_UnbookedAppointment, TG_ServiceType } from "@/lib/shared/types"; // Update the import path as needed
 import { cn } from "@/lib/utils";
 import ScheduleForTheDay from "./ScheduleForTheDay";
+import { useAppointmentsStore } from "@/useAppointmentsStore";
 
 type Props = {
-  appointments: TG_UnbookedAppointment[];
+  appointmentsData: TG_UnbookedAppointment[];
   serviceTypes: TG_ServiceType[];
 };
 
 //TODO bug ked sa dostanem na rovnaky mesiac ako je teraz ale o rok neskor
 
-const AppointmentsCalendar = ({ appointments, serviceTypes }: Props) => {
+const AppointmentsCalendar = ({ appointmentsData, serviceTypes }: Props) => {
+  const setAppointments = useAppointmentsStore(
+    (state) => state.setAppointments,
+  );
+  const appointments = useAppointmentsStore((state) => state.appointments);
+
+  useEffect(() => {
+    setAppointments(appointmentsData);
+  }, [appointmentsData, setAppointments]);
+
+  console.log("appointments", appointments)
+
   const today = startOfToday();
   const closestAppointmentDateRaw = appointments
     .map((appointment) => parseISO(appointment.startTime))
@@ -45,6 +57,7 @@ const AppointmentsCalendar = ({ appointments, serviceTypes }: Props) => {
   let [currentMonth, setCurrentMonth] = useState(
     format(selectedDay, "MMM-yyyy", { locale: enUS }),
   );
+
   let firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
 
   const days = eachDayOfInterval({

@@ -22,7 +22,7 @@ const Page = async () => {
 
   return (
     <AppointmentsCalendar
-      appointments={unbookedAppointments}
+      appointmentsData={unbookedAppointments}
       serviceTypes={serviceTypes}
     />
   );

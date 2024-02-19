@@ -63,6 +63,11 @@ export const dashboardLinks = {
       icon: React.createElement(FaFacebook),
     },
     {
+      text: "Blog",
+      path: "/dashboard/admin/blog",
+      icon: React.createElement(FaFacebook),
+    },
+    {
       text: "Správa pacientov",
       path: "/dashboard/admin/sprava-pacientov",
       icon: React.createElement(FaFacebook),

@@ -15,17 +15,18 @@ import DashboardSectionWrapper from "@/components/dashboard/DashboardSectionWrap
 
 //TODO aj na mobile nechat pri tych sekciach zaokruhlene okraje, skusit spravit ten wrapper
 
-const getPatientsForBookedAppointmentAction = async () => {
+async function getBookedAppointmentsAction(): Promise<TG_BookedAppointment[]> {
   "use server";
   try {
     const session = await getServerSession(authOptions);
+
     if (!session) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
     }
-
-    const url = `${process.env.BACKEND_API_URL}/patients/patients-for-booked-appointment`;
+    
+    const url = `${process.env.BACKEND_API_URL}/appointments/booked-appointments`;
     const res = await fetch(url, {
       method: "GET",
       headers: {
@@ -33,9 +34,9 @@ const getPatientsForBookedAppointmentAction = async () => {
         Authorization: `Bearer ${session.backendTokens.accessToken}`,
       },
     });
-
     if (!res.ok) {
       const errorData = await res.text();
+      console.error("errorData", errorData);
       throw new Error(errorData);
     }
 
@@ -43,64 +44,25 @@ const getPatientsForBookedAppointmentAction = async () => {
 
     return data.length > 0 ? data : [];
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    throw new Error("getBookedAppointmentsAction: " + getErrorMessage(error));
   }
-};
-
-const getBookedAppointmentsAction = async () => {
-  "use server";
-  try {
-    const session = await getServerSession(authOptions);
-    if (!session) {
-      throw new Error(
-        "Session not found. User must be logged in to perform this action.",
-      );
-    }
-
-    const url = `${process.env.BACKEND_API_URL}/appointments/booked-apointments`;
-    const res = await fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
-      },
-    });
-
-    if (!res.ok) {
-      const errorData = await res.text();
-      throw new Error(errorData);
-    }
-
-    const data = await res.json();
-
-    return data.length > 0 ? data : [];
-  } catch (error) {
-    throw new Error(getErrorMessage(error));
-  }
-};
+}
 
 const Page = async () => {
+  let bookedAppointments: TG_BookedAppointment[] = [];
   let serviceTypes: TG_ServiceType[] = [];
+
   try {
+    bookedAppointments = await getBookedAppointmentsAction();
     serviceTypes = await getServiceTypesAction();
   } catch (error) {
     console.error(error);
   }
 
-  let patientsForBookedAppointment: TG_PatientForBookedAppointment[] = [];
-  try {
-    patientsForBookedAppointment =
-      await getPatientsForBookedAppointmentAction();
-  } catch (error) {
-    console.error(error);
-  }
-
-  let bookedAppointments: TG_BookedAppointment[] = [];
-  try {
-    bookedAppointments = await getBookedAppointmentsAction();
-  } catch (error) {
-    console.error(error);
-  }
+  const [bookedAppointmentsData, serviceTypesData] = await Promise.all([
+    bookedAppointments,
+    serviceTypes,
+  ]);
 
   return (
     <div className="flex h-full w-full flex-col gap-2 text-black lg:flex-row">
@@ -108,14 +70,11 @@ const Page = async () => {
         title={"Vytvoriť nový termín"}
         width={"w-full lg:w-2/5"}
       >
-        <CreateNewAppointmentForm
-          serviceTypes={serviceTypes}
-          patients={patientsForBookedAppointment}
-        />
+        <CreateNewAppointmentForm serviceTypes={serviceTypesData} />
       </DashboardSectionWrapper>
       <DashboardSectionWrapper title={"Zarezervované termíny"}>
         <div>
-          {bookedAppointments.map((item) => (
+          {bookedAppointmentsData.map((item) => (
             <div key={item.cost}>asd</div>
           ))}
         </div>

@@ -10,7 +10,7 @@ const DashboardSectionWrapper = ({ children, width, title }: Props) => {
   return (
     <section
       className={cn(
-        "h-full border-slate-200 bg-white p-2 md:rounded-lg md:border-2",
+        "h-fit border-slate-200 bg-white p-2 md:rounded-lg md:border-2",
         width ? width : "w-full",
       )}
     >

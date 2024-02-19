@@ -20,26 +20,18 @@ import { getErrorMessage } from "@/lib/utils";
 
 //TODO po diplomovke - multi select pacientov aby sa dalo rezervovat viac ludi naraz (skupinovy trening)
 
-// type PatientOptionType = {
-//   label: string;
-//   value: number;
-// };
-
 type Props = {
   serviceTypes: TG_ServiceType[];
-  patients: TG_PatientForBookedAppointment[];
 };
 
 const CreateNewAppointmentForm = ({
   serviceTypes,
-  patients,
 }: Props) => {
   const [startTime, setStartTime] = useState(new Date());
   const [selectedOptions, setSelectedOptions] = useState<
     ServiceTypeOptionType[]
   >([]);
-  // const [selectedPatient, setSelectedPatient] =
-  //   useState<SingleValue<PatientOptionType>>(null);
+
   const [capacity, setCapacity] = useState<number>(1);
 
   // Convert service types and their duration costs to select options
@@ -50,11 +42,6 @@ const CreateNewAppointmentForm = ({
       color: serviceType.hexColor, // Use the hex color for option styling
     })),
   );
-
-  // const patientOptions = patients.map((patient) => ({
-  //   label: `${patient.firstName} ${patient.secondName} - (${patient.personId})`,
-  //   value: patient.personId,
-  // }));
 
   const customStyles = {
     option: (provided: any, { data }: any) => ({
@@ -75,12 +62,6 @@ const CreateNewAppointmentForm = ({
       color: "black",
     }),
   };
-
-  // const handlePatientSelectChange = (
-  //   selected: SingleValue<PatientOptionType>,
-  // ) => {
-  //   setSelectedPatient(selected);
-  // };
 
   const handleServiceTypesSelectChange = (
     selected: MultiValue<ServiceTypeOptionType>,
@@ -162,23 +143,6 @@ const CreateNewAppointmentForm = ({
           className="input disabled:opacity-50"
         />
       </div>
-      {/* <div className="">
-        <Label htmlFor="patients">Pacient</Label>
-        <Select
-          id="patients"
-          isMulti={false}
-          instanceId="patients"
-          name="patients"
-          options={patientOptions}
-          styles={customStyles}
-          components={makeAnimated()}
-          onChange={handlePatientSelectChange}
-          value={selectedPatient}
-          isDisabled={selectedOptions.length > 1}
-          className="input disabled:opacity-50"
-          isClearable={true}
-        />
-      </div> */}
       <div className="mt-4">
         <Button type="submit" className="btn">
           Odoslať

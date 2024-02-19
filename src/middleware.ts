@@ -7,18 +7,15 @@ import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
 
 export default withAuth(
   function middleware(req) {
-    console.log(req.nextauth);
 
     if (req.nextUrl.pathname.startsWith("/dashboard") && !req.nextauth) {
       return NextResponse.redirect(new URL("/prihlasenie", req.url));
     }
 
     if (req.nextUrl.pathname.startsWith("/prihlasenie")) {
-      console.log("prihlasenie");
       if (req.nextauth) {
         return NextResponse.redirect(new URL("/", req.url));
       } else {
-        console.log("no auth");
         return NextResponse.redirect(new URL("/prihlasenie", req.url));
       }
     }

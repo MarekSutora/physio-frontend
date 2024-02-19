@@ -11,6 +11,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { createClientBookedAppointmentAction } from "@/lib/actions/appointmentsActions";
 import { getErrorMessage } from "@/lib/utils";
 import AuthButtons from "@/components/auth/authButtons/AuthButtons";
+import ReserveAppointmentConfirmationDialog from "./ReserveAppointmentConfirmationDialog";
 
 type AppointmentCardProps = {
   appointment: TG_UnbookedAppointment;
@@ -22,7 +23,7 @@ const AppointmentCard = ({
   selectedServiceTypeNames,
 }: AppointmentCardProps) => {
   const { data: session, status: isAuthenticated } = useSession();
-  const { toast } = useToast();
+
 
   const visibleServiceTypes = appointment.serviceTypeInfos.filter(
     (asti) => selectedServiceTypeNames.includes(asti.name), // Match based on service type name
@@ -30,25 +31,6 @@ const AppointmentCard = ({
 
   //TODO style this
 
-  const tryBookAppointment = async (astdcId: number) => {
-    if (isAuthenticated && session?.user.roles.includes("Patient")) {
-      try {
-        await createClientBookedAppointmentAction(astdcId);
-
-        toast({
-          variant: "success",
-          title: "Appointment created successfully!",
-        });
-      } catch (error) {
-        toast({
-          variant: "destructive",
-          description: getErrorMessage(error),
-        });
-      }
-    } else {
-      alert("Musíte byť prihlásený.");
-    }
-  };
   const handleDeleteButtonClick = () => {
     // Logika pre odstránenie termínu
   };
@@ -81,35 +63,30 @@ const AppointmentCard = ({
       {visibleServiceTypes.map((item) => (
         <div
           key={item.astdcId}
-          className="flex flex-col rounded-lg p-2"
+          className="flex flex-col rounded-lg px-2 py-1"
           style={{ backgroundColor: `${item.hexColor}18` }}
         >
           <div className="flex flex-row items-center justify-between pb-1">
             <span className="font-semibold">{item.name}</span>
             {}
           </div>
-          <div className="text-sm">
-            Trvanie:{" "}
-            <span className="font-semibold">{item.durationMinutes} min </span> |
-            Cena: <span className="font-semibold">{item.cost + " €"}</span>
-            {appointment.capacity > 1 && (
-              <>
-                <span> | Obsadenosť: </span>{" "}
-                <span className="font-semibold">
-                  {appointment.reservedCount}/{appointment.capacity}
-                </span>
-              </>
-            )}
-          </div>
           <div className="flex flex-row items-center justify-between">
+            <div className="text-sm">
+              Trvanie:{" "}
+              <span className="font-semibold">{item.durationMinutes} min </span>{" "}
+              | Cena: <span className="font-semibold">{item.cost + " €"}</span>
+              {appointment.capacity > 1 && (
+                <>
+                  <span> | Obsadenosť: </span>{" "}
+                  <span className="font-semibold">
+                    {appointment.reservedCount}/{appointment.capacity}
+                  </span>
+                </>
+              )}
+            </div>
+
             {!session?.user.roles.includes("Admin") && session?.user && (
-              <button
-                onClick={() => tryBookAppointment(item.astdcId)}
-                className="text-md rounded-sm border border-secondary bg-white px-[6px]
-                 py-[5px] font-semibold text-secondary shadow-lg transition-all ease-in-out hover:bg-secondary hover:text-slate-50"
-              >
-                Rezervovať
-              </button>
+              <ReserveAppointmentConfirmationDialog astdcId={item.astdcId} />
             )}
           </div>
         </div>

@@ -19,7 +19,7 @@ export async function getUnbookedAppointmentsAction(): Promise<
   const res = await fetch(url, {
     method: "GET",
     cache: "no-store",
-    //next: { tags: ["available-appointment"] },
+    next: { tags: ["unbooked-appointments"] },
   });
 
   if (!res.ok) {
@@ -170,7 +170,9 @@ export async function deleteAppointmentAction(
   }
 }
 
-export async function getBookedAppointmentsAction(): Promise<TC_AdminBookedAppointment> {
+export async function getBookedAppointmentsAction(): Promise<
+  TC_AdminBookedAppointment[]
+> {
   try {
     const session = await getServerSession(authOptions);
 

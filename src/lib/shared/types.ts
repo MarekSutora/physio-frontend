@@ -66,13 +66,47 @@ export type TC_ClientBookedAppointment = {
 
 export type TG_BookedAppointment = {
   id: number;
-  date: Date;
-  duration: number;
+  startTime: Date;
+  durationMinutes: number;
   serviceTypeName: string;
-  person: string;
+  clientFirstName: string;
+  clientSecondName: string;
   cost: number;
-  note: string;
   hexColor: string;
+};
+
+//BLOG
+
+export type TG_BlogPost = {
+  id: number;
+  title: string;
+  author: string;
+  datePublished: string;
+  keywordsString: string;
+  mainImageUrl: string;
+  htmlContent: string;
+  isHidden: boolean;
+};
+
+export type TC_BlogPost = {
+  title: string;
+  datePublished: string;
+  htmlContent: string;
+  author: string;
+  keywordsString: string;
+  mainImageUrl: string;
+  isHidden: boolean;
+};
+
+export type TU_BlogPost = {
+  id: number;
+  title: string;
+  author: string;
+  datePublished: string;
+  keywordsString: string;
+  mainImageUrl: string;
+  htmlContent: string;
+  isHidden: boolean;
 };
 
 //OTHER
