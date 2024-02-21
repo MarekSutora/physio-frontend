@@ -10,6 +10,14 @@ const nextConfig = {
   //       },
   //     ];
   //   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "**",
+      },
+    ],
+  },
 };
 
 module.exports = nextConfig;

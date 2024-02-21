@@ -86,6 +86,7 @@ export type TG_BlogPost = {
   mainImageUrl: string;
   htmlContent: string;
   isHidden: boolean;
+  slug: string;
 };
 
 export type TC_BlogPost = {

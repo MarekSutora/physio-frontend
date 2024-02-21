@@ -1,5 +1,5 @@
 import DashboardSectionWrapper from "@/components/dashboard/DashboardSectionWrapper";
-import CreateNewBlogForm from "@/components/dashboard/admin/blog/CreateNewBlogForm";
+import BlogForm from "@/components/dashboard/admin/blog/BlogPostForm";
 import React from "react";
 
 const Page = () => {
@@ -9,7 +9,7 @@ const Page = () => {
         title={"Vytvoriť nový Blog Post"}
         width={"w-full"}
       >
-        <CreateNewBlogForm />
+        <BlogForm createNew={true} />
       </DashboardSectionWrapper>
     </div>
   );

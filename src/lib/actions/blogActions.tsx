@@ -134,7 +134,7 @@ export async function hideBlogPostAction(blogPostId: number) {
       );
     }
 
-    const url = `${process.env.BACKEND_API_URL}/blog/hide/${blogPostId}`;
+    const url = `${process.env.BACKEND_API_URL}/blog-posts/hide/${blogPostId}`;
 
     const res = await fetch(url, {
       method: "POST",
@@ -167,7 +167,7 @@ export async function deleteBlogPostAction(blogPostId: number) {
       );
     }
 
-    const url = `${process.env.BACKEND_API_URL}/blog/${blogPostId}`;
+    const url = `${process.env.BACKEND_API_URL}/blog-posts/${blogPostId}`;
 
     const res = await fetch(url, {
       method: "DELETE",
@@ -185,6 +185,52 @@ export async function deleteBlogPostAction(blogPostId: number) {
     revalidateTag("blog-posts");
 
     return true;
+  } catch (error) {
+    throw new Error(getErrorMessage(error));
+  }
+}
+
+export async function getBlogPostBySlugAction(
+  slug: string,
+): Promise<TG_BlogPost> {
+  try {
+    const url = `${process.env.BACKEND_API_URL}/blog-posts/by-slug/${encodeURIComponent(slug)}`;
+    const res = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!res.ok) {
+      const errorData = await res.text();
+      throw new Error(errorData);
+    }
+
+    const blogPost: TG_BlogPost = await res.json();
+    return blogPost;
+  } catch (error) {
+    throw new Error(getErrorMessage(error));
+  }
+}
+
+export async function getNonHiddenBlogPosts(): Promise<TG_BlogPost[]> {
+  try {
+    const url = `${process.env.BACKEND_API_URL}/blog-posts/non-hidden`;
+    const res = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!res.ok) {
+      const errorData = await res.text();
+      throw new Error(errorData);
+    }
+
+    const blogPosts: TG_BlogPost[] = await res.json();
+    return blogPosts;
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }

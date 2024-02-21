@@ -1,71 +1,83 @@
 "use client";
 
-import LogoImage from "@/components/mainPage/common/logo/LogoImage";
-import { dashboardLinks } from "@/lib/shared/constants";
-import { motion } from "framer-motion";
-import Link from "next/link";
-import React, { useState } from "react";
-import SidePanelMenuItem from "../DashboardMenuItem";
-import { useSession } from "next-auth/react";
+import React, { useRef } from "react";
+import useDimensions from "@/lib/hooks/useDimensions";
+import { cn } from "@/lib/utils";
+import Hamburger from "hamburger-react";
+import { motion, useCycle } from "framer-motion";
+import DashboardNavUl from "../DashboardNavUl";
 
 type Props = {};
 
 const DashboardMobileNav = (props: Props) => {
-  const [isMenuToggled, setIsMenuToggled] = useState<boolean>(false);
-  const { data: session, status } = useSession();
+  const containerRef = useRef(null);
+  const { height } = useDimensions(containerRef);
+  const [isOpen, toggleOpen] = useCycle<boolean>(false, true);
 
-  const user = session?.user;
+  const sidebar = {
+    open: (height = 1000) => ({
+      clipPath: `circle(${height * 2 + 200}px at 100% 0)`,
+      transition: {
+        type: "spring",
+        stiffness: 20,
+        restDelta: 2,
+      },
+    }),
+    closed: {
+      clipPath: "circle(0px at 100% 0)",
+      transition: {
+        type: "spring",
+        stiffness: 300,
+        damping: 40,
+      },
+    },
+  };
 
   return (
-    <div className="flex h-full flex-col">
-      <div className="flex h-[75px] flex-row items-center justify-between bg-primary p-2">
-        <Link href="/">
-          <LogoImage style="w-16 h-16" fill="white" />
-        </Link>
-        <div className="text-white">
-          {/* <ToggleNavbarButton
-            setIsMenuToggled={setIsMenuToggled}
-            isMenuToggled={isMenuToggled}
-          /> */}
-        </div>
-      </div>
-
-      {isMenuToggled && (
+    <>
+      <div className={cn(isOpen ? "block h-14 bg-white" : "hidden h-0")}></div>
+      <div
+        className={cn(
+          "left-0 right-0 top-0 z-50 block h-14 w-full bg-primary text-white md:hidden",
+          isOpen ? "fixed" : "sticky",
+        )}
+      >
+        <button className="flex h-full w-full justify-end">
+          <HamburgerWrapper toggle={toggleOpen} />
+        </button>
         <motion.nav
-          className="fixed top-[75px] z-50 h-screen w-full overflow-hidden  bg-primary"
-          initial={{ y: -1000, opacity: 0.8 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ type: "tween", duration: 0.3 }}
+          initial={false}
+          animate={isOpen ? "open" : "closed"}
+          custom={height}
+          className={`fixed top-14 z-50 h-full w-full md:hidden ${
+            isOpen ? "" : "pointer-events-none"
+          }`}
+          ref={containerRef}
         >
-          <nav>
-            <ul className="flex flex-col">
-              {user?.roles.includes("Admin") &&
-                dashboardLinks.admin.map((link) => {
-                  return (
-                    <SidePanelMenuItem
-                      key={link.text}
-                      text={link.text}
-                      icon={link.icon}
-                      path={link.path}
-                    />
-                  );
-                })}
-              {user?.roles.includes("Patient") &&
-                dashboardLinks.patient.map((link) => {
-                  return (
-                    <SidePanelMenuItem
-                      key={link.text}
-                      text={link.text}
-                      icon={link.icon}
-                      path={link.path}
-                    />
-                  );
-                })}
-            </ul>
-          </nav>
+          <motion.div
+            variants={sidebar}
+            className="absolute inset-0 right-0 w-full bg-white"
+          >
+            <div className="flex h-full w-full flex-col overflow-y-visible border-t border-slate-200 bg-primary font-semibold">
+              <DashboardNavUl />
+            </div>
+          </motion.div>
         </motion.nav>
-      )}
-    </div>
+      </div>
+    </>
+  );
+};
+
+const HamburgerWrapper = ({ toggle }: { toggle: any }) => {
+  return (
+    <Hamburger
+      size={20}
+      color="#ffffff"
+      label="Show menu"
+      onToggle={toggle}
+      distance="sm"
+      duration={0.5}
+    />
   );
 };
 

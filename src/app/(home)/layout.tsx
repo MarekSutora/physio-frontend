@@ -32,7 +32,9 @@ export default function RootLayout({
           <div className="flex flex-col">
             <HeaderMobile />
             <HeaderDesktop />
-            <main className="h-min-[579px] h-auto">{children}</main>
+            <main className="h-auto min-h-[603px] w-full bg-slate-50">
+              {children}
+            </main>
             <Footer />
             <Toaster />
           </div>

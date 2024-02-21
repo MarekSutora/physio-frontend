@@ -5,26 +5,36 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import dynamic from "next/dynamic";
-import { TC_BlogPost } from "@/lib/shared/types";
+import { TC_BlogPost, TG_BlogPost } from "@/lib/shared/types";
 import { createBlogPostAction } from "@/lib/actions/blogActions";
 import { useToast } from "@/components/ui/use-toast";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const RichTextEditor = dynamic(() => import("./RichTextEditor"), {
   ssr: false,
 });
 
-const CreateNewBlogForm = () => {
+type BlogFormProps = {
+  createNew: boolean;
+  oldData?: TG_BlogPost;
+};
+
+const BlogPostForm = ({ createNew, oldData }: BlogFormProps) => {
   const { toast } = useToast();
 
-  const [blogData, setBlogData] = useState<TC_BlogPost>({
-    title: "",
-    author: "",
-    datePublished: "",
-    keywordsString: "",
-    mainImageUrl: "",
-    htmlContent: "",
-    isHidden: false,
-  });
+  const [blogData, setBlogData] = useState<TC_BlogPost>(
+    oldData
+      ? oldData
+      : {
+          title: "",
+          author: "",
+          datePublished: "",
+          keywordsString: "",
+          mainImageUrl: "",
+          htmlContent: "",
+          isHidden: false,
+        },
+  );
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -54,6 +64,10 @@ const CreateNewBlogForm = () => {
       });
     }
   };
+
+  function handleCheckboxChange(event: FormEvent<HTMLButtonElement>): void {
+    throw new Error("Function not implemented.");
+  }
 
   return (
     <form
@@ -108,6 +122,13 @@ const CreateNewBlogForm = () => {
       <Label htmlFor="content">Content</Label>
       <RichTextEditor onContentChange={handleEditorChange} />
 
+      <Label htmlFor="isHidden">Is Hidden</Label>
+      <Checkbox
+        id="isHidden"
+        checked={blogData.isHidden}
+        onChange={handleCheckboxChange}
+      />
+
       <Button type="submit" className="mt-2">
         Submit
       </Button>
@@ -115,4 +136,4 @@ const CreateNewBlogForm = () => {
   );
 };
 
-export default CreateNewBlogForm;
+export default BlogPostForm;

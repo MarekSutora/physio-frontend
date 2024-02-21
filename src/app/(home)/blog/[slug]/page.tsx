@@ -1,19 +1,22 @@
 import {
   getAllBlogPostsAction,
   getBlogPostByIdAction,
+  getBlogPostBySlugAction,
+  getNonHiddenBlogPosts,
 } from "@/lib/actions/blogActions";
 import React from "react";
 
 export async function generateStaticParams() {
-  const blogPosts = await getAllBlogPostsAction();
+  const blogPosts = await getNonHiddenBlogPosts();
 
   return blogPosts.map((post) => ({
-    params: { id: post.id.toString() },
+    slug: post.slug,
   }));
 }
 
-const Page = async ({ params }: { params: { id: number } }) => {
-  const blogPost = await getBlogPostByIdAction(params.id);
+const Page = async ({ params }: { params: { slug: string } }) => {
+  console.log("params", params);
+  const blogPost = await getBlogPostBySlugAction(params.slug);
 
   const {
     title,

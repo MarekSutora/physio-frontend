@@ -1,11 +1,34 @@
-import React from 'react'
+import {
+  getAllBlogPostsAction,
+  getNonHiddenBlogPosts,
+} from "@/lib/actions/blogActions";
+import { TG_BlogPost } from "@/lib/shared/types";
+import React, { useEffect, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import parse, { Element } from "html-react-parser";
+import HoverBackground from "@/components/mainPage/blog/HoverBackground";
+import BlogCard from "@/components/mainPage/blog/BlogCard";
 
-type Props = {}
+const Page = async () => {
+  const blogPosts = await getNonHiddenBlogPosts();
 
-const Page = (props: Props) => {
+  const firstPostCopies = Array(20).fill(blogPosts[0]);
+
   return (
-    <div>Zobrazene blogy</div>
-  )
-}
+    <div className="m-auto h-full min-h-[605px] w-11/12  md:w-5/6 lg:w-4/6">
+      <div className="flex flex-wrap py-7">
+        {firstPostCopies.map((post, index) => (
+          <div
+            key={index}
+            className={`group w-full pb-3 pl-3 pr-3 transition-all duration-300 ease-in-out hover:scale-[1.01] ${index === 0 || index === 1 ? "md:w-1/2" : "md:w-1/3"}`}
+          >
+            <BlogCard post={post} />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
-export default Page
+export default Page;

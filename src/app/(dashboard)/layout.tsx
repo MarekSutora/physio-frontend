@@ -5,7 +5,7 @@ import Providers from "@/components/Providers";
 import DashboardNavigationPanel from "@/components/dashboard/navigation/DashboardNavigationPanel";
 import { cn } from "@/lib/utils";
 import LogoImage from "@/components/mainPage/common/logo/LogoImage";
-import DashboardDesktopHeader from "@/components/dashboard/navigation/desktop/DashboardDesktopHeader";
+import DashboardHeader from "@/components/dashboard/navigation/DashboardHeader";
 import { Toaster } from "@/components/ui/toaster";
 import { Suspense } from "react";
 
@@ -29,10 +29,10 @@ export default function RootLayout({
         <Providers>
           <div className="flex h-full w-full flex-col md:flex-row">
             <DashboardNavigationPanel />
-            <div className="flex h-auto w-full flex-col items-start gap-3 bg-slate-50 p-3">
-              <DashboardDesktopHeader />
+            <main className="flex h-auto w-full flex-col items-start gap-3 bg-slate-50 p-3">
+              <DashboardHeader />
               <Suspense fallback={<p>Loading...</p>}>{children}</Suspense>
-            </div>
+            </main>
           </div>
           <Toaster />
         </Providers>

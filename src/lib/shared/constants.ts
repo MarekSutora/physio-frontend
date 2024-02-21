@@ -64,7 +64,10 @@ export const dashboardLinks = {
     },
     {
       text: "Blog",
-      path: "/dashboard/admin/blog",
+      subMenuItems: [
+        { text: "Nový článok", path: "/dashboard/admin/blog/novy-clanok" },
+        { text: "Všetky články", path: "/dashboard/admin/blog/vsetky-clanky" },
+      ],
       icon: React.createElement(FaFacebook),
     },
     {
@@ -95,7 +98,7 @@ export const dashboardLinks = {
       icon: React.createElement(FaFacebook),
     },
   ],
-} as const;
+};
 
 export const DesktopDashboardSectionStyle =
   "border-slate-200 bg-white p-2 md:rounded-lg md:border-2" as const;
