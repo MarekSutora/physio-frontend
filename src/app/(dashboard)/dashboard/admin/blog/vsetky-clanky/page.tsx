@@ -17,7 +17,7 @@ const generateDummyData = (
       author: `Author ${Math.random().toString(36).substring(2, 7)}`,
       datePublished: new Date(
         Date.now() - Math.floor(Math.random() * 10000000000),
-      ).toLocaleDateString(),
+      ).toISOString(),
       isHidden: Math.random() > 0.5,
     });
   }
@@ -31,7 +31,7 @@ const Page = async () => {
 
   try {
     let _blogPosts = await getAllBlogPostsAction();
-    blogPosts = generateDummyData(blogPosts[0], 10);
+    blogPosts = generateDummyData(_blogPosts[0], 10);
   } catch (error) {
     console.error("error", error);
   }

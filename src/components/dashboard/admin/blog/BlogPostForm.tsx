@@ -36,6 +36,8 @@ const BlogPostForm = ({ createNew, oldData }: BlogFormProps) => {
         },
   );
 
+  console.log('blogData', blogData);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setBlogData({ ...blogData, [id]: value });
@@ -129,9 +131,11 @@ const BlogPostForm = ({ createNew, oldData }: BlogFormProps) => {
         onChange={handleCheckboxChange}
       />
 
-      <Button type="submit" className="mt-2">
-        Submit
-      </Button>
+      {createNew ? (
+        <Button type="submit">Create</Button>
+      ) : (
+        <Button type="submit">Update</Button>
+      )}
     </form>
   );
 };

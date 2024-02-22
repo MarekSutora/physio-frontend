@@ -1,15 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  //reactStrictMode: true,
-  //   swcMinify: true,
-  //   async rewrites() {
-  //     return [
-  //       {
-  //         source: "/api",
-  //         destination: "https://localhost:7049",
-  //       },
-  //     ];
-  //   },
+  async rewrites() {
+    return [
+      {
+        source: "/apinet/:path*",
+        destination: `${process.env.BACKEND_API_URL}/:path*`,
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {

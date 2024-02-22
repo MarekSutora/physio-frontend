@@ -208,6 +208,7 @@ export async function getBlogPostBySlugAction(
     }
 
     const blogPost: TG_BlogPost = await res.json();
+
     return blogPost;
   } catch (error) {
     throw new Error(getErrorMessage(error));

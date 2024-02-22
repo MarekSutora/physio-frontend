@@ -1,8 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaSortUp, FaSortDown, FaCheck, FaTimes } from "react-icons/fa";
 import { TG_BlogPost } from "@/lib/shared/types"; // Make sure to import from the correct location
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 type SortField = keyof TG_BlogPost;
 type SortOrder = "ascend" | "descend";
@@ -11,44 +14,50 @@ type Props = {
   _blogPosts: TG_BlogPost[];
 };
 
+const sortData = (
+  data: TG_BlogPost[],
+  field: SortField,
+  order: SortOrder,
+): TG_BlogPost[] => {
+  return [...data].sort((a, b) => {
+    // Handle string comparison
+    if (typeof a[field] === "string" && typeof b[field] === "string") {
+      if (order === "ascend") {
+        return a[field] < b[field] ? -1 : a[field] > b[field] ? 1 : 0;
+      } else {
+        return a[field] > b[field] ? -1 : a[field] < b[field] ? 1 : 0;
+      }
+    }
+    // Handle boolean comparison
+    if (typeof a[field] === "boolean" && typeof b[field] === "boolean") {
+      return a[field] === b[field]
+        ? 0
+        : (a[field] ? -1 : 1) * (order === "ascend" ? 1 : -1);
+    }
+    // Handle date comparison
+    if (field === "datePublished") {
+      const dateA = new Date(a.datePublished);
+      const dateB = new Date(b.datePublished);
+      return order === "ascend"
+        ? dateA.getTime() - dateB.getTime()
+        : dateB.getTime() - dateA.getTime();
+    }
+    return 0;
+  });
+};
+
 const BlogPostsGrid = ({ _blogPosts }: Props) => {
-  const [blogPosts, setBlogPosts] = useState<TG_BlogPost[]>(_blogPosts);
-  const [sortField, setSortField] = useState<SortField>();
-  const [sortOrder, setSortOrder] = useState<SortOrder>("ascend");
+  const preSortedBlogPosts = sortData(_blogPosts, "datePublished", "descend");
+  const [blogPosts, setBlogPosts] = useState<TG_BlogPost[]>(preSortedBlogPosts);
+  const [sortField, setSortField] = useState<SortField>("datePublished");
+  const [sortOrder, setSortOrder] = useState<SortOrder>("descend");
 
   const handleSort = (field: SortField) => {
-    const isAscend = sortField === field && sortOrder === "ascend";
-    setSortOrder(isAscend ? "descend" : "ascend");
-    const sortedData = [...blogPosts].sort((a, b) => {
-      // Sorting logic for strings
-      if (typeof a[field] === "string" && typeof b[field] === "string") {
-        if (sortOrder === "ascend") {
-          return a[field] < b[field] ? -1 : a[field] > b[field] ? 1 : 0;
-        } else {
-          return a[field] > b[field] ? -1 : a[field] < b[field] ? 1 : 0;
-        }
-      }
-      // Sorting logic for booleans
-      if (typeof a[field] === "boolean" && typeof b[field] === "boolean") {
-        if (sortOrder === "ascend") {
-          return a[field] === b[field] ? 0 : a[field] ? -1 : 1;
-        } else {
-          return a[field] === b[field] ? 0 : a[field] ? 1 : -1;
-        }
-      }
-      // Sorting logic for dates
-      if (field === "datePublished") {
-        const dateA = new Date(a.datePublished);
-        const dateB = new Date(b.datePublished);
-        return sortOrder === "ascend"
-          ? dateA.getTime() - dateB.getTime()
-          : dateB.getTime() - dateA.getTime();
-      }
-      return 0;
-    });
-
+    const newOrder =
+      sortField === field && sortOrder === "ascend" ? "descend" : "ascend";
     setSortField(field);
-    setBlogPosts(sortedData); // Update the state to force rerender with sorted data
+    setSortOrder(newOrder);
+    setBlogPosts(sortData(blogPosts, field, newOrder));
   };
 
   // Action handlers
@@ -102,7 +111,7 @@ const BlogPostsGrid = ({ _blogPosts }: Props) => {
           <tr key={post.id}>
             <td>{post.title}</td>
             <td>{post.author}</td>
-            <td>{new Date(post.datePublished).toLocaleDateString()}</td>
+            <td>{new Date(post.datePublished).toLocaleDateString("sk")}</td>
             <td>
               {post.isHidden ? (
                 <FaTimes color="red" />
@@ -110,12 +119,17 @@ const BlogPostsGrid = ({ _blogPosts }: Props) => {
                 <FaCheck color="green" />
               )}
             </td>
-            <td>
-              <button onClick={() => handleHidePublish(post.id)}>
-                Hide/Publish
-              </button>
-              <button onClick={() => handleDelete(post.id)}>Delete</button>
-              <button onClick={() => handleUpdate(post.id)}>Update</button>
+            <td className="flex flex-row gap-2">
+              <Button onClick={() => handleHidePublish(post.id)}>
+                {post.isHidden ? "Publish" : "Hide"}
+              </Button>
+              <Link href={`./upravit-clanok?slug=${post.slug}`}>Update</Link>
+              <Button
+                variant="destructive"
+                onClick={() => handleDelete(post.id)}
+              >
+                Delete
+              </Button>
             </td>
           </tr>
         ))}
