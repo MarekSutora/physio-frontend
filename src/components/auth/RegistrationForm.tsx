@@ -276,12 +276,3 @@ const RegistrationForm = () => {
 };
 
 export default RegistrationForm;
-function registerPatientAction(payload: {
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
-}) {
-  throw new Error("Function not implemented.");
-}

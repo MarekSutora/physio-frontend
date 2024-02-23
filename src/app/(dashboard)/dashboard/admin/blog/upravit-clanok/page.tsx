@@ -2,7 +2,7 @@ import useSWR from "swr";
 import React from "react";
 import DashboardSectionWrapper from "@/components/dashboard/DashboardSectionWrapper";
 import BlogPostForm from "@/components/dashboard/admin/blog/BlogPostForm";
-import { TG_BlogPost } from "@/lib/shared/types";
+import { TBlogPost } from "@/lib/shared/types";
 import { ca } from "date-fns/locale";
 import { getBlogPostBySlugAction } from "@/lib/actions/blogActions";
 
@@ -12,7 +12,7 @@ type Props = {
 };
 
 const Page = async (props: Props) => {
-  let blogPost: TG_BlogPost | undefined = undefined;
+  let blogPost: TBlogPost | undefined = undefined;
 
   const slug = props.searchParams.slug;
 

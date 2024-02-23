@@ -10,7 +10,6 @@ import {
   TG_ServiceType,
 } from "@/lib/shared/types";
 import { Label } from "@/components/ui/label";
-import "react-datepicker/dist/react-datepicker.css";
 import DatePickerComponent from "./DatePickerComponent";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

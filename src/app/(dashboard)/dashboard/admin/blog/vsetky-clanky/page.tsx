@@ -1,14 +1,14 @@
 import DashboardSectionWrapper from "@/components/dashboard/DashboardSectionWrapper";
 import BlogPostsGrid from "@/components/dashboard/admin/blog/BlogPostsGrid";
 import { getAllBlogPostsAction } from "@/lib/actions/blogActions";
-import { TG_BlogPost } from "@/lib/shared/types";
+import { TBlogPost } from "@/lib/shared/types";
 import React from "react";
 
 const generateDummyData = (
-  sampleData: TG_BlogPost,
+  sampleData: TBlogPost,
   count: number,
-): TG_BlogPost[] => {
-  const dummyData: TG_BlogPost[] = [];
+): TBlogPost[] => {
+  const dummyData: TBlogPost[] = [];
   for (let i = 0; i < count; i++) {
     dummyData.push({
       ...sampleData,
@@ -27,11 +27,12 @@ const generateDummyData = (
 type Props = {};
 
 const Page = async () => {
-  let blogPosts: TG_BlogPost[] = [];
+  let blogPosts: TBlogPost[] = [];
 
   try {
     let _blogPosts = await getAllBlogPostsAction();
-    blogPosts = generateDummyData(_blogPosts[0], 10);
+    blogPosts = _blogPosts;
+    // blogPosts = generateDummyData(_blogPosts[0], 10);
   } catch (error) {
     console.error("error", error);
   }

@@ -2,11 +2,11 @@
 
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
-import { TC_BlogPost, TG_BlogPost, TU_BlogPost } from "../shared/types";
+import { TBlogPost } from "../shared/types";
 import { revalidateTag } from "next/cache";
 import { getErrorMessage } from "../utils";
 
-export async function getAllBlogPostsAction(): Promise<TG_BlogPost[]> {
+export async function getAllBlogPostsAction(): Promise<TBlogPost[]> {
   try {
     const url = `${process.env.BACKEND_API_URL}/blog-posts`;
 
@@ -32,7 +32,7 @@ export async function getAllBlogPostsAction(): Promise<TG_BlogPost[]> {
   }
 }
 
-export async function getBlogPostByIdAction(id: number): Promise<TG_BlogPost> {
+export async function getBlogPostByIdAction(id: number): Promise<TBlogPost> {
   try {
     const url = `${process.env.BACKEND_API_URL}/blog-posts/${id}`;
     const res = await fetch(url, {
@@ -54,7 +54,17 @@ export async function getBlogPostByIdAction(id: number): Promise<TG_BlogPost> {
   }
 }
 
-export async function createBlogPostAction(formData: TC_BlogPost) {
+export async function createBlogPostAction(formData: TBlogPost) {
+  const createBlogPost = {
+    title: formData.title,
+    datePublished: formData.datePublished,
+    htmlContent: formData.htmlContent,
+    author: formData.author,
+    keywordsString: formData.keywordsString,
+    mainImageUrl: formData.mainImageUrl,
+    isHidden: formData.isHidden,
+  };
+
   try {
     const session = await getServerSession(authOptions);
 
@@ -74,7 +84,7 @@ export async function createBlogPostAction(formData: TC_BlogPost) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${session.backendTokens.accessToken}`,
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(createBlogPost),
     });
 
     if (!res.ok) {
@@ -90,7 +100,7 @@ export async function createBlogPostAction(formData: TC_BlogPost) {
   }
 }
 
-export async function updateBlogPostAction(formData: TU_BlogPost) {
+export async function updateBlogPostAction(formData: TBlogPost) {
   try {
     const session = await getServerSession(authOptions);
 
@@ -192,7 +202,7 @@ export async function deleteBlogPostAction(blogPostId: number) {
 
 export async function getBlogPostBySlugAction(
   slug: string,
-): Promise<TG_BlogPost> {
+): Promise<TBlogPost> {
   try {
     const url = `${process.env.BACKEND_API_URL}/blog-posts/by-slug/${encodeURIComponent(slug)}`;
     const res = await fetch(url, {
@@ -207,7 +217,7 @@ export async function getBlogPostBySlugAction(
       throw new Error(errorData);
     }
 
-    const blogPost: TG_BlogPost = await res.json();
+    const blogPost: TBlogPost = await res.json();
 
     return blogPost;
   } catch (error) {
@@ -215,7 +225,7 @@ export async function getBlogPostBySlugAction(
   }
 }
 
-export async function getNonHiddenBlogPosts(): Promise<TG_BlogPost[]> {
+export async function getNonHiddenBlogPosts(): Promise<TBlogPost[]> {
   try {
     const url = `${process.env.BACKEND_API_URL}/blog-posts/non-hidden`;
     const res = await fetch(url, {
@@ -230,7 +240,7 @@ export async function getNonHiddenBlogPosts(): Promise<TG_BlogPost[]> {
       throw new Error(errorData);
     }
 
-    const blogPosts: TG_BlogPost[] = await res.json();
+    const blogPosts: TBlogPost[] = await res.json();
     return blogPosts;
   } catch (error) {
     throw new Error(getErrorMessage(error));

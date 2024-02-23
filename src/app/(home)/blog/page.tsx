@@ -2,7 +2,7 @@ import {
   getAllBlogPostsAction,
   getNonHiddenBlogPosts,
 } from "@/lib/actions/blogActions";
-import { TG_BlogPost } from "@/lib/shared/types";
+import { TBlogPost } from "@/lib/shared/types";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,7 +13,8 @@ import BlogCard from "@/components/mainPage/blog/BlogCard";
 const Page = async () => {
   const blogPosts = await getNonHiddenBlogPosts();
 
-  const firstPostCopies = Array(20).fill(blogPosts[0]);
+  //const firstPostCopies = Array(20).fill(blogPosts[0]);
+  const firstPostCopies = blogPosts;
 
   return (
     <div className="m-auto h-full min-h-[605px] w-11/12  md:w-5/6 lg:w-4/6">

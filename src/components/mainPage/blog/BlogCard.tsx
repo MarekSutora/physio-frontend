@@ -1,5 +1,5 @@
 import { getAllBlogPostsAction } from "@/lib/actions/blogActions";
-import { TG_BlogPost } from "@/lib/shared/types";
+import { TBlogPost } from "@/lib/shared/types";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,7 +9,7 @@ import HoverBackground from "@/components/mainPage/blog/HoverBackground";
 type Props = {};
 
 type BlogCardProps = {
-  post: TG_BlogPost;
+  post: TBlogPost;
 };
 
 const stripHtml = (htmlString: string) => {

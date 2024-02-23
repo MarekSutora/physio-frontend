@@ -5,10 +5,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import dynamic from "next/dynamic";
-import { TC_BlogPost, TG_BlogPost } from "@/lib/shared/types";
-import { createBlogPostAction } from "@/lib/actions/blogActions";
+import { TBlogPost  } from "@/lib/shared/types";
+import { createBlogPostAction, updateBlogPostAction } from "@/lib/actions/blogActions";
 import { useToast } from "@/components/ui/use-toast";
 import { Checkbox } from "@/components/ui/checkbox";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css"; // Import CSS for react-datepicker
 
 const RichTextEditor = dynamic(() => import("./RichTextEditor"), {
   ssr: false,
@@ -16,13 +18,17 @@ const RichTextEditor = dynamic(() => import("./RichTextEditor"), {
 
 type BlogFormProps = {
   createNew: boolean;
-  oldData?: TG_BlogPost;
+  oldData?: TBlogPost;
 };
 
 const BlogPostForm = ({ createNew, oldData }: BlogFormProps) => {
   const { toast } = useToast();
 
-  const [blogData, setBlogData] = useState<TC_BlogPost>(
+  const [datePublished, setDatePublished] = useState<Date | null>(
+    oldData && oldData.datePublished ? new Date(oldData.datePublished) : null,
+  );
+
+  const [blogData, setBlogData] = useState<TBlogPost>(
     oldData
       ? oldData
       : {
@@ -36,7 +42,7 @@ const BlogPostForm = ({ createNew, oldData }: BlogFormProps) => {
         },
   );
 
-  console.log('blogData', blogData);
+  console.log("blogData", blogData);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -51,25 +57,40 @@ const BlogPostForm = ({ createNew, oldData }: BlogFormProps) => {
     event.preventDefault();
 
     try {
-      await createBlogPostAction(blogData);
-      toast({
-        variant: "success",
-        title: "Úspech. 🎉",
-        className: "text-lg",
-      });
+      if (createNew) {
+        // Call the function to create a new blog post
+        await createBlogPostAction(blogData);
+        toast({
+          variant: "success",
+          title: "Post created successfully! 🎉",
+          className: "text-lg",
+        });
+      } else {
+        await updateBlogPostAction(blogData); 
+        toast({
+          variant: "success",
+          title: "Post updated successfully! 🎉",
+          className: "text-lg",
+        });
+      }
     } catch (error) {
       console.log("error", error);
       toast({
         variant: "destructive",
-        description: "Nepodarilo sa pridať. 🙄",
+        description: "Failed to submit the post. 🙄",
         className: "text-lg",
       });
     }
   };
 
-  function handleCheckboxChange(event: FormEvent<HTMLButtonElement>): void {
-    throw new Error("Function not implemented.");
-  }
+  const handleCheckboxChange = (checked: boolean): void => {
+    setBlogData({ ...blogData, isHidden: checked });
+  };
+
+  const handleDateChange = (date: Date | null) => {
+    setDatePublished(date);
+    setBlogData({ ...blogData, datePublished: date?.toISOString() || "" });
+  };
 
   return (
     <form
@@ -94,14 +115,17 @@ const BlogPostForm = ({ createNew, oldData }: BlogFormProps) => {
         onChange={handleInputChange}
       />
 
-      <Label htmlFor="datePublished">Date Published</Label>
-      <Input
-        id="datePublished"
-        type="date"
-        required
-        value={blogData.datePublished}
-        onChange={handleInputChange}
-      />
+      <div className="flex flex-col">
+        <Label htmlFor="datePublished">Date Published</Label>
+        <DatePicker
+          selected={datePublished}
+          onChange={handleDateChange}
+          dateFormat="dd.MM.yyyy"
+          isClearable
+          placeholderText="Select a date"
+          className="form-control"
+        />
+      </div>
 
       <Label htmlFor="mainImageUrl">Main Image URL</Label>
       <Input
@@ -121,14 +145,17 @@ const BlogPostForm = ({ createNew, oldData }: BlogFormProps) => {
         onChange={handleInputChange}
       />
 
-      <Label htmlFor="content">Content</Label>
-      <RichTextEditor onContentChange={handleEditorChange} />
-
       <Label htmlFor="isHidden">Is Hidden</Label>
       <Checkbox
         id="isHidden"
         checked={blogData.isHidden}
-        onChange={handleCheckboxChange}
+        onCheckedChange={handleCheckboxChange}
+      />
+
+      <Label htmlFor="content">Content</Label>
+      <RichTextEditor
+        onContentChange={handleEditorChange}
+        initialContent={blogData.htmlContent} // Pass the current content state to the editor
       />
 
       {createNew ? (

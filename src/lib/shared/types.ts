@@ -77,8 +77,8 @@ export type TG_BookedAppointment = {
 
 //BLOG
 
-export type TG_BlogPost = {
-  id: number;
+export type TBlogPost = {
+  id?: number;
   title: string;
   author: string;
   datePublished: string;
@@ -86,28 +86,7 @@ export type TG_BlogPost = {
   mainImageUrl: string;
   htmlContent: string;
   isHidden: boolean;
-  slug: string;
-};
-
-export type TC_BlogPost = {
-  title: string;
-  datePublished: string;
-  htmlContent: string;
-  author: string;
-  keywordsString: string;
-  mainImageUrl: string;
-  isHidden: boolean;
-};
-
-export type TU_BlogPost = {
-  id: number;
-  title: string;
-  author: string;
-  datePublished: string;
-  keywordsString: string;
-  mainImageUrl: string;
-  htmlContent: string;
-  isHidden: boolean;
+  slug?: string;
 };
 
 //OTHER
