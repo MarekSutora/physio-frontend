@@ -5,8 +5,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import dynamic from "next/dynamic";
-import { TBlogPost  } from "@/lib/shared/types";
-import { createBlogPostAction, updateBlogPostAction } from "@/lib/actions/blogActions";
+import { TBlogPost } from "@/lib/shared/types";
+import {
+  createBlogPostAction,
+  updateBlogPostAction,
+} from "@/lib/actions/blogActions";
 import { useToast } from "@/components/ui/use-toast";
 import { Checkbox } from "@/components/ui/checkbox";
 import DatePicker from "react-datepicker";
@@ -66,7 +69,7 @@ const BlogPostForm = ({ createNew, oldData }: BlogFormProps) => {
           className: "text-lg",
         });
       } else {
-        await updateBlogPostAction(blogData); 
+        await updateBlogPostAction(blogData);
         toast({
           variant: "success",
           title: "Post updated successfully! 🎉",
@@ -77,7 +80,9 @@ const BlogPostForm = ({ createNew, oldData }: BlogFormProps) => {
       console.log("error", error);
       toast({
         variant: "destructive",
-        description: "Failed to submit the post. 🙄",
+        description: createNew
+          ? "Failed to create the post."
+          : "Failed to update the post.",
         className: "text-lg",
       });
     }

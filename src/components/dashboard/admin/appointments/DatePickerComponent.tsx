@@ -1,6 +1,7 @@
 import React from "react";
 import DatePicker, { CalendarContainer } from "react-datepicker";
 import { sk } from "date-fns/locale";
+import "react-datepicker/dist/react-datepicker.css";
 
 type Props = {
   startTime: Date;

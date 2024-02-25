@@ -31,6 +31,8 @@ export const authOptions: AuthOptions = {
       },
       async authorize(credentials, req) {
         if (!credentials?.email || !credentials?.password) return null;
+        
+
 
         try {
           const res = await fetch(`${process.env.BACKEND_API_URL}/auth/login`, {
@@ -51,6 +53,7 @@ export const authOptions: AuthOptions = {
             }
           }
         } catch (error) {
+          console.log("authorize error", error);
           throw new Error(getErrorMessage(error));
         }
       },

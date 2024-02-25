@@ -93,7 +93,7 @@ export async function createAdminBookedAppointmentAction(
       throw new Error(errorData);
     }
 
-    revalidateTag("unbooked-appointments");
+    revalidateTag("booked-appointments");
     // Assuming a successful creation returns true or similar positive confirmation
     return true;
   } catch (error) {
@@ -128,7 +128,7 @@ export async function createClientBookedAppointmentAction(
       throw new Error(errorData);
     }
 
-    revalidateTag("unbooked-appointments");
+    revalidateTag("booked-appointments");
     // Assuming a successful creation returns true or similar positive confirmation
     return true;
   } catch (error) {

@@ -233,6 +233,7 @@ export async function getNonHiddenBlogPosts(): Promise<TBlogPost[]> {
       headers: {
         "Content-Type": "application/json",
       },
+      next: { tags: ["blog-posts"] },
     });
 
     if (!res.ok) {

@@ -66,6 +66,7 @@ export type TC_ClientBookedAppointment = {
 
 export type TG_BookedAppointment = {
   id: number;
+  appointmentId: number;
   startTime: Date;
   durationMinutes: number;
   serviceTypeName: string;
@@ -73,6 +74,8 @@ export type TG_BookedAppointment = {
   clientSecondName: string;
   cost: number;
   hexColor: string;
+  capacity: number;
+  appointmentBookedDate: Date;
 };
 
 //BLOG

@@ -10,6 +10,10 @@ import {
   deleteBlogPostAction,
   updateBlogPostAction,
 } from "@/lib/actions/blogActions";
+import { useToast } from "@/components/ui/use-toast";
+import { ca } from "date-fns/locale";
+
+//TODO style the table
 
 type SortField = keyof TBlogPost;
 type SortOrder = "ascend" | "descend";
@@ -50,6 +54,7 @@ const sortData = (
 };
 
 const BlogPostsGrid = ({ _blogPosts }: Props) => {
+  const { toast } = useToast();
   const preSortedBlogPosts = sortData(_blogPosts, "datePublished", "descend");
   const [blogPosts, setBlogPosts] = useState<TBlogPost[]>(preSortedBlogPosts);
   const [sortField, setSortField] = useState<SortField>("datePublished");
@@ -65,19 +70,51 @@ const BlogPostsGrid = ({ _blogPosts }: Props) => {
 
   // Action handlers
   const handleHide = async (blogPost: TBlogPost) => {
-    blogPost.isHidden = true;
-
-    await updateBlogPostAction(blogPost);
+    try {
+      blogPost.isHidden = true;
+      await updateBlogPostAction(blogPost);
+      toast({
+        variant: "success",
+        title: "Post hidden successfully.",
+      });
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Failed to hide the post.",
+      });
+    }
   };
 
   const handlePublish = async (blogPost: TBlogPost) => {
-    blogPost.isHidden = false;
-
-    await updateBlogPostAction(blogPost);
+    try {
+      blogPost.isHidden = false;
+      await updateBlogPostAction(blogPost);
+      toast({
+        variant: "success",
+        title: "Post published successfully.",
+      });
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Failed to publish the post.",
+      });
+    }
   };
 
   const handleDelete = async (id: number) => {
-    await deleteBlogPostAction(id);
+    try {
+      await deleteBlogPostAction(id);
+      setBlogPosts(blogPosts.filter((post) => post.id !== id));
+      toast({
+        variant: "success",
+        title: "Post deleted successfully.",
+      });
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Failed to delete the post.",
+      });
+    }
   };
 
   return (
