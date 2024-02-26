@@ -7,13 +7,14 @@ import { getErrorMessage } from "../utils";
 import {
   TC_AdminBookedAppointment,
   TC_Appointment,
+  TG_BookedAppointment,
   TG_UnbookedAppointment,
 } from "../shared/types";
 
 export async function getUnbookedAppointmentsAction(): Promise<
   TG_UnbookedAppointment[]
 > {
-  const url = `${process.env.BACKEND_API_URL}/appointments/unbooked-appointments`;
+  const url = `${process.env.BACKEND_API_URL}/appointments/unbooked`;
 
   // Make the fetch call with the Authorization header
   const res = await fetch(url, {
@@ -43,7 +44,7 @@ export async function createAppointmentAction(
       );
     }
 
-    const url = `${process.env.BACKEND_API_URL}/appointments/unbooked-appointments`;
+    const url = `${process.env.BACKEND_API_URL}/appointments/unbooked`;
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -171,7 +172,7 @@ export async function deleteAppointmentAction(
 }
 
 export async function getBookedAppointmentsAction(): Promise<
-  TC_AdminBookedAppointment[]
+  TG_BookedAppointment[]
 > {
   try {
     const session = await getServerSession(authOptions);
@@ -182,30 +183,32 @@ export async function getBookedAppointmentsAction(): Promise<
       );
     }
 
-    const url = `${process.env.BACKEND_API_URL}/appointments/booked-appointments`;
-    const response = await fetch(url, {
+    const url = `${process.env.BACKEND_API_URL}/appointments/booked`;
+    const res = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${session.backendTokens.accessToken}`,
       },
+      next: { tags: ["booked-appointments"] },
     });
-
-    if (!response.ok) {
-      const errorData = await response.text();
+    if (!res.ok) {
+      const errorData = await res.text();
+      console.error("errorData", errorData);
       throw new Error(errorData);
     }
 
-    const data = await response.json();
-    return data;
+    const data = await res.json();
+
+    return data.length > 0 ? data : [];
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    throw new Error("getBookedAppointmentsAction: " + getErrorMessage(error));
   }
 }
 
-export async function cancelBookedAppointment(
+export async function deleteBookedAppointmentAction(
   bookedAppointmentId: number,
-): Promise<boolean> {
+): Promise<void> {
   try {
     const session = await getServerSession(authOptions);
 
@@ -215,9 +218,9 @@ export async function cancelBookedAppointment(
       );
     }
 
-    const url = `${process.env.BACKEND_API_URL}/appointments/booked-appointments/${bookedAppointmentId}`;
+    const url = `${process.env.BACKEND_API_URL}/appointments/booked/${bookedAppointmentId}`;
     const response = await fetch(url, {
-      method: "PUT",
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${session.backendTokens.accessToken}`,
@@ -229,9 +232,8 @@ export async function cancelBookedAppointment(
       throw new Error(errorData);
     }
 
+    revalidateTag("booked-appointments");
     revalidateTag("unbooked-appointments");
-    // Assuming a successful deletion returns true or similar positive confirmation
-    return true;
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }

@@ -7,16 +7,17 @@ import { TG_BookedAppointment } from "@/lib/shared/types";
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import DashboardSectionWrapper from "../../DashboardSectionWrapper";
-import { wrap } from "module";
-import { Calendar } from "primereact/calendar";
 import { FilterMatchMode } from "primereact/api";
-import { Dropdown } from "primereact/dropdown";
 import { MultiSelect, MultiSelectChangeEvent } from "primereact/multiselect";
 import { locale, addLocale } from "primereact/api";
-import { add } from "date-fns";
-import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { Button } from "@/components/ui/button";
-import CustomConfirmDialog from "@/components/mainPage/common/actionConfirmationDialog";
+import ShadConfirmationDialog from "@/components/mainPage/common/logo/ShadConfirmationDialog";
+import {
+  deleteAppointmentAction,
+  deleteBookedAppointmentAction,
+} from "@/lib/actions/appointmentsActions";
+import { useToast } from "@/components/ui/use-toast";
+import Link from "next/link";
 
 declare module "primereact/api" {
   export function addLocale(
@@ -31,6 +32,7 @@ type Props = {
 
 //TODO date filtering
 //TODO mozno clear filter global a keyword search global
+//TODO warning server does not match client
 
 const defaultFilters: DataTableFilterMeta = {
   serviceTypeName: { value: null, matchMode: FilterMatchMode.IN },
@@ -41,9 +43,16 @@ const defaultFilters: DataTableFilterMeta = {
   capacity: { value: null, matchMode: FilterMatchMode.EQUALS },
   startTime: { value: null, matchMode: FilterMatchMode.CONTAINS },
   appointmentBookedDate: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  clientId: { value: null, matchMode: FilterMatchMode.CONTAINS },
 };
 
 const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
+  const [dialogVisible, setDialogVisible] = useState(false);
+  const [dynamicStyles, setDynamicStyles] = useState("");
+  const { toast } = useToast();
+  const [bookedAppointmentsState, setBookedAppointmentsState] =
+    useState<TG_BookedAppointment[]>(bookedAppointments);
+
   locale("sk");
   addLocale("sk", {
     startsWith: "Začína na",
@@ -201,18 +210,21 @@ const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
     },
   });
 
-  let dynamicStyles = "";
-  bookedAppointments.forEach((appointment) => {
-    const colorClass = `row-bg-${appointment.hexColor.replace("#", "")}`;
-    dynamicStyles += `
-      .${colorClass} {
-        background-color: ${appointment.hexColor}14;
-      }
-      .${colorClass}:hover {
-        background-color: ${appointment.hexColor}28;
-      }
-    `;
-  });
+  useEffect(() => {
+    let styles = "";
+    bookedAppointments.forEach((appointment) => {
+      const colorClass = `row-bg-${appointment.hexColor.replace("#", "")}`;
+      styles += `
+        .${colorClass} {
+          background-color: ${appointment.hexColor}14;
+        }
+        .${colorClass}:hover {
+          background-color: ${appointment.hexColor}28;
+        }
+      `;
+    });
+    setDynamicStyles(styles);
+  }, [bookedAppointments]);
 
   const rowClassName = (data: TG_BookedAppointment) => {
     return `row-bg-${data.hexColor.replace("#", "")}`;
@@ -251,61 +263,93 @@ const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
     );
   };
 
-  const confirmAction = (
-    action: (appointment: TG_BookedAppointment) => void,
-    rowData: TG_BookedAppointment,
-  ): void => {
-    confirmDialog({
-      message: "Are you sure you want to perform this action?",
-      header: "Confirmation",
-      icon: "pi pi-exclamation-triangle",
-      acceptClassName: "bg-primary text-white",
-      defaultFocus: "reject",
-      accept: () => action(rowData),
-      reject: () => {}, // Optional reject function
-    });
+  const handleDeleteBookedAppointment = async (id: number) => {
+    try {
+      await deleteBookedAppointmentAction(id);
+
+      toast({
+        variant: "success",
+        title: "Rezervacia zrusena",
+        description: "Rezervacia bola uspesne zrusena",
+        className: "text-lg",
+      });
+      setBookedAppointmentsState(
+        bookedAppointments.filter((appt) => appt.id !== id),
+      );
+    } catch {
+      toast({
+        variant: "destructive",
+        title: "Chyba pri zrusovani rezervacie",
+        description: "Nepodarilo sa zrusit rezervaciu",
+        className: "text-lg",
+      });
+    } finally {
+      setDialogVisible(false);
+    }
   };
 
-  // Example action function, typed to accept a TG_BookedAppointment
-  const someAction = (rowData: TG_BookedAppointment): void => {
-    console.log("Action confirmed for", rowData);
-    // Perform your action here
+  const handleDeleteAppointment = async (appId: number) => {
+    try {
+      await deleteAppointmentAction(appId);
+
+      toast({
+        variant: "success",
+        title: "Termin zruseny",
+        description: "Termin bol uspesne zruseny",
+        className: "text-lg",
+      });
+      setBookedAppointmentsState(
+        bookedAppointments.filter((appt) => appt.appointmentId !== appId),
+      );
+    } catch (error) {
+      console.error("error", error);
+      toast({
+        variant: "destructive",
+        title: "Chyba pri zrusovani terminu",
+        description: "Nepodarilo sa zrusit termin",
+        className: "text-lg",
+      });
+    } finally {
+      setDialogVisible(false);
+    }
   };
 
   const actionBodyTemplate = (rowData: TG_BookedAppointment) => {
     return (
-      <>
-        <Button
-          variant="default"
-          onClick={() => confirmAction(someAction, rowData)}
+      <div className="flex flex-row gap-1">
+        <Link
+          href={`./termin?appId=${rowData.appointmentId}`}
+          className="bg-primary text-white"
         >
           Otvorit
-        </Button>
-        <Button
-          variant="destructive"
-          onClick={() => confirmAction(someAction, rowData)}
+        </Link>
+        <>
+          <ShadConfirmationDialog
+            onConfirm={handleDeleteBookedAppointment}
+            confirmArgs={[rowData.id]}
+          >
+            <Button
+              variant="destructive"
+              onClick={() => setDialogVisible(true)}
+            >
+              Zrusit rezervaciu
+            </Button>
+          </ShadConfirmationDialog>
+        </>
+        <ShadConfirmationDialog
+          onConfirm={handleDeleteAppointment}
+          confirmArgs={[rowData.appointmentId]}
         >
-          Zrusit rezervaciu
-        </Button>
-        <Button
-          variant="destructive"
-          onClick={() => confirmAction(someAction, rowData)}
-        >
-          Zrusit termin
-        </Button>
-      </>
+          <Button variant="destructive" onClick={() => setDialogVisible(true)}>
+            Zrusit termin
+          </Button>
+        </ShadConfirmationDialog>
+      </div>
     );
   };
 
   return (
-    <DashboardSectionWrapper title="Rezervované termíny">
-      <CustomConfirmDialog
-        isVisible={dialogVisible}
-        onHide={() => setDialogVisible(false)}
-        performAction={performAction}
-        successToastText="Action Successful"
-        errorToastTest="Action Failed"
-      />
+    <DashboardSectionWrapper title="Rezervované termíny" height="h-fit">
       <style>{dynamicStyles}</style>
       <DataTable
         value={bookedAppointments}
@@ -314,9 +358,10 @@ const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
         emptyMessage="Nenasli sa ziadne rezervovane terminy"
         rowClassName={rowClassName}
         filters={defaultFilters}
-        dataKey="id"
         filterLocale="sk"
-        aria-controls="booked-appointments-table"
+        aria-hidden
+        dataKey="id"
+        size="small"
       >
         <Column
           field="startTime"
@@ -325,7 +370,7 @@ const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
           body={(rowData: TG_BookedAppointment) =>
             formatDate(rowData.startTime)
           }
-          style={{ width: "250px" }}
+          style={{ width: "200px", minWidth: "200px" }}
           filter
           filterField="startTime"
         />
@@ -334,7 +379,7 @@ const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
           header="Typ sluzby"
           sortable
           body={(rowData: TG_BookedAppointment) => rowData.serviceTypeName}
-          style={{ width: "200px", textWrap: "nowrap" }}
+          style={{ width: "200px" }}
           filter
           filterElement={serviceTypeFilterTemplate}
           showFilterMatchModes={false}
@@ -361,6 +406,15 @@ const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
           hidden
         />
         <Column
+          field="clientId"
+          header="ID klienta"
+          sortable
+          body={(rowData: TG_BookedAppointment) => rowData.clientId}
+          style={{ width: "70px" }}
+          filter
+          filterField="clientId"
+        />
+        <Column
           field="clientFirstName"
           header="Meno"
           sortable
@@ -383,7 +437,7 @@ const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
           body={(rowData: TG_BookedAppointment) =>
             formatDate(rowData.startTime)
           }
-          style={{ width: "250px" }}
+          style={{ width: "260px" }}
           filter
           filterField="appointmentBookedDate"
         />

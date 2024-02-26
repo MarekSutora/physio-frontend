@@ -3,11 +3,12 @@ import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import { useToast } from "@/components/ui/use-toast";
 import { getErrorMessage } from "@/lib/utils";
+import ClipLoader from "react-spinners/ClipLoader";
 
 type Props = {
   isVisible: boolean;
   onHide: () => void;
-  performAction: () => Promise<void>;
+  performAction: () => any;
   successToastText: string;
   errorToastTest: string;
 };
@@ -22,10 +23,10 @@ const CustomConfirmDialog = ({
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
-  const handleConfirm = async () => {
+  const handleConfirm = () => {
     setIsLoading(true);
     try {
-      await performAction();
+      performAction();
       toast({
         variant: "success",
         title: " 🎉 " + successToastText + " 🎉",
@@ -71,7 +72,19 @@ const CustomConfirmDialog = ({
         onHide={onHide}
       >
         <p>Are you sure you want to perform this action?</p>
-        {isLoading && <p>Loading...</p>} {/* Display loading indicator */}
+        {isLoading && (
+          <ClipLoader
+            color={"#14746F"}
+            loading={isLoading}
+            cssOverride={{
+              display: "block",
+              margin: "0 auto",
+            }}
+            size={100}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        )}
       </Dialog>
     </>
   );

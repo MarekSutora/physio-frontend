@@ -29,7 +29,7 @@ export default function RootLayout({
         <Providers>
           <div className="flex h-full w-full flex-col md:flex-row">
             <DashboardNavigationPanel />
-            <main className="flex h-auto w-full flex-col items-start gap-3 bg-slate-50 p-3">
+            <main className="flex h-full w-full flex-col items-start gap-3 bg-slate-50 p-3">
               <DashboardHeader />
               <Suspense fallback={<p>Loading...</p>}>{children}</Suspense>
             </main>

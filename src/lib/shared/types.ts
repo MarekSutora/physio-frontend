@@ -76,6 +76,7 @@ export type TG_BookedAppointment = {
   hexColor: string;
   capacity: number;
   appointmentBookedDate: Date;
+  clientId: number;
 };
 
 //BLOG

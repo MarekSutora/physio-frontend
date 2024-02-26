@@ -32,7 +32,7 @@ const AppointmentCard = ({
   //TODO style this
 
   const handleDeleteButtonClick = () => {
-    //TODO
+    
   };
 
   return (
