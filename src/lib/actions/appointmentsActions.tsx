@@ -5,6 +5,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 import { revalidateTag } from "next/cache";
 import { getErrorMessage } from "../utils";
 import {
+  TAppointment,
   TC_AdminBookedAppointment,
   TC_Appointment,
   TG_BookedAppointment,
@@ -16,7 +17,6 @@ export async function getUnbookedAppointmentsAction(): Promise<
 > {
   const url = `${process.env.BACKEND_API_URL}/appointments/unbooked`;
 
-  // Make the fetch call with the Authorization header
   const res = await fetch(url, {
     method: "GET",
     cache: "no-store",
@@ -234,6 +234,29 @@ export async function deleteBookedAppointmentAction(
 
     revalidateTag("booked-appointments");
     revalidateTag("unbooked-appointments");
+  } catch (error) {
+    throw new Error(getErrorMessage(error));
+  }
+}
+
+//TODO auth
+export async function getAppointmentByIdAction(
+  id: number,
+): Promise<TAppointment> {
+  try {
+    const url = `${process.env.BACKEND_API_URL}/appointments/${id}`;
+    const res = await fetch(url, {
+      method: "GET",
+      cache: "no-store",
+    });
+
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    const data = await res.json();
+
+    return data;
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }

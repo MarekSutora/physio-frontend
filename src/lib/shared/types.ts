@@ -113,3 +113,29 @@ export type TResponseResult = {
   success: boolean;
   message: string;
 };
+
+//APPOINTMENT
+
+export type TAppointment = {
+  id: number;
+  capacity: number;
+  startTime: Date; // or string if you prefer to handle dates in ISO string format
+  bookedAppointments: TG_BookedAppointment[]; // Using TG_BookedAppointment for booked appointments
+  appointmentDetail: TAppointmentDetail; // Defining TAppointmentDetail below
+};
+
+export type TAppointmentDetail = {
+  notes: string;
+  appointmentExerciseDetails: TAppointmentExerciseDetail[]; // Defining TAppointmentExerciseDetail below
+};
+
+export type TAppointmentExerciseDetail = {
+  exerciseName: string | null;
+  numberOfRepetitions?: number | null;
+  expectedNumberOfSets?: number | null;
+  expectedDurationInMinutes?: number | null;
+  restAfterExerciseInMinutes?: number | null;
+  restBetweenSetsInMinutes?: number | null;
+  order: number;
+  successfullyPerformed?: boolean;
+};

@@ -435,7 +435,7 @@ const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
           header="Datum rezervacie"
           sortable
           body={(rowData: TG_BookedAppointment) =>
-            formatDate(rowData.startTime)
+            formatDate(rowData.appointmentBookedDate)
           }
           style={{ width: "260px" }}
           filter

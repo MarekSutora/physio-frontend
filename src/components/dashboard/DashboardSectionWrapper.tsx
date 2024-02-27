@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import { he } from "date-fns/locale";
 
 type Props = {
   children: React.ReactNode;
