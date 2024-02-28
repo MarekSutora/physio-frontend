@@ -119,23 +119,29 @@ export type TResponseResult = {
 export type TAppointment = {
   id: number;
   capacity: number;
-  startTime: Date; // or string if you prefer to handle dates in ISO string format
-  bookedAppointments: TG_BookedAppointment[]; // Using TG_BookedAppointment for booked appointments
-  appointmentDetail: TAppointmentDetail; // Defining TAppointmentDetail below
+  startTime: Date;
+  bookedAppointments: TG_BookedAppointment[];
+  appointmentDetail: TAppointmentDetail;
 };
 
 export type TAppointmentDetail = {
   notes: string;
-  appointmentExerciseDetails: TAppointmentExerciseDetail[]; // Defining TAppointmentExerciseDetail below
+  appointmentExerciseDetails: TAppointmentExerciseDetail[];
 };
 
 export type TAppointmentExerciseDetail = {
-  exerciseName: string | null;
+  exerciseType: TExerciseType;
+  weight?: number | null;
   numberOfRepetitions?: number | null;
   expectedNumberOfSets?: number | null;
   expectedDurationInMinutes?: number | null;
   restAfterExerciseInMinutes?: number | null;
   restBetweenSetsInMinutes?: number | null;
   order: number;
-  successfullyPerformed?: boolean;
+  successfullyPerformed: boolean;
+};
+
+export type TExerciseType = {
+  id: number;
+  name: string;
 };

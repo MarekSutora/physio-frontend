@@ -6,6 +6,7 @@ import { revalidateTag } from "next/cache";
 import { getErrorMessage } from "../utils";
 import {
   TAppointment,
+  TAppointmentExerciseDetail,
   TC_AdminBookedAppointment,
   TC_Appointment,
   TG_BookedAppointment,
@@ -257,6 +258,37 @@ export async function getAppointmentByIdAction(
     const data = await res.json();
 
     return data;
+  } catch (error) {
+    throw new Error(getErrorMessage(error));
+  }
+}
+
+
+export async function updateAppointmentDetails(appId: number, data: TAppointmentExerciseDetail[]): Promise<void> {
+  try {
+    const session = await getServerSession(authOptions);
+
+    if (!session) {
+      throw new Error(
+        "Session not found. User must be logged in to perform this action.",
+      );
+    }
+
+    const url = `${process.env.BACKEND_API_URL}/appointments/${appId}/exercise-details`;
+    const response = await fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
+    }
+
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }

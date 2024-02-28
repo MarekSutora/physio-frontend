@@ -8,12 +8,63 @@ import {
 } from "@/lib/shared/types";
 import { getBlogPostBySlugAction } from "@/lib/actions/blogActions";
 import { getAppointmentByIdAction } from "@/lib/actions/appointmentsActions";
-import WorkoutPlanForm from "@/components/dashboard/admin/appointments/WorkoutPlanForm";
+import WorkoutPlanForm from "@/components/dashboard/admin/appointments/plan/WorkoutPlanForm";
 
 type Props = {
   params: {};
   searchParams: { [key: string]: string | string[] | undefined };
 };
+
+const dummyExerciseTypes = [
+  { id: 1, name: "Bench Press" },
+  { id: 2, name: "Squats" },
+  { id: 3, name: "Deadlifts" },
+  { id: 4, name: "Pullups" },
+  { id: 5, name: "Pushups" },
+];
+
+const dummyExercisesData: TAppointmentExerciseDetail[] = [
+  {
+    exerciseType: dummyExerciseTypes[0],
+    order: 1,
+    expectedNumberOfSets: 3,
+    numberOfRepetitions: 10,
+    restBetweenSetsInMinutes: 2,
+    successfullyPerformed: false,
+  },
+  {
+    exerciseType: dummyExerciseTypes[1],
+    order: 2,
+    numberOfRepetitions: 10,
+    expectedDurationInMinutes: 30,
+    restAfterExerciseInMinutes: 5,
+    successfullyPerformed: false,
+  },
+  {
+    exerciseType: dummyExerciseTypes[2],
+    order: 3,
+    expectedNumberOfSets: 3,
+    numberOfRepetitions: 10,
+    restBetweenSetsInMinutes: 2,
+    successfullyPerformed: false,
+  },
+  {
+    exerciseType: dummyExerciseTypes[3],
+    order: 4,
+    expectedNumberOfSets: 3,
+    numberOfRepetitions: 10,
+    restBetweenSetsInMinutes: 2,
+    successfullyPerformed: false,
+  },
+  {
+    exerciseType: dummyExerciseTypes[4],
+    order: 5,
+    expectedNumberOfSets: 3,
+    numberOfRepetitions: 10,
+    restBetweenSetsInMinutes: 2,
+    successfullyPerformed: false,
+  },
+];
 
 const Page = async (props: Props) => {
   let appointment: TAppointment | undefined = undefined;
@@ -29,28 +80,22 @@ const Page = async (props: Props) => {
   try {
     appointment = await getAppointmentByIdAction(appIdNumber);
     exerciseDetails =
-      appointment?.appointmentDetail.appointmentExerciseDetails ?? [];
+      appointment?.appointmentDetail?.appointmentExerciseDetails ??
+      dummyExercisesData;
   } catch (error) {
     console.error("error", error);
   }
 
-  const someRandomExerciseNames = [
-    "Bench Press",
-    "Squats",
-    "Deadlifts",
-    "Pullups",
-    "Pushups",
-  ].map((name) => ({ label: name, value: name }));
-
   return (
     <div className="flex h-full w-full flex-col gap-2 lg:flex-row">
-      <DashboardSectionWrapper title={"Plan"} width="w-full lg:w-[75%]">
+      <DashboardSectionWrapper title={"Plan"} width="w-full">
         <WorkoutPlanForm
           initialExercises={exerciseDetails}
-          availableExercises={someRandomExerciseNames}
+          availableExercises={dummyExerciseTypes}
+          appId={appIdNumber}
         />
       </DashboardSectionWrapper>
-      <DashboardSectionWrapper title={"Podrobnosti"} width="w-full lg:w-[25%]">
+      {/* <DashboardSectionWrapper title={"Podrobnosti"} width="w-full lg:w-[25%]">
         <h1 className="text-2xl font-semibold">
           {appointment?.bookedAppointments[0].serviceTypeName}
         </h1>
@@ -72,7 +117,7 @@ const Page = async (props: Props) => {
             </div>
           ))}
         </li>
-      </DashboardSectionWrapper>
+      </DashboardSectionWrapper> */}
     </div>
   );
 };
