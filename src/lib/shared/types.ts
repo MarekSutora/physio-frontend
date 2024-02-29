@@ -125,16 +125,17 @@ export type TAppointment = {
 };
 
 export type TAppointmentDetail = {
-  notes: string;
-  appointmentExerciseDetails: TAppointmentExerciseDetail[];
+  appId?: number;
+  note?: string;
+  appointmentExerciseDetails: TAppointmentExerciseDetail[] | [];
 };
 
 export type TAppointmentExerciseDetail = {
   exerciseType: TExerciseType;
   weight?: number | null;
   numberOfRepetitions?: number | null;
-  expectedNumberOfSets?: number | null;
-  expectedDurationInMinutes?: number | null;
+  numberOfSets?: number | null;
+  durationInMinutes?: number | null;
   restAfterExerciseInMinutes?: number | null;
   restBetweenSetsInMinutes?: number | null;
   order: number;

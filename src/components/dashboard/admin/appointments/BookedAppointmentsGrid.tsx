@@ -15,6 +15,7 @@ import ShadConfirmationDialog from "@/components/mainPage/common/logo/ShadConfir
 import {
   deleteAppointmentAction,
   deleteBookedAppointmentAction,
+  markBookedAppointmentAsFinishedAction,
 } from "@/lib/actions/appointmentsActions";
 import { useToast } from "@/components/ui/use-toast";
 import Link from "next/link";
@@ -314,6 +315,31 @@ const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
     }
   };
 
+  const handleMarkBkedAppAsFinished = async (id: number) => {
+    try {
+      await markBookedAppointmentAsFinishedAction(id);
+
+      toast({
+        variant: "success",
+        title: "Rezervacia zrusena",
+        description: "Uspech",
+        className: "text-lg",
+      });
+      setBookedAppointmentsState(
+        bookedAppointments.filter((appt) => appt.id !== id),
+      );
+    } catch {
+      toast({
+        variant: "destructive",
+        title: "Chyba pri zrusovani rezervacie",
+        description: "Neuspech",
+        className: "text-lg",
+      });
+    } finally {
+      setDialogVisible(false);
+    }
+  };
+
   const actionBodyTemplate = (rowData: TG_BookedAppointment) => {
     return (
       <div className="flex flex-row gap-1">
@@ -344,9 +370,19 @@ const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
             Zrusit termin
           </Button>
         </ShadConfirmationDialog>
+        <ShadConfirmationDialog
+          onConfirm={handleMarkBkedAppAsFinished}
+          confirmArgs={[rowData.id]}
+        >
+          <Button variant="default" onClick={() => setDialogVisible(true)}>
+            Vykonane
+          </Button>
+        </ShadConfirmationDialog>
       </div>
     );
   };
+
+  console.log("bookedAppointments", bookedAppointments);
 
   return (
     <DashboardSectionWrapper title="Rezervované termíny" height="h-fit">
@@ -362,6 +398,8 @@ const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
         aria-hidden
         dataKey="id"
         size="small"
+        groupRowsBy="appointmentId"
+        rowGroupMode="rowspan"
       >
         <Column
           field="startTime"

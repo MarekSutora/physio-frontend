@@ -41,7 +41,6 @@ const AppointmentsCalendar = ({ appointmentsData, serviceTypes }: Props) => {
     setAppointments(appointmentsData);
   }, [appointmentsData, setAppointments]);
 
-  console.log("appointments", appointments)
 
   const today = startOfToday();
   const closestAppointmentDateRaw = appointments

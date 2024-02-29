@@ -16,18 +16,24 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import PlannedExercisesList from "./PlannedExercisesList";
-import { TAppointmentExerciseDetail, TExerciseType } from "@/lib/shared/types";
+import {
+  TAppointmentDetail,
+  TAppointmentExerciseDetail,
+  TExerciseType,
+} from "@/lib/shared/types";
 import { ChevronsUpDown } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { CheckedState } from "@radix-ui/react-checkbox";
 import { Textarea } from "@/components/ui/textarea";
-import { ca } from "date-fns/locale";
-import { updateAppointmentDetails } from "@/lib/actions/appointmentsActions";
+import { updateAppointmentDetailsAction } from "@/lib/actions/appointmentsActions";
+import { toast } from "@/components/ui/use-toast";
+import { get } from "http";
+import { getErrorMessage } from "@/lib/utils";
 
 type WorkoutPlanFormProps = {
-  initialExercises: TAppointmentExerciseDetail[];
-  availableExercises: TExerciseType[];
-  appId: number;
+  exerciseTypes: TExerciseType[];
+  appointmentDetail: TAppointmentDetail;
+  appointmentId: number;
 };
 
 const labelMapping: { [key: string]: string } = {
@@ -40,44 +46,59 @@ const labelMapping: { [key: string]: string } = {
 };
 
 const WorkoutPlanForm = ({
-  initialExercises,
-  availableExercises,
-  appId,
+  exerciseTypes,
+  appointmentDetail,
+  appointmentId,
 }: WorkoutPlanFormProps) => {
+  let initialPlannedExercises: TAppointmentExerciseDetail[] = [];
+  if (appointmentDetail && appointmentDetail.appointmentExerciseDetails) {
+    initialPlannedExercises = appointmentDetail.appointmentExerciseDetails.sort(
+      (a, b) => a.order - b.order,
+    );
+  }
+
   const [plannedExercises, setPlannedExercises] = useState<
     TAppointmentExerciseDetail[]
-  >(initialExercises.sort((a, b) => a.order - b.order));
+  >(initialPlannedExercises);
+
   const [newExercise, setNewExercise] = useState<TAppointmentExerciseDetail>({
-    exerciseType: availableExercises[0],
+    exerciseType: exerciseTypes[0],
     weight: 0,
     numberOfRepetitions: 0,
-    expectedNumberOfSets: 0,
-    expectedDurationInMinutes: 0,
+    numberOfSets: 0,
+    durationInMinutes: 0,
     restAfterExerciseInMinutes: 0,
     restBetweenSetsInMinutes: 0,
     order: 0,
     successfullyPerformed: false,
   });
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState<number | null>(null);
+  const [value, setValue] = useState<number | null>(
+    exerciseTypes[0]?.id || null,
+  );
+  const [note, setNote] = useState(
+    appointmentDetail ? appointmentDetail.note : "",
+  );
 
   const addExercise = () => {
     setPlannedExercises([...plannedExercises, newExercise]);
+
+    resetNewExercise();
   };
 
   const resetNewExercise = () => {
     setNewExercise({
-      exerciseType: availableExercises[0], // Reset to the first available exercise type
+      exerciseType: exerciseTypes[0], // Reset to the first available exercise type
       weight: 0,
       numberOfRepetitions: 0,
-      expectedNumberOfSets: 0,
-      expectedDurationInMinutes: 0,
+      numberOfSets: 0,
+      durationInMinutes: 0,
       restAfterExerciseInMinutes: 0,
       restBetweenSetsInMinutes: 0,
       order: plannedExercises.length + 1, // Adjust the order to be the next in the list
       successfullyPerformed: false,
     });
-    setValue(availableExercises[0]?.id || null); // Also reset the selected exercise type
+    setValue(exerciseTypes[0]?.id || null); // Also reset the selected exercise type
   };
 
   const handleInputChange = (
@@ -85,15 +106,12 @@ const WorkoutPlanForm = ({
     key: keyof TAppointmentExerciseDetail,
     newValue: number | null,
   ) => {
-    const newPlannedExercises = plannedExercises.map((exercise) => {
-      if (exercise.order === order) {
-        return { ...exercise, [key]: newValue };
-      }
-      return exercise;
-    });
+    const newNewExercise = { ...newExercise, [key]: newValue, order };
 
-    setPlannedExercises(newPlannedExercises);
+    setNewExercise(newNewExercise);
   };
+
+  console.log("plannedExercises", plannedExercises);
 
   const handleSPCheckboxChange = (checked: CheckedState): void => {
     setNewExercise({ ...newExercise, successfullyPerformed: Boolean(checked) });
@@ -106,11 +124,23 @@ const WorkoutPlanForm = ({
   };
 
   const saveChanges = async () => {
+    const _appointmentDetail = {
+      note: note,
+      appointmentExerciseDetails: plannedExercises, // Include the planned exercises
+    };
+
     try {
-        await updateAppointmentDetails(appId, plannedExercises);
-        //TODO toast
+      await updateAppointmentDetailsAction(appointmentId, _appointmentDetail);
+
+      toast({
+        variant: "success",
+        title: "Available appointment created successfully!",
+      });
     } catch (error) {
-      
+      toast({
+        variant: "destructive",
+        title: getErrorMessage(error),
+      });
     }
   };
 
@@ -119,7 +149,7 @@ const WorkoutPlanForm = ({
       <PlannedExercisesList
         plannedExercises={plannedExercises}
         setPlannedExercises={setPlannedExercises}
-        someRandomExerciseNames={availableExercises}
+        someRandomExerciseNames={exerciseTypes}
       />
       <div className="flex flex-col gap-2">
         <div className="flex flex-row items-center gap-2">
@@ -132,7 +162,7 @@ const WorkoutPlanForm = ({
                 className="w-[200px] justify-between"
               >
                 {value
-                  ? availableExercises.find((e) => e.id === value)?.name
+                  ? exerciseTypes.find((e) => e.id === value)?.name
                   : "Vyber typ služby..."}
                 <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
               </Button>
@@ -140,21 +170,29 @@ const WorkoutPlanForm = ({
             <PopoverContent className="w-[200px] p-0">
               <Command>
                 <CommandInput placeholder="Vyber typ služby..." required />
-                <CommandGroup>
-                  {availableExercises.map((serviceType) => (
+                <CommandGroup className="max-h-96 overflow-y-auto">
+                  {exerciseTypes.map((exerciseType) => (
                     <CommandItem
-                      key={serviceType.id}
-                      value={serviceType.name}
+                      key={exerciseType.id}
+                      value={exerciseType.name}
                       onSelect={(currentValue: string) => {
-                        setValue(
-                          availableExercises.find(
-                            (e) => e.name === currentValue,
-                          )?.id!,
+                        const newExerciseType = exerciseTypes.find(
+                          (e) =>
+                            e.name.toLowerCase() === currentValue.toLowerCase(),
                         );
+                        console.log("currentValue", currentValue);
+
+                        setValue(newExerciseType?.id!);
                         setOpen(false);
+                        const newNewExercise = {
+                          ...newExercise,
+                          newExerciseType,
+                        };
+
+                        setNewExercise(newNewExercise);
                       }}
                     >
-                      {serviceType.name}
+                      {exerciseType.name}
                     </CommandItem>
                   ))}
                 </CommandGroup>
@@ -178,6 +216,7 @@ const WorkoutPlanForm = ({
                   <Input
                     id={key}
                     type="number"
+                    min={0}
                     value={
                       newExercise[
                         key as keyof TAppointmentExerciseDetail
@@ -211,10 +250,12 @@ const WorkoutPlanForm = ({
         </div>
 
         <Label htmlFor="note">Note</Label>
-        <Textarea id="note" />
-
+        <Textarea
+          id="note"
+          value={note}
+          onChange={(e) => setNote(e.target.value)}
+        />
         <Button onClick={saveChanges}>Save</Button>
-        {/* Refresh button */}
       </div>
     </div>
   );

@@ -45,6 +45,8 @@ const ExerciseDetailsRow = ({
   const [open, setOpen] = React.useState(false);
   const [isMoved, setIsMoved] = useState(false);
 
+  console.log("plannedExercises", plannedExercises);
+
   useEffect(() => {
     if (isMoved) {
       const timer = setTimeout(() => setIsMoved(false), 300); // Reset background after 500ms
@@ -153,20 +155,22 @@ const ExerciseDetailsRow = ({
         <PopoverContent className="w-[200px] p-0">
           <Command>
             <CommandInput placeholder="Vyber typ služby..." required />
-            <CommandGroup>
-              {availableExercises.map((serviceType) => (
+            <CommandGroup className="max-h-96 overflow-y-auto">
+              {availableExercises.map((exerciseType) => (
                 <CommandItem
-                  key={serviceType.id}
-                  value={serviceType.name}
+                  key={exerciseType.id}
+                  value={exerciseType.name}
                   onSelect={(currentValue: string) => {
                     setValue(
-                      availableExercises.find((e) => e.name === currentValue)
-                        ?.id!,
+                      availableExercises.find(
+                        (e) =>
+                          e.name.toLowerCase() === currentValue.toLowerCase(),
+                      )?.id!,
                     );
                     setOpen(false);
                   }}
                 >
-                  {serviceType.name}
+                  {exerciseType.name}
                 </CommandItem>
               ))}
             </CommandGroup>
@@ -188,8 +192,9 @@ const ExerciseDetailsRow = ({
                 {labelMapping[key] || key}
               </Label>
               <Input
-                id={key}
+                id={key + exerciseDetails.order}
                 type="number"
+                min={0}
                 value={
                   exerciseDetails[
                     key as keyof TAppointmentExerciseDetail

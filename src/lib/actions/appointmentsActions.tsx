@@ -6,9 +6,11 @@ import { revalidateTag } from "next/cache";
 import { getErrorMessage } from "../utils";
 import {
   TAppointment,
+  TAppointmentDetail,
   TAppointmentExerciseDetail,
   TC_AdminBookedAppointment,
   TC_Appointment,
+  TExerciseType,
   TG_BookedAppointment,
   TG_UnbookedAppointment,
 } from "../shared/types";
@@ -20,7 +22,6 @@ export async function getUnbookedAppointmentsAction(): Promise<
 
   const res = await fetch(url, {
     method: "GET",
-    cache: "no-store",
     next: { tags: ["unbooked-appointments"] },
   });
 
@@ -131,6 +132,7 @@ export async function createClientBookedAppointmentAction(
     }
 
     revalidateTag("booked-appointments");
+    revalidateTag("unbooked-appointments");
     // Assuming a successful creation returns true or similar positive confirmation
     return true;
   } catch (error) {
@@ -263,8 +265,10 @@ export async function getAppointmentByIdAction(
   }
 }
 
-
-export async function updateAppointmentDetails(appId: number, data: TAppointmentExerciseDetail[]): Promise<void> {
+export async function updateAppointmentDetailsAction(
+  appointmentId: number,
+  appointmentDetail: TAppointmentDetail,
+): Promise<void> {
   try {
     const session = await getServerSession(authOptions);
 
@@ -274,14 +278,72 @@ export async function updateAppointmentDetails(appId: number, data: TAppointment
       );
     }
 
-    const url = `${process.env.BACKEND_API_URL}/appointments/${appId}/exercise-details`;
+    console.log("appointmentDetail", JSON.stringify(appointmentDetail));
+
+    const url = `${process.env.BACKEND_API_URL}/appointments/${appointmentId}/details`; // Endpoint might need to be updated
     const response = await fetch(url, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${session.backendTokens.accessToken}`,
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(appointmentDetail),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
+    }
+    // Handle success response
+  } catch (error) {
+    throw new Error(getErrorMessage(error));
+  }
+}
+
+export async function getAllExerciseTypesAction(): Promise<TExerciseType[]> {
+  try {
+    const url = `${process.env.BACKEND_API_URL}/exercise-types`;
+
+    const res = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!res.ok) {
+      const errorData = await res.text();
+      throw new Error(errorData);
+    }
+
+    const data = await res.json();
+
+    return data;
+  } catch (error) {
+    console.error("error", error);
+    throw new Error(getErrorMessage(error));
+  }
+}
+
+export async function markBookedAppointmentAsFinishedAction(
+  id: number,
+): Promise<void> {
+  try {
+    const session = await getServerSession(authOptions);
+
+    if (!session) {
+      throw new Error(
+        "Session not found. User must be logged in to perform this action.",
+      );
+    }
+
+    const url = `${process.env.BACKEND_API_URL}/appointments/booked/${id}/finished`;
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+      },
     });
 
     if (!response.ok) {
@@ -289,6 +351,7 @@ export async function updateAppointmentDetails(appId: number, data: TAppointment
       throw new Error(errorData);
     }
 
+    revalidateTag("booked-appointments");
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }
