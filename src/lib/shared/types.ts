@@ -146,3 +146,13 @@ export type TExerciseType = {
   id: number;
   name: string;
 };
+
+//STATISTICS
+
+export type TServiceTypeMonthlyStatistics = {
+  year: number;
+  month: number;
+  serviceTypeName: string;
+  finishedAppointmentsCount: number;
+  hexColor: string;
+};

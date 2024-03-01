@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 type Props = {
   children: React.ReactNode;
   width?: string;
-  title: string;
+  title?: string;
   height?: string;
 };
 
@@ -16,9 +16,11 @@ const DashboardSectionWrapper = ({ children, width, title, height }: Props) => {
         height ? height : "h-full",
       )}
     >
-      <h1 className="text-md mb-2 border-b-2 border-slate-200 pb-1 text-center font-medium">
-        {title}
-      </h1>
+      {title && (
+        <h1 className="text-md mb-2 border-b-2 border-slate-200 pb-1 text-center font-medium">
+          {title}
+        </h1>
+      )}
       {children}
     </section>
   );

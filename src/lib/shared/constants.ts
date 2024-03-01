@@ -264,3 +264,18 @@ export const PrimeReactLocaleSk = {
 
 export const DesktopDashboardSectionStyle =
   "border-slate-200 bg-white p-2 md:rounded-lg md:border-2" as const;
+
+export const SlovakMonths = [
+  "Január",
+  "Február",
+  "Marec",
+  "Apríl",
+  "Máj",
+  "Jún",
+  "Júl",
+  "August",
+  "September",
+  "Október",
+  "November",
+  "December",
+] as const;

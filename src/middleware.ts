@@ -25,7 +25,7 @@ export default withAuth(
       req.nextauth.token?.user.roles.includes("Admin")
     ) {
       return NextResponse.redirect(
-        new URL("/dashboard/admin/prehlad", req.url),
+        new URL("/dashboard/admin/statistiky", req.url),
       );
     } else if (
       req.nextUrl.pathname === "/dashboard" &&
