@@ -1,9 +1,11 @@
+import ViewCounter from "@/components/mainPage/blog/ViewCounter";
 import {
   getAllBlogPostsAction,
   getBlogPostByIdAction,
   getBlogPostBySlugAction,
   getNonHiddenBlogPosts,
 } from "@/lib/actions/blogActions";
+import { View } from "lucide-react";
 import React from "react";
 
 export async function generateStaticParams() {
@@ -34,6 +36,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
 
   return (
     <article className="prose m-auto p-5 md:prose-lg lg:prose-xl prose-img:m-auto prose-img:p-0 md:p-0 lg:p-0">
+      <ViewCounter blogSlug={params.slug} />
       <header>
         <h1>{title}</h1>
         <p>
