@@ -2,21 +2,16 @@ export const dynamic = "force-dynamic";
 
 import React from "react";
 import DashboardSectionWrapper from "@/components/dashboard/DashboardSectionWrapper";
-import BlogPostForm from "@/components/dashboard/admin/blog/BlogPostForm";
 import {
   TAppointment,
   TAppointmentDetail,
-  TAppointmentExerciseDetail,
-  TBlogPost,
   TExerciseType,
 } from "@/lib/shared/types";
-import { getBlogPostBySlugAction } from "@/lib/actions/blogActions";
 import {
   getAllExerciseTypesAction,
   getAppointmentByIdAction,
 } from "@/lib/actions/appointmentsActions";
 import WorkoutPlanForm from "@/components/dashboard/admin/appointments/plan/WorkoutPlanForm";
-import { ca } from "date-fns/locale";
 
 type Props = {
   params: {};
@@ -30,7 +25,6 @@ const Page = async (props: Props) => {
 
   let appointmentDetail: TAppointmentDetail;
 
-  //convert appId to number
   let appIdNumber = -1;
   if (appId) {
     appIdNumber = parseInt(appId as string);

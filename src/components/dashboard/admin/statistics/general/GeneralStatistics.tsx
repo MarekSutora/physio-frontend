@@ -1,31 +1,40 @@
 import DashboardSectionWrapper from "@/components/dashboard/DashboardSectionWrapper";
-import { TServiceTypeMonthlyStatistics } from "@/lib/shared/types";
+import { TGeneralStatistics } from "@/lib/shared/types";
 import React from "react";
-import ServiceTypesMonthlyBarChart from "./ServiceTypesMonthlyBarChart";
+import ServiceTypesStatsChart from "./ServiceTypesChart";
+import RevenueStatsChart from "./RevenueStatsChart";
+import NewClientsTrendStatsChart from "./NewClientsTrendStatsChart";
+import BlogPostViewsStatsChart from "./BlogPostViewsStatsChart";
 
 type Props = {
-  serviceTypeMonthlyStats: TServiceTypeMonthlyStatistics[];
+  generalStatistics: TGeneralStatistics;
 };
 
-const GeneralStatistics = ({ serviceTypeMonthlyStats }: Props) => {
+const GeneralStatistics = ({ generalStatistics }: Props) => {
   return (
     <div className="flex h-full w-full flex-col gap-2">
-      <div className="flex h-full w-full flex-row gap-2">
-        <DashboardSectionWrapper width="w-full h-full">
-          <ServiceTypesMonthlyBarChart
-            serviceTypeMonthlyStats={serviceTypeMonthlyStats}
+      <div className="flex  flex-col gap-2 md:h-1/2 md:w-full md:flex-row">
+        <DashboardSectionWrapper width="md:w-1/2 w-full" height="h-full">
+          <ServiceTypesStatsChart
+            serviceTypeStats={generalStatistics.serviceTypeStatistics}
           />
         </DashboardSectionWrapper>
-        <DashboardSectionWrapper width="w-full h-full">
-          asd
+        <DashboardSectionWrapper width="md:w-1/2 w-full" height="h-full">
+          <RevenueStatsChart
+            revenueStats={generalStatistics.revenueStatistics}
+          />
         </DashboardSectionWrapper>
       </div>
-      <div className="flex h-full w-full flex-row gap-2">
-        <DashboardSectionWrapper width="w-full h-full">
-          asd
+      <div className="flex flex-col gap-2 md:h-1/2 md:w-full md:flex-row">
+        <DashboardSectionWrapper width="md:w-1/2 w-full" height="h-full">
+          <NewClientsTrendStatsChart
+            newClientsStats={generalStatistics.newClientsStatistics}
+          />
         </DashboardSectionWrapper>
-        <DashboardSectionWrapper width="w-full h-full">
-          asd
+        <DashboardSectionWrapper width="md:w-1/2 w-full" height="h-full">
+          <BlogPostViewsStatsChart
+            blogPostViewsStats={generalStatistics.blogPostViewsStatistics}
+          />
         </DashboardSectionWrapper>
       </div>
     </div>

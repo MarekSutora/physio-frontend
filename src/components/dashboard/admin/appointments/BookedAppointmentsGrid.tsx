@@ -54,6 +54,8 @@ const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
   const [bookedAppointmentsState, setBookedAppointmentsState] =
     useState<TG_BookedAppointment[]>(bookedAppointments);
 
+  console.log("bookedAppointmentsState", bookedAppointmentsState);
+
   locale("sk");
   addLocale("sk", {
     startsWith: "Začína na",
@@ -388,7 +390,7 @@ const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
     <DashboardSectionWrapper title="Rezervované termíny" height="h-fit">
       <style>{dynamicStyles}</style>
       <DataTable
-        value={bookedAppointments}
+        value={bookedAppointmentsState}
         paginator
         rows={11}
         emptyMessage="Nenasli sa ziadne rezervovane terminy"

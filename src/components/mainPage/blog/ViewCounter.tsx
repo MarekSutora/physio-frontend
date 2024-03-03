@@ -30,7 +30,7 @@ const ViewCounter = ({ blogSlug }: Props) => {
   }, [blogSlug]);
 
   return (
-    <div className="block" aria-hidden>
+    <div className="hidden" aria-hidden>
       ViewCounter
     </div>
   );

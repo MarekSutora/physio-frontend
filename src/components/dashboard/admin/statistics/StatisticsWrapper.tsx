@@ -4,19 +4,19 @@ import React, { useState } from "react";
 import DashboardSectionWrapper from "@/components/dashboard/DashboardSectionWrapper";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { TServiceTypeMonthlyStatistics } from "@/lib/shared/types";
 import GeneralStatistics from "./general/GeneralStatistics";
+import { TGeneralStatistics } from "@/lib/shared/types";
 
 type Props = {
-  serviceTypeMonthlyStats: TServiceTypeMonthlyStatistics[];
+  generalStatistics: TGeneralStatistics;
 };
 
-const StatisticsWrapper = ({ serviceTypeMonthlyStats }: Props) => {
+const StatisticsWrapper = ({ generalStatistics }: Props) => {
   const [sectionToggled, setSectionToggled] = useState<string>("sectionOne");
 
   return (
     <>
-      <DashboardSectionWrapper width="w-full" height="h-auto">
+      {/* <DashboardSectionWrapper width="w-full" height="h-auto">
         <div className="flex flex-row gap-2">
           <Button
             className={cn(
@@ -41,10 +41,10 @@ const StatisticsWrapper = ({ serviceTypeMonthlyStats }: Props) => {
             Prehlad
           </Button>
         </div>
-      </DashboardSectionWrapper>
+      </DashboardSectionWrapper> */}
       <div className="h-full w-full">
         {sectionToggled === "sectionOne" && (
-          <GeneralStatistics serviceTypeMonthlyStats={serviceTypeMonthlyStats} />
+          <GeneralStatistics generalStatistics={generalStatistics} />
         )}
         {sectionToggled === "sectionTwo" && (
           <DashboardSectionWrapper width="w-full">

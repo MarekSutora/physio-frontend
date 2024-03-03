@@ -149,10 +149,46 @@ export type TExerciseType = {
 
 //STATISTICS
 
-export type TServiceTypeMonthlyStatistics = {
+export type TServiceTypeStatistics = {
   year: number;
   month: number;
   serviceTypeName: string;
   finishedAppointmentsCount: number;
   hexColor: string;
+};
+
+export type TRevenueStatistics = {
+  year: number;
+  month: number;
+  totalRevenue: number;
+};
+
+export type TNewClientsStatistics = {
+  year: number;
+  month: number;
+  newClientsCount: number;
+};
+
+export type TBlogPostViewsStats = {
+  year: number;
+  month: number;
+  viewsCount: number;
+};
+
+export type TGeneralStatistics = {
+  serviceTypeStatistics: TServiceTypeStatistics[];
+  revenueStatistics: TRevenueStatistics[];
+  newClientsStatistics: TNewClientsStatistics[];
+  blogPostViewsStatistics: TBlogPostViewsStats[];
+};
+
+//CLIENT
+
+export type TClient = {
+  personId: number;
+  registeredDate: Date;
+  phoneNumber: string;
+  email: string;
+  firstName: string;
+  lastName: string;
 };
