@@ -192,3 +192,10 @@ export type TClient = {
   firstName: string;
   lastName: string;
 };
+
+export type TClientNote = {
+  id?: number;
+  patientId: number;
+  note: string;
+  createdAt: Date;
+};

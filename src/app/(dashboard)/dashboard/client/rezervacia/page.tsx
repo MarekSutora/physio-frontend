@@ -1,11 +1,31 @@
-import React from 'react'
+import AppointmentsCalendar from "@/components/mainPage/appointments/AppointmentsCalendar";
+import { getUnbookedAppointmentsAction } from "@/lib/actions/appointmentsActions";
+import { getServiceTypesAction } from "@/lib/actions/serviceTypesActions";
+import { TG_UnbookedAppointment, TG_ServiceType } from "@/lib/shared/types";
+import React from "react";
 
-type Props = {}
+const Page = async () => {
+  let unbookedAppointmentsData: TG_UnbookedAppointment[] = [];
+  let serviceTypesData: TG_ServiceType[] = [];
 
-const Page = (props: Props) => {
+  try {
+    unbookedAppointmentsData = await getUnbookedAppointmentsAction();
+    serviceTypesData = await getServiceTypesAction();
+  } catch (error) {
+    console.error(error);
+  }
+
+  const [unbookedAppointments, serviceTypes] = await Promise.all([
+    unbookedAppointmentsData,
+    serviceTypesData,
+  ]);
+
   return (
-    <div>Page</div>
-  )
-}
+    <AppointmentsCalendar
+      appointmentsData={unbookedAppointments}
+      serviceTypes={serviceTypes}
+    />
+  );
+};
 
-export default Page
+export default Page;

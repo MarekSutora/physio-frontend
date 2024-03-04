@@ -174,19 +174,22 @@ export async function deleteAppointmentAction(
   }
 }
 
-export async function getBookedAppointmentsAction(): Promise<
-  TG_BookedAppointment[]
-> {
+export async function getBookedAppointmentsAction(
+  userId?: string,
+): Promise<TG_BookedAppointment[]> {
   try {
     const session = await getServerSession(authOptions);
-
     if (!session) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
     }
 
-    const url = `${process.env.BACKEND_API_URL}/appointments/booked`;
+    let url = `${process.env.BACKEND_API_URL}/appointments/booked`;
+    if (userId) {
+      url += `?userId=${userId}`;
+    }
+
     const res = await fetch(url, {
       method: "GET",
       headers: {
@@ -195,17 +198,51 @@ export async function getBookedAppointmentsAction(): Promise<
       },
       next: { tags: ["booked-appointments"] },
     });
+
     if (!res.ok) {
-      const errorData = await res.text();
-      console.error("errorData", errorData);
-      throw new Error(errorData);
+      throw new Error(`HTTP error! status: ${res.status}`);
     }
 
     const data = await res.json();
-
     return data.length > 0 ? data : [];
   } catch (error) {
     throw new Error("getBookedAppointmentsAction: " + getErrorMessage(error));
+  }
+}
+
+export async function getFinishedAppointmentsAction(
+  userId?: string,
+): Promise<TG_BookedAppointment[]> {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session) {
+      throw new Error(
+        "Session not found. User must be logged in to perform this action.",
+      );
+    }
+
+    let url = `${process.env.BACKEND_API_URL}/appointments/finished`;
+    if (userId) {
+      url += `?userId=${userId}`;
+    }
+
+    const res = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+      },
+      next: { tags: ["finished-appointments"] },
+    });
+
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    const data = await res.json();
+    return data.length > 0 ? data : [];
+  } catch (error) {
+    throw new Error("getFinishedAppointmentsAction: " + getErrorMessage(error));
   }
 }
 
@@ -337,7 +374,7 @@ export async function markBookedAppointmentAsFinishedAction(
       );
     }
 
-    const url = `${process.env.BACKEND_API_URL}/appointments/booked/${id}/finished`;
+    const url = `${process.env.BACKEND_API_URL}/appointments/booked/${id}/finish`;
     const response = await fetch(url, {
       method: "POST",
       headers: {
