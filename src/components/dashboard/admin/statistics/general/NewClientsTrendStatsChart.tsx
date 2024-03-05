@@ -88,7 +88,7 @@ const NewClientsTrendStatsChart = ({ newClientsStats }: Props) => {
 
   return (
     <div className="flex h-full w-full flex-col">
-      <div className="flex flex-row justify-between">
+      <div className="flex w-full flex-row justify-between">
         <h1 className="pl-6 text-lg font-medium">
           New Clients Trend Over Time
         </h1>
@@ -100,7 +100,7 @@ const NewClientsTrendStatsChart = ({ newClientsStats }: Props) => {
           onSelect={handleYearChange}
         />
       </div>
-      <div className="m-auto md:w-[100%]">
+      <div className="m-auto md:w-[87%]">
         <Chart type="line" data={getChartData()} options={chartOptions} />
       </div>
     </div>

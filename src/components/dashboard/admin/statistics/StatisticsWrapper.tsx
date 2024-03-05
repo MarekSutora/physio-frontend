@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import DashboardSectionWrapper from "@/components/dashboard/DashboardSectionWrapper";
+import DashboardSectionWrapper from "@/components/dashboard/common/DashboardSectionWrapper";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import GeneralStatistics from "./general/GeneralStatistics";

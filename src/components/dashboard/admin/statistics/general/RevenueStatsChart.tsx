@@ -79,8 +79,8 @@ const RevenueStatsChart = ({ revenueStats }: Props) => {
 
   return (
     <div className="flex h-full w-full flex-col">
-      <div className="flex h-[10%] w-full flex-row justify-between">
-        <h1>Vykonane sluzby za dane ob</h1>
+      <div className="flex w-full flex-row justify-between">
+        <h1 className="pl-6 text-lg font-medium">Vykonane sluzby za dane ob</h1>
         <ComboBox
           buttonText={
             selectedYear === "all" ? "Celé obdobie" : selectedYear.toString()
@@ -89,7 +89,7 @@ const RevenueStatsChart = ({ revenueStats }: Props) => {
           onSelect={handleYearChange}
         />
       </div>
-      <div className="m-auto md:w-[100%]">
+      <div className="m-auto md:w-[87%]">
         <Chart type="line" data={getChartData()} options={chartOptions} />
       </div>
     </div>

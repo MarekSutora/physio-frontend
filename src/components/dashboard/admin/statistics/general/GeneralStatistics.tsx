@@ -1,4 +1,4 @@
-import DashboardSectionWrapper from "@/components/dashboard/DashboardSectionWrapper";
+import DashboardSectionWrapper from "@/components/dashboard/common/DashboardSectionWrapper";
 import { TGeneralStatistics } from "@/lib/shared/types";
 import React from "react";
 import ServiceTypesStatsChart from "./ServiceTypesChart";

@@ -1,4 +1,4 @@
-import DashboardSectionWrapper from "@/components/dashboard/DashboardSectionWrapper";
+import DashboardSectionWrapper from "@/components/dashboard/common/DashboardSectionWrapper";
 import BlogForm from "@/components/dashboard/admin/blog/BlogPostForm";
 import React from "react";
 

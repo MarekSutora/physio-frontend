@@ -39,7 +39,6 @@ const ServiceTypesStatsChart = ({ serviceTypeStats }: Props) => {
         (acc, stat) => {
           const { serviceTypeName, month, year, finishedAppointmentsCount } =
             stat;
-          // Map the year to a zero-based index for the "all" case
           const yearIndex = uniqueYears.indexOf(year);
           const index = selectedYear === "all" ? yearIndex : month - 1;
           if (!acc[serviceTypeName]) {
@@ -99,7 +98,7 @@ const ServiceTypesStatsChart = ({ serviceTypeStats }: Props) => {
   return (
     <div className="flex h-full w-full flex-col">
       <div className="flex w-full flex-row justify-between">
-        <h1 className="text-lg font-medium pl-6">Poskytnute sluzby</h1>
+        <h1 className="pl-6 text-lg font-medium">Poskytnute sluzby</h1>
         <ComboBox
           buttonText={
             selectedYear === "all" ? "Celé obdobie" : selectedYear.toString()
@@ -108,7 +107,7 @@ const ServiceTypesStatsChart = ({ serviceTypeStats }: Props) => {
           onSelect={handleYearChange}
         ></ComboBox>
       </div>
-      <div className="m-auto md:w-[100%]">
+      <div className="m-auto md:w-[87%]">
         <Chart type="bar" data={getChartData()} options={chartOptions} />
       </div>
     </div>

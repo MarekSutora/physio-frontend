@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import React from "react";
-import DashboardSectionWrapper from "@/components/dashboard/DashboardSectionWrapper";
+import DashboardSectionWrapper from "@/components/dashboard/common/DashboardSectionWrapper";
 import {
   TAppointment,
   TAppointmentDetail,

@@ -1,4 +1,4 @@
-import DashboardSectionWrapper from "@/components/dashboard/DashboardSectionWrapper";
+import DashboardSectionWrapper from "@/components/dashboard/common/DashboardSectionWrapper";
 import BlogPostsGrid from "@/components/dashboard/admin/blog/BlogPostsGrid";
 import { getAllBlogPostsAction } from "@/lib/actions/blogActions";
 import { TBlogPost } from "@/lib/shared/types";

@@ -79,9 +79,9 @@ const BlogPostViewsStatsChart = ({ blogPostViewsStats }: Props) => {
   };
 
   return (
-    <>
-      <div className="flex flex-row justify-between">
-        <h1>Blog Post Views Trend Over Time</h1>
+    <div className="flex h-full w-full flex-col">
+      <div className="flex w-full flex-row justify-between">
+        <h1 className="pl-6 text-lg font-medium">Poskytnute sluzby</h1>
         <ComboBox
           buttonText={
             selectedYear === "all" ? "Celé obdobie" : selectedYear.toString()
@@ -90,8 +90,10 @@ const BlogPostViewsStatsChart = ({ blogPostViewsStats }: Props) => {
           onSelect={handleYearChange}
         />
       </div>
-      <Chart type="line" data={getChartData()} options={chartOptions} />
-    </>
+      <div className="m-auto md:w-[87%]">
+        <Chart type="line" data={getChartData()} options={chartOptions} />
+      </div>
+    </div>
   );
 };
 

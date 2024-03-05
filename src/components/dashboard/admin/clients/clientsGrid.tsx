@@ -7,7 +7,7 @@ import { Column, ColumnFilterElementTemplateOptions } from "primereact/column";
 import { TG_BookedAppointment } from "@/lib/shared/types";
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
-import DashboardSectionWrapper from "../../DashboardSectionWrapper";
+import DashboardSectionWrapper from "../../common/DashboardSectionWrapper";
 import { FilterMatchMode } from "primereact/api";
 import { MultiSelect, MultiSelectChangeEvent } from "primereact/multiselect";
 import { locale, addLocale } from "primereact/api";
@@ -42,9 +42,6 @@ const defaultFilters: DataTableFilterMeta = {
 };
 
 const ClientsGrid = ({ clients }: Props) => {
-  const [dialogVisible, setDialogVisible] = useState(false);
-  const [dynamicStyles, setDynamicStyles] = useState("");
-  const { toast } = useToast();
   const [clientsDataState, setclientsDataState] = useState<TClient[]>(clients);
 
   console.log("clientsDataState", clientsDataState);
@@ -208,7 +205,6 @@ const ClientsGrid = ({ clients }: Props) => {
 
   const formatDate = (dateString: Date) => {
     const date = new Date(dateString);
-    console.log("dateString", dateString);
     const day = date.getDate();
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
@@ -222,7 +218,7 @@ const ClientsGrid = ({ clients }: Props) => {
     return (
       <div className="flex flex-row gap-1">
         <Link
-          href={`./klienct?Id=${rowData.personId}`}
+          href={`./klient?Id=${rowData.personId}`}
           className="bg-primary text-white"
         >
           Otvorit

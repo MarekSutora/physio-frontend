@@ -1,4 +1,4 @@
-import DashboardSectionWrapper from "@/components/dashboard/DashboardSectionWrapper";
+import DashboardSectionWrapper from "@/components/dashboard/common/DashboardSectionWrapper";
 import ClientsGrid from "@/components/dashboard/admin/clients/clientsGrid";
 import { getPatientsData } from "@/lib/actions/clientsAction";
 import { TClient } from "@/lib/shared/types";

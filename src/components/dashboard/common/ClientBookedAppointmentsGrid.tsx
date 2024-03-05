@@ -6,7 +6,6 @@ import { Column, ColumnFilterElementTemplateOptions } from "primereact/column";
 import { TG_BookedAppointment } from "@/lib/shared/types";
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
-import DashboardSectionWrapper from "../../common/DashboardSectionWrapper";
 import { FilterMatchMode } from "primereact/api";
 import { MultiSelect, MultiSelectChangeEvent } from "primereact/multiselect";
 import { locale, addLocale } from "primereact/api";
@@ -19,6 +18,8 @@ import {
 } from "@/lib/actions/appointmentsActions";
 import { useToast } from "@/components/ui/use-toast";
 import Link from "next/link";
+import DashboardSectionWrapper from "./DashboardSectionWrapper";
+import { useSession } from "next-auth/react";
 
 declare module "primereact/api" {
   export function addLocale(
@@ -30,10 +31,6 @@ declare module "primereact/api" {
 type Props = {
   bookedAppointments: TG_BookedAppointment[];
 };
-
-//TODO date filtering
-//TODO mozno clear filter global a keyword search global
-//TODO warning server does not match client
 
 const defaultFilters: DataTableFilterMeta = {
   serviceTypeName: { value: null, matchMode: FilterMatchMode.IN },
@@ -47,7 +44,8 @@ const defaultFilters: DataTableFilterMeta = {
   clientId: { value: null, matchMode: FilterMatchMode.CONTAINS },
 };
 
-const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
+const ClientBookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
+  const { data: session } = useSession();
   const [dialogVisible, setDialogVisible] = useState(false);
   const [dynamicStyles, setDynamicStyles] = useState("");
   const { toast } = useToast();
@@ -218,13 +216,13 @@ const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
     bookedAppointments.forEach((appointment) => {
       const colorClass = `row-bg-${appointment.hexColor.replace("#", "")}`;
       styles += `
-        .${colorClass} {
-          background-color: ${appointment.hexColor}14;
-        }
-        .${colorClass}:hover {
-          background-color: ${appointment.hexColor}28;
-        }
-      `;
+          .${colorClass} {
+            background-color: ${appointment.hexColor}14;
+          }
+          .${colorClass}:hover {
+            background-color: ${appointment.hexColor}28;
+          }
+        `;
     });
     setDynamicStyles(styles);
   }, [bookedAppointments]);
@@ -364,27 +362,32 @@ const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
             </Button>
           </ShadConfirmationDialog>
         </>
-        <ShadConfirmationDialog
-          onConfirm={handleDeleteAppointment}
-          confirmArgs={[rowData.appointmentId]}
-        >
-          <Button variant="destructive" onClick={() => setDialogVisible(true)}>
-            Zrusit termin
-          </Button>
-        </ShadConfirmationDialog>
-        <ShadConfirmationDialog
-          onConfirm={handleMarkBkedAppAsFinished}
-          confirmArgs={[rowData.id]}
-        >
-          <Button variant="default" onClick={() => setDialogVisible(true)}>
-            Vykonane
-          </Button>
-        </ShadConfirmationDialog>
+        {session?.user.roles.includes("Admin") && (
+          <>
+            <ShadConfirmationDialog
+              onConfirm={handleDeleteAppointment}
+              confirmArgs={[rowData.appointmentId]}
+            >
+              <Button
+                variant="destructive"
+                onClick={() => setDialogVisible(true)}
+              >
+                Zrusit termin
+              </Button>
+            </ShadConfirmationDialog>
+            <ShadConfirmationDialog
+              onConfirm={handleMarkBkedAppAsFinished}
+              confirmArgs={[rowData.id]}
+            >
+              <Button variant="default" onClick={() => setDialogVisible(true)}>
+                Vykonane
+              </Button>
+            </ShadConfirmationDialog>
+          </>
+        )}
       </div>
     );
   };
-
-  console.log("bookedAppointments", bookedAppointments);
 
   return (
     <DashboardSectionWrapper title="Rezervované termíny" height="h-fit">
@@ -445,52 +448,56 @@ const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
           filterField="cost"
           hidden
         />
-        <Column
-          field="clientId"
-          header="ID klienta"
-          sortable
-          body={(rowData: TG_BookedAppointment) => rowData.clientId}
-          style={{ width: "70px" }}
-          filter
-          filterField="clientId"
-        />
-        <Column
-          field="clientFirstName"
-          header="Meno"
-          sortable
-          body={(rowData: TG_BookedAppointment) => rowData.clientFirstName}
-          filter
-          filterField="clientFirstName"
-        />
-        <Column
-          field="clientSecondName"
-          header="Priezvisko"
-          sortable
-          body={(rowData: TG_BookedAppointment) => rowData.clientSecondName}
-          filter
-          filterField="clientSecondName"
-        />
-        <Column
-          field="appointmentBookedDate"
-          header="Datum rezervacie"
-          sortable
-          body={(rowData: TG_BookedAppointment) =>
-            formatDate(rowData.appointmentBookedDate)
-          }
-          style={{ width: "260px" }}
-          filter
-          filterField="appointmentBookedDate"
-        />
-        <Column
-          field="capacity"
-          header="Kapacita"
-          sortable
-          body={(rowData: TG_BookedAppointment) => rowData.capacity}
-          style={{ width: "30px" }}
-          filter
-          filterField="capacity"
-          hidden
-        />
+        {session?.user.roles.includes("Admin") && (
+          <>
+            <Column
+              field="clientId"
+              header="ID klienta"
+              sortable
+              body={(rowData: TG_BookedAppointment) => rowData.clientId}
+              style={{ width: "70px" }}
+              filter
+              filterField="clientId"
+            />
+            <Column
+              field="clientFirstName"
+              header="Meno"
+              sortable
+              body={(rowData: TG_BookedAppointment) => rowData.clientFirstName}
+              filter
+              filterField="clientFirstName"
+            />
+            <Column
+              field="clientSecondName"
+              header="Priezvisko"
+              sortable
+              body={(rowData: TG_BookedAppointment) => rowData.clientSecondName}
+              filter
+              filterField="clientSecondName"
+            />
+            <Column
+              field="appointmentBookedDate"
+              header="Datum rezervacie"
+              sortable
+              body={(rowData: TG_BookedAppointment) =>
+                formatDate(rowData.appointmentBookedDate)
+              }
+              style={{ width: "260px" }}
+              filter
+              filterField="appointmentBookedDate"
+            />
+            <Column
+              field="capacity"
+              header="Kapacita"
+              sortable
+              body={(rowData: TG_BookedAppointment) => rowData.capacity}
+              style={{ width: "30px" }}
+              filter
+              filterField="capacity"
+              hidden
+            />
+          </>
+        )}
         <Column
           header="Akcie"
           body={actionBodyTemplate}
@@ -501,4 +508,4 @@ const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
   );
 };
 
-export default BookedAppointmentsGrid;
+export default ClientBookedAppointmentsGrid;

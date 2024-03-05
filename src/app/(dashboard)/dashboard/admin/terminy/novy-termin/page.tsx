@@ -11,7 +11,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 import React from "react";
 import { cn, getErrorMessage } from "@/lib/utils";
-import DashboardSectionWrapper from "@/components/dashboard/DashboardSectionWrapper";
+import DashboardSectionWrapper from "@/components/dashboard/common/DashboardSectionWrapper";
 
 //TODO aj na mobile nechat pri tych sekciach zaokruhlene okraje, skusit spravit ten wrapper
 
