@@ -1,3 +1,4 @@
+import DashboardSectionWrapper from "@/components/dashboard/common/DashboardSectionWrapper";
 import AppointmentsCalendar from "@/components/mainPage/appointments/AppointmentsCalendar";
 import { getUnbookedAppointmentsAction } from "@/lib/actions/appointmentsActions";
 import { getServiceTypesAction } from "@/lib/actions/serviceTypesActions";
@@ -21,10 +22,12 @@ const Page = async () => {
   ]);
 
   return (
-    <AppointmentsCalendar
-      appointmentsData={unbookedAppointments}
-      serviceTypes={serviceTypes}
-    />
+    <DashboardSectionWrapper>
+      <AppointmentsCalendar
+        appointmentsData={unbookedAppointments}
+        serviceTypes={serviceTypes}
+      />
+    </DashboardSectionWrapper>
   );
 };
 

@@ -68,8 +68,6 @@ export async function createBlogPostAction(formData: TBlogPost) {
   try {
     const session = await getServerSession(authOptions);
 
-    console.log("formData", formData);
-
     if (!session) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",

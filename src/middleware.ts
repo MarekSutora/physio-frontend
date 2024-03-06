@@ -7,7 +7,6 @@ import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
 
 export default withAuth(
   function middleware(req) {
-
     if (req.nextUrl.pathname.startsWith("/dashboard") && !req.nextauth) {
       return NextResponse.redirect(new URL("/prihlasenie", req.url));
     }
@@ -32,7 +31,7 @@ export default withAuth(
       req.nextauth.token?.user.roles.includes("Patient")
     ) {
       return NextResponse.redirect(
-        new URL("/dashboard/client/rezervacie", req.url),
+        new URL("/dashboard/klient/rezervacia", req.url),
       );
     }
   },

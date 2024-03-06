@@ -45,8 +45,6 @@ const BlogPostForm = ({ createNew, oldData }: BlogFormProps) => {
         },
   );
 
-  console.log("blogData", blogData);
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setBlogData({ ...blogData, [id]: value });

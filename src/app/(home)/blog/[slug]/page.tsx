@@ -17,7 +17,6 @@ export async function generateStaticParams() {
 }
 
 const Page = async ({ params }: { params: { slug: string } }) => {
-  console.log("params", params);
   const blogPost = await getBlogPostBySlugAction(params.slug);
 
   const {

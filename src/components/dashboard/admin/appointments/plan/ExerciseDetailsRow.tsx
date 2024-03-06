@@ -45,8 +45,6 @@ const ExerciseDetailsRow = ({
   const [open, setOpen] = React.useState(false);
   const [isMoved, setIsMoved] = useState(false);
 
-  console.log("plannedExercises", plannedExercises);
-
   useEffect(() => {
     if (isMoved) {
       const timer = setTimeout(() => setIsMoved(false), 300); // Reset background after 500ms

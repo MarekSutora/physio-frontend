@@ -5,7 +5,7 @@ type Props = {};
 
 const DashboardDesktopNav = async (props: Props) => {
   return (
-    <nav className="h-screen w-[240px] bg-secondary">
+    <nav className="h-screen w-[240px] bg-secondary pt-[86px]">
       <DashboardNavUl />
     </nav>
   );

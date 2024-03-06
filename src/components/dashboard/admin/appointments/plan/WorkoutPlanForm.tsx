@@ -111,8 +111,6 @@ const WorkoutPlanForm = ({
     setNewExercise(newNewExercise);
   };
 
-  console.log("plannedExercises", plannedExercises);
-
   const handleSPCheckboxChange = (checked: CheckedState): void => {
     setNewExercise({ ...newExercise, successfullyPerformed: Boolean(checked) });
   };
@@ -180,7 +178,6 @@ const WorkoutPlanForm = ({
                           (e) =>
                             e.name.toLowerCase() === currentValue.toLowerCase(),
                         );
-                        console.log("currentValue", currentValue);
 
                         setValue(newExerciseType?.id!);
                         setOpen(false);

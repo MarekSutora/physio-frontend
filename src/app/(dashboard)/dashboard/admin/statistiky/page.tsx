@@ -87,8 +87,6 @@ const Page = async () => {
     blogPostViewsStatistics: generateBlogPostViewsStats(),
   };
 
-  //console.log(generalStatistics);
-
   return <StatisticsWrapper generalStatistics={generalStatistics} />;
 };
 

@@ -75,8 +75,8 @@ const ScheduleForTheDay = ({
         value={selectedOptions}
         required
       />
-      <div className="h-full w-full">
-        <ScrollArea className="h-[500px] w-full" type="always">
+      <div className="h-[500px] w-full">
+        <ScrollArea className="h-[500px] w-full" type="auto" >
           {filteredAppointments.length > 0 ? (
             filteredAppointments.map((appointment, index) => (
               <AppointmentCard
@@ -84,7 +84,7 @@ const ScheduleForTheDay = ({
                 appointment={appointment}
                 selectedServiceTypeNames={selectedOptions.map(
                   (option) => option.value,
-                )} // Pass selected service type names
+                )}
               />
             ))
           ) : (

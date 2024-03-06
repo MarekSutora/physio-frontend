@@ -195,7 +195,7 @@ export type TClient = {
 
 export type TClientNote = {
   id?: number;
-  patientId: number;
+  clientId: number;
   note: string;
-  createdAt: Date;
+  createdAt?: Date;
 };

@@ -23,6 +23,7 @@ import { TG_UnbookedAppointment, TG_ServiceType } from "@/lib/shared/types"; // 
 import { cn } from "@/lib/utils";
 import ScheduleForTheDay from "./ScheduleForTheDay";
 import { useAppointmentsStore } from "@/useAppointmentsStore";
+import { start } from "repl";
 
 type Props = {
   appointmentsData: TG_UnbookedAppointment[];
@@ -32,30 +33,33 @@ type Props = {
 //TODO bug ked sa dostanem na rovnaky mesiac ako je teraz ale o rok neskor
 
 const AppointmentsCalendar = ({ appointmentsData, serviceTypes }: Props) => {
+  let [selectedDay, setSelectedDay] = useState(startOfToday());
+  let [currentMonth, setCurrentMonth] = useState(
+    format(startOfToday(), "MMM-yyyy", { locale: enUS }),
+  );
   const setAppointments = useAppointmentsStore(
     (state) => state.setAppointments,
   );
   const appointments = useAppointmentsStore((state) => state.appointments);
 
   useEffect(() => {
+    const today = startOfToday();
+    const closestAppointmentDateRaw = appointments
+      .map((appointment) => parseISO(appointment.startTime))
+      .filter((date) => isToday(date) || isAfter(date, today))
+      .sort((a, b) => a.getTime() - b.getTime())[0];
+
+    const initialSelectedDay = closestAppointmentDateRaw
+      ? new Date(closestAppointmentDateRaw.setHours(0, 0, 0, 0))
+      : today;
+
+    setCurrentMonth(format(initialSelectedDay, "MMM-yyyy", { locale: enUS }));
+    setSelectedDay(initialSelectedDay);
+  }, [appointments]);
+
+  useEffect(() => {
     setAppointments(appointmentsData);
   }, [appointmentsData, setAppointments]);
-
-
-  const today = startOfToday();
-  const closestAppointmentDateRaw = appointments
-    .map((appointment) => parseISO(appointment.startTime))
-    .filter((date) => isToday(date) || isAfter(date, today))
-    .sort((a, b) => a.getTime() - b.getTime())[0];
-
-  const initialSelectedDay = closestAppointmentDateRaw
-    ? new Date(closestAppointmentDateRaw.setHours(0, 0, 0, 0))
-    : today;
-
-  let [selectedDay, setSelectedDay] = useState(initialSelectedDay);
-  let [currentMonth, setCurrentMonth] = useState(
-    format(selectedDay, "MMM-yyyy", { locale: enUS }),
-  );
 
   let firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
 
@@ -84,7 +88,7 @@ const AppointmentsCalendar = ({ appointmentsData, serviceTypes }: Props) => {
   }
 
   return (
-    <section className="m-auto flex h-full min-h-[600px] w-5/6 flex-col justify-between gap-9 border-slate-200 bg-white py-2 md:rounded-lg md:border-2 lg:flex-row lg:p-6">
+    <div className="m-auto flex h-full flex-col justify-between gap-9 py-2 lg:flex-row lg:p-6">
       <div className="pt-12 lg:w-[40%]">
         <div className="flex items-center">
           <h2 className="flex-auto select-none pl-5 text-lg font-semibold text-gray-900">
@@ -176,7 +180,7 @@ const AppointmentsCalendar = ({ appointmentsData, serviceTypes }: Props) => {
         selectedDay={selectedDay}
         serviceTypes={serviceTypes}
       />
-    </section>
+    </div>
   );
 };
 

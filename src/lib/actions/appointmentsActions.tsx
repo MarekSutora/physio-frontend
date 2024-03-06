@@ -97,6 +97,7 @@ export async function createAdminBookedAppointmentAction(
     }
 
     revalidateTag("booked-appointments");
+    revalidateTag("unbooked-appointments");
     // Assuming a successful creation returns true or similar positive confirmation
     return true;
   } catch (error) {
@@ -174,9 +175,9 @@ export async function deleteAppointmentAction(
   }
 }
 
-export async function getBookedAppointmentsAction(
-  userId?: string,
-): Promise<TG_BookedAppointment[]> {
+export async function getAllBookedAppointmentsAction(): Promise<
+  TG_BookedAppointment[]
+> {
   try {
     const session = await getServerSession(authOptions);
     if (!session) {
@@ -186,10 +187,6 @@ export async function getBookedAppointmentsAction(
     }
 
     let url = `${process.env.BACKEND_API_URL}/appointments/booked`;
-    if (userId) {
-      url += `?userId=${userId}`;
-    }
-
     const res = await fetch(url, {
       method: "GET",
       headers: {
@@ -206,12 +203,14 @@ export async function getBookedAppointmentsAction(
     const data = await res.json();
     return data.length > 0 ? data : [];
   } catch (error) {
-    throw new Error("getBookedAppointmentsAction: " + getErrorMessage(error));
+    throw new Error(
+      "getAllBookedAppointmentsAction: " + getErrorMessage(error),
+    );
   }
 }
 
-export async function getFinishedAppointmentsAction(
-  userId?: string,
+export async function getBookedAppointmentsForClientAction(
+  clientId?: number,
 ): Promise<TG_BookedAppointment[]> {
   try {
     const session = await getServerSession(authOptions);
@@ -221,18 +220,15 @@ export async function getFinishedAppointmentsAction(
       );
     }
 
-    let url = `${process.env.BACKEND_API_URL}/appointments/finished`;
-    if (userId) {
-      url += `?userId=${userId}`;
-    }
+    let clientIdToUse = clientId ? clientId : session.user?.clientId;
 
+    let url = `${process.env.BACKEND_API_URL}/appointments/client/${clientIdToUse}/booked`;
     const res = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${session.backendTokens.accessToken}`,
       },
-      next: { tags: ["finished-appointments"] },
     });
 
     if (!res.ok) {
@@ -242,7 +238,78 @@ export async function getFinishedAppointmentsAction(
     const data = await res.json();
     return data.length > 0 ? data : [];
   } catch (error) {
-    throw new Error("getFinishedAppointmentsAction: " + getErrorMessage(error));
+    throw new Error(
+      "getBookedAppointmentsForClientAction: " + getErrorMessage(error),
+    );
+  }
+}
+
+export async function getFinishedAppointmentsForClientAction(
+  clientId?: number,
+): Promise<TG_BookedAppointment[]> {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session) {
+      throw new Error(
+        "Session not found. User must be logged in to perform this action.",
+      );
+    }
+
+    let clientIdToUse = clientId ? clientId : session.user?.clientId;
+
+    let url = `${process.env.BACKEND_API_URL}/appointments/client/${clientIdToUse}/finished`;
+    const res = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+      },
+    });
+
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    const data = await res.json();
+    return data.length > 0 ? data : [];
+  } catch (error) {
+    throw new Error(
+      "getFinishedAppointmentsForClientAction: " + getErrorMessage(error),
+    );
+  }
+}
+
+export async function getAllFinishedAppointmentsAction(): Promise<
+  TG_BookedAppointment[]
+> {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session) {
+      throw new Error(
+        "Session not found. User must be logged in to perform this action.",
+      );
+    }
+
+    let url = `${process.env.BACKEND_API_URL}/appointments/finished`;
+    const res = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+      },
+      next: { tags: ["all-finished-appointments"] },
+    });
+
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    const data = await res.json();
+    return data.length > 0 ? data : [];
+  } catch (error) {
+    throw new Error(
+      "getAllFinishedAppointmentsAction: " + getErrorMessage(error),
+    );
   }
 }
 
@@ -314,8 +381,6 @@ export async function updateAppointmentDetailsAction(
         "Session not found. User must be logged in to perform this action.",
       );
     }
-
-    console.log("appointmentDetail", JSON.stringify(appointmentDetail));
 
     const url = `${process.env.BACKEND_API_URL}/appointments/${appointmentId}/details`; // Endpoint might need to be updated
     const response = await fetch(url, {
@@ -389,6 +454,7 @@ export async function markBookedAppointmentAsFinishedAction(
     }
 
     revalidateTag("booked-appointments");
+    revalidateTag("all-finished-appointments");
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }

@@ -54,8 +54,6 @@ const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
   const [bookedAppointmentsState, setBookedAppointmentsState] =
     useState<TG_BookedAppointment[]>(bookedAppointments);
 
-  console.log("bookedAppointmentsState", bookedAppointmentsState);
-
   locale("sk");
   addLocale("sk", {
     startsWith: "Začína na",
@@ -346,7 +344,7 @@ const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
     return (
       <div className="flex flex-row gap-1">
         <Link
-          href={`./termin?appId=${rowData.appointmentId}`}
+          href={`../../termin?appId=${rowData.appointmentId}`}
           className="bg-primary text-white"
         >
           Otvorit
@@ -383,8 +381,6 @@ const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
       </div>
     );
   };
-
-  console.log("bookedAppointments", bookedAppointments);
 
   return (
     <DashboardSectionWrapper title="Rezervované termíny" height="h-fit">

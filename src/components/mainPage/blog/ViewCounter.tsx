@@ -19,8 +19,6 @@ const ViewCounter = ({ blogSlug }: Props) => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-
-        console.log("View count incremented successfully.");
       } catch (error) {
         console.error("Failed to increment view count", error);
       }

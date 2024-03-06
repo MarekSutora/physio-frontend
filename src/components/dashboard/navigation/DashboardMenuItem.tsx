@@ -45,18 +45,16 @@ const DashboardMenuItem = ({ text, path, icon, subMenuItems }: Props) => {
   return (
     <>
       {subMenuItems ? (
-        <div>
+        <div className="h-full w-full">
           <button
             className={cn(
-              isActive &&
-                "flex w-full cursor-default flex-row items-center justify-between gap-2 bg-white px-5 py-2 text-lg text-primary transition-all duration-200 ease-in-out",
-              !isActive &&
-                "group flex w-full flex-row items-center justify-between gap-2 rounded-md px-5 py-2 text-lg text-white transition-all duration-200 ease-in-out",
-              "font-medium",
+              isActive && "bg-white text-primary",
+              !isActive && "group bg-secondary text-white",
+              "flex w-full flex-row items-center justify-between gap-2 py-2 pl-3 pr-2 text-lg font-medium",
             )}
             onClick={() => handleItemWithSubMenuClick(text)}
           >
-            <div className="scale-125 transition-all duration-200 ease-in-out hover:underline group-hover:scale-[1.35] group-active:scale-[1.35]">
+            <div className="scale-125 hover:underline group-hover:scale-[1.35] group-active:scale-[1.35]">
               {icon}
             </div>
             <span className="w-full text-start">{text}</span>
@@ -79,14 +77,21 @@ const DashboardMenuItem = ({ text, path, icon, subMenuItems }: Props) => {
                 animate="open"
                 exit="closed"
                 transition={{ duration: 0.5, ease: "easeInOut" }}
-                className="flex w-full flex-col  text-white "
+                className="flex w-full flex-col text-white "
               >
                 {subMenuItems.map((subLink) => (
-                  <li
-                    key={subLink.text}
-                    className="h-full w-full py-1 pl-12 hover:bg-primary/70"
-                  >
-                    <Link href={subLink.path}>{subLink.text}</Link>
+                  <li key={subLink.text}>
+                    <Link
+                      className={cn(
+                        subLink.path === currentPath && "bg-white text-primary",
+                        !(subLink.path === currentPath) &&
+                          "group text-white hover:bg-white hover:text-primary",
+                        "flex h-full w-full flex-row items-center justify-between gap-2 py-2 pl-8 pr-2 text-base font-medium",
+                      )}
+                      href={subLink.path}
+                    >
+                      {subLink.text}
+                    </Link>
                   </li>
                 ))}
               </motion.ul>
@@ -96,15 +101,14 @@ const DashboardMenuItem = ({ text, path, icon, subMenuItems }: Props) => {
       ) : (
         <Link
           className={cn(
-            isActive &&
-              "flex w-full cursor-default flex-row items-center gap-2 bg-white py-2 pl-5 text-lg text-primary transition-all duration-200 ease-in-out",
+            isActive && "cursor-default bg-white text-primary",
             !isActive &&
-              "ease-in-ou group flex w-full flex-row items-center gap-2 rounded-md py-2 pl-5 text-lg text-white transition-all duration-200",
-            "font-medium",
+              "ease-in-ou group text-white hover:bg-white hover:text-primary",
+            "flex w-full flex-row items-center gap-2 py-2 pl-3 pr-2 text-lg font-medium transition-all duration-200",
           )}
           href={path!}
         >
-          <div className="scale-125 transition-all duration-200 ease-in-out hover:underline group-hover:scale-[1.35] group-active:scale-[1.35]">
+          <div className="scale-125 hover:underline group-hover:scale-[1.35] group-active:scale-[1.35]">
             {icon}
           </div>
           {text}

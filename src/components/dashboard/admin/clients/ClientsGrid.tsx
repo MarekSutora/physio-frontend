@@ -44,7 +44,6 @@ const defaultFilters: DataTableFilterMeta = {
 const ClientsGrid = ({ clients }: Props) => {
   const [clientsDataState, setclientsDataState] = useState<TClient[]>(clients);
 
-  console.log("clientsDataState", clientsDataState);
 
   locale("sk");
   addLocale("sk", {
@@ -218,7 +217,7 @@ const ClientsGrid = ({ clients }: Props) => {
     return (
       <div className="flex flex-row gap-1">
         <Link
-          href={`./klient?Id=${rowData.personId}`}
+          href={`./klienti/klient?Id=${rowData.personId}`}
           className="bg-primary text-white"
         >
           Otvorit

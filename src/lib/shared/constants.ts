@@ -63,7 +63,7 @@ export const dashboardLinks = {
         { text: "Nový termín", path: "/dashboard/admin/terminy/novy-termin" },
         {
           text: "Rezervované termíny",
-          path: "/dashboard/admin/terminy/rezervovane-terminy",
+          path: "/dashboard/admin/terminy/zarezervovane-terminy",
         },
       ],
       icon: React.createElement(FaFacebook),
@@ -89,20 +89,20 @@ export const dashboardLinks = {
   ],
   patient: [
     {
-      text: "My Appointments",
-      path: "/dashboard/client/my-appointments",
+      text: "Rezervácia",
+      path: "/dashboard/klient/rezervacia",
       icon: React.createElement(FaFacebook),
     },
     {
-      text: "My Profile",
-      path: "/dashboard/client/my-profile",
+      text: "Historia",
+      path: "/dashboard/klient/historia",
       icon: React.createElement(FaFacebook),
     },
     {
-      text: "Support",
-      path: "/dashboard/client/support",
+      text: "Zarezerované termíny",
+      path: "/dashboard/klient/zarezervovane-terminy",
       icon: React.createElement(FaFacebook),
-    },
+    }
   ],
 };
 

@@ -17,6 +17,12 @@ const DashboardNavUl = () => {
             <DashboardMenuItem {...link} />
           </li>
         ))}
+      {user?.roles.includes("Patient") &&
+        dashboardLinks.patient.map((link) => (
+          <li key={link.text}>
+            <DashboardMenuItem {...link} />
+          </li>
+        ))}
     </ul>
   );
 };

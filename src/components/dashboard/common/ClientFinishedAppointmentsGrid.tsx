@@ -29,7 +29,7 @@ declare module "primereact/api" {
 }
 
 type Props = {
-  bookedAppointments: TG_BookedAppointment[];
+  finishedAppointments: TG_BookedAppointment[];
 };
 
 const defaultFilters: DataTableFilterMeta = {
@@ -44,15 +44,13 @@ const defaultFilters: DataTableFilterMeta = {
   clientId: { value: null, matchMode: FilterMatchMode.CONTAINS },
 };
 
-const ClientFinishedAppointmentsGrid = ({ bookedAppointments }: Props) => {
+const ClientFinishedAppointmentsGrid = ({ finishedAppointments }: Props) => {
   const { data: session } = useSession();
   const [dialogVisible, setDialogVisible] = useState(false);
   const [dynamicStyles, setDynamicStyles] = useState("");
   const { toast } = useToast();
   const [bookedAppointmentsState, setBookedAppointmentsState] =
-    useState<TG_BookedAppointment[]>(bookedAppointments);
-
-  console.log("bookedAppointmentsState", bookedAppointmentsState);
+    useState<TG_BookedAppointment[]>(finishedAppointments);
 
   locale("sk");
   addLocale("sk", {
@@ -213,7 +211,7 @@ const ClientFinishedAppointmentsGrid = ({ bookedAppointments }: Props) => {
 
   useEffect(() => {
     let styles = "";
-    bookedAppointments.forEach((appointment) => {
+    finishedAppointments.forEach((appointment) => {
       const colorClass = `row-bg-${appointment.hexColor.replace("#", "")}`;
       styles += `
           .${colorClass} {
@@ -225,7 +223,7 @@ const ClientFinishedAppointmentsGrid = ({ bookedAppointments }: Props) => {
         `;
     });
     setDynamicStyles(styles);
-  }, [bookedAppointments]);
+  }, [finishedAppointments]);
 
   const rowClassName = (data: TG_BookedAppointment) => {
     return `row-bg-${data.hexColor.replace("#", "")}`;
@@ -249,7 +247,7 @@ const ClientFinishedAppointmentsGrid = ({ bookedAppointments }: Props) => {
       <MultiSelect
         value={options.value}
         options={Array.from(
-          new Set(bookedAppointments.map((appt) => appt.serviceTypeName)),
+          new Set(finishedAppointments.map((appt) => appt.serviceTypeName)),
         )}
         onChange={(e: MultiSelectChangeEvent) =>
           options.filterApplyCallback(e.value)
@@ -275,7 +273,7 @@ const ClientFinishedAppointmentsGrid = ({ bookedAppointments }: Props) => {
         className: "text-lg",
       });
       setBookedAppointmentsState(
-        bookedAppointments.filter((appt) => appt.id !== id),
+        finishedAppointments.filter((appt) => appt.id !== id),
       );
     } catch {
       toast({
@@ -300,7 +298,7 @@ const ClientFinishedAppointmentsGrid = ({ bookedAppointments }: Props) => {
         className: "text-lg",
       });
       setBookedAppointmentsState(
-        bookedAppointments.filter((appt) => appt.appointmentId !== appId),
+        finishedAppointments.filter((appt) => appt.appointmentId !== appId),
       );
     } catch (error) {
       console.error("error", error);
@@ -326,7 +324,7 @@ const ClientFinishedAppointmentsGrid = ({ bookedAppointments }: Props) => {
         className: "text-lg",
       });
       setBookedAppointmentsState(
-        bookedAppointments.filter((appt) => appt.id !== id),
+        finishedAppointments.filter((appt) => appt.id !== id),
       );
     } catch {
       toast({
@@ -344,7 +342,7 @@ const ClientFinishedAppointmentsGrid = ({ bookedAppointments }: Props) => {
     return (
       <div className="flex flex-row gap-1">
         <Link
-          href={`./termin?appId=${rowData.appointmentId}`}
+          href={`../termin?appId=${rowData.appointmentId}`}
           className="bg-primary text-white"
         >
           Otvorit
@@ -390,7 +388,10 @@ const ClientFinishedAppointmentsGrid = ({ bookedAppointments }: Props) => {
   };
 
   return (
-    <DashboardSectionWrapper title="Rezervované termíny" height="h-fit">
+    <DashboardSectionWrapper
+      title="História termínov"
+      height="max-h-full h-full"
+    >
       <style>{dynamicStyles}</style>
       <DataTable
         value={bookedAppointmentsState}

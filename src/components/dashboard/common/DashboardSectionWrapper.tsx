@@ -5,15 +5,23 @@ type Props = {
   width?: string;
   title?: string;
   height?: string;
+  additionalClasses?: string;
 };
 
-const DashboardSectionWrapper = ({ children, width, title, height }: Props) => {
+const DashboardSectionWrapper = ({
+  children,
+  width,
+  title,
+  height,
+  additionalClasses,
+}: Props) => {
   return (
     <section
       className={cn(
         "rounded-lg border-2 border-slate-200 bg-white p-2",
         width ? width : "w-full",
         height ? height : "h-full",
+        additionalClasses && additionalClasses,
       )}
     >
       {title && (
