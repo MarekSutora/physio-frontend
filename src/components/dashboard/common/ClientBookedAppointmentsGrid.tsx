@@ -319,7 +319,7 @@ const ClientBookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
 
       toast({
         variant: "success",
-        title: "Rezervacia zrusena",
+        title: "Uspech",
         description: "Uspech",
         className: "text-lg",
       });
@@ -329,7 +329,7 @@ const ClientBookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
     } catch {
       toast({
         variant: "destructive",
-        title: "Chyba pri zrusovani rezervacie",
+        title: "Chyba",
         description: "Neuspech",
         className: "text-lg",
       });
@@ -396,7 +396,7 @@ const ClientBookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
       <DataTable
         value={bookedAppointmentsState}
         paginator
-        rows={11}
+        rows={10}
         emptyMessage="Nenasli sa ziadne rezervovane terminy"
         rowClassName={rowClassName}
         filters={defaultFilters}

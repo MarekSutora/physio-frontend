@@ -30,7 +30,7 @@ const formSchema = z
       .string()
       .min(1, "Meno je povinné. 🙄")
       .max(50, "Meno nesmie mať viac ako 50 znakov. 🙄"),
-    secondName: z
+    lastName: z
       .string()
       .min(1, "Priezvisko je povinné. 🙄")
       .max(50, "Priezvisko nesmie mať viac ako 50 znakov. 🙄"),
@@ -58,7 +58,7 @@ const RegistrationForm = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       firstName: "",
-      secondName: "",
+      lastName: "",
       phoneNumber: "",
       email: "",
       heslo: "",
@@ -74,7 +74,7 @@ const RegistrationForm = () => {
         email: formData.email,
         password: formData.heslo,
         firstName: formData.firstName,
-        secondName: formData.secondName,
+        lastName: formData.lastName,
         phoneNumber: formData.phoneNumber,
       });
 
@@ -143,7 +143,7 @@ const RegistrationForm = () => {
                 {/* Priezvisko */}
                 <FormField
                   control={form.control}
-                  name="secondName"
+                  name="lastName"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Priezvisko</FormLabel>

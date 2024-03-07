@@ -441,7 +441,7 @@ export async function markBookedAppointmentAsFinishedAction(
 
     const url = `${process.env.BACKEND_API_URL}/appointments/booked/${id}/finish`;
     const response = await fetch(url, {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${session.backendTokens.accessToken}`,
@@ -456,6 +456,7 @@ export async function markBookedAppointmentAsFinishedAction(
     revalidateTag("booked-appointments");
     revalidateTag("all-finished-appointments");
   } catch (error) {
+    console.error("error", error);
     throw new Error(getErrorMessage(error));
   }
 }

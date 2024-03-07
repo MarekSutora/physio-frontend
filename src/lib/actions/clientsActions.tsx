@@ -128,3 +128,31 @@ export async function getClientById(clientId: number): Promise<TClient> {
   const data = await response.json();
   return data;
 }
+
+export async function deleteNoteFromClient(noteId: number): Promise<void> {
+  try {
+    const session = await getServerSession(authOptions);
+
+    if (!session) {
+      throw new Error(
+        "Session not found. User must be logged in to perform this action.",
+      );
+    }
+
+    const url = `${process.env.BACKEND_API_URL}/patients/notes/${noteId}`;
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
+    }
+  } catch (error) {
+    throw new Error(getErrorMessage(error));
+  }
+}

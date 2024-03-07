@@ -19,6 +19,7 @@ export async function registerClientAction(
     );
 
     if (!res.ok) {
+      console.error("Error:", res);
       const errorMessage =
         (await res.json().then((data) => data.message)) ??
         "Skúste to prosím znova. 🙄";

@@ -1,5 +1,5 @@
 import ClientPageWrapper from "@/components/dashboard/admin/clients/ClientPageWrapper";
-import { getFinishedAppointmentsForClientAction } from "@/lib/actions/appointmentsActions";
+import { getBookedAppointmentsForClientAction, getFinishedAppointmentsForClientAction } from "@/lib/actions/appointmentsActions";
 import {
   getAllNotesForPatient,
   getClientById,
@@ -40,7 +40,7 @@ const Page = async (props: Props) => {
 
   try {
     clientsBookedAppointments =
-      await getFinishedAppointmentsForClientAction(clientIdNumber);
+      await getBookedAppointmentsForClientAction(clientIdNumber);
   } catch (error) {
     console.error(error);
   }
