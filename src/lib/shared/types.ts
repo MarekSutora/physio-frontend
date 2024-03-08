@@ -199,3 +199,13 @@ export type TClientNote = {
   note: string;
   createdAt?: Date;
 };
+
+//AUTH
+
+export type TResetPasswordFormData = {
+  email: string;
+  token: string;
+  password: string;
+  confirmPassword: string;
+};
+

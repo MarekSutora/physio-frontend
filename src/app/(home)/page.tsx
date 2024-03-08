@@ -3,9 +3,7 @@ import Contact from "@/components/mainPage/homePage/Contact";
 import React from "react";
 import Reviews from "@/components/mainPage/homePage/Reviews";
 
-type Props = {};
-
-const Home = (props: Props) => {
+const Home = () => {
   return (
     <div className="m-auto h-auto">
       <Reviews />

@@ -11,18 +11,16 @@ import {
   FormLabel,
   FormControl,
   FormMessage,
-} from "@/components/ui/form"; // Adjust the import paths based on your project structure
+} from "@/components/ui/form";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Select } from "@/components/ui/select";
 import { contactInfo, socialMediaLinks } from "@/lib/shared/constants";
 import { IoIosMail } from "react-icons/io";
 import { FaPhone } from "react-icons/fa";
 import Link from "next/link";
 import { Textarea } from "@/components/ui/textarea";
 
-// Define form schema using Zod
 const formSchema = z.object({
   name: z.string().min(1, "Meno je povinné. 🙄"),
   secondName: z.string().min(1, "Priezvisko je povinné. 🙄"),
@@ -50,7 +48,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="w-full bg-slate-50">
+    <div className="w-full bg-slate-50" id="kontakt">
       <div className="flex w-full flex-row gap-3 pb-6">
         <div className="m-auto h-[1px] w-full bg-slate-200"></div>
         <h1 className="w-full text-nowrap pb-3 text-center text-4xl font-semibold">
@@ -67,7 +65,6 @@ const Contact = () => {
                 className="w-full space-y-4"
               >
                 <div className="flex flex-row gap-5">
-                  {/* Meno */}
                   <FormField
                     control={form.control}
                     name="name"

@@ -1,5 +1,8 @@
 import ClientPageWrapper from "@/components/dashboard/admin/clients/ClientPageWrapper";
-import { getBookedAppointmentsForClientAction, getFinishedAppointmentsForClientAction } from "@/lib/actions/appointmentsActions";
+import {
+  getBookedAppointmentsForClientAction,
+  getFinishedAppointmentsForClientAction,
+} from "@/lib/actions/appointmentsActions";
 import {
   getAllNotesForPatient,
   getClientById,
@@ -8,7 +11,6 @@ import { TClient, TClientNote, TG_BookedAppointment } from "@/lib/shared/types";
 import React from "react";
 
 type Props = {
-  params: {};
   searchParams: { [key: string]: string | string[] | undefined };
 };
 

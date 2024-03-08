@@ -22,7 +22,9 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { getErrorMessage } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 
-type Props = {};
+type Props = {
+  searchParams: { [key: string]: string | string[] | undefined };
+};
 
 type LoginForm = {
   email: string;
@@ -39,7 +41,7 @@ const formSchema = z.object({
   password: z.string().min(1, "Heslo musí byť vyplnené. 🙄"),
 });
 
-const LoginForm = (props: Props) => {
+const LoginForm = ({ searchParams }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
@@ -56,11 +58,15 @@ const LoginForm = (props: Props) => {
     try {
       setIsLoading(true);
 
-      const res = await signIn<"credentials">("credentials", {
-        email: values.email,
-        password: values.password,
-        redirect: false,
-      }, undefined);
+      const res = await signIn<"credentials">(
+        "credentials",
+        {
+          email: values.email,
+          password: values.password,
+          redirect: false,
+        },
+        undefined,
+      );
       if (res?.error) {
         setIsLoading(false);
         toast({
@@ -100,6 +106,23 @@ const LoginForm = (props: Props) => {
         />
       ) : (
         <>
+          {searchParams.reset === "success" && (
+            <div className="text-center">
+              <h1 className="text-2xl font-semibold">
+                Obnovenie hesla úspešné!
+              </h1>
+              <p>Prosím, prihláste sa pomocou nového hesla.</p>
+            </div>
+          )}
+          {searchParams.emailConfirmed === "success" && (
+            <div className="text-center">
+              <h1 className="text-2xl font-semibold">
+                Potvrdenie emailu úspešné!
+              </h1>
+              <p>Teraz sa mozete prihlasit.</p>
+            </div>
+          )}
+
           <h1 className="text-center text-4xl font-bold text-gray-800">
             Vitajte späť!
           </h1>

@@ -4,7 +4,11 @@ import Image from "next/image";
 
 //TODO ked nejde api tak ukazuje fetch failed - treba nejaku inu message
 
-const Page = () => {
+type Props = {
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+const Page = async (props: Props) => {
   return (
     <section className="h-[var(--min-height-main-section)] w-full bg-white">
       <div className="flex h-full items-center justify-center gap-7 md:flex-row">
@@ -15,7 +19,7 @@ const Page = () => {
           height={350}
           className="hidden h-[350px] w-[350px] rounded-2xl shadow-lg md:block"
         />
-        <LoginForm />
+        <LoginForm searchParams={props.searchParams} />
       </div>
     </section>
   );

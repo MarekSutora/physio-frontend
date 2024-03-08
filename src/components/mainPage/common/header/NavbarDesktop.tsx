@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { FaAngleDown } from "react-icons/fa";
 import AuthButtons from "@/components/auth/authButtons/AuthButtons";
+import { Link as ScrollLink } from "react-scroll/modules";
 
 const NavbarDesktop = () => {
   const [hoveredLink, setHoveredLink] = useState<string>("");
@@ -74,9 +75,23 @@ const NavbarDesktop = () => {
             )}
           </li>
         ))}
+
+        <li>
+          <button>
+            <ScrollLink
+              to="kontakt"
+              spy={true}
+              smooth={true}
+              offset={-100}
+              duration={500}
+            >
+              Kontakt
+            </ScrollLink>
+          </button>
+        </li>
       </ul>
 
-        <AuthButtons />
+      <AuthButtons />
     </nav>
   );
 };

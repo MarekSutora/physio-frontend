@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -19,8 +19,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useToast } from "@/components/ui/use-toast";
-import { register } from "module";
-import { registerClientAction } from "@/lib/actions/registerClientAction";
+import { registerClientAction } from "@/lib/actions/authActions";
+import DashboardSectionWrapper from "../dashboard/common/DashboardSectionWrapper";
 
 // Define the form schema using Zod
 
@@ -50,9 +50,9 @@ const formSchema = z
 type RegistrationFormData = z.infer<typeof formSchema>;
 
 const RegistrationForm = () => {
-  const router = useRouter();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [registrationSuccess, setRegistrationSuccess] = useState(false);
 
   const form = useForm<RegistrationFormData>({
     resolver: zodResolver(formSchema),
@@ -88,7 +88,7 @@ const RegistrationForm = () => {
         });
       } else {
         setIsLoading(false);
-        router.push("/prihlasenie");
+        setRegistrationSuccess(true);
       }
     } catch (error) {
       setIsLoading(false);
@@ -100,6 +100,19 @@ const RegistrationForm = () => {
       });
     }
   };
+
+  if (registrationSuccess) {
+    // Display the success message
+    return (
+      <DashboardSectionWrapper>
+        <div className="text-center">
+          <h1 className="text-2xl font-semibold">Registrácia Úspešná!</h1>
+          <p>Prosím, skontrolujte svoj email na potvrdenie účtu.</p>
+        </div>
+      </DashboardSectionWrapper>
+    );
+  }
+
 
   return (
     <div className="flex w-96 flex-col justify-start">
