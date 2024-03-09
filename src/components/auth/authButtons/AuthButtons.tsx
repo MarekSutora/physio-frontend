@@ -15,8 +15,8 @@ const AuthButtons = () => {
   if (session && session.user) {
     return (
       <div className="flex flex-row items-center gap-1">
-        <LogoutButton />
         <DashboardButton userRoles={session.user.roles} />
+        <LogoutButton />
       </div>
     );
   }
@@ -41,8 +41,8 @@ const DashboardButton = ({ userRoles }: DashboardButtonProps) => {
   return (
     <Link
       href={linkPath}
-      className="hover:complementary hover:bg-complementary group flex items-center gap-1 rounded-md bg-primary
-                 px-[6px] py-[6px] font-bold text-slate-50 shadow-xl transition-all ease-in-out hover:bg-secondary"
+      className="group flex h-8 items-center gap-1 rounded-sm bg-primary px-[4px] py-[4px] font-bold border border-primary
+      text-white shadow-xl transition-all ease-in-out hover:bg-white hover:text-primary"
     >
       <MdDashboard className="inline-block w-5 group-hover:scale-[1.10]" />
       Dashboard

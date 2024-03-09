@@ -20,7 +20,6 @@ import DashboardSectionWrapper from "@/components/dashboard/common/DashboardSect
 import { forgotPasswordAction } from "@/lib/actions/authActions";
 import ClipLoader from "react-spinners/ClipLoader";
 
-// Define the form schema using Zod
 const schema = z.object({
   email: z.string().email("Neplatná emailová adresa. 🙄"),
 });

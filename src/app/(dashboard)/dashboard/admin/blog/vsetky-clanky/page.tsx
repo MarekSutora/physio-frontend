@@ -24,21 +24,18 @@ const generateDummyData = (
   return dummyData;
 };
 
-type Props = {};
-
 const Page = async () => {
   let blogPosts: TBlogPost[] = [];
 
   try {
     let _blogPosts = await getAllBlogPostsAction();
     blogPosts = _blogPosts;
-    // blogPosts = generateDummyData(_blogPosts[0], 10);
   } catch (error) {
     console.error("error", error);
   }
 
   return (
-    <DashboardSectionWrapper title={"Clanky"}>
+    <DashboardSectionWrapper title={"Články"}>
       <BlogPostsGrid _blogPosts={blogPosts} />
     </DashboardSectionWrapper>
   );

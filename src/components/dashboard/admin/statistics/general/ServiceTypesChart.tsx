@@ -1,3 +1,5 @@
+"use client";
+
 import { SlovakMonths } from "@/lib/shared/constants";
 import { TServiceTypeStatistics } from "@/lib/shared/types";
 import { Chart } from "primereact/chart";
@@ -98,7 +100,7 @@ const ServiceTypesStatsChart = ({ serviceTypeStats }: Props) => {
   return (
     <div className="flex h-full w-full flex-col">
       <div className="flex w-full flex-row justify-between">
-        <h1 className="pl-6 text-lg font-medium">Poskytnute sluzby</h1>
+        <h1 className="pl-6 text-lg font-medium">Poskytnuté služby</h1>
         <ComboBox
           buttonText={
             selectedYear === "all" ? "Celé obdobie" : selectedYear.toString()

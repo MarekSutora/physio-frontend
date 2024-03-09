@@ -3,20 +3,26 @@
 import React from "react";
 import { signOut } from "next-auth/react";
 import { PiSignOut } from "react-icons/pi";
-import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
-type Props = {};
+type Props = {
+  isDashboard?: boolean;
+};
 
-const LogoutButton = (props: Props) => {
+const LogoutButton = ({ isDashboard }: Props) => {
   return (
-    <Button
-      className="hover:complementary hover:bg-complementary group flex items-center gap-1 rounded-md bg-primary
-      px-[6px] py-[6px] font-bold text-slate-50 shadow-xl transition-all ease-in-out hover:bg-secondary"
+    <button
+      className={cn(
+        !isDashboard
+          ? " rounded-sm border border-primary px-[4px] py-[4px] font-semibold text-primary shadow-lg transition-all ease-in-out hover:bg-primary  hover:text-white"
+          : "w-full items-center pl-1 font-normal text-white  hover:bg-slate-100 hover:text-secondary",
+        "group flex h-8 items-center",
+      )}
       onClick={() => signOut({ callbackUrl: "/" })}
     >
-      <PiSignOut className="inline-block scale-125 transition-all ease-in-out group-hover:scale-[1.35]" />
+      <PiSignOut className="inline-block h-6 w-6 group-hover:scale-[1.10]" />
       Odhlásiť sa
-    </Button>
+    </button>
   );
 };
 

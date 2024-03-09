@@ -28,7 +28,7 @@ const editorConfiguration = {
 
 type RichTextEditorProps = {
   onContentChange: (content: string) => void;
-  initialContent?: string; // Add this line
+  initialContent?: string;
 };
 
 const RichTextEditor = ({
@@ -36,11 +36,18 @@ const RichTextEditor = ({
   initialContent = "",
 }: RichTextEditorProps) => {
   return (
-    <div className="m-auto w-[800px]">
+    <div className="m-auto h-[500px] w-full overflow-y-visible">
+      <style>
+        {`.ck-editor__editable {
+    max-height: 460px;
+    height: 460px
+}`}
+      </style>
+
       <CKEditor
         editor={Editor}
         config={editorConfiguration}
-        data={initialContent} // Initialize the editor with initialContent
+        data={initialContent}
         onChange={(event, editor) => {
           const data = editor.getData();
           onContentChange(data);

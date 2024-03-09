@@ -10,8 +10,8 @@ const LoginButton = ({ text, path }: LoginButtonProps) => {
   return (
     <Link
       href={path}
-      className="text-sec group flex items-center gap-1 rounded-sm border border-secondary px-[4px] py-[3px]
-               font-bold text-secondary shadow-lg transition-all ease-in-out hover:bg-secondary hover:text-slate-50"
+      className="group flex h-8 items-center gap-1 rounded-sm border border-primary px-[4px] py-[4px]
+      font-semibold text-primary shadow-lg transition-all ease-in-out hover:bg-primary hover:text-white"
     >
       <FaUserTie className="inline-block w-5 group-hover:scale-[1.10]" />
       {text}

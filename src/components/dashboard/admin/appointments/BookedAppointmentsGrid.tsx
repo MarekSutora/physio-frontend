@@ -303,7 +303,6 @@ const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
         bookedAppointments.filter((appt) => appt.appointmentId !== appId),
       );
     } catch (error) {
-      console.error("error", error);
       toast({
         variant: "destructive",
         title: "Chyba pri zrusovani terminu",

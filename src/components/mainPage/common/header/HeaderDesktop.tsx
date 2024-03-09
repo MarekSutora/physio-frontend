@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import NavbarDesktop from "./NavbarDesktop";
-import { useSelectedLayoutSegment } from "next/navigation";
 import useScroll from "@/lib/hooks/useScroll";
 import Link from "next/link";
 import Image from "next/image";

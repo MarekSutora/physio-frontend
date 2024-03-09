@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { Chart } from "primereact/chart";
 import ComboBox from "./ComboBox";
@@ -38,7 +40,7 @@ const BlogPostViewsStatsChart = ({ blogPostViewsStats }: Props) => {
       labels,
       datasets: [
         {
-          label: "Blog Post Views",
+          label: "Zhliadnutia článkov Blogu",
           backgroundColor: "#FFCA28",
           data: labels.map((label) => {
             return selectedYear === "all"
@@ -68,7 +70,7 @@ const BlogPostViewsStatsChart = ({ blogPostViewsStats }: Props) => {
         beginAtZero: true,
         title: {
           display: true,
-          text: "Views",
+          text: "Počet zhliadnutí",
         },
       },
     },
@@ -81,7 +83,7 @@ const BlogPostViewsStatsChart = ({ blogPostViewsStats }: Props) => {
   return (
     <div className="flex h-full w-full flex-col">
       <div className="flex w-full flex-row justify-between">
-        <h1 className="pl-6 text-lg font-medium">Poskytnute sluzby</h1>
+        <h1 className="pl-6 text-lg font-medium">Zhliadnutia článkov Blogu</h1>
         <ComboBox
           buttonText={
             selectedYear === "all" ? "Celé obdobie" : selectedYear.toString()

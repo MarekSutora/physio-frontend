@@ -1,9 +1,6 @@
 import React from "react";
 import { basicLinks, socialMediaLinks } from "@/lib/shared/constants";
 import Link from "next/link";
-import Image from "next/image";
-import LogoImage from "../logo/LogoImage";
-import LogoText from "../logo/LogoText";
 import { IoIosMail } from "react-icons/io";
 import { contactInfo } from "@/lib/shared/constants";
 import { FaPhone, FaLocationDot } from "react-icons/fa6";
@@ -20,16 +17,13 @@ const Footer = () => {
             </p>
             <nav>
               <ul className="text-md flex h-full flex-col justify-evenly gap-1 text-center text-sm md:text-left">
-                {basicLinks.map(
-                  (link) =>
-                    !link.subMenuItems && (
-                      <li key={link.text}>
-                        <Link className="hover:underline" href={link.path}>
-                          {link.text}
-                        </Link>
-                      </li>
-                    ),
-                )}
+                {basicLinks.map((link) => (
+                  <li key={link.text}>
+                    <Link className="hover:underline" href={link.path}>
+                      {link.text}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </nav>
           </div>

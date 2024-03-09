@@ -73,7 +73,7 @@ const generateBlogPostViewsStats = (): TBlogPostViewsStats[] => {
   return blogPostViewsStats;
 };
 
-const serviceTypes = ["Service1", "Service2", "Service3"];
+const serviceTypes = ["Služba1", "Služba2", "Služba3"];
 const serviceTypeStats: TServiceTypeStatistics[] = serviceTypes.flatMap(
   (serviceType) =>
     generateServiceTypeStatistics(serviceType, generateHexColor()),

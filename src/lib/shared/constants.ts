@@ -1,18 +1,24 @@
-import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaInstagram,
+  FaYoutube,
+  FaChartBar,
+  FaCalendarAlt,
+  FaBlog,
+  FaUsers,
+  FaTools,
+  FaCalendarCheck,
+  FaHistory,
+} from "react-icons/fa";
 import React from "react";
 
 export const basicLinks = [
-  {
-    text: "Služby",
-    subMenuItems: [
-      { text: "Služba 1aaaaaaa", path: "/" },
-      { text: "Služba2aaaaaaa", path: "/" },
-      { text: "Služba3aaaaaaa", path: "/" },
-    ],
-  },
+  { text: "Domov", path: "/" },
+  { text: "Služby", path: "/sluzby" },
   { text: "O mne", path: "/o-mne" },
-  { text: "Rezervácia", path: "/rezervacia" },
   { text: "Blog", path: "/blog" },
+  { text: "Kontakt", path: "/kontakt" },
+  { text: "Rezervácia", path: "/rezervacia" },
 ];
 
 export const userLinks = [
@@ -48,14 +54,9 @@ export const contactInfo = {
 export const dashboardLinks = {
   admin: [
     {
-      text: "Prehľad",
-      path: "/dashboard/admin/prehlad",
-      icon: React.createElement(FaFacebook),
-    },
-    {
       text: "Štatistiky",
       path: "/dashboard/admin/statistiky",
-      icon: React.createElement(FaFacebook),
+      icon: React.createElement(FaChartBar),
     },
     {
       text: "Termíny",
@@ -66,7 +67,7 @@ export const dashboardLinks = {
           path: "/dashboard/admin/terminy/zarezervovane-terminy",
         },
       ],
-      icon: React.createElement(FaFacebook),
+      icon: React.createElement(FaCalendarAlt),
     },
     {
       text: "Blog",
@@ -74,35 +75,35 @@ export const dashboardLinks = {
         { text: "Nový článok", path: "/dashboard/admin/blog/novy-clanok" },
         { text: "Všetky články", path: "/dashboard/admin/blog/vsetky-clanky" },
       ],
-      icon: React.createElement(FaFacebook),
+      icon: React.createElement(FaBlog),
     },
     {
       text: "Klienti",
       path: "/dashboard/admin/klienti",
-      icon: React.createElement(FaFacebook),
+      icon: React.createElement(FaUsers),
     },
     {
       text: "Správa služieb",
       path: "/dashboard/admin/sprava-sluzieb",
-      icon: React.createElement(FaFacebook),
+      icon: React.createElement(FaTools),
     },
   ],
   patient: [
     {
       text: "Rezervácia",
       path: "/dashboard/klient/rezervacia",
-      icon: React.createElement(FaFacebook),
+      icon: React.createElement(FaCalendarCheck),
     },
     {
       text: "Historia",
       path: "/dashboard/klient/historia",
-      icon: React.createElement(FaFacebook),
+      icon: React.createElement(FaHistory),
     },
     {
       text: "Zarezerované termíny",
       path: "/dashboard/klient/zarezervovane-terminy",
-      icon: React.createElement(FaFacebook),
-    }
+      icon: React.createElement(FaCalendarAlt),
+    },
   ],
 };
 

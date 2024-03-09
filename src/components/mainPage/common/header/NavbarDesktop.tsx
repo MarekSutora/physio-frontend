@@ -1,105 +1,39 @@
-import React, { useState } from "react";
-import { basicLinks, socialMediaLinks } from "@/lib/shared/constants";
+import React from "react";
+import { basicLinks } from "@/lib/shared/constants";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { FaAngleDown } from "react-icons/fa";
 import AuthButtons from "@/components/auth/authButtons/AuthButtons";
-import { Link as ScrollLink } from "react-scroll/modules";
+import { usePathname } from "next/navigation";
 
 const NavbarDesktop = () => {
-  const [hoveredLink, setHoveredLink] = useState<string>("");
+  const currentPath = usePathname();
 
   return (
     <nav className="flex h-full w-auto items-center">
-      <ul
-        className="mr-6 flex items-center justify-evenly gap-6 text-base"
-        onMouseLeave={() => setHoveredLink("")}
-      >
+      <ul className="mr-6 flex items-center justify-evenly gap-6 text-lg">
         {basicLinks.map((link) => (
           <li
             key={link.text}
             className="group relative flex cursor-pointer flex-col items-center justify-center"
-            onMouseEnter={() => setHoveredLink(link.text)}
           >
-            {link.subMenuItems ? (
-              <div className="hover:text-shadow flex items-center gap-1">
-                {link.text}
-                <FaAngleDown className="transition-all duration-300 ease-in-out group-hover:rotate-180" />
-              </div>
-            ) : (
-              <div className="relative flex flex-col">
-                <Link href={link.path} className="hover:text-shadow">
-                  {link.text}
-                </Link>
-                {link.text === hoveredLink && (
-                  <motion.div
-                    className="absolute top-full h-[2px] w-full rounded-md bg-primary"
-                    layoutId="activeHover"
-                    transition={{
-                      type: "weenie",
-                    }}
-                  />
-                )}
-              </div>
-            )}
-            {link.text === hoveredLink && hasSubMenuItems(hoveredLink) && (
-              <>
-                <motion.div
-                  className="group absolute top-full z-10 w-auto rounded-md border bg-white shadow-md transition-all ease-in-out"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                >
-                  <ul className="flex flex-col justify-evenly">
-                    {link.subMenuItems?.map((subLink, index) => (
-                      <li
-                        key={subLink.text}
-                        className="w-auto whitespace-nowrap transition-all duration-700 ease-in-out hover:bg-gray-200"
-                      >
-                        <Link href={subLink.path}>
-                          <span className="p-2">{subLink.text}</span>
-                          {index !== link.subMenuItems.length - 1 && (
-                            <div className="m-auto mt-1 h-[1px] w-[95%] bg-slate-200 opacity-95"></div>
-                          )}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </motion.div>
-                <motion.div
-                  layoutId="activeHover"
-                  transition={{
-                    type: "weenie",
-                  }}
-                />
-              </>
-            )}
+            <Link
+              href={link.path}
+              className={`relative block hover:[text-shadow:-.05px_-.05px_0_rgba(0,0,0,0.5),.05px_.05px_0_rgba(0,0,0,0.5)] ${
+                currentPath === link.path
+                  ? "[text-shadow:-.05px_-.05px_0_rgba(0,0,0,0.5),.05px_.05px_0_rgba(0,0,0,0.5)]"
+                  : ""
+              } before:absolute before:inset-x-0 before:bottom-0 before:h-0.5 before:origin-left before:scale-x-0 before:bg-primary before:transition-transform before:duration-200 hover:before:scale-x-100 ${
+                currentPath === link.path ? "before:scale-x-100" : ""
+              }`}
+            >
+              {link.text}
+            </Link>
           </li>
         ))}
-
-        <li>
-          <button>
-            <ScrollLink
-              to="kontakt"
-              spy={true}
-              smooth={true}
-              offset={-100}
-              duration={500}
-            >
-              Kontakt
-            </ScrollLink>
-          </button>
-        </li>
       </ul>
-
       <AuthButtons />
     </nav>
   );
-};
-
-const hasSubMenuItems = (link: string) => {
-  if (basicLinks.find((item) => item.text === link)?.subMenuItems) {
-    return true;
-  }
 };
 
 export default NavbarDesktop;

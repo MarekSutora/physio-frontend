@@ -1,3 +1,6 @@
+"use client";
+
+
 import { SlovakMonths } from "@/lib/shared/constants";
 import { TRevenueStatistics } from "@/lib/shared/types";
 import { Chart } from "primereact/chart";
@@ -80,7 +83,7 @@ const RevenueStatsChart = ({ revenueStats }: Props) => {
   return (
     <div className="flex h-full w-full flex-col">
       <div className="flex w-full flex-row justify-between">
-        <h1 className="pl-6 text-lg font-medium">Vykonane sluzby za dane ob</h1>
+        <h1 className="pl-6 text-lg font-medium">Dosiahnutý zisk podľa vykonaných služieb</h1>
         <ComboBox
           buttonText={
             selectedYear === "all" ? "Celé obdobie" : selectedYear.toString()

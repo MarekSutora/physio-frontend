@@ -6,7 +6,7 @@ const Page = () => {
   return (
     <div className="flex h-full w-full flex-col gap-2 text-black lg:flex-row">
       <DashboardSectionWrapper
-        title={"Vytvoriť nový Blog Post"}
+        title={"Vytvorenie nového článku"}
         width={"w-full"}
       >
         <BlogForm createNew={true} />

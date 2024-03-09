@@ -22,14 +22,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="m-0 h-full p-0">
+    <html lang="en" className="m-0 h-full w-full p-0">
       <body
-        className={cn(inter.className, "m-0 h-full bg-white p-0 text-gray-950")}
+        className={cn(
+          inter.className,
+          "m-0 h-full w-full bg-white p-0 text-gray-950",
+        )}
       >
         <Providers>
-          <div className="flex h-full w-full flex-col md:flex-row">
+          <div className="flex h-full w-full flex-grow flex-col overflow-y-auto md:flex-row">
             <DashboardNavigationPanel />
-            <main className="flex h-full w-full flex-col items-start gap-3 bg-slate-50 p-3">
+            <main className="flex h-full w-full flex-col items-start gap-2 bg-slate-50 p-2">
               <DashboardHeader />
               <Suspense fallback={<p>Loading...</p>}>{children}</Suspense>
             </main>

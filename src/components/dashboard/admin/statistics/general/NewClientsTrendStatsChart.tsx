@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { Chart } from "primereact/chart";
 import ComboBox from "./ComboBox";
@@ -40,7 +42,7 @@ const NewClientsTrendStatsChart = ({ newClientsStats }: Props) => {
       labels,
       datasets: [
         {
-          label: "New Clients",
+          label: "Noví klienti",
           backgroundColor: "#66BB6A",
           data: labels.map((label) => {
             return selectedYear === "all"
@@ -89,9 +91,7 @@ const NewClientsTrendStatsChart = ({ newClientsStats }: Props) => {
   return (
     <div className="flex h-full w-full flex-col">
       <div className="flex w-full flex-row justify-between">
-        <h1 className="pl-6 text-lg font-medium">
-          New Clients Trend Over Time
-        </h1>
+        <h1 className="pl-6 text-lg font-medium">Noví klienti</h1>
         <ComboBox
           buttonText={
             selectedYear === "all" ? "Celé obdobie" : selectedYear.toString()

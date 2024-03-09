@@ -1,9 +1,7 @@
-import useSWR from "swr";
 import React from "react";
 import DashboardSectionWrapper from "@/components/dashboard/common/DashboardSectionWrapper";
 import BlogPostForm from "@/components/dashboard/admin/blog/BlogPostForm";
 import { TBlogPost } from "@/lib/shared/types";
-import { ca } from "date-fns/locale";
 import { getBlogPostBySlugAction } from "@/lib/actions/blogActions";
 
 type Props = {

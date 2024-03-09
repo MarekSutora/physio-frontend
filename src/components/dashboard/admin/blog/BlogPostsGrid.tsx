@@ -1,193 +1,122 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { FaSortUp, FaSortDown, FaCheck, FaTimes } from "react-icons/fa";
-import { TBlogPost } from "@/lib/shared/types"; // Make sure to import from the correct location
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import Link from "next/link";
+import React, { useState } from "react";
+import { DataTable, DataTableFilterMeta } from "primereact/datatable";
+import { Column } from "primereact/column";
+import { TBlogPost } from "@/lib/shared/types"; // Make sure this path is correct
 import {
   deleteBlogPostAction,
   updateBlogPostAction,
 } from "@/lib/actions/blogActions";
 import { useToast } from "@/components/ui/use-toast";
-import { ca } from "date-fns/locale";
-
-//TODO style the table
-
-type SortField = keyof TBlogPost;
-type SortOrder = "ascend" | "descend";
+import "primereact/resources/themes/saga-blue/theme.css";
+import "primereact/resources/primereact.min.css";
+import { FilterMatchMode } from "primereact/api";
+import ShadConfirmationDialog from "@/components/mainPage/common/logo/ShadConfirmationDialog";
+import { Button } from "@/components/ui/button";
 
 type Props = {
   _blogPosts: TBlogPost[];
 };
 
-const sortData = (
-  data: TBlogPost[],
-  field: SortField,
-  order: SortOrder,
-): TBlogPost[] => {
-  return [...data].sort((a, b) => {
-    if (typeof a[field] === "string" && typeof b[field] === "string") {
-      if (order === "ascend") {
-        return a[field]! < b[field]! ? -1 : a[field]! > b[field]! ? 1 : 0;
-      } else {
-        return a[field]! > b[field]! ? -1 : a[field]! < b[field]! ? 1 : 0;
-      }
-    }
-
-    if (typeof a[field] === "boolean" && typeof b[field] === "boolean") {
-      return a[field] === b[field]
-        ? 0
-        : (a[field] ? -1 : 1) * (order === "ascend" ? 1 : -1);
-    }
-
-    if (field === "datePublished") {
-      const dateA = new Date(a.datePublished);
-      const dateB = new Date(b.datePublished);
-      return order === "ascend"
-        ? dateA.getTime() - dateB.getTime()
-        : dateB.getTime() - dateA.getTime();
-    }
-    return 0;
-  });
+const defaultFilters: DataTableFilterMeta = {
+  title: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  author: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  datePublished: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  isHidden: { value: null, matchMode: FilterMatchMode.CONTAINS },
 };
 
 const BlogPostsGrid = ({ _blogPosts }: Props) => {
   const { toast } = useToast();
-  const preSortedBlogPosts = sortData(_blogPosts, "datePublished", "descend");
-  const [blogPosts, setBlogPosts] = useState<TBlogPost[]>(preSortedBlogPosts);
-  const [sortField, setSortField] = useState<SortField>("datePublished");
-  const [sortOrder, setSortOrder] = useState<SortOrder>("descend");
+  const [blogPosts, setBlogPosts] = useState<TBlogPost[]>(_blogPosts);
 
-  const handleSort = (field: SortField) => {
-    const newOrder =
-      sortField === field && sortOrder === "ascend" ? "descend" : "ascend";
-    setSortField(field);
-    setSortOrder(newOrder);
-    setBlogPosts(sortData(blogPosts, field, newOrder));
-  };
-
-  // Action handlers
-  const handleHide = async (blogPost: TBlogPost) => {
+  const handleHide = async (rowData: TBlogPost) => {
     try {
-      blogPost.isHidden = true;
-      await updateBlogPostAction(blogPost);
+      rowData.isHidden = !rowData.isHidden;
+      await updateBlogPostAction(rowData);
       toast({
         variant: "success",
-        title: "Post hidden successfully.",
+        title: `Článok ${rowData.isHidden ? "schovaný" : "zverejnený"} úspešne.`,
       });
+      setBlogPosts([...blogPosts]);
     } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Failed to hide the post.",
-      });
+      toast({ variant: "destructive", title: "Failed to update the post." });
     }
   };
 
-  const handlePublish = async (blogPost: TBlogPost) => {
+  const handleDelete = async (rowData: TBlogPost) => {
     try {
-      blogPost.isHidden = false;
-      await updateBlogPostAction(blogPost);
-      toast({
-        variant: "success",
-        title: "Post published successfully.",
-      });
+      await deleteBlogPostAction(rowData.id!);
+      setBlogPosts(blogPosts.filter((post) => post.id !== rowData.id));
+      toast({ variant: "success", title: "Post deleted successfully." });
     } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Failed to publish the post.",
-      });
+      toast({ variant: "destructive", title: "Failed to delete the post." });
     }
   };
 
-  const handleDelete = async (id: number) => {
-    try {
-      await deleteBlogPostAction(id);
-      setBlogPosts(blogPosts.filter((post) => post.id !== id));
-      toast({
-        variant: "success",
-        title: "Post deleted successfully.",
-      });
-    } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Failed to delete the post.",
-      });
-    }
+  const actionBodyTemplate = (rowData: TBlogPost) => {
+    return (
+      <div className="flex flex-row gap-1">
+        <ShadConfirmationDialog onConfirm={handleHide} confirmArgs={[rowData]}>
+          <Button> {rowData.isHidden ? "Zverejniť" : "Skryť"}</Button>
+        </ShadConfirmationDialog>
+
+        <ShadConfirmationDialog
+          onConfirm={handleDelete}
+          confirmArgs={[rowData]}
+        >
+          <Button variant={"destructive"}>Vymazať</Button>
+        </ShadConfirmationDialog>
+      </div>
+    );
   };
 
   return (
-    <div className="max-w-full overflow-x-auto">
-      <table className="w-full overflow-x-visible">
-        <thead>
-          <tr>
-            <th>
-              <button onClick={() => handleSort("title")}>
-                Title{" "}
-                {sortField === "title" &&
-                  (sortOrder === "ascend" ? <FaSortUp /> : <FaSortDown />)}
-              </button>
-            </th>
-            <th>
-              <button onClick={() => handleSort("author")}>
-                Author{" "}
-                {sortField === "author" &&
-                  (sortOrder === "ascend" ? <FaSortUp /> : <FaSortDown />)}
-              </button>
-            </th>
-            <th>
-              <button onClick={() => handleSort("datePublished")}>
-                Date Published{" "}
-                {sortField === "datePublished" &&
-                  (sortOrder === "ascend" ? <FaSortUp /> : <FaSortDown />)}
-              </button>
-            </th>
-            <th>
-              <button onClick={() => handleSort("isHidden")}>
-                Is Hidden{" "}
-                {sortField === "isHidden" &&
-                  (sortOrder === "ascend" ? <FaSortUp /> : <FaSortDown />)}
-              </button>
-            </th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {blogPosts.map((post) => (
-            <tr key={post.id}>
-              <td>{post.title}</td>
-              <td>{post.author}</td>
-              <td>{new Date(post.datePublished).toLocaleDateString("sk")}</td>
-              <td>
-                {post.isHidden ? (
-                  <FaCheck color="green" />
-                ) : (
-                  <FaTimes color="red" />
-                )}
-              </td>
-              <td className="flex flex-row gap-2">
-                {post.isHidden ? (
-                  <Button variant="ghost" onClick={() => handlePublish(post)}>
-                    Publish
-                  </Button>
-                ) : (
-                  <Button variant="ghost" onClick={() => handleHide(post)}>
-                    Hide
-                  </Button>
-                )}
-                <Link href={`./upravit-clanok?slug=${post.slug}`}>Update</Link>
-                <Button
-                  variant="destructive"
-                  onClick={() => handleDelete(post.id!)}
-                >
-                  Delete
-                </Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div>
+      <DataTable
+        value={blogPosts}
+        paginator
+        filters={defaultFilters}
+        rows={10}
+        emptyMessage=""
+        filterLocale="sk"
+        dataKey="id"
+        size="small"
+      >
+        <Column
+          field="title"
+          header="Názov"
+          filter
+          filterField="title"
+          sortable
+        ></Column>
+        <Column
+          field="author"
+          header="Autor"
+          filter
+          filterField="author"
+          sortable
+        ></Column>
+        <Column
+          field="datePublished"
+          header="Publikované"
+          body={(rowData) =>
+            new Date(rowData.datePublished).toLocaleDateString("sk")
+          }
+          filter
+          sortable
+          filterField="datePublished"
+        ></Column>
+        <Column
+          field="isHidden"
+          header="Zverejnený"
+          body={(rowData) => (rowData.isHidden ? "Nie" : "Áno")}
+          filter
+          filterField="isHidden"
+          sortable
+        ></Column>
+        <Column body={actionBodyTemplate} header="Actions"></Column>
+      </DataTable>
     </div>
   );
 };
