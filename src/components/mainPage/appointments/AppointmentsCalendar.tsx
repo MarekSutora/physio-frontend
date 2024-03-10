@@ -23,16 +23,20 @@ import { TG_UnbookedAppointment, TG_ServiceType } from "@/lib/shared/types"; // 
 import { cn } from "@/lib/utils";
 import ScheduleForTheDay from "./ScheduleForTheDay";
 import { useAppointmentsStore } from "@/useAppointmentsStore";
-import { start } from "repl";
 
 type Props = {
   appointmentsData: TG_UnbookedAppointment[];
   serviceTypes: TG_ServiceType[];
+  columnLayout?: boolean;
 };
 
 //TODO bug ked sa dostanem na rovnaky mesiac ako je teraz ale o rok neskor
 
-const AppointmentsCalendar = ({ appointmentsData, serviceTypes }: Props) => {
+const AppointmentsCalendar = ({
+  appointmentsData,
+  serviceTypes,
+  columnLayout,
+}: Props) => {
   let [selectedDay, setSelectedDay] = useState(startOfToday());
   let [currentMonth, setCurrentMonth] = useState(
     format(startOfToday(), "MMM-yyyy", { locale: enUS }),
@@ -88,8 +92,18 @@ const AppointmentsCalendar = ({ appointmentsData, serviceTypes }: Props) => {
   }
 
   return (
-    <div className="m-auto flex h-full flex-col justify-between gap-9 py-2 lg:flex-row lg:p-6">
-      <div className="pt-12 lg:w-[40%]">
+    <div
+      className={cn(
+        "m-auto flex h-full flex-col justify-between gap-9 py-2 lg:flex-row lg:p-6",
+        columnLayout && "flex-col lg:flex-col lg:p-1 max-h-full lg:max-h-full",
+      )}
+    >
+      <div
+        className={cn(
+          "pt-12 lg:w-[40%]",
+          columnLayout && "m-auto p-2 lg:w-10/12",
+        )}
+      >
         <div className="flex items-center">
           <h2 className="flex-auto select-none pl-5 text-lg font-semibold text-gray-900">
             {getMonthNameSk(
@@ -157,6 +171,7 @@ const AppointmentsCalendar = ({ appointmentsData, serviceTypes }: Props) => {
                       "bg-tertiary bg-opacity-30 font-semibold hover:bg-tertiary hover:bg-opacity-70",
                     isEqual(day, selectedDay) && "bg-primary text-white",
                     "mx-auto my-[2px] flex h-8 w-8 items-center justify-center rounded-md",
+                    columnLayout && "h-6 w-4",
                   )}
                 >
                   <time dateTime={format(day, "yyyy-MM-dd")}>

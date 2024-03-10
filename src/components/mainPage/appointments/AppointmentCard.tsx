@@ -1,17 +1,14 @@
-import {
-  ServiceTypeOptionType,
-  TG_UnbookedAppointment,
-} from "@/lib/shared/types";
+import { TG_UnbookedAppointment } from "@/lib/shared/types";
 import { format } from "date-fns";
 import { sk } from "date-fns/locale";
 import React from "react";
 import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import { createClientBookedAppointmentAction } from "@/lib/actions/appointmentsActions";
-import { getErrorMessage } from "@/lib/utils";
 import AuthButtons from "@/components/auth/authButtons/AuthButtons";
 import ReserveAppointmentConfirmationDialog from "./ReserveAppointmentConfirmationDialog";
+import ShadConfirmationDialog from "../common/logo/ShadConfirmationDialog";
+import { deleteAppointmentAction } from "@/lib/actions/appointmentsActions";
 
 type AppointmentCardProps = {
   appointment: TG_UnbookedAppointment;
@@ -22,15 +19,31 @@ const AppointmentCard = ({
   appointment,
   selectedServiceTypeNames,
 }: AppointmentCardProps) => {
-  const { data: session, status: isAuthenticated } = useSession();
+  const { data: session } = useSession();
+  const { toast } = useToast();
 
   const visibleServiceTypes = appointment.serviceTypeInfos.filter(
-    (asti) => selectedServiceTypeNames.includes(asti.name), // Match based on service type name
+    (asti) => selectedServiceTypeNames.includes(asti.name),
   );
 
-  //TODO style this
+  const handleDeleteAppointment = async (appId: number) => {
+    try {
+      await deleteAppointmentAction(appId);
 
-  const handleDeleteButtonClick = () => {};
+      toast({
+        variant: "success",
+        title: "Termín úspešne zrušený.",
+        className: "text-lg",
+      });
+      removeAppointmentByAppId(appId);
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Chyba pri rušení termínu.",
+        className: "text-lg",
+      });
+    }
+  };
 
   return (
     <div className="flex w-full flex-col gap-1 rounded-lg border-l border-r border-t px-3 py-1 last:border-b">
@@ -39,13 +52,14 @@ const AppointmentCard = ({
           {format(new Date(appointment.startTime), "HH:mm", { locale: sk })}
         </time>
         {session?.user.roles.includes("Admin") ? (
-          <Button
-            className="h-7 p-1"
-            variant={"destructive"}
-            onClick={handleDeleteButtonClick}
+          <ShadConfirmationDialog
+            onConfirm={handleDeleteAppointment}
+            confirmArgs={[appointment.id]}
           >
-            Zrušiť termín
-          </Button>
+            <Button className="h-8 px-2 py-1" variant="destructive">
+              Zrušiť termín
+            </Button>
+          </ShadConfirmationDialog>
         ) : (
           !session?.user && (
             <div className="flex flex-row items-center justify-center">
@@ -65,7 +79,6 @@ const AppointmentCard = ({
         >
           <div className="flex flex-row items-center justify-between pb-1">
             <span className="font-semibold">{item.name}</span>
-            {}
           </div>
           <div className="flex flex-row items-center justify-between">
             <div className="text-sm">
@@ -93,3 +106,6 @@ const AppointmentCard = ({
 };
 
 export default AppointmentCard;
+function removeAppointmentByAppId(appId: number) {
+  throw new Error("Function not implemented.");
+}

@@ -5,7 +5,7 @@ import {
 } from "@/lib/shared/types";
 import { format } from "date-fns";
 import { sk } from "date-fns/locale";
-import React, {useState } from "react";
+import React, { useState } from "react";
 import AppointmentCard from "./AppointmentCard";
 import Select, { MultiValue } from "react-select";
 import makeAnimated from "react-select/animated";
@@ -72,7 +72,7 @@ const ScheduleForTheDay = ({
         required
       />
       <div className="h-[500px] w-full">
-        <ScrollArea className="h-[500px] w-full" type="auto" >
+        <ScrollArea className="h-[500px] max-h-[500px] w-full" type="auto">
           {filteredAppointments.length > 0 ? (
             filteredAppointments.map((appointment, index) => (
               <AppointmentCard
