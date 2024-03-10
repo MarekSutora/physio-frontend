@@ -5,9 +5,9 @@ import React, { useState } from "react";
 import DashboardSectionWrapper from "../../common/DashboardSectionWrapper";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import ClientFinishedAppointmentsGrid from "../../common/ClientFinishedAppointmentsGrid";
-import ClientBookedAppointmentsGrid from "../../common/ClientBookedAppointmentsGrid";
 import ClientNotesGridForm from "../../common/ClientNotesGridForm";
+import FinishedAppointmentsGrid from "../../common/FinishedAppointmentsGrid";
+import BookedAppointmentsGrid from "../../common/BookedAppointmentsGrid";
 
 type Props = {
   clientData: TClient | undefined;
@@ -83,12 +83,12 @@ const ClientPageWrapper = ({
           </div>
         </DashboardSectionWrapper>
         {sectionToggled === "bookedAppointmentsSection" && (
-          <ClientBookedAppointmentsGrid
+          <BookedAppointmentsGrid
             bookedAppointments={clientBookedAppointments}
           />
         )}
         {sectionToggled === "finishedAppointmentsSection" && (
-          <ClientFinishedAppointmentsGrid
+          <FinishedAppointmentsGrid
             finishedAppointments={clientFinishedAppointments}
           />
         )}

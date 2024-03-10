@@ -1,12 +1,10 @@
 import ViewCounter from "@/components/mainPage/blog/ViewCounter";
 import {
-  getAllBlogPostsAction,
-  getBlogPostByIdAction,
   getBlogPostBySlugAction,
   getNonHiddenBlogPosts,
 } from "@/lib/actions/blogActions";
-import { View } from "lucide-react";
 import React from "react";
+import Image from "next/image";
 
 export async function generateStaticParams() {
   const blogPosts = await getNonHiddenBlogPosts();
@@ -36,7 +34,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
   return (
     <article className="prose m-auto p-5 md:prose-lg lg:prose-xl prose-img:m-auto prose-img:p-0 md:p-0 lg:p-0">
       <ViewCounter blogSlug={params.slug} />
-      <header>
+      <header className="pt-4">
         <h1>{title}</h1>
         <p>
           {formattedDate} - {author}
@@ -45,8 +43,15 @@ const Page = async ({ params }: { params: { slug: string } }) => {
       {/* eslint-disable-next-line @next/next/no-img-element */}
       {mainImageUrl && <img src={mainImageUrl} alt={title} />}
       <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
-      <footer>
-        <p>Keywords: {keywordsString.split(";").join(", ")}</p>
+      <footer className="flex flex-row flex-wrap gap-1 p-4 pb-8">
+        {keywordsString.split(";").map((keyword, index) => (
+          <i
+            key={index}
+            className="inline-block rounded-full bg-gray-200 px-3 py-1 text-sm font-semibold text-gray-700"
+          >
+            {"#" + keyword}
+          </i>
+        ))}
       </footer>
     </article>
   );

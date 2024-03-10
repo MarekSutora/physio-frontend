@@ -7,14 +7,13 @@ import { FaPhone, FaLocationDot } from "react-icons/fa6";
 
 const Footer = () => {
   return (
-    <footer className="h-auto w-full bg-primary text-slate-50">
-      <div className="md:flex-start mx-auto flex h-5/6 w-5/6 flex-col gap-2 md:flex-row md:gap-10 md:pt-2">
-        <div className="m-auto h-[1px] w-[100%] bg-slate-600 md:hidden"></div>
-        <div className="md:flex-start flex flex-col gap-2 md:w-full md:flex-row md:pt-4">
-          <div className="md:w-full">
-            <p className="md:text pb-2 text-center font-bold md:text-left">
+    <footer className="h-auto w-full bg-primary text-white">
+      <div className="mx-auto flex h-5/6 w-5/6 flex-col gap-2 md:flex-row md:gap-10 md:pt-2">
+        <section className="flex w-full flex-col items-center justify-center gap-2 md:flex-row md:pt-4">
+          <div className="w-52">
+            <h1 className="md:text pb-2 text-center text-xl font-bold md:text-left">
               NAVIGÁCIA
-            </p>
+            </h1>
             <nav>
               <ul className="text-md flex h-full flex-col justify-evenly gap-1 text-center text-sm md:text-left">
                 {basicLinks.map((link) => (
@@ -28,10 +27,12 @@ const Footer = () => {
             </nav>
           </div>
 
-          <div className="m-auto h-[1px] w-[60%] bg-slate-600 md:hidden"></div>
+          <div className="m-auto h-[1px] w-5/6 bg-secondary md:hidden"></div>
 
-          <div className="h-full items-center md:w-full">
-            <p className="pb-2 text-center font-bold md:text-left">KONTAKT</p>
+          <div className="h-full w-52 items-center lg:pl-10">
+            <h1 className="pb-2 text-center text-xl font-bold md:text-left">
+              KONTAKT
+            </h1>
             <nav className="mx-auto flex flex-col gap-2 text-sm  md:mx-0">
               <a
                 className="mx-auto flex items-center gap-1 md:mx-0 "
@@ -59,7 +60,7 @@ const Footer = () => {
               </a>
             </nav>
           </div>
-        </div>
+        </section>
       </div>
 
       <nav className="mt-4 w-full">

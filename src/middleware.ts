@@ -28,7 +28,7 @@ export default withAuth(
       );
     } else if (
       req.nextUrl.pathname === "/dashboard" &&
-      req.nextauth.token?.user.roles.includes("Patient")
+      req.nextauth.token?.user.roles.includes("Client")
     ) {
       return NextResponse.redirect(
         new URL("/dashboard/klient/rezervacia", req.url),

@@ -7,7 +7,7 @@ import { getErrorMessage } from "../utils";
 import { TClient, TClientNote } from "../shared/types";
 import { ca } from "date-fns/locale";
 
-export async function getPatientsData(): Promise<TClient[]> {
+export async function getClientsData(): Promise<TClient[]> {
   try {
     const session = await getServerSession(authOptions);
 
@@ -17,7 +17,7 @@ export async function getPatientsData(): Promise<TClient[]> {
       );
     }
 
-    const url = `${process.env.BACKEND_API_URL}/patients`;
+    const url = `${process.env.BACKEND_API_URL}/clients`;
 
     const res = await fetch(url, {
       method: "GET",
@@ -41,7 +41,6 @@ export async function getPatientsData(): Promise<TClient[]> {
   }
 }
 
-// Function to add a note to a patient
 export async function addNoteToClient(note: TClientNote): Promise<void> {
   const session = await getServerSession(authOptions);
 
@@ -51,7 +50,7 @@ export async function addNoteToClient(note: TClientNote): Promise<void> {
     );
   }
 
-  const url = `${process.env.BACKEND_API_URL}/patients/${note.clientId}/notes`;
+  const url = `${process.env.BACKEND_API_URL}/clients/${note.clientId}/notes`;
   const response = await fetch(url, {
     method: "POST",
     headers: {
@@ -67,9 +66,8 @@ export async function addNoteToClient(note: TClientNote): Promise<void> {
   }
 }
 
-// Function to get all notes for a patient
-export async function getAllNotesForPatient(
-  patientId: number,
+export async function getAllNotesForClient(
+  clientId: number,
 ): Promise<TClientNote[]> {
   try {
     const session = await getServerSession(authOptions);
@@ -80,7 +78,7 @@ export async function getAllNotesForPatient(
       );
     }
 
-    const url = `${process.env.BACKEND_API_URL}/patients/${patientId}/notes`;
+    const url = `${process.env.BACKEND_API_URL}/clients/${clientId}/notes`;
     const response = await fetch(url, {
       method: "GET",
       headers: {
@@ -101,7 +99,6 @@ export async function getAllNotesForPatient(
   }
 }
 
-// Function to get patient details by ID
 export async function getClientById(clientId: number): Promise<TClient> {
   const session = await getServerSession(authOptions);
 
@@ -111,7 +108,7 @@ export async function getClientById(clientId: number): Promise<TClient> {
     );
   }
 
-  const url = `${process.env.BACKEND_API_URL}/patients/${clientId}`;
+  const url = `${process.env.BACKEND_API_URL}/clients/${clientId}`;
   const response = await fetch(url, {
     method: "GET",
     headers: {
@@ -139,7 +136,7 @@ export async function deleteNoteFromClient(noteId: number): Promise<void> {
       );
     }
 
-    const url = `${process.env.BACKEND_API_URL}/patients/notes/${noteId}`;
+    const url = `${process.env.BACKEND_API_URL}/clients/notes/${noteId}`;
     const response = await fetch(url, {
       method: "DELETE",
       headers: {

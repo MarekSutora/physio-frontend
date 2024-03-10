@@ -72,7 +72,10 @@ const LoginForm = ({ searchParams }: Props) => {
         toast({
           variant: "destructive",
           title: "Chyba pri prihlasovani. 🙁",
-          description: getErrorMessage(res?.error) + " 🙄",
+          description:
+            getErrorMessage(res?.error) === "fetch failed"
+              ? "Skúste to prosím neskôr."
+              : getErrorMessage(res?.error) + " 🙄",
           className: "text-lg",
         });
       } else {
@@ -107,7 +110,7 @@ const LoginForm = ({ searchParams }: Props) => {
       ) : (
         <>
           {searchParams.reset === "success" && (
-            <div className="text-center">
+            <div className="rounded-lg border-2 border-green-700/70 bg-green-300 p-5 m-3 text-center text-green-900">
               <h1 className="text-2xl font-semibold">
                 Obnovenie hesla úspešné!
               </h1>
@@ -115,7 +118,7 @@ const LoginForm = ({ searchParams }: Props) => {
             </div>
           )}
           {searchParams.emailConfirmed === "success" && (
-            <div className="text-center">
+            <div className="rounded-lg border-2 border-green-700/70 bg-green-300 p-5 m-3 text-center text-green-900">
               <h1 className="text-2xl font-semibold">
                 Potvrdenie emailu úspešné!
               </h1>

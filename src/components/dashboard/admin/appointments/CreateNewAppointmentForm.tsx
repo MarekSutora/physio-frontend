@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-import Select, { MultiValue, SingleValue } from "react-select";
+import Select, { MultiValue } from "react-select";
 import makeAnimated from "react-select/animated";
 import {
   ServiceTypeOptionType,
   TC_Appointment,
-  TG_PatientForBookedAppointment,
+  TG_ClientForBookedAppointment,
   TG_ServiceType,
 } from "@/lib/shared/types";
 import { Label } from "@/components/ui/label";

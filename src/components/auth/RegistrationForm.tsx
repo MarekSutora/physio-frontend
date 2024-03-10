@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -22,7 +21,17 @@ import { useToast } from "@/components/ui/use-toast";
 import { registerClientAction } from "@/lib/actions/authActions";
 import DashboardSectionWrapper from "../dashboard/common/DashboardSectionWrapper";
 
-// Define the form schema using Zod
+const passwordSchema = z
+  .string()
+  .min(7, { message: "Heslo musí obsahovať aspoň 7 znakov." })
+  .regex(/\d/, { message: "Heslo musí obsahovať aspoň jednu číslicu." })
+  .regex(/[a-z]/, { message: "Heslo musí obsahovať aspoň jedno malé písmeno." })
+  .regex(/[A-Z]/, {
+    message: "Heslo musí obsahovať aspoň jedno veľké písmeno.",
+  })
+  .regex(/\W/, {
+    message: "Heslo musí obsahovať aspoň jeden nealfanumerický znak.",
+  });
 
 const formSchema = z
   .object({
@@ -36,13 +45,13 @@ const formSchema = z
       .max(50, "Priezvisko nesmie mať viac ako 50 znakov. 🙄"),
     phoneNumber: z.string().min(1, "Telefónne číslo musí byť vyplnené. 🙄"),
     email: z.string().email("Neplatná emailová adresa. 🙄"),
-    heslo: z.string().min(5, "Heslo musí mať aspoň 5 znakov. 🙄"),
-    confirmedHeslo: z.string(),
+    password: passwordSchema,
+    confirmedPassword: z.string(),
     termsAndConditions: z
       .boolean()
       .refine((val) => val === true, "Musíte súhlasiť. 🙄"),
   })
-  .refine((data) => data.heslo === data.confirmedHeslo, {
+  .refine((data) => data.password === data.confirmedPassword, {
     message: "Heslá sa musia zhodovať. 🙄",
     path: ["confirmedHeslo"],
   });
@@ -61,8 +70,8 @@ const RegistrationForm = () => {
       lastName: "",
       phoneNumber: "",
       email: "",
-      heslo: "",
-      confirmedHeslo: "",
+      password: "",
+      confirmedPassword: "",
       termsAndConditions: false,
     },
   });
@@ -72,7 +81,7 @@ const RegistrationForm = () => {
     try {
       const result = await registerClientAction({
         email: formData.email,
-        password: formData.heslo,
+        password: formData.password,
         firstName: formData.firstName,
         lastName: formData.lastName,
         phoneNumber: formData.phoneNumber,
@@ -85,6 +94,7 @@ const RegistrationForm = () => {
           title: "Registrácia zlyhala. 🙁",
           description: result.message,
           className: "text-lg",
+          duration: 5000,
         });
       } else {
         setIsLoading(false);
@@ -95,24 +105,24 @@ const RegistrationForm = () => {
       toast({
         variant: "destructive",
         title: "Chyba pri registrácii. 🙁",
-        description: "Nepodarilo sa spracovať registráciu. Skúste to znova. 🙄",
+        description:
+          "Nepodarilo sa spracovať registráciu. Skúste to znova neskôr. 🙄",
         className: "text-lg",
+        duration: 5000,
       });
     }
   };
 
   if (registrationSuccess) {
-    // Display the success message
     return (
       <DashboardSectionWrapper>
-        <div className="text-center">
+        <div className="m-3 rounded-lg border-2 border-green-700/70 bg-green-300 p-5 text-center text-green-900">
           <h1 className="text-2xl font-semibold">Registrácia Úspešná!</h1>
           <p>Prosím, skontrolujte svoj email na potvrdenie účtu.</p>
         </div>
       </DashboardSectionWrapper>
     );
   }
-
 
   return (
     <div className="flex w-96 flex-col justify-start">
@@ -139,7 +149,6 @@ const RegistrationForm = () => {
               className="flex flex-col"
             >
               <div className="flex flex-row gap-5">
-                {/* Meno */}
                 <FormField
                   control={form.control}
                   name="firstName"
@@ -153,7 +162,6 @@ const RegistrationForm = () => {
                     </FormItem>
                   )}
                 />
-                {/* Priezvisko */}
                 <FormField
                   control={form.control}
                   name="lastName"
@@ -168,8 +176,6 @@ const RegistrationForm = () => {
                   )}
                 />
               </div>
-
-              {/* Telefonne Cislo */}
               <FormField
                 control={form.control}
                 name="phoneNumber"
@@ -183,8 +189,6 @@ const RegistrationForm = () => {
                   </FormItem>
                 )}
               />
-
-              {/* Email */}
               <FormField
                 control={form.control}
                 name="email"
@@ -198,11 +202,9 @@ const RegistrationForm = () => {
                   </FormItem>
                 )}
               />
-
-              {/* Heslo */}
               <FormField
                 control={form.control}
-                name="heslo"
+                name="password"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Heslo</FormLabel>
@@ -217,11 +219,9 @@ const RegistrationForm = () => {
                   </FormItem>
                 )}
               />
-
-              {/* Confirmed Heslo */}
               <FormField
                 control={form.control}
-                name="confirmedHeslo"
+                name="confirmedPassword"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Potvrdenie hesla</FormLabel>
@@ -236,8 +236,6 @@ const RegistrationForm = () => {
                   </FormItem>
                 )}
               />
-
-              {/* Terms and Conditions Checkbox */}
               <FormField
                 control={form.control}
                 name="termsAndConditions"
@@ -272,8 +270,6 @@ const RegistrationForm = () => {
                   </FormItem>
                 )}
               />
-
-              {/* Submit Button */}
               <Button
                 className="mt-2 w-full bg-primary active:scale-95"
                 type="submit"

@@ -1,6 +1,5 @@
 "use server";
 
-import { ca } from "date-fns/locale";
 import {
   TRegistrationFormData,
   TResetPasswordFormData,
@@ -13,7 +12,7 @@ export async function registerClientAction(
 ): Promise<TResponseResult> {
   try {
     const res = await fetch(
-      `${process.env.BACKEND_API_URL}/auth/registerPatient`,
+      `${process.env.BACKEND_API_URL}/auth/register-client`,
       {
         method: "POST",
         headers: {

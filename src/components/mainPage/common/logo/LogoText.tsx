@@ -12,7 +12,6 @@ const LogoText = ({ color = "", className = "" }: LogoTextProps) => {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 910 225"
       width="100%"
-      height="auto"
       color={color}
       className={className}
       fill={color}

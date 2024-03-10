@@ -24,16 +24,13 @@ const AppointmentCard = ({
 }: AppointmentCardProps) => {
   const { data: session, status: isAuthenticated } = useSession();
 
-
   const visibleServiceTypes = appointment.serviceTypeInfos.filter(
     (asti) => selectedServiceTypeNames.includes(asti.name), // Match based on service type name
   );
 
   //TODO style this
 
-  const handleDeleteButtonClick = () => {
-    
-  };
+  const handleDeleteButtonClick = () => {};
 
   return (
     <div className="flex w-full flex-col gap-1 rounded-lg border-l border-r border-t px-3 py-1 last:border-b">
@@ -51,9 +48,9 @@ const AppointmentCard = ({
           </Button>
         ) : (
           !session?.user && (
-            <div className="flex flex-row">
-              <p className="text-sm text-destructive">
-                Pre rezervovanie termínu musíte byť prihlásený
+            <div className="flex flex-row items-center justify-center">
+              <p className="w-full pr-6 text-sm font-medium text-destructive">
+                Na rezervovanie termínu musíte byť prihlásený
               </p>
               <AuthButtons />
             </div>

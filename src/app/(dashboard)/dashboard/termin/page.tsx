@@ -68,7 +68,7 @@ const Page = async (props: Props) => {
                 </p>
                 <p> {ba.clientFirstName + " " + ba.clientSecondName}</p>
                 <p>
-                  Datum rezervacie:{" "}
+                  Dátum rezervácie:{" "}
                   {ba.appointmentBookedDate.toLocaleString("sk")}
                 </p>
               </div>
@@ -85,7 +85,7 @@ const Page = async (props: Props) => {
       </div>
     );
   } else {
-    <div>Not found</div>;
+    <div>Not Found</div>;
   }
 };
 

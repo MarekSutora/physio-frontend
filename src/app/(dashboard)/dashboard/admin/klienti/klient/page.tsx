@@ -4,7 +4,7 @@ import {
   getFinishedAppointmentsForClientAction,
 } from "@/lib/actions/appointmentsActions";
 import {
-  getAllNotesForPatient,
+  getAllNotesForClient,
   getClientById,
 } from "@/lib/actions/clientsActions";
 import { TClient, TClientNote, TG_BookedAppointment } from "@/lib/shared/types";
@@ -48,7 +48,7 @@ const Page = async (props: Props) => {
   }
 
   try {
-    clientsNotes = await getAllNotesForPatient(clientIdNumber);
+    clientsNotes = await getAllNotesForClient(clientIdNumber);
   } catch (error) {
     console.error(error);
   }

@@ -10,8 +10,8 @@ type Props = {};
 
 const DashboardDesktopNav = async (props: Props) => {
   return (
-    <nav className="flex h-full w-[240px] flex-col justify-between overscroll-y-none bg-secondary">
-      <Link href="/" className="m-5 text-white">
+    <nav className="flex h-full w-[240px] flex-col justify-between overscroll-y-none bg-primary">
+      <Link href="/" className="m-5 pb-4 text-white">
         <LogoText color="white" />
       </Link>
       <DashboardNavUl />

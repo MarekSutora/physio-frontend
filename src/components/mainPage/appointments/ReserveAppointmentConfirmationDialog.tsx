@@ -27,7 +27,7 @@ const ReserveAppointmentConfirmationDialog = ({ astdcId }: Props) => {
   const { toast } = useToast();
 
   const tryBookAppointment = async (astdcId: number) => {
-    if (isAuthenticated && session?.user.roles.includes("Patient")) {
+    if (isAuthenticated && session?.user.roles.includes("Client")) {
       try {
         await createClientBookedAppointmentAction(astdcId);
         removeAppointment(astdcId);

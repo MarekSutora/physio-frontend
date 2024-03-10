@@ -34,9 +34,6 @@ const DashboardMenuItem = ({ text, path, icon, subMenuItems }: Props) => {
     }
   };
 
-  const user = session?.user;
-
-  // Variants for Framer Motion to control animations
   const variants = {
     open: { opacity: 1, height: "auto" },
     closed: { opacity: 0, height: 0 },
@@ -49,7 +46,7 @@ const DashboardMenuItem = ({ text, path, icon, subMenuItems }: Props) => {
           <button
             className={cn(
               isActive && "bg-white text-primary",
-              !isActive && "group bg-secondary text-white",
+              !isActive && "group bg-primary text-white",
               "flex w-full flex-row items-center justify-between gap-2 py-2 pl-3 pr-2 text-lg font-medium",
             )}
             onClick={() => handleItemWithSubMenuClick(text)}

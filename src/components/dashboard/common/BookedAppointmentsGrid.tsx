@@ -6,7 +6,7 @@ import { Column, ColumnFilterElementTemplateOptions } from "primereact/column";
 import { TG_BookedAppointment } from "@/lib/shared/types";
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
-import DashboardSectionWrapper from "../../common/DashboardSectionWrapper";
+import DashboardSectionWrapper from "./DashboardSectionWrapper";
 import { FilterMatchMode } from "primereact/api";
 import { MultiSelect, MultiSelectChangeEvent } from "primereact/multiselect";
 import { locale, addLocale } from "primereact/api";
@@ -19,6 +19,7 @@ import {
 } from "@/lib/actions/appointmentsActions";
 import { useToast } from "@/components/ui/use-toast";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 declare module "primereact/api" {
   export function addLocale(
@@ -48,11 +49,11 @@ const defaultFilters: DataTableFilterMeta = {
 };
 
 const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
-  const [dialogVisible, setDialogVisible] = useState(false);
   const [dynamicStyles, setDynamicStyles] = useState("");
   const { toast } = useToast();
   const [bookedAppointmentsState, setBookedAppointmentsState] =
     useState<TG_BookedAppointment[]>(bookedAppointments);
+  const { data: session } = useSession();
 
   locale("sk");
   addLocale("sk", {
@@ -270,8 +271,7 @@ const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
 
       toast({
         variant: "success",
-        title: "Rezervacia zrusena",
-        description: "Rezervacia bola uspesne zrusena",
+        title: "Rezervácia úspešne zrušená.",
         className: "text-lg",
       });
       setBookedAppointmentsState(
@@ -280,12 +280,9 @@ const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
     } catch {
       toast({
         variant: "destructive",
-        title: "Chyba pri zrusovani rezervacie",
-        description: "Nepodarilo sa zrusit rezervaciu",
+        title: "Chyba pri rušení rezervácie.",
         className: "text-lg",
       });
-    } finally {
-      setDialogVisible(false);
     }
   };
 
@@ -295,8 +292,7 @@ const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
 
       toast({
         variant: "success",
-        title: "Termin zruseny",
-        description: "Termin bol uspesne zruseny",
+        title: "Termín úspešne zrušený.",
         className: "text-lg",
       });
       setBookedAppointmentsState(
@@ -305,12 +301,9 @@ const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
     } catch (error) {
       toast({
         variant: "destructive",
-        title: "Chyba pri zrusovani terminu",
-        description: "Nepodarilo sa zrusit termin",
+        title: "Chyba pri rušení termínu.",
         className: "text-lg",
       });
-    } finally {
-      setDialogVisible(false);
     }
   };
 
@@ -320,8 +313,7 @@ const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
 
       toast({
         variant: "success",
-        title: "Rezervacia zrusena",
-        description: "Uspech",
+        title: "Termín úspešne označený ako vykonaný.",
         className: "text-lg",
       });
       setBookedAppointmentsState(
@@ -330,65 +322,64 @@ const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
     } catch {
       toast({
         variant: "destructive",
-        title: "Chyba pri zrusovani rezervacie",
-        description: "Neuspech",
+        title: "Chyba pri označovaní termínu ako vykonaný.",
         className: "text-lg",
       });
-    } finally {
-      setDialogVisible(false);
     }
   };
 
   const actionBodyTemplate = (rowData: TG_BookedAppointment) => {
     return (
-      <div className="flex flex-row gap-1">
+      <div className="flex flex-row items-center gap-1">
         <Link
           href={`../../termin?appId=${rowData.appointmentId}`}
-          className="bg-primary text-white"
+          className="flex h-8 flex-row items-center rounded-sm bg-primary px-2 text-center text-sm font-medium text-white hover:bg-secondary"
         >
-          Otvorit
+          Otvoriť
         </Link>
-        <>
-          <ShadConfirmationDialog
-            onConfirm={handleDeleteBookedAppointment}
-            confirmArgs={[rowData.id]}
-          >
-            <Button
-              variant="destructive"
-              onClick={() => setDialogVisible(true)}
+        {session?.user?.roles.includes("Admin") && (
+          <div className="flex flex-row items-center gap-1">
+            <ShadConfirmationDialog
+              onConfirm={handleDeleteBookedAppointment}
+              confirmArgs={[rowData.id]}
             >
-              Zrusit rezervaciu
-            </Button>
-          </ShadConfirmationDialog>
-        </>
-        <ShadConfirmationDialog
-          onConfirm={handleDeleteAppointment}
-          confirmArgs={[rowData.appointmentId]}
-        >
-          <Button variant="destructive" onClick={() => setDialogVisible(true)}>
-            Zrusit termin
-          </Button>
-        </ShadConfirmationDialog>
-        <ShadConfirmationDialog
-          onConfirm={handleMarkBkedAppAsFinished}
-          confirmArgs={[rowData.id]}
-        >
-          <Button variant="default" onClick={() => setDialogVisible(true)}>
-            Vykonane
-          </Button>
-        </ShadConfirmationDialog>
+              <Button className="h-8 px-2 py-1" variant="destructive">
+                Zrušiť rezerváciu
+              </Button>
+            </ShadConfirmationDialog>
+            <ShadConfirmationDialog
+              onConfirm={handleDeleteAppointment}
+              confirmArgs={[rowData.appointmentId]}
+            >
+              <Button className="h-8 px-2 py-1" variant="destructive">
+                Zrušiť termín
+              </Button>
+            </ShadConfirmationDialog>
+            <ShadConfirmationDialog
+              onConfirm={handleMarkBkedAppAsFinished}
+              confirmArgs={[rowData.id]}
+            >
+              <Button className="h-8 px-2 py-1" variant="default">
+                Vykonané
+              </Button>
+            </ShadConfirmationDialog>
+          </div>
+        )}
       </div>
     );
   };
 
   return (
-    <DashboardSectionWrapper title="Rezervované termíny" height="h-fit">
+    <DashboardSectionWrapper
+      title="Rezervované termíny"
+      height="max-h-full h-full"
+    >
       <style>{dynamicStyles}</style>
       <DataTable
         value={bookedAppointmentsState}
         paginator
-        rows={11}
-        emptyMessage="Nenasli sa ziadne rezervovane terminy"
+        rows={13}
+        emptyMessage="Nenašli sa žiadne výsledky"
         rowClassName={rowClassName}
         filters={defaultFilters}
         filterLocale="sk"
@@ -400,7 +391,7 @@ const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
       >
         <Column
           field="startTime"
-          header="Start Time"
+          header="Začiatok"
           sortable
           body={(rowData: TG_BookedAppointment) =>
             formatDate(rowData.startTime)
@@ -411,7 +402,7 @@ const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
         />
         <Column
           field="serviceTypeName"
-          header="Typ sluzby"
+          header="Typ služby"
           sortable
           body={(rowData: TG_BookedAppointment) => rowData.serviceTypeName}
           style={{ width: "200px" }}
@@ -430,62 +421,58 @@ const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
           filter
           filterField="durationMinutes"
         />
-        <Column
-          field="cost"
-          header="Cena"
-          sortable
-          body={(rowData: TG_BookedAppointment) => `${rowData.cost} €`}
-          style={{ width: "70px" }}
-          filter
-          filterField="cost"
-          hidden
-        />
-        <Column
-          field="clientId"
-          header="ID klienta"
-          sortable
-          body={(rowData: TG_BookedAppointment) => rowData.clientId}
-          style={{ width: "70px" }}
-          filter
-          filterField="clientId"
-        />
-        <Column
-          field="clientFirstName"
-          header="Meno"
-          sortable
-          body={(rowData: TG_BookedAppointment) => rowData.clientFirstName}
-          filter
-          filterField="clientFirstName"
-        />
-        <Column
-          field="clientSecondName"
-          header="Priezvisko"
-          sortable
-          body={(rowData: TG_BookedAppointment) => rowData.clientSecondName}
-          filter
-          filterField="clientSecondName"
-        />
-        <Column
-          field="appointmentBookedDate"
-          header="Datum rezervacie"
-          sortable
-          body={(rowData: TG_BookedAppointment) =>
-            formatDate(rowData.appointmentBookedDate)
-          }
-          style={{ width: "260px" }}
-          filter
-          filterField="appointmentBookedDate"
-        />
-        <Column
-          field="capacity"
-          header="Kapacita"
-          sortable
-          body={(rowData: TG_BookedAppointment) => rowData.capacity}
-          style={{ width: "30px" }}
-          filter
-          filterField="capacity"
-          hidden
-        />
+        {session?.user?.roles.includes("Admin") && (
+          <Column
+            field="cost"
+            header="Cena"
+            sortable
+            body={(rowData: TG_BookedAppointment) => `${rowData.cost} €`}
+            filter
+            filterField="cost"
+            hidden
+          />
+        )}
+        {session?.user?.roles.includes("Admin") && (
+          <Column
+            field="clientId"
+            header="ID klienta"
+            sortable
+            body={(rowData: TG_BookedAppointment) => rowData.clientId}
+            filter
+            filterField="clientId"
+          />
+        )}
+        {session?.user?.roles.includes("Admin") && (
+          <Column
+            field="clientFirstName"
+            header="Meno"
+            sortable
+            body={(rowData: TG_BookedAppointment) => rowData.clientFirstName}
+            filter
+            filterField="clientFirstName"
+          />
+        )}
+        {session?.user?.roles.includes("Admin") && (
+          <Column
+            field="clientSecondName"
+            header="Priezvisko"
+            sortable
+            body={(rowData: TG_BookedAppointment) => rowData.clientSecondName}
+            filter
+            filterField="clientSecondName"
+          />
+        )}
+        {session?.user?.roles.includes("Admin") && (
+          <Column
+            field="capacity"
+            header="Kapacita"
+            sortable
+            body={(rowData: TG_BookedAppointment) => rowData.capacity}
+            filter
+            filterField="capacity"
+            hidden
+          />
+        )}
         <Column
           header="Akcie"
           body={actionBodyTemplate}

@@ -4,7 +4,7 @@ import CreateNewAppointmentForm from "@/components/dashboard/admin/appointments/
 import { getServiceTypesAction } from "@/lib/actions/serviceTypesActions";
 import {
   TG_BookedAppointment,
-  TG_PatientForBookedAppointment,
+  TG_ClientForBookedAppointment,
   TG_ServiceType,
 } from "@/lib/shared/types";
 import { getServerSession } from "next-auth/next";

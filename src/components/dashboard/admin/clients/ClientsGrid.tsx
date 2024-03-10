@@ -1,24 +1,14 @@
 "use client";
 
 import { TClient } from "@/lib/shared/types";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { DataTable, DataTableFilterMeta } from "primereact/datatable";
-import { Column, ColumnFilterElementTemplateOptions } from "primereact/column";
-import { TG_BookedAppointment } from "@/lib/shared/types";
+import { Column } from "primereact/column";
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import DashboardSectionWrapper from "../../common/DashboardSectionWrapper";
 import { FilterMatchMode } from "primereact/api";
-import { MultiSelect, MultiSelectChangeEvent } from "primereact/multiselect";
 import { locale, addLocale } from "primereact/api";
-import { Button } from "@/components/ui/button";
-import ShadConfirmationDialog from "@/components/mainPage/common/logo/ShadConfirmationDialog";
-import {
-  deleteAppointmentAction,
-  deleteBookedAppointmentAction,
-  markBookedAppointmentAsFinishedAction,
-} from "@/lib/actions/appointmentsActions";
-import { useToast } from "@/components/ui/use-toast";
 import Link from "next/link";
 
 declare module "primereact/api" {
@@ -42,8 +32,7 @@ const defaultFilters: DataTableFilterMeta = {
 };
 
 const ClientsGrid = ({ clients }: Props) => {
-  const [clientsDataState, setclientsDataState] = useState<TClient[]>(clients);
-
+  const [clientsDataState, setClientsDataState] = useState<TClient[]>(clients); //TODO do buducnosti pre mazanie klientov
 
   locale("sk");
   addLocale("sk", {
@@ -241,7 +230,7 @@ const ClientsGrid = ({ clients }: Props) => {
       >
         <Column
           field="personId"
-          header="ID"
+          header="Id"
           filter
           filterMatchMode={FilterMatchMode.CONTAINS}
         />
@@ -271,7 +260,7 @@ const ClientsGrid = ({ clients }: Props) => {
         />
         <Column
           field="registrationDate"
-          header="Datum registracie"
+          header="Dátum registrácie"
           body={(rowData: TClient) => formatDate(rowData.registeredDate)}
           style={{ width: "260px" }}
           filter

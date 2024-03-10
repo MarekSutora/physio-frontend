@@ -1,4 +1,4 @@
-import ClientBookedAppointmentsGrid from "@/components/dashboard/common/ClientBookedAppointmentsGrid";
+import BookedAppointmentsGrid from "@/components/dashboard/common/BookedAppointmentsGrid";
 import { getBookedAppointmentsForClientAction } from "@/lib/actions/appointmentsActions";
 import { TG_BookedAppointment } from "@/lib/shared/types";
 import React from "react";
@@ -13,7 +13,7 @@ const Page = async () => {
   }
 
   return (
-    <ClientBookedAppointmentsGrid bookedAppointments={bookedAppointments} />
+    <BookedAppointmentsGrid bookedAppointments={bookedAppointments} />
   );
 };
 

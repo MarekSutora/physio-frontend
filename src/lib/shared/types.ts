@@ -47,21 +47,21 @@ export type TG_ServiceTypeInfo = {
   cost: number;
 };
 
-export type TG_PatientForBookedAppointment = {
+export type TG_ClientForBookedAppointment = {
   personId: number;
   firstName: string;
   secondName: string;
 };
 
 export type TC_AdminBookedAppointment = {
-  patientId: number;
+  clientId: number;
   startTime: Date;
   stdcId: number;
 };
 
 export type TC_ClientBookedAppointment = {
   arstdcId: number;
-  patientId: number;
+  clientId: number;
 };
 
 export type TG_BookedAppointment = {
@@ -208,4 +208,3 @@ export type TResetPasswordFormData = {
   password: string;
   confirmPassword: string;
 };
-

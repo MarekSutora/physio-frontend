@@ -1,20 +1,18 @@
-import AdminFinishedAppointmentsGrid from "@/components/dashboard/admin/appointments/AdminFinishedAppointmentsGrid";
+import FinishedAppointmentsGrid from "@/components/dashboard/common/FinishedAppointmentsGrid";
 import { getAllFinishedAppointmentsAction } from "@/lib/actions/appointmentsActions";
 import { TG_BookedAppointment } from "@/lib/shared/types";
 import React from "react";
 
 const Page = async () => {
-  let bookedAppointments: TG_BookedAppointment[] = [];
+  let finishedAppointments: TG_BookedAppointment[] = [];
 
   try {
-    bookedAppointments = await getAllFinishedAppointmentsAction();
+    finishedAppointments = await getAllFinishedAppointmentsAction();
   } catch (error) {
     console.error(error);
   }
 
-  return (
-    <AdminFinishedAppointmentsGrid bookedAppointments={bookedAppointments} />
-  );
+  return <FinishedAppointmentsGrid finishedAppointments={finishedAppointments} />;
 };
 
 export default Page;

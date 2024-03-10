@@ -15,7 +15,6 @@ import React from "react";
 export const basicLinks = [
   { text: "Domov", path: "/" },
   { text: "Služby", path: "/sluzby" },
-  { text: "O mne", path: "/o-mne" },
   { text: "Blog", path: "/blog" },
   { text: "Kontakt", path: "/kontakt" },
   { text: "Rezervácia", path: "/rezervacia" },
@@ -66,6 +65,10 @@ export const dashboardLinks = {
           text: "Rezervované termíny",
           path: "/dashboard/admin/terminy/zarezervovane-terminy",
         },
+        {
+          text: "História",
+          path: "/dashboard/admin/terminy/historia",
+        }
       ],
       icon: React.createElement(FaCalendarAlt),
     },
@@ -88,7 +91,7 @@ export const dashboardLinks = {
       icon: React.createElement(FaTools),
     },
   ],
-  patient: [
+  client: [
     {
       text: "Rezervácia",
       path: "/dashboard/klient/rezervacia",

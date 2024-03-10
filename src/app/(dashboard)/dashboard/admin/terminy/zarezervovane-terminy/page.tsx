@@ -1,11 +1,8 @@
 export const dynamic = "force-dynamic";
 
-import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
-import BookedAppointmentsGrid from "@/components/dashboard/admin/appointments/BookedAppointmentsGrid";
+import BookedAppointmentsGrid from "@/components/dashboard/common/BookedAppointmentsGrid";
 import { getAllBookedAppointmentsAction } from "@/lib/actions/appointmentsActions";
 import { TG_BookedAppointment } from "@/lib/shared/types";
-import { getErrorMessage } from "@/lib/utils";
-import { getServerSession } from "next-auth/next";
 import React from "react";
 
 const Page = async () => {

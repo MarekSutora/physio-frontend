@@ -5,9 +5,9 @@ import {
 } from "@/lib/shared/types";
 import { format } from "date-fns";
 import { sk } from "date-fns/locale";
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 import AppointmentCard from "./AppointmentCard";
-import Select, { MultiValue, SingleValue } from "react-select";
+import Select, { MultiValue } from "react-select";
 import makeAnimated from "react-select/animated";
 import { ScrollArea } from "@/components/ui/scrollArea";
 
@@ -37,10 +37,6 @@ const ScheduleForTheDay = ({
   ) => {
     setSelectedOptions(selected.map((option) => ({ ...option })));
   };
-
-  // useEffect(() => {
-  //   handleServiceTypesSelectChange(selectedOptions);
-  // }, [selectedOptions]); // Dependency array includes selectedOptions
 
   const filteredAppointments = selectedDayAppointments.filter((appointment) =>
     appointment.serviceTypeInfos.some(
