@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import BookedAppointmentsGrid from "@/components/dashboard/common/BookedAppointmentsGrid";
 import { getBookedAppointmentsForClientAction } from "@/lib/actions/appointmentsActions";
 import { TG_BookedAppointment } from "@/lib/shared/types";
@@ -12,9 +14,7 @@ const Page = async () => {
     console.error(error);
   }
 
-  return (
-    <BookedAppointmentsGrid bookedAppointments={bookedAppointments} />
-  );
+  return <BookedAppointmentsGrid bookedAppointments={bookedAppointments} />;
 };
 
 export default Page;
