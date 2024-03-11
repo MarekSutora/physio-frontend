@@ -31,7 +31,7 @@ const App = () => {
         </h1>
         <div className="m-auto h-[1px] w-full bg-slate-200"></div>
       </div>
-      <section className="m-auto w-[61.8%]">
+      <section className="m-auto w-5/6 pb-10 lg:w-[61.8%]">
         <LoadScript googleMapsApiKey={apiKey!}>
           <div className="flex flex-col shadow-xl lg:flex-row">
             <GoogleMap

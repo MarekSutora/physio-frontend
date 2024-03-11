@@ -56,7 +56,7 @@ const Contact = () => {
         </h1>
         <div className="m-auto h-[1px] w-full bg-slate-200"></div>
       </div>
-      <section className="m-auto w-[61.8%] pb-10">
+      <section className="m-auto lg:w-[61.8%] pb-10 w-5/6">
         <div className="flex w-full flex-col gap-10 lg:flex-row lg:gap-10">
           <Form {...form}>
             <form

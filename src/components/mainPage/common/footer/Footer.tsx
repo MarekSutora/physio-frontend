@@ -27,7 +27,7 @@ const Footer = () => {
             </nav>
           </div>
 
-          <div className="m-auto h-[1px] w-5/6 bg-secondary md:hidden"></div>
+          <div className="m-auto h-[1px] w-5/6 bg-primary/85 md:hidden"></div>
 
           <div className="h-full w-52 items-center lg:pl-10">
             <h1 className="pb-2 text-center text-xl font-bold md:text-left">

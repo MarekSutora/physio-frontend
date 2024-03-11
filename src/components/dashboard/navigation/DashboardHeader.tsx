@@ -14,7 +14,7 @@ const DashboardHeader = async (props: Props) => {
   return (
     <header className="flex h-auto w-full items-center justify-between rounded-lg border-2 border-slate-200 bg-white px-2">
       <Link href="/">
-        <LogoImage style="w-10 h-10" fill="#14746F" />
+        <LogoImage style="w-10 h-10" fill="#298294" />
       </Link>
       <div className="flex items-center gap-2">
         <span className="text-lg  text-slate-600">{user?.fullName}</span>

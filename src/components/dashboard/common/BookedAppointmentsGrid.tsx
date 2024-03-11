@@ -333,7 +333,7 @@ const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
       <div className="flex flex-row items-center gap-1">
         <Link
           href={`../../termin?appId=${rowData.appointmentId}`}
-          className="flex h-8 flex-row items-center rounded-sm bg-primary px-2 text-center text-sm font-medium text-white hover:bg-secondary"
+          className="flex h-8 flex-row items-center rounded-sm bg-primary px-2 text-center text-sm font-medium text-white hover:bg-primary/85"
         >
           Otvoriť
         </Link>

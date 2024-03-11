@@ -25,7 +25,7 @@ const Header = () => {
   return (
     <header
       className={cn(
-        `sticky top-0 z-30 hidden h-14 w-full transition-all duration-200 ease-in md:block`,
+        `sticky top-0 z-30 hidden h-14 w-full bg-slate-50 transition-all duration-200 ease-in md:block`,
         !isTopOfPage && "h-16 bg-white shadow-sm",
       )}
     >

@@ -97,7 +97,7 @@ const LoginForm = ({ searchParams }: Props) => {
     <div className="flex w-96 flex-col justify-start ">
       {isLoading ? (
         <ClipLoader
-          color={"#14746F"}
+          color={"#298294"}
           loading={isLoading}
           cssOverride={{
             display: "block",
@@ -110,7 +110,7 @@ const LoginForm = ({ searchParams }: Props) => {
       ) : (
         <>
           {searchParams.reset === "success" && (
-            <div className="rounded-lg border-2 border-green-700/70 bg-green-300 p-5 m-3 text-center text-green-900">
+            <div className="m-3 rounded-lg border-2 border-green-700/70 bg-green-300 p-5 text-center text-green-900">
               <h1 className="text-2xl font-semibold">
                 Obnovenie hesla úspešné!
               </h1>
@@ -118,7 +118,7 @@ const LoginForm = ({ searchParams }: Props) => {
             </div>
           )}
           {searchParams.emailConfirmed === "success" && (
-            <div className="rounded-lg border-2 border-green-700/70 bg-green-300 p-5 m-3 text-center text-green-900">
+            <div className="m-3 rounded-lg border-2 border-green-700/70 bg-green-300 p-5 text-center text-green-900">
               <h1 className="text-2xl font-semibold">
                 Potvrdenie emailu úspešné!
               </h1>
@@ -182,7 +182,7 @@ const LoginForm = ({ searchParams }: Props) => {
 
               <Button
                 type="submit"
-                className="m-auto mb-2 mt-1 w-5/6 bg-secondary text-white hover:bg-primary focus:bg-primary"
+                className="m-auto mb-2 mt-1 w-5/6 bg-primary text-white hover:bg-primary/85 focus:bg-primary"
               >
                 Prihlásiť sa
               </Button>

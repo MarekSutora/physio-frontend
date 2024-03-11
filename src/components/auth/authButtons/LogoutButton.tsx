@@ -15,7 +15,7 @@ const LogoutButton = ({ isDashboard }: Props) => {
       className={cn(
         !isDashboard
           ? " rounded-sm border border-primary px-[4px] py-[4px] font-semibold text-primary shadow-lg transition-all ease-in-out hover:bg-primary  hover:text-white"
-          : "w-full items-center pl-1 font-normal text-white  hover:bg-slate-100 hover:text-secondary",
+          : "w-full items-center pl-1 font-normal text-white  hover:bg-slate-100 hover:text-primary/85",
         "group flex h-8 items-center",
       )}
       onClick={() => signOut({ callbackUrl: "/" })}

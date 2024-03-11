@@ -5,17 +5,31 @@ import {
 } from "@/lib/actions/blogActions";
 import React from "react";
 import Image from "next/image";
+import { TBlogPost } from "@/lib/shared/types";
 
 export async function generateStaticParams() {
-  const blogPosts = await getNonHiddenBlogPosts();
+  try {
+    const blogPosts = await getNonHiddenBlogPosts();
 
-  return blogPosts.map((post) => ({
-    slug: post.slug,
-  }));
+    return blogPosts.map((post) => ({
+      params: {
+        slug: post.slug,
+      },
+    }));
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
 }
 
 const Page = async ({ params }: { params: { slug: string } }) => {
-  const blogPost = await getBlogPostBySlugAction(params.slug);
+  let blogPost: TBlogPost;
+  try {
+    blogPost = await getBlogPostBySlugAction(params.slug);
+  } catch (error) {
+    console.error(error);
+    return { notFound: true };
+  }
 
   const {
     title,

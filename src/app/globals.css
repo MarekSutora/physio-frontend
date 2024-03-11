@@ -78,69 +78,11 @@
 }
 
 @layer utilities {
-  .sticky {
+  .stickyy {
     position: sticky;
     position: -webkit-sticky;
   }
 
-  .text-bg-fx {
-    background-repeat: no-repeat;
-    will-change: background-size;
-    transition: background-size 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-  }
-  .text-bg-fx:hover {
-    background-size: 100% 100%;
-  }
-
-  .text-bg-fx--scale-x {
-    @apply px-0 py-0.5 lg:py-1;
-    background-image: linear-gradient(
-      hsla(245 58% 51% / 0.2),
-      hsla(245 58% 51% / 0.2)
-    );
-    background-size: 0% 100%;
-  }
-
-  .text-bg-fx--scale-y {
-    text-decoration: none;
-    background-image: linear-gradient(
-      hsla(245 58% 51% / 0.2),
-      hsla(245 58% 51% / 0.2)
-    );
-    background-size: 100% 2px;
-    background-position: center bottom;
-  }
-
-  .text-bg-fx--underline,
-  .text-bg-fx--underline-bold {
-    text-decoration: none;
-    background-size: 0% 100%;
-  }
-
-  .text-bg-fx--underline {
-    /* text underline size = 1px */
-    background-image: linear-gradient(
-      transparent calc(100% - 3px),
-      currentColor calc(100% - 3px),
-      currentColor calc(100% - 2px),
-      transparent 2px
-    );
-  }
-
-  .text-bg-fx--underline-bold {
-    background-image: linear-gradient(
-      transparent 50%,
-      hsla(245 58% 51% / 0.2) 50%
-    );
-  }
-
-  .text-bg-fx--text-shadow {
-    /* you can use this with the .text-bg-fx--underline effect */
-    text-shadow:
-      1.5px 1px hsl(0, 0%, 100%),
-      -1.5px 1px hsl(0, 0%, 100%),
-      0px 1px hsl(0, 0%, 100%);
-  }
 }
 
 

@@ -74,7 +74,7 @@ const CustomConfirmDialog = ({
         <p>Are you sure you want to perform this action?</p>
         {isLoading && (
           <ClipLoader
-            color={"#14746F"}
+            color={"#298294"}
             loading={isLoading}
             cssOverride={{
               display: "block",

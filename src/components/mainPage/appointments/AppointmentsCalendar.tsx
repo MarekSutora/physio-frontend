@@ -95,7 +95,7 @@ const AppointmentsCalendar = ({
     <div
       className={cn(
         "m-auto flex h-full flex-col justify-between gap-9 py-2 lg:flex-row lg:p-6",
-        columnLayout && "flex-col lg:flex-col lg:p-1 max-h-full lg:max-h-full",
+        columnLayout && "max-h-full flex-col lg:max-h-full lg:flex-col lg:p-1",
       )}
     >
       <div
@@ -168,7 +168,7 @@ const AppointmentsCalendar = ({
                       "text-gray-900",
                     !isEqual(day, selectedDay) &&
                       isAppointmentOnDay &&
-                      "bg-tertiary bg-opacity-30 font-semibold hover:bg-tertiary hover:bg-opacity-70",
+                      "bg-primary/80 bg-opacity-30 font-semibold hover:bg-primary/80 hover:bg-opacity-70",
                     isEqual(day, selectedDay) && "bg-primary text-white",
                     "mx-auto my-[2px] flex h-8 w-8 items-center justify-center rounded-md",
                     columnLayout && "h-6 w-4",

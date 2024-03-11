@@ -121,7 +121,7 @@ const ExerciseDetailsRow = ({
   return (
     <motion.div
       className="flex flex-row items-end gap-3"
-      animate={{ backgroundColor: isMoved ? "#14746F" : "#ffffff" }} // Change these colors as needed
+      animate={{ backgroundColor: isMoved ? "#298294" : "#ffffff" }} // Change these colors as needed
       transition={{ duration: 0.5 }}
     >
       <div className="flex flex-col gap-1">

@@ -6,9 +6,12 @@ import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import AuthButtons from "@/components/auth/authButtons/AuthButtons";
-import ReserveAppointmentConfirmationDialog from "./ReserveAppointmentConfirmationDialog";
 import ShadConfirmationDialog from "../common/logo/ShadConfirmationDialog";
-import { deleteAppointmentAction } from "@/lib/actions/appointmentsActions";
+import {
+  createClientBookedAppointmentAction,
+  deleteAppointmentAction,
+} from "@/lib/actions/appointmentsActions";
+import { getErrorMessage } from "@/lib/utils";
 
 type AppointmentCardProps = {
   appointment: TG_UnbookedAppointment;
@@ -19,11 +22,11 @@ const AppointmentCard = ({
   appointment,
   selectedServiceTypeNames,
 }: AppointmentCardProps) => {
-  const { data: session } = useSession();
+  const { data: session, status: isAuthenticated } = useSession();
   const { toast } = useToast();
 
-  const visibleServiceTypes = appointment.serviceTypeInfos.filter(
-    (asti) => selectedServiceTypeNames.includes(asti.name),
+  const visibleServiceTypes = appointment.serviceTypeInfos.filter((asti) =>
+    selectedServiceTypeNames.includes(asti.name),
   );
 
   const handleDeleteAppointment = async (appId: number) => {
@@ -42,6 +45,26 @@ const AppointmentCard = ({
         title: "Chyba pri rušení termínu.",
         className: "text-lg",
       });
+    }
+  };
+
+  const tryBookAppointment = async (astdcId: number) => {
+    if (isAuthenticated && session?.user.roles.includes("Client")) {
+      try {
+        await createClientBookedAppointmentAction(astdcId);
+        removeAppointmentByAppId(astdcId);
+        toast({
+          variant: "success",
+          title: "Termín úspešne zarezervovaný.",
+        });
+      } catch (error) {
+        toast({
+          variant: "destructive",
+          description: "Chyba pri rezervovaní termínu.",
+        });
+      }
+    } else {
+      alert("Musíte byť prihlásený.");
     }
   };
 
@@ -95,8 +118,18 @@ const AppointmentCard = ({
               )}
             </div>
 
-            {!session?.user.roles.includes("Admin") && session?.user && (
-              <ReserveAppointmentConfirmationDialog astdcId={item.astdcId} />
+            {!session?.user.roles.includes("Client") && session?.user && (
+              <ShadConfirmationDialog
+                onConfirm={tryBookAppointment}
+                confirmArgs={[item.astdcId]}
+              >
+                <button
+                  className="text-md rounded-sm border border-primary/85 bg-white px-[6px]
+                 py-[5px] font-semibold text-primary/85 shadow-lg transition-all ease-in-out hover:bg-primary/85 hover:text-slate-50"
+                >
+                  Rezervovať
+                </button>
+              </ShadConfirmationDialog>
             )}
           </div>
         </div>

@@ -26,10 +26,10 @@ export default function RootLayout({
   return (
     <html lang="en" className="m-0 h-full p-0">
       <body
-        className={`${inter.className} m-0 h-full w-full bg-slate-50 p-0 text-gray-950`}
+        className={`${inter.className} m-0 h-full w-full overflow-auto bg-slate-50 p-0 text-gray-950`}
       >
         <Providers>
-          <div className="flex  w-full flex-col">
+          <div className="flex w-full flex-col">
             <HeaderMobile />
             <HeaderDesktop />
             <main className="h-auto min-h-[603px] w-full bg-slate-50">
