@@ -17,7 +17,7 @@ const Page = async (props: Props) => {
   try {
     blogPost = await getBlogPostBySlugAction(slug as string);
   } catch (error) {
-    console.error("error", error);
+    console.log("error", error);
   }
 
   return (

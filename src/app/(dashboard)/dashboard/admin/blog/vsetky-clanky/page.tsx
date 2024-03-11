@@ -31,7 +31,7 @@ const Page = async () => {
     let _blogPosts = await getAllBlogPostsAction();
     blogPosts = _blogPosts;
   } catch (error) {
-    console.error("error", error);
+    console.log("error", error);
   }
 
   return (

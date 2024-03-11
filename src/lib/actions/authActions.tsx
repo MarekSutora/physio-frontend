@@ -23,7 +23,7 @@ export async function registerClientAction(
     );
 
     if (!res.ok) {
-      console.error("Error:", res);
+      console.log("Error:", res);
       const errorMessage =
         (await res.json().then((data) => data.message)) ??
         "Skúste to prosím znova. 🙄";
@@ -50,7 +50,7 @@ export async function forgotPasswordAction(email: string): Promise<void> {
     );
 
     if (!res.ok) {
-      console.error("Error:", res);
+      console.log("Error:", res);
       const errorMessage =
         (await res.json().then((data) => data.message)) ??
         "Skúste to prosím znova. 🙄";
@@ -77,7 +77,7 @@ export async function resetPasswordAction(
     );
 
     if (!res.ok) {
-      console.error("Error:", res);
+      console.log("Error:", res);
       const errorMessage =
         (await res.json().then((data) => data.message)) ??
         "Skúste to prosím znova. 🙄";

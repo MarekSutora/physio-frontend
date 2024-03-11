@@ -36,7 +36,7 @@ export async function getClientsData(): Promise<TClient[]> {
 
     return data;
   } catch (error) {
-    console.error("error", error);
+    console.log("error", error);
     throw new Error(getErrorMessage(error));
   }
 }

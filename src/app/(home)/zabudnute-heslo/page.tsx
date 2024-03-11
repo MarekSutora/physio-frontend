@@ -44,7 +44,7 @@ const ForgotPasswordPage = () => {
       await forgotPasswordAction(formData.email);
       setEmailSent(true);
     } catch (error) {
-      console.error("Error sending password reset email", error);
+      console.log("Error sending password reset email", error);
       toast({
         title: "Error",
         description: "An error occurred sending the password reset email",

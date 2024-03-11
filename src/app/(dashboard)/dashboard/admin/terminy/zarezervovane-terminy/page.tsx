@@ -11,7 +11,7 @@ const Page = async () => {
   try {
     bookedAppointments = await getAllBookedAppointmentsAction();
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 
   return <BookedAppointmentsGrid bookedAppointments={bookedAppointments} />;

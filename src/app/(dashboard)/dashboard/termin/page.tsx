@@ -41,7 +41,7 @@ const Page = async (props: Props) => {
 
     exerciseTypes = await getAllExerciseTypesAction();
   } catch (error) {
-    console.error("error", error);
+    console.log("error", error);
   }
 
   if (appointment) {

@@ -12,7 +12,7 @@ const Page = async () => {
   try {
     finishedBookedAppointments = await getFinishedAppointmentsForClientAction();
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 
   return (

@@ -16,7 +16,7 @@ const Page = async () => {
   try {
     serviceTypes = await getServiceTypesAction();
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 
   return (

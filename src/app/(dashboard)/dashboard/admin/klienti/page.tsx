@@ -14,7 +14,7 @@ const Page = async () => {
   try {
     clients = await getClientsData();
   } catch (error) {
-    console.error("error", error);
+    console.log("error", error);
   }
 
   return <ClientsGrid clients={clients} />;

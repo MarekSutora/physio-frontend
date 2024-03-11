@@ -30,27 +30,27 @@ const Page = async (props: Props) => {
   try {
     client = await getClientById(clientIdNumber);
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 
   try {
     clientsFinishedAppointments =
       await getFinishedAppointmentsForClientAction(clientIdNumber);
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 
   try {
     clientsBookedAppointments =
       await getBookedAppointmentsForClientAction(clientIdNumber);
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 
   try {
     clientsNotes = await getAllNotesForClient(clientIdNumber);
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 
   return (

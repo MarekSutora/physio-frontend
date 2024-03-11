@@ -15,7 +15,7 @@ const Page = async (props: Props) => {
   try {
     serviceTypes = await getServiceTypesAction();
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 
   return (

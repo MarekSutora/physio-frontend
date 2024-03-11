@@ -66,7 +66,7 @@ const ResetPasswordForm = (props: Props) => {
       });
       router.push("/prihlasenie?emailConfirmed=success");
     } catch (error) {
-      console.error("Error resetting password", error);
+      console.log("Error resetting password", error);
       toast({
         title: "Error",
         description: "An error occurred resetting the password",

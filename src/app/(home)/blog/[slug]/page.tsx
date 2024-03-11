@@ -17,7 +17,7 @@ export async function generateStaticParams() {
       },
     }));
   } catch (error) {
-    console.error(error);
+    console.log(error);
     return [];
   }
 }
@@ -27,7 +27,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
   try {
     blogPost = await getBlogPostBySlugAction(params.slug);
   } catch (error) {
-    console.error(error);
+    console.log(error);
     return { notFound: true };
   }
 

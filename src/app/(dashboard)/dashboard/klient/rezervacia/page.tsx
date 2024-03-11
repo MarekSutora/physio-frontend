@@ -13,7 +13,7 @@ const Page = async () => {
     unbookedAppointmentsData = await getUnbookedAppointmentsAction();
     serviceTypesData = await getServiceTypesAction();
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 
   const [unbookedAppointments, serviceTypes] = await Promise.all([

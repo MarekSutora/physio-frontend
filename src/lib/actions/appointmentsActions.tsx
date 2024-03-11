@@ -422,7 +422,7 @@ export async function getAllExerciseTypesAction(): Promise<TExerciseType[]> {
 
     return data;
   } catch (error) {
-    console.error("error", error);
+    console.log("error", error);
     throw new Error(getErrorMessage(error));
   }
 }
@@ -456,7 +456,7 @@ export async function markBookedAppointmentAsFinishedAction(
     revalidateTag("booked-appointments");
     revalidateTag("all-finished-appointments");
   } catch (error) {
-    console.error("error", error);
+    console.log("error", error);
     throw new Error(getErrorMessage(error));
   }
 }

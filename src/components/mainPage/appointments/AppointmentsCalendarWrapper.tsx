@@ -17,7 +17,7 @@ const AppointmentsCalendarWrapper = async ({ columnLayout }: Props) => {
     unbookedAppointmentsData = await getUnbookedAppointmentsAction();
     serviceTypesData = await getServiceTypesAction();
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 
   const [unbookedAppointments, serviceTypes] = await Promise.all([
