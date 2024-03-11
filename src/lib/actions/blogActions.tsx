@@ -15,7 +15,6 @@ export async function getAllBlogPostsAction(): Promise<TBlogPost[]> {
       headers: {
         "Content-Type": "application/json",
       },
-      // Assuming your caching strategy might need tags for invalidation
       next: { tags: ["blog-posts"] },
     });
 

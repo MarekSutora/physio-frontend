@@ -1,12 +1,9 @@
-import { getAllBlogPostsAction } from "@/lib/actions/blogActions";
+
 import { TBlogPost } from "@/lib/shared/types";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import parse, { Element } from "html-react-parser";
-import HoverBackground from "@/components/mainPage/blog/HoverBackground";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
-import { cn } from "@/lib/utils";
 
 type BlogCardProps = {
   post: TBlogPost;
