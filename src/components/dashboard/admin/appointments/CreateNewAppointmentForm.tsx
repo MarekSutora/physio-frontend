@@ -23,9 +23,7 @@ type Props = {
   serviceTypes: TG_ServiceType[];
 };
 
-const CreateNewAppointmentForm = ({
-  serviceTypes,
-}: Props) => {
+const CreateNewAppointmentForm = ({ serviceTypes }: Props) => {
   const [startTime, setStartTime] = useState(new Date());
   const [selectedOptions, setSelectedOptions] = useState<
     ServiceTypeOptionType[]
@@ -113,12 +111,14 @@ const CreateNewAppointmentForm = ({
           name="serviceTypes"
           isMulti
           closeMenuOnSelect={false}
+          placeholder="Vyberte typ služby"
           options={serviceTypesOptions}
           styles={customStyles}
           components={makeAnimated()}
           onChange={handleServiceTypesSelectChange}
           value={selectedOptions}
           required
+          noOptionsMessage={() => ""}
         />
       </div>
       <div className="mt-4 flex w-[220px] flex-col gap-1 space-y-1">

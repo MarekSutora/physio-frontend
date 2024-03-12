@@ -58,6 +58,7 @@ const ScheduleForTheDay = ({
         id="serviceTypes"
         instanceId="serviceTypes"
         name="serviceTypes"
+        placeholder="Vyberte typy služieb"
         isMulti
         closeMenuOnSelect={false}
         options={serviceTypes.map((st) => ({
@@ -70,6 +71,7 @@ const ScheduleForTheDay = ({
         onChange={handleServiceTypesSelectChange}
         value={selectedOptions}
         required
+        noOptionsMessage={() => ""}
       />
       <div className="h-[500px] w-full">
         <ScrollArea className="h-[500px] max-h-[500px] w-full" type="auto">
@@ -84,7 +86,7 @@ const ScheduleForTheDay = ({
               />
             ))
           ) : (
-            <p className="text-center">
+            <p className="pt-1 text-center">
               Pre vybrané typy služieb nie sú k dispozícii žiadne termíny.
             </p>
           )}

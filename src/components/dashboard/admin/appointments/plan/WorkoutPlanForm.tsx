@@ -27,8 +27,7 @@ import { CheckedState } from "@radix-ui/react-checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { updateAppointmentDetailsAction } from "@/lib/actions/appointmentsActions";
 import { toast } from "@/components/ui/use-toast";
-import { get } from "http";
-import { getErrorMessage } from "@/lib/utils";
+import ShadConfirmationDialog from "@/components/mainPage/common/logo/ShadConfirmationDialog";
 
 type WorkoutPlanFormProps = {
   exerciseTypes: TExerciseType[];
@@ -42,6 +41,8 @@ const labelMapping: { [key: string]: string } = {
   expectedDurationInMinutes: "Predpokladaná doba trvania (min)",
   restAfterExerciseInMinutes: "Oddych po cvičení (min)",
   restBetweenSetsInMinutes: "Oddych medzi sériami (min)",
+  durationInMinutes: "Doba trvania (min)",
+  numberOfSets: "Počet sérií",
   weight: "Hmotnosť (kg)",
 };
 
@@ -88,17 +89,17 @@ const WorkoutPlanForm = ({
 
   const resetNewExercise = () => {
     setNewExercise({
-      exerciseType: exerciseTypes[0], // Reset to the first available exercise type
+      exerciseType: exerciseTypes[0],
       weight: 0,
       numberOfRepetitions: 0,
       numberOfSets: 0,
       durationInMinutes: 0,
       restAfterExerciseInMinutes: 0,
       restBetweenSetsInMinutes: 0,
-      order: plannedExercises.length + 1, // Adjust the order to be the next in the list
+      order: plannedExercises.length + 1,
       successfullyPerformed: false,
     });
-    setValue(exerciseTypes[0]?.id || null); // Also reset the selected exercise type
+    setValue(exerciseTypes[0]?.id || null);
   };
 
   const handleInputChange = (
@@ -132,25 +133,25 @@ const WorkoutPlanForm = ({
 
       toast({
         variant: "success",
-        title: "Available appointment created successfully!",
+        title: "Úspešne uložený plán!",
       });
     } catch (error) {
       toast({
         variant: "destructive",
-        title: getErrorMessage(error),
+        title: "Pri ukladaní plánu nastala chyba!",
       });
     }
   };
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex max-h-fit flex-col gap-2 overflow-y-auto px-2">
       <PlannedExercisesList
         plannedExercises={plannedExercises}
         setPlannedExercises={setPlannedExercises}
         someRandomExerciseNames={exerciseTypes}
       />
       <div className="flex flex-col gap-2">
-        <div className="flex flex-row items-center gap-2">
+        <div className="flex flex-row flex-wrap items-end gap-2">
           <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
               <Button
@@ -161,13 +162,13 @@ const WorkoutPlanForm = ({
               >
                 {value
                   ? exerciseTypes.find((e) => e.id === value)?.name
-                  : "Vyber typ služby..."}
+                  : "Vyberte typ cvičenia..."}
                 <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-[200px] p-0">
               <Command>
-                <CommandInput placeholder="Vyber typ služby..." required />
+                <CommandInput placeholder="Vyberte typ cvičenia..." required />
                 <CommandGroup className="max-h-96 overflow-y-auto">
                   {exerciseTypes.map((exerciseType) => (
                     <CommandItem
@@ -205,9 +206,9 @@ const WorkoutPlanForm = ({
                   "number",
             )
             .map((key) => (
-              <div key={key} className="flex w-full items-center gap-1">
-                <div className="flex w-full flex-col">
-                  <Label className="text-sm" htmlFor={key}>
+              <div key={key} className="flex w-32 items-end gap-1">
+                <div className="flex flex-col">
+                  <Label className="text-xs" htmlFor={key}>
                     {labelMapping[key] || key}
                   </Label>
                   <Input
@@ -229,7 +230,7 @@ const WorkoutPlanForm = ({
                   />
                 </div>
                 <button
-                  className="ml-2 rounded bg-red-500 p-1 text-white"
+                  className="mb-[5px] h-full w-6 rounded-md bg-red-500 p-0.5 text-white"
                   onClick={() =>
                     handleDeleteClick(key as keyof TAppointmentExerciseDetail)
                   }
@@ -238,21 +239,35 @@ const WorkoutPlanForm = ({
                 </button>
               </div>
             ))}
-          <Checkbox
-            checked={newExercise.successfullyPerformed}
-            onCheckedChange={handleSPCheckboxChange}
-          />
-          <Button onClick={addExercise}>Add</Button>
-          <Button onClick={resetNewExercise}>Refresh</Button>
+          <div className="flex flex-row items-center gap-1 pb-2">
+            <Label htmlFor="successfullyPerformed">Úspešne vykonané</Label>
+            <Checkbox
+              id="successfullyPerformed"
+              checked={newExercise.successfullyPerformed}
+              onCheckedChange={handleSPCheckboxChange}
+              className="ml-1"
+            />
+          </div>
+
+          <div className="flex flex-row gap-1">
+            <Button className="h-8" onClick={addExercise}>
+              Pridať
+            </Button>
+            <Button className="h-8" onClick={resetNewExercise}>
+              Obnoviť
+            </Button>
+          </div>
         </div>
 
-        <Label htmlFor="note">Note</Label>
+        <Label htmlFor="note">Poznámka</Label>
         <Textarea
           id="note"
           value={note}
           onChange={(e) => setNote(e.target.value)}
         />
-        <Button onClick={saveChanges}>Save</Button>
+        <ShadConfirmationDialog onConfirm={saveChanges}>
+          <Button>Uložiť</Button>
+        </ShadConfirmationDialog>
       </div>
     </div>
   );

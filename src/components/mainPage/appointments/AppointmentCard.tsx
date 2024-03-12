@@ -71,7 +71,7 @@ const AppointmentCard = ({
   return (
     <div className="flex w-full flex-col gap-1 rounded-lg border-l border-r border-t px-3 py-1 last:border-b">
       <div className=" flex flex-row justify-between">
-        <time className="pr-4 text-lg font-semibold">
+        <time className="pr-4 pt-1 text-lg font-semibold">
           {format(new Date(appointment.startTime), "HH:mm", { locale: sk })}
         </time>
         {session?.user.roles.includes("Admin") ? (
@@ -124,8 +124,8 @@ const AppointmentCard = ({
                 confirmArgs={[item.astdcId]}
               >
                 <button
-                  className="text-md rounded-sm border border-primary/85 bg-white px-[6px]
-                 py-[5px] font-semibold text-primary/85 shadow-lg transition-all ease-in-out hover:bg-primary/85 hover:text-slate-50"
+                  className="text-md flex h-8 items-center rounded-sm border border-primary/85 bg-white px-[6px]
+                 py-[5px] font-semibold text-primary/85 shadow-md transition-all ease-in-out hover:bg-primary/85 hover:text-slate-50"
                 >
                   Rezervovať
                 </button>

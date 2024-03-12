@@ -4,17 +4,13 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { TClientNote } from "@/lib/shared/types";
 import { Button } from "@/components/ui/button";
-import { Data } from "@react-google-maps/api";
 import { DataTable, DataTableFilterMeta } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { ca } from "date-fns/locale";
 import { useToast } from "@/components/ui/use-toast";
-import { set } from "date-fns";
 import {
   addNoteToClient,
   deleteNoteFromClient,
 } from "@/lib/actions/clientsActions";
-import { text } from "stream/consumers";
 import { FilterMatchMode } from "primereact/api";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import ShadConfirmationDialog from "@/components/mainPage/common/logo/ShadConfirmationDialog";
@@ -47,8 +43,7 @@ const ClientNotesGridForm = ({ clientNotes, clientId }: Props) => {
 
       toast({
         variant: "success",
-        title: "Uspech",
-        description: "Uspech",
+        title: "Poznámka bola úspešne pridaná.",
         className: "text-lg",
       });
 
@@ -58,7 +53,7 @@ const ClientNotesGridForm = ({ clientNotes, clientId }: Props) => {
       toast({
         variant: "destructive",
         title: "Chyba",
-        description: "Neuspech",
+        description: "Poznámku sa nepodarilo pridať.",
         className: "text-lg",
       });
     }
@@ -70,8 +65,7 @@ const ClientNotesGridForm = ({ clientNotes, clientId }: Props) => {
 
       toast({
         variant: "success",
-        title: "Uspech",
-        description: "Uspech",
+        title: "Poznámka bola úspešne odstránená.",
         className: "text-lg",
       });
 
@@ -83,8 +77,7 @@ const ClientNotesGridForm = ({ clientNotes, clientId }: Props) => {
     } catch (error) {
       toast({
         variant: "destructive",
-        title: "Chyba",
-        description: "Neuspech",
+        title: "Poznámku sa nepodarilo odstrániť.",
         className: "text-lg",
       });
     }
@@ -95,7 +88,7 @@ const ClientNotesGridForm = ({ clientNotes, clientId }: Props) => {
       <div className="flex flex-row gap-1">
         <Dialog>
           <DialogTrigger>
-            <Button>Otvorit</Button>
+            <Button>Otvoriť</Button>
           </DialogTrigger>
           <DialogContent contentEditable={false}>
             <Label htmlFor="note">{formatDate(rowData.createdAt!)}</Label>
@@ -112,7 +105,7 @@ const ClientNotesGridForm = ({ clientNotes, clientId }: Props) => {
           onConfirm={handleDeleteNote}
           confirmArgs={[rowData.id]}
         >
-          <Button variant="destructive">Odstranit</Button>
+          <Button variant="destructive">Odstrániť</Button>
         </ShadConfirmationDialog>
       </div>
     );
@@ -131,7 +124,7 @@ const ClientNotesGridForm = ({ clientNotes, clientId }: Props) => {
 
   return (
     <DashboardSectionWrapper title="Poznamky ku klientovi" height="h-full">
-      <Label htmlFor="note">Poznamka</Label>
+      <Label htmlFor="note">Nová poznámka</Label>
       <Textarea
         className="h-28 w-full"
         id="note"
@@ -139,7 +132,7 @@ const ClientNotesGridForm = ({ clientNotes, clientId }: Props) => {
         autoFocus={true}
       />
       <Button className="mt-2 w-full" onClick={handleAddNote}>
-        Pridat poznamku
+        Pridať poznamku
       </Button>
       <DataTable
         value={clientNotesState}
@@ -157,7 +150,7 @@ const ClientNotesGridForm = ({ clientNotes, clientId }: Props) => {
       >
         <Column
           field="note"
-          header="Poznamka"
+          header="Poznámka"
           style={{
             width: "74%",
             maxWidth: "400px",
@@ -173,7 +166,7 @@ const ClientNotesGridForm = ({ clientNotes, clientId }: Props) => {
         />
         <Column
           field="createdAt"
-          header="Vytvorene"
+          header="Vytvorené"
           body={(rowData: TClientNote) => formatDate(rowData.createdAt!)}
           style={{ width: "10%" }}
           sortable

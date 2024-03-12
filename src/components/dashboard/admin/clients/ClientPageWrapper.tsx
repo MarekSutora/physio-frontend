@@ -30,16 +30,39 @@ const ClientPageWrapper = ({
     <div className="flex h-full w-full flex-col gap-2 md:flex-row">
       <DashboardSectionWrapper
         title="Client Information"
-        height="h-full"
+        height="h-fit md:h-full"
         width="w-full md:w-1/4"
       >
         {clientData && (
-          <div>
+          <div className="mx-5 mt-6 flex flex-row flex-wrap md:flex-col lg:mx-0">
             <h2>
-              {clientData.firstName} {clientData.lastName}
+              <span>Id: </span>{" "}
+              <span className="font-semibold">{clientData.personId}</span>
             </h2>
-            <p>{clientData.email}</p>
-            <p>{clientData.phoneNumber}</p>
+            <div className="mx-2 h-6 w-[1px] bg-gray-300 lg:mx-0 lg:my-2 lg:h-[1px] lg:w-1/2"></div>
+            <h2>
+              <span>Meno: </span>{" "}
+              <span className="font-semibold">
+                {clientData.firstName} {clientData.lastName}
+              </span>
+            </h2>
+            <div className="mx-2 h-6 w-[1px] bg-gray-300 lg:mx-0 lg:my-2 lg:h-[1px] lg:w-1/2"></div>
+            <h2>
+              <span>Email: </span>{" "}
+              <span className="font-semibold">{clientData.email}</span>
+            </h2>
+            <div className="mx-2 h-6 w-[1px] bg-gray-300 lg:mx-0 lg:my-2 lg:h-[1px] lg:w-1/2"></div>
+            <h2>
+              <span>Telefónne číslo: </span>{" "}
+              <span className="font-semibold">{clientData.phoneNumber}</span>
+            </h2>
+            <div className="mx-2 h-6 w-[1px] bg-gray-300 lg:mx-0 lg:my-2 lg:h-[1px] lg:w-1/2"></div>
+            <h2>
+              <span>Dátum registrácie: </span>
+              <span className="font-semibold">
+                {new Date(clientData.registeredDate).toLocaleDateString("sk")}
+              </span>
+            </h2>
           </div>
         )}
       </DashboardSectionWrapper>
@@ -56,7 +79,7 @@ const ClientPageWrapper = ({
               )}
               onClick={() => setSectionToggled("bookedAppointmentsSection")}
             >
-              Zarezervovane terminy
+              Zarezervované termíny
             </Button>
             <Button
               className={cn(
@@ -67,7 +90,7 @@ const ClientPageWrapper = ({
               )}
               onClick={() => setSectionToggled("finishedAppointmentsSection")}
             >
-              Ukoncene terminy
+              Ukončené termíny
             </Button>
             <Button
               className={cn(
@@ -78,7 +101,7 @@ const ClientPageWrapper = ({
               )}
               onClick={() => setSectionToggled("clientNotesSection")}
             >
-              Poznamky ku klientovi
+              Poznámky ku klientovi
             </Button>
           </div>
         </DashboardSectionWrapper>
