@@ -18,7 +18,13 @@ export async function generateStaticParams() {
     }));
   } catch (error) {
     console.log(error);
-    return [];
+    return [
+      {
+        params: {
+          slug: "",
+        },
+      },
+    ];
   }
 }
 

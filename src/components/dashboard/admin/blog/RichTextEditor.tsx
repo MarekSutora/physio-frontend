@@ -1,7 +1,7 @@
 // RichTextEditor.tsx
 import React from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import Editor from "ckeditor5-custom-build";
 
 const editorConfiguration = {
   //TODO adjust this configuration
@@ -45,7 +45,7 @@ const RichTextEditor = ({
       </style>
 
       <CKEditor
-        editor={ClassicEditor}
+        editor={Editor}
         config={editorConfiguration}
         data={initialContent}
         onChange={(event, editor) => {
@@ -56,5 +56,4 @@ const RichTextEditor = ({
     </div>
   );
 };
-
 export default RichTextEditor;

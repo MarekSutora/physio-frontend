@@ -1,7 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 #rich text editor online build
-/ckeditor5
+# /ckeditor5
 
 # dependencies
 /node_modules
