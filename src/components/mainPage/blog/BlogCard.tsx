@@ -1,3 +1,4 @@
+"use client";
 
 import { TBlogPost } from "@/lib/shared/types";
 import React from "react";
@@ -79,9 +80,9 @@ const BlogCard = ({ post }: BlogCardProps) => {
           >
             <div className="flex flex-row justify-between px-6 pb-2 pt-4">
               <span className="text-sm text-gray-600">{post.author}</span>
-              <span className="text-sm text-gray-600">
-                {new Date(post.datePublished).toLocaleDateString()}
-              </span>
+              <time className="text-sm text-gray-600">
+                {new Date(post.datePublished).toLocaleDateString("sk")}
+              </time>
             </div>
           </CardItem>
         </Link>

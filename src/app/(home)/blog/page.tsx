@@ -1,7 +1,12 @@
 import { getNonHiddenBlogPosts } from "@/lib/actions/blogActions";
 import React from "react";
-import BlogCard from "@/components/mainPage/blog/BlogCard";
+
 import { TBlogPost } from "@/lib/shared/types";
+import dynamic from "next/dynamic";
+
+const BlogCard = dynamic(() => import("@/components/mainPage/blog/BlogCard"), {
+  ssr: false,
+});
 
 const Page = async () => {
   let blogPosts: TBlogPost[] = [];
@@ -9,10 +14,12 @@ const Page = async () => {
   try {
     blogPosts = await getNonHiddenBlogPosts();
   } catch (error) {
+    blogPosts = [];
     console.log(error);
   }
 
-  const firstPostCopies = Array(20).fill(blogPosts[0]);
+  const firstPostCopies =
+    blogPosts.length > 0 ? Array(20).fill(blogPosts[0]) : [];
 
   return (
     <div className="m-auto min-h-[605px] w-11/12  md:w-5/6 lg:w-4/6">
