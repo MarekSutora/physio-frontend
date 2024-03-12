@@ -90,13 +90,17 @@ const ExerciseDetailsRow = ({
         newPlannedExercises[newIndex],
         newPlannedExercises[currentIndex],
       ];
-      setPlannedExercises(newPlannedExercises);
-      setIsMoved(true); // Trigger background animation
+
+      const updatedExercises = newPlannedExercises.map((exercise, index) => ({
+        ...exercise,
+        order: index + 1,
+      }));
+      setPlannedExercises(updatedExercises);
+      setIsMoved(true);
     }
   };
 
   const handleDeletePlannedExercise = () => {
-    //reorder them as well after deletion
     const newPlannedExercises = plannedExercises
       .filter((exercise) => exercise.order !== exerciseDetails.order)
       .map((exercise, index) => ({ ...exercise, order: index + 1 }));

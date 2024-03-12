@@ -15,7 +15,7 @@ const PlannedExercisesList = ({
   someRandomExerciseNames,
 }: Props) => {
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex max-h-[400px] flex-col gap-3 overflow-y-auto">
       {plannedExercises.map((exercise, index) => (
         <div key={exercise.order} className="flex flex-row gap-3">
           <ExerciseDetailsRow

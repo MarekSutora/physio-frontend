@@ -70,7 +70,7 @@ const WorkoutPlanForm = ({
     durationInMinutes: 0,
     restAfterExerciseInMinutes: 0,
     restBetweenSetsInMinutes: 0,
-    order: 0,
+    order: plannedExercises.length + 1,
     successfullyPerformed: false,
   });
   const [open, setOpen] = useState(false);
@@ -82,7 +82,11 @@ const WorkoutPlanForm = ({
   );
 
   const addExercise = () => {
-    setPlannedExercises([...plannedExercises, newExercise]);
+    const maxOrder = Math.max(0, ...plannedExercises.map((e) => e.order));
+    const newOrder = maxOrder + 1; 
+
+    const newExerciseToAdd = { ...newExercise, order: newOrder };
+    setPlannedExercises([...plannedExercises, newExerciseToAdd]);
 
     resetNewExercise();
   };
@@ -96,7 +100,7 @@ const WorkoutPlanForm = ({
       durationInMinutes: 0,
       restAfterExerciseInMinutes: 0,
       restBetweenSetsInMinutes: 0,
-      order: plannedExercises.length + 1,
+      order: plannedExercises.length + 2,
       successfullyPerformed: false,
     });
     setValue(exerciseTypes[0]?.id || null);
@@ -144,7 +148,7 @@ const WorkoutPlanForm = ({
   };
 
   return (
-    <div className="flex max-h-fit flex-col gap-2 overflow-y-auto px-2">
+    <div className="flex flex-col gap-2 px-2">
       <PlannedExercisesList
         plannedExercises={plannedExercises}
         setPlannedExercises={setPlannedExercises}
