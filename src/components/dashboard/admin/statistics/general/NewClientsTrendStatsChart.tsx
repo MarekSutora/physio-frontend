@@ -78,7 +78,7 @@ const NewClientsTrendStatsChart = ({ newClientsStats }: Props) => {
         beginAtZero: true,
         title: {
           display: true,
-          text: "New Clients",
+          text: "Noví klienti",
         },
       },
     },

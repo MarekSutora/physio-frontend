@@ -60,7 +60,7 @@ const Services = () => {
   ];
 
   return (
-    <div className="w-full bg-slate-50">
+    <section className="w-full bg-slate-50">
       <div className="flex w-full flex-row gap-3 pb-6">
         <div className="m-auto h-[1px] w-full bg-slate-200"></div>
         <h1 className="w-full text-nowrap pb-3 text-center text-4xl font-semibold">
@@ -68,12 +68,12 @@ const Services = () => {
         </h1>
         <div className="m-auto h-[1px] w-full bg-slate-200"></div>
       </div>
-      <section className="m-auto flex w-5/6 flex-col flex-wrap pb-10 lg:w-[61.8%] lg:flex-row">
+      <div className="m-auto flex w-5/6 flex-col flex-wrap lg:w-[61.8%] lg:flex-row">
         {fourDummyServices.map((service, index) => (
           <ServiceCard key={index} {...service} />
         ))}
-      </section>
-    </div>
+      </div>
+    </section>
   );
 };
 
@@ -108,8 +108,8 @@ const ServiceCard = ({
             src={image}
             alt={title}
             quality={100}
-            layout="fill"
-            objectFit="cover"
+            fill
+            style={{ objectFit: "cover" }}
             className="rounded-t-lg object-cover"
           />
           <div className="absolute inset-0 rounded-t-lg bg-black opacity-60" />

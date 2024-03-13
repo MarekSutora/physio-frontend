@@ -114,6 +114,16 @@ export type TResponseResult = {
   message: string;
 };
 
+export type TReview = {
+  id: number;
+  author: string;
+  rating: number;
+  text: string;
+  date: Date;
+  link: string;
+  personPictureUrl: string;
+};
+
 //APPOINTMENT
 
 export type TAppointment = {

@@ -5,7 +5,11 @@ import { useSession } from "next-auth/react";
 import { dashboardLinks } from "@/lib/shared/constants";
 import DashboardMenuItem from "./DashboardMenuItem";
 
-const DashboardNavUl = () => {
+type Props = {
+  mobileCloseFunction?: () => void;
+};
+
+const DashboardNavUl = ({ mobileCloseFunction }: Props) => {
   const { data: session } = useSession();
   const user = session?.user;
 
@@ -14,13 +18,19 @@ const DashboardNavUl = () => {
       {user?.roles.includes("Admin") &&
         dashboardLinks.admin.map((link) => (
           <li key={link.text}>
-            <DashboardMenuItem {...link} />
+            <DashboardMenuItem
+              {...link}
+              mobileCloseFunction={mobileCloseFunction}
+            />
           </li>
         ))}
       {user?.roles.includes("Client") &&
         dashboardLinks.client.map((link) => (
           <li key={link.text}>
-            <DashboardMenuItem {...link} />
+            <DashboardMenuItem
+              {...link}
+              mobileCloseFunction={mobileCloseFunction}
+            />
           </li>
         ))}
     </ul>

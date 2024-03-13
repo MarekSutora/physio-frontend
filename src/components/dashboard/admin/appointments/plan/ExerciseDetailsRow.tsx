@@ -90,13 +90,17 @@ const ExerciseDetailsRow = ({
         newPlannedExercises[newIndex],
         newPlannedExercises[currentIndex],
       ];
-      setPlannedExercises(newPlannedExercises);
-      setIsMoved(true); // Trigger background animation
+
+      const updatedExercises = newPlannedExercises.map((exercise, index) => ({
+        ...exercise,
+        order: index + 1,
+      }));
+      setPlannedExercises(updatedExercises);
+      setIsMoved(true);
     }
   };
 
   const handleDeletePlannedExercise = () => {
-    //reorder them as well after deletion
     const newPlannedExercises = plannedExercises
       .filter((exercise) => exercise.order !== exerciseDetails.order)
       .map((exercise, index) => ({ ...exercise, order: index + 1 }));
@@ -184,9 +188,9 @@ const ExerciseDetailsRow = ({
               "number",
         )
         .map((key) => (
-          <div key={key} className="flex w-full items-center gap-1">
-            <div className="flex w-full flex-col">
-              <Label className="text-sm" htmlFor={key}>
+          <div key={key} className="flex w-32 items-end gap-1">
+            <div className="flex flex-col">
+              <Label className="text-xs" htmlFor={key}>
                 {labelMapping[key] || key}
               </Label>
               <Input
@@ -208,7 +212,7 @@ const ExerciseDetailsRow = ({
               />
             </div>
             <button
-              className="ml-2 rounded bg-red-500 p-1 text-white"
+              className="mb-[5px] h-full w-6 rounded-md bg-red-500 p-0.5 text-white"
               onClick={() =>
                 handleDeleteClick(key as keyof TAppointmentExerciseDetail)
               }
@@ -217,11 +221,20 @@ const ExerciseDetailsRow = ({
             </button>
           </div>
         ))}
-      <Checkbox
-        checked={exerciseDetails.successfullyPerformed}
-        onCheckedChange={handleSPCheckboxChange}
-      />
-      <button onClick={handleDeletePlannedExercise}>zrusit</button>
+      <div className="flex flex-row items-center gap-1 pb-2">
+        <Label htmlFor="successfullyPerformed">Úspešne vykonané</Label>
+        <Checkbox
+          checked={exerciseDetails.successfullyPerformed}
+          onCheckedChange={handleSPCheckboxChange}
+        />
+      </div>
+      <Button
+        className="h-8"
+        variant="destructive"
+        onClick={handleDeletePlannedExercise}
+      >
+        Zrušiť
+      </Button>
     </motion.div>
   );
 };

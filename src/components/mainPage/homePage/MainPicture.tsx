@@ -40,8 +40,8 @@ const MainPicture = () => {
             <Image
               src={images[currentImage]}
               alt="representative-picture"
-              layout="fill"
-              objectFit="cover"
+              fill
+              style={{ objectFit: "cover" }}
               className="backdrop-brightness-50"
             />
           </motion.div>
@@ -64,8 +64,7 @@ const MainPicture = () => {
         <div
           className="flex h-[100px] w-10/12 flex-row items-center rounded-full border-2 border-primary font-medium lg:w-6/12"
           style={{
-            background: `url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23337783' fill-opacity='0.43' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");`,
-            backgroundColor: "#6695a1",
+            background: `url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23337783' fill-opacity='0.43' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E"), #6695a1`,
           }}
         >
           <Link

@@ -23,7 +23,7 @@ const App = () => {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY; // Make sure to set your API key
 
   return (
-    <div className="w-full pb-10">
+    <div className="w-full">
       <div className="flex w-full flex-row gap-3">
         <div className="m-auto h-[1px] w-full bg-slate-200"></div>
         <h1 className="w-full text-nowrap pb-3 text-center text-4xl font-semibold">
@@ -31,7 +31,7 @@ const App = () => {
         </h1>
         <div className="m-auto h-[1px] w-full bg-slate-200"></div>
       </div>
-      <section className="m-auto w-5/6 pb-10 lg:w-[61.8%]">
+      <section className="m-auto w-full">
         <LoadScript googleMapsApiKey={apiKey!}>
           <div className="flex flex-col shadow-xl lg:flex-row">
             <GoogleMap

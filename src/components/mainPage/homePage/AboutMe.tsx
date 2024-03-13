@@ -10,17 +10,9 @@ const AboutMe = (props: Props) => {
   return (
     <section className="m-auto flex h-full min-h-[500px] w-11/12 flex-col gap-6 pb-10 pt-20 lg:w-[61.8%] lg:flex-row lg:items-center lg:gap-10">
       <div className="relative m-auto h-[500px] w-[500px] lg:m-0">
-        {/* Shadow or background effect */}
         <div className="absolute -bottom-4 -left-4 z-0 h-[500px] w-[500px] rounded-lg bg-primary/50 shadow-lg"></div>
-        {/* Actual image */}
         <div className="relative z-10 h-[500px] w-[500px] shadow-lg">
-          <Image
-            src={image}
-            alt="physiotherapist"
-            layout="fill"
-            objectFit="cover"
-            className="rounded-lg"
-          />
+          <Image src={image} alt="physiotherapist" className="rounded-lg" />
         </div>
       </div>
       <div className="flex w-full flex-col lg:flex-grow">

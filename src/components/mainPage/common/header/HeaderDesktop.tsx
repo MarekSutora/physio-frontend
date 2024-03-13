@@ -8,7 +8,6 @@ import Link from "next/link";
 import Image from "next/image";
 
 const Header = () => {
-  const scrolled = useScroll(5);
   const [isTopOfPage, setIsTopOfPage] = useState<boolean>(true);
 
   useEffect(() => {

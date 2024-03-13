@@ -28,13 +28,13 @@ const Page = async () => {
       >
         <CreateNewAppointmentForm serviceTypes={serviceTypes} />
       </DashboardSectionWrapper>
-      <DashboardSectionWrapper
+      {/* <DashboardSectionWrapper
         title={"Zoznam termínov"}
         width={"w-full lg:w-3/5"}
         height="h-auto max-h-full"
       >
         <AppointmentsCalendarWrapper columnLayout={true} />
-      </DashboardSectionWrapper>
+      </DashboardSectionWrapper> */}
     </div>
   );
 };

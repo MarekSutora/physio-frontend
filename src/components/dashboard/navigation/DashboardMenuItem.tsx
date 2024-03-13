@@ -14,12 +14,18 @@ type Props = {
   path?: string;
   icon: React.ReactNode;
   subMenuItems?: { text: string; path: string }[];
+  mobileCloseFunction?: () => void;
 };
 
-const DashboardMenuItem = ({ text, path, icon, subMenuItems }: Props) => {
+const DashboardMenuItem = ({
+  text,
+  path,
+  icon,
+  subMenuItems,
+  mobileCloseFunction,
+}: Props) => {
   const currentPath = usePathname();
   const isActive = currentPath === path;
-  const { data: session } = useSession();
   const [toggledItemsWithSubMenu, setToggledItemsWithSubMenu] = useState<
     string[]
   >([]);
@@ -42,7 +48,7 @@ const DashboardMenuItem = ({ text, path, icon, subMenuItems }: Props) => {
   return (
     <>
       {subMenuItems ? (
-        <div className="h-full w-full">
+        <div className="h-full w-full border-b-[1px] border-white lg:border-0">
           <button
             className={cn(
               isActive && "bg-white text-primary",
@@ -77,13 +83,13 @@ const DashboardMenuItem = ({ text, path, icon, subMenuItems }: Props) => {
                 className="flex w-full flex-col text-white "
               >
                 {subMenuItems.map((subLink) => (
-                  <li key={subLink.text}>
+                  <li key={subLink.text} onClick={mobileCloseFunction}>
                     <Link
                       className={cn(
                         subLink.path === currentPath && "bg-white text-primary",
                         !(subLink.path === currentPath) &&
                           "group text-white hover:bg-white hover:text-primary",
-                        "flex h-full w-full flex-row items-center justify-between gap-2 py-2 pl-8 pr-2 text-base font-medium",
+                        "flex h-full w-full flex-row items-center justify-between gap-2 border-t-[1px] border-white py-2 pl-8 pr-2 text-base font-medium lg:border-0",
                       )}
                       href={subLink.path}
                     >
@@ -101,9 +107,10 @@ const DashboardMenuItem = ({ text, path, icon, subMenuItems }: Props) => {
             isActive && "cursor-default bg-white text-primary",
             !isActive &&
               "ease-in-ou group text-white hover:bg-white hover:text-primary",
-            "flex w-full flex-row items-center gap-2 py-2 pl-3 pr-2 text-lg font-medium transition-all duration-200",
+            "flex w-full flex-row items-center gap-2 border-b-[1px] border-white py-2 pl-3 pr-2 text-lg font-medium transition-all duration-200 lg:border-0",
           )}
           href={path!}
+          onClick={mobileCloseFunction}
         >
           <div className="scale-125 hover:underline group-hover:scale-[1.35] group-active:scale-[1.35]">
             {icon}

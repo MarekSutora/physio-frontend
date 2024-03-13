@@ -30,8 +30,6 @@ type Props = {
   columnLayout?: boolean;
 };
 
-//TODO bug ked sa dostanem na rovnaky mesiac ako je teraz ale o rok neskor
-
 const AppointmentsCalendar = ({
   appointmentsData,
   serviceTypes,
@@ -168,7 +166,7 @@ const AppointmentsCalendar = ({
                       "text-gray-900",
                     !isEqual(day, selectedDay) &&
                       isAppointmentOnDay &&
-                      "bg-primary/80 bg-opacity-30 font-semibold hover:bg-primary/80 hover:bg-opacity-70",
+                      "bg-primary/30 bg-opacity-30 font-semibold hover:bg-primary/80 hover:bg-opacity-70",
                     isEqual(day, selectedDay) && "bg-primary text-white",
                     "mx-auto my-[2px] flex h-8 w-8 items-center justify-center rounded-md",
                     columnLayout && "h-6 w-4",

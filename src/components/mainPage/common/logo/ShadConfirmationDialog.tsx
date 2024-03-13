@@ -44,7 +44,7 @@ const ShadConfirmationDialog = ({
     <>
       <AlertDialog open={open} onOpenChange={setOpen}>
         <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
-        <AlertDialogContent>
+        <AlertDialogContent className="rounded-sm">
           {isLoading ? (
             <ClipLoader
               color={"#298294"}
@@ -60,20 +60,23 @@ const ShadConfirmationDialog = ({
           ) : (
             <>
               <AlertDialogHeader>
-                <AlertDialogTitle>{dialogTitle}</AlertDialogTitle>
+                <AlertDialogTitle className="text-center">
+                  {dialogTitle}
+                </AlertDialogTitle>
                 <AlertDialogDescription>
                   {dialogDescription}
                 </AlertDialogDescription>
               </AlertDialogHeader>
-              <AlertDialogFooter>
+              <AlertDialogFooter className="m-auto flex w-full flex-row gap-4 sm:items-center sm:justify-center">
                 <AlertDialogCancel
                   onClick={() => setOpen(false)}
                   disabled={isLoading}
+                  className="border-[1px] border-gray-500 text-black"
                 >
-                  Zatvorit
+                  Zrušiť
                 </AlertDialogCancel>
                 <Button onClick={handleConfirm} disabled={isLoading}>
-                  Potvrdit
+                  Potvrdiť
                 </Button>
               </AlertDialogFooter>
             </>

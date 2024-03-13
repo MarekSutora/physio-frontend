@@ -49,31 +49,55 @@ const Page = async (props: Props) => {
       <div className="flex h-full w-full flex-col gap-2">
         <DashboardSectionWrapper
           title={"Podrobnosti"}
-          width="w-full lg:h-[20%]"
+          width="w-full"
+          height="h-fit"
         >
-          <h1 className="text-2xl font-semibold">
-            {appointment?.bookedAppointments[0].serviceTypeName}
-          </h1>
-          <p className="mb-2">
-            Dátum: {appointment?.startTime.toLocaleString("sk")}
-          </p>
-          <p className="mb-2">
-            Cena: {appointment?.bookedAppointments[0].cost}€
-          </p>
-          <li className="over max-h-[500px]">
-            {appointment?.bookedAppointments.map((ba) => (
-              <div key={ba.id}>
-                <p>
-                  {ba.clientId ? "Klient: " + ba.clientId : "Klient: Neznámy"}
-                </p>
-                <p> {ba.clientFirstName + " " + ba.clientSecondName}</p>
-                <p>
-                  Dátum rezervácie:{" "}
-                  {ba.appointmentBookedDate.toLocaleString("sk")}
-                </p>
-              </div>
-            ))}
-          </li>
+          <div className="mx-0 mt-6 flex flex-row flex-wrap items-start">
+            <h2>
+              <span>Dátum: </span>{" "}
+              <span className="font-semibold">
+                {new Date(appointment?.startTime).toLocaleDateString("sk")}
+              </span>
+            </h2>
+            <div className="mx-2 h-6 w-[1px] bg-gray-300"></div>
+            <h2>
+              <span>Cena: </span>{" "}
+              <span className="font-semibold">
+                {appointment?.bookedAppointments[0].cost}€
+              </span>
+            </h2>
+            <div className="mx-2 h-6 w-[1px] bg-gray-300"></div>
+            <h2>
+              <span>Typ: </span>{" "}
+              <span className="font-semibold">
+                {appointment?.bookedAppointments[0].serviceTypeName}
+              </span>
+            </h2>
+            <div className="mx-2 h-6 w-[1px] bg-gray-300"></div>
+            <div className="max-h-[500px] overflow-y-auto">
+              {appointment?.bookedAppointments.map((ba) => (
+                <div key={ba.id} className="lex-row flex gap-2 ">
+                  <span>
+                    {"Klient: "}
+                    <span className="font-semibold">
+                      {ba.clientId
+                        ? +ba.clientId + " - "
+                        : "Klient: Neznámy - "}
+                      {ba.clientFirstName + " " + ba.clientSecondName + " - "}
+                    </span>
+                  </span>
+                  <span>
+                    Dátum rezervácie:{" "}
+                    <span className="font-semibold">
+                      {new Date(ba.appointmentBookedDate).toLocaleDateString(
+                        "sk",
+                      )}
+                    </span>
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
         </DashboardSectionWrapper>
         <DashboardSectionWrapper title={"Plan"} width="w-full">
           <WorkoutPlanForm
