@@ -14,6 +14,7 @@ import "primereact/resources/primereact.min.css";
 import { FilterMatchMode } from "primereact/api";
 import ShadConfirmationDialog from "@/components/mainPage/common/logo/ShadConfirmationDialog";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 type Props = {
   _blogPosts: TBlogPost[];
@@ -57,6 +58,8 @@ const BlogPostsGrid = ({ _blogPosts }: Props) => {
   const actionBodyTemplate = (rowData: TBlogPost) => {
     return (
       <div className="flex flex-row gap-1">
+        <Link href={`./upravit-clanok?slug=${rowData.slug}`}>Update</Link>
+
         <ShadConfirmationDialog onConfirm={handleHide} confirmArgs={[rowData]}>
           <Button> {rowData.isHidden ? "Zverejniť" : "Skryť"}</Button>
         </ShadConfirmationDialog>

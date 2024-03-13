@@ -154,6 +154,8 @@ const transformServiceTypeForUpdate = (
     name: serviceType.name,
     description: serviceType.description,
     hexColor: serviceType.hexColor,
+    iconName: serviceType.iconName,
+    imageUrl: serviceType.imageUrl,
     durationCosts: serviceType.stdcs.map((stdc) => ({
       durationMinutes: stdc.durationMinutes,
       cost: stdc.cost,

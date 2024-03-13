@@ -47,8 +47,8 @@ const ClientNotesGridForm = ({ clientNotes, clientId }: Props) => {
         className: "text-lg",
       });
 
-      setNote("");
       setClientNotesState([...clientNotesState, newNote]);
+      setNote("");
     } catch (error) {
       toast({
         variant: "destructive",
@@ -130,6 +130,7 @@ const ClientNotesGridForm = ({ clientNotes, clientId }: Props) => {
         id="note"
         onChange={(e) => setNote(e.target.value)}
         autoFocus={true}
+        value={note}
       />
       <Button className="mt-2 w-full" onClick={handleAddNote}>
         Pridať poznamku
@@ -139,7 +140,7 @@ const ClientNotesGridForm = ({ clientNotes, clientId }: Props) => {
         className="w-full max-w-full"
         paginator
         rows={7}
-        emptyMessage="Nenasli sa ziadne poznamky"
+        emptyMessage="Nenašli sa žiadne poznámky"
         filterLocale="sk"
         dataKey="id"
         size="small"
@@ -159,7 +160,9 @@ const ClientNotesGridForm = ({ clientNotes, clientId }: Props) => {
             wordBreak: "break-all",
           }}
           body={(rowData: TClientNote) =>
-            rowData.note.substring(0, 100) + "..."
+            rowData.note.length > 50
+              ? `${rowData.note.substring(0, 50)}...`
+              : rowData.note
           }
           filter
           filterField="note"

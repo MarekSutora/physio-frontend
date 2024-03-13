@@ -1,10 +1,14 @@
 import React from "react";
-import { FaSwimmer, FaRunning, FaHeartbeat, FaDumbbell } from "react-icons/fa";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons"; // A default icon
+import { library, IconName } from "@fortawesome/fontawesome-svg-core";
+import * as Icons from "@fortawesome/free-solid-svg-icons";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 import Link from "next/link";
 import Image from "next/image";
-
 import image from "@/root/public/MainImages/greenStudioPeople.webp";
+
+library.add(Icons.fas);
 
 const Services = () => {
   const fourDummyServices = [
@@ -13,7 +17,7 @@ const Services = () => {
       fullDescription:
         "Plávanie je šport, ktorý je vhodný pre všetky vekové kategórie. Je to skvelý spôsob, ako sa udržiavať vo forme a zároveň relaxovať.",
       shortDescription: "Plávanie je skvelý spôsob, ako sa udržiavať vo forme.",
-      icon: <FaSwimmer />,
+      icon: "FaSwimmer",
       durationCosts: [
         { duration: "30 minút", cost: 10 },
         { duration: "60 minút", cost: 15 },
@@ -25,7 +29,7 @@ const Services = () => {
       fullDescription:
         "Beh je skvelý spôsob, ako sa dostať do formy. Je to jednoduchý spôsob, ako sa dostať do formy a zároveň relaxovať.",
       shortDescription: "Beh je skvelý spôsob, ako sa dostať do formy.",
-      icon: <FaRunning />,
+      icon: "FaRunning",
       durationCosts: [
         { duration: "30 minút", cost: 5 },
         { duration: "60 minút", cost: 10 },
@@ -37,7 +41,7 @@ const Services = () => {
       fullDescription:
         "Kardio je skvelý spôsob, ako sa dostať do formy. Je to jednoduchý spôsob, ako sa dostať do formy a zároveň relaxovať.",
       shortDescription: "Kardio je skvelý spôsob, ako sa dostať do formy.",
-      icon: <FaHeartbeat />,
+      icon: "FaHeartbeataa",
       durationCosts: [
         { duration: "30 minút", cost: 5 },
         { duration: "60 minút", cost: 10 },
@@ -50,7 +54,7 @@ const Services = () => {
         "Posilňovanie je skvelý spôsob, ako sa dostať do formy. Je to jednoduchý spôsob, ako sa dostať do formy a zároveň relaxovať.",
       shortDescription:
         "Posilňovanie je skvelý spôsob, ako sa dostať do formy.",
-      icon: <FaDumbbell />,
+      icon: "FaDumbbell",
       durationCosts: [
         { duration: "30 minút", cost: 5 },
         { duration: "60 minút", cost: 10 },
@@ -81,7 +85,7 @@ type ServiceCardProps = {
   title: string;
   fullDescription: string;
   shortDescription: string;
-  icon: React.ReactNode;
+  icon: string;
   durationCosts: { duration: string; cost: number }[];
   linkHref: string;
 };
@@ -94,6 +98,20 @@ const ServiceCard = ({
   durationCosts,
   linkHref,
 }: ServiceCardProps) => {
+  const renderIcon = (iconName: string) => {
+    const iconKey = iconName.replace("Fa", "").toLowerCase();
+
+    const faIcon = (Icons as any)[
+      `fa${iconKey.charAt(0).toUpperCase() + iconKey.slice(1)}`
+    ];
+
+    return faIcon ? (
+      <FontAwesomeIcon icon={faIcon as any} />
+    ) : (
+      <FontAwesomeIcon icon={faHeart} />
+    );
+  };
+
   return (
     <CardContainer
       className="group m-2 flex h-[500px] min-h-[500px] w-full flex-col justify-start rounded-lg border-2 border-slate-200 bg-white"
@@ -101,8 +119,8 @@ const ServiceCard = ({
     >
       <CardBody className="h-full min-h-[500px] w-full">
         <div className="h-1/2 w-full">
-          <div className="absolute left-4 top-4 z-10 text-5xl text-white">
-            {icon}
+          <div className="absolute left-4 top-4 z-10 h-10 w-10 text-5xl text-white">
+            {renderIcon(icon)}
           </div>
           <Image
             src={image}

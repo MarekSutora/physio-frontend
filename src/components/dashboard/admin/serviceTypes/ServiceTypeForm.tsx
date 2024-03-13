@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Controller,
   SubmitHandler,
@@ -15,6 +15,9 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { TCU_ServiceType } from "@/lib/shared/types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { library, IconName } from "@fortawesome/fontawesome-svg-core";
+import * as Icons from "@fortawesome/free-solid-svg-icons";
 
 const durationCostSchema = z.object({
   durationMinutes: z.coerce
@@ -30,6 +33,8 @@ const formSchema = z.object({
   description: z.string().min(1, { message: "Description is required" }),
   hexColor: z.string().min(1, { message: "Hex color is required" }),
   durationCosts: z.array(durationCostSchema),
+  imageUrl: z.string().url({ message: "Invalid URL" }),
+  iconName: z.string().min(1, { message: "Icon name is required" }),
 });
 
 type Props = {
@@ -37,6 +42,7 @@ type Props = {
   children: React.ReactNode;
   onSubmit: SubmitHandler<TCU_ServiceType>;
 };
+library.add(Icons.fas);
 
 const ServiceTypeForm = ({ serviceType, children, onSubmit }: Props) => {
   const form = useForm<TCU_ServiceType>({
@@ -49,30 +55,30 @@ const ServiceTypeForm = ({ serviceType, children, onSubmit }: Props) => {
       durationCosts: serviceType?.durationCosts ?? [
         { durationMinutes: 0, cost: 0 },
       ],
+      imageUrl: serviceType?.imageUrl ?? "",
+      iconName: serviceType?.iconName ?? "",
     },
   });
-
-  // useEffect(() => {
-  //   form.reset({
-  //     id: serviceType?.id ?? null,
-  //     name: serviceType?.name ?? "",
-  //     description: serviceType?.description ?? "",
-  //     hexColor: serviceType?.hexColor ?? "#aabbcc",
-  //     durationCosts: serviceType?.durationCosts ?? [
-  //       { durationMinutes: 0, cost: 0 },
-  //     ],
-  //   });
-  // }, [serviceType, form.reset, form]);
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: "durationCosts",
   });
 
+  const renderIcon = (iconName: string) => {
+    const iconKey = iconName.replace("Fa", "").toLowerCase();
+
+    const faIcon = (Icons as any)[
+      `fa${iconKey.charAt(0).toUpperCase() + iconKey.slice(1)}`
+    ];
+
+    return <FontAwesomeIcon className="text-4xl" icon={faIcon as any} />;
+  };
+
   return (
     <form
       onSubmit={form.handleSubmit(onSubmit)}
-      className="flex flex-col gap-2"
+      className="flex max-h-[720px] flex-col gap-2 overflow-y-auto px-2"
     >
       <Input id="id" type="hidden" {...form.register("id")} />
       <div className="space-y-1">
@@ -94,7 +100,30 @@ const ServiceTypeForm = ({ serviceType, children, onSubmit }: Props) => {
           </span>
         )}
       </div>
+      <div className="space-y-1">
+        <Label htmlFor="imageUrl">Image URL</Label>
 
+        <Input id="imageUrl" {...form.register("imageUrl")} />
+        {form.formState.errors.imageUrl && (
+          <span className="text-sm font-medium text-destructive">
+            {form.formState.errors.imageUrl.message}
+          </span>
+        )}
+      </div>
+
+      <div className="space-y-1">
+        <Label htmlFor="iconName">Icon Name</Label>
+        <div className="flex flex-row items-center gap-1">
+          {" "}
+          <Input id="iconName" {...form.register("iconName")} />
+          {form.formState.errors.iconName && (
+            <span className="text-sm font-medium text-destructive">
+              {form.formState.errors.iconName.message}
+            </span>
+          )}{" "}
+          {renderIcon(form.getValues("iconName"))}{" "}
+        </div>
+      </div>
       <div className="space-y-1">
         <Label htmlFor="hexColor">Farba</Label>
         <Controller

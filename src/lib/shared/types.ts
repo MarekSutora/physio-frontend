@@ -9,6 +9,8 @@ export type TCU_ServiceType = {
   description: string;
   hexColor: string;
   durationCosts: TDurationCost[];
+  imageUrl: string;
+  iconName: string;
 };
 
 export type TG_ServiceType = {
@@ -16,6 +18,8 @@ export type TG_ServiceType = {
   name: string;
   description: string;
   hexColor: string;
+  iconName: string;
+  imageUrl: string;
   stdcs: DurationCosts[];
 };
 
