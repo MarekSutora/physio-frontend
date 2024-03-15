@@ -11,7 +11,7 @@ import {
   createClientBookedAppointmentAction,
   deleteAppointmentAction,
 } from "@/lib/actions/appointmentsActions";
-import { getErrorMessage } from "@/lib/utils";
+import { useAppointmentsStore } from "@/useAppointmentsStore";
 
 type AppointmentCardProps = {
   appointment: TG_UnbookedAppointment;
@@ -27,6 +27,10 @@ const AppointmentCard = ({
 
   const visibleServiceTypes = appointment.serviceTypeInfos.filter((asti) =>
     selectedServiceTypeNames.includes(asti.name),
+  );
+
+  const removeAppointmentByAppId = useAppointmentsStore(
+    (state) => state.removeAppointmentByAppId,
   );
 
   const handleDeleteAppointment = async (appId: number) => {
@@ -118,7 +122,7 @@ const AppointmentCard = ({
               )}
             </div>
 
-            {!session?.user.roles.includes("Client") && session?.user && (
+            {session?.user.roles.includes("Client") && session?.user && (
               <ShadConfirmationDialog
                 onConfirm={tryBookAppointment}
                 confirmArgs={[item.astdcId]}
@@ -139,6 +143,3 @@ const AppointmentCard = ({
 };
 
 export default AppointmentCard;
-function removeAppointmentByAppId(appId: number) {
-  throw new Error("Function not implemented.");
-}

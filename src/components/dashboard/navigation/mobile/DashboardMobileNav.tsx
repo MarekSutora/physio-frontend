@@ -40,7 +40,7 @@ const DashboardMobileNav = () => {
       <div className={cn(isOpen ? "block h-14 bg-white" : "hidden h-0")}></div>
       <div
         className={cn(
-          "left-0 right-0 top-0 z-50 block h-14 w-full bg-primary text-white md:hidden",
+          "left-0 right-0 top-0 z-50 block h-14 w-full bg-primary text-white xl:hidden",
           isOpen ? "fixed" : "stickyy",
         )}
       >
@@ -51,7 +51,7 @@ const DashboardMobileNav = () => {
           initial={false}
           animate={isOpen ? "open" : "closed"}
           custom={height}
-          className={`fixed top-14 z-50 h-full w-full md:hidden ${
+          className={`fixed top-14 z-50 h-full w-full xl:hidden ${
             isOpen ? "" : "pointer-events-none"
           }`}
           ref={containerRef}

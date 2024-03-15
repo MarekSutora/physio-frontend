@@ -48,7 +48,7 @@ const DashboardMenuItem = ({
   return (
     <>
       {subMenuItems ? (
-        <div className="h-full w-full border-b-[1px] border-white lg:border-0">
+        <div className="h-full w-full border-b-[1px] border-white xl:border-0">
           <button
             className={cn(
               isActive && "bg-white text-primary",
@@ -89,7 +89,7 @@ const DashboardMenuItem = ({
                         subLink.path === currentPath && "bg-white text-primary",
                         !(subLink.path === currentPath) &&
                           "group text-white hover:bg-white hover:text-primary",
-                        "flex h-full w-full flex-row items-center justify-between gap-2 border-t-[1px] border-white py-2 pl-8 pr-2 text-base font-medium lg:border-0",
+                        "flex h-full w-full flex-row items-center justify-between gap-2 border-t-[1px] border-white py-2 pl-8 pr-2 text-base font-medium xl:border-0",
                       )}
                       href={subLink.path}
                     >
@@ -107,7 +107,7 @@ const DashboardMenuItem = ({
             isActive && "cursor-default bg-white text-primary",
             !isActive &&
               "ease-in-ou group text-white hover:bg-white hover:text-primary",
-            "flex w-full flex-row items-center gap-2 border-b-[1px] border-white py-2 pl-3 pr-2 text-lg font-medium transition-all duration-200 lg:border-0",
+            "flex w-full flex-row items-center gap-2 border-b-[1px] border-white py-2 pl-3 pr-2 text-lg font-medium transition-all duration-200 xl:border-0",
           )}
           href={path!}
           onClick={mobileCloseFunction}

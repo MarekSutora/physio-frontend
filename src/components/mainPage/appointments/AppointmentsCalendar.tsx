@@ -42,6 +42,7 @@ const AppointmentsCalendar = ({
   const setAppointments = useAppointmentsStore(
     (state) => state.setAppointments,
   );
+
   const appointments = useAppointmentsStore((state) => state.appointments);
 
   useEffect(() => {
