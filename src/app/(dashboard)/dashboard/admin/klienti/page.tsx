@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 
-import ClientsGrid from "@/components/dashboard/admin/clients/ClientsGrid";
+import ClientsGrid from "@/components/dashboard/admin/clients/ClientsDataTable";
 import DashboardSectionWrapper from "@/components/dashboard/common/DashboardSectionWrapper";
 import { getClientsData } from "@/lib/actions/clientsActions";
 import { TClient } from "@/lib/shared/types";

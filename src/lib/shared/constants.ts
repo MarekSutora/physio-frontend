@@ -12,14 +12,6 @@ import {
 } from "react-icons/fa";
 import React from "react";
 
-export const basicLinks = [
-  { text: "Domov", path: "/" },
-  { text: "Služby", path: "/sluzby" },
-  { text: "Kontakt", path: "/kontakt" },
-  { text: "Blog", path: "/blog" },
-  { text: "Rezervácia", path: "/rezervacia" },
-];
-
 export const userLinks = [
   { text: "Prihlásenie", path: "/prihlasenie" },
   { text: "Registrácia", path: "/registracia" },

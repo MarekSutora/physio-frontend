@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 
-import BookedAppointmentsGrid from "@/components/dashboard/common/BookedAppointmentsGrid";
+import BookedAppointmentsGrid from "@/components/dashboard/common/BookedAppointmentsDataTable";
 import { getBookedAppointmentsForClientAction } from "@/lib/actions/appointmentsActions";
 import { TG_BookedAppointment } from "@/lib/shared/types";
 import React from "react";

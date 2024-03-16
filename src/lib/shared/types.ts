@@ -16,6 +16,7 @@ export type TCU_ServiceType = {
 export type TG_ServiceType = {
   id: number;
   name: string;
+  slug: string;
   description: string;
   hexColor: string;
   iconName: string;
@@ -98,6 +99,12 @@ export type TBlogPost = {
 };
 
 //OTHER
+
+export type TMainPageLink = {
+  text: string;
+  path?: string;
+  subMenuItems?: { text: string; path: string }[];
+};
 
 export type ServiceTypeOptionType = {
   label: string;

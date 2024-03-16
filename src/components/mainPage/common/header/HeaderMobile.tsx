@@ -1,16 +1,21 @@
 "use client";
 
 import React, { useCallback, useRef } from "react";
-
-import { basicLinks, socialMediaLinks } from "@/lib/shared/constants";
+import { socialMediaLinks } from "@/lib/shared/constants";
 import Link from "next/link";
 import AuthButtons from "@/components/auth/authButtons/AuthButtons";
 import { motion, useCycle } from "framer-motion";
 import useDimensions from "@/lib/hooks/useDimensions";
 import { cn } from "@/lib/utils";
 import Hamburger from "hamburger-react";
+import MobileMenuItem from "./MobileMenuItem";
+import { TMainPageLink } from "@/lib/shared/types";
 
-const HeaderMobile = () => {
+type HeaderMobileProps = {
+  links: TMainPageLink[];
+};
+
+const HeaderMobile = ({ links }: HeaderMobileProps) => {
   const containerRef = useRef(null);
   const { height } = useDimensions(containerRef);
   const [isOpen, toggleOpen] = useCycle<boolean>(false, true);
@@ -67,20 +72,13 @@ const HeaderMobile = () => {
             variants={sidebar}
             className="flex w-full flex-col border-t border-slate-200 bg-white font-semibold"
           >
-            {basicLinks.map((link) => (
-              <li
-                key={link.text}
-                className="w-full cursor-pointer text-xl"
-                onClick={closeMenu}
-              >
-                <Link href={link.path}>
-                  <div className="h-full w-full px-9 py-3 transition-all ease-in-out hover:bg-slate-200 focus:border focus:bg-slate-200">
-                    {link.text}
-                  </div>
-                </Link>
-
-                <div className="h-[1px] w-full bg-slate-200"></div>
-              </li>
+            {links.map((link, index) => (
+              <MobileMenuItem
+                key={index}
+                text={link.text}
+                path={link.path}
+                subMenuItems={link.subMenuItems}
+              />
             ))}
             <div className="m-auto mt-5 flex gap-3" onClick={closeMenu}>
               <AuthButtons />

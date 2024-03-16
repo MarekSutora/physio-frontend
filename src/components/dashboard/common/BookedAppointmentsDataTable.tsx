@@ -9,7 +9,7 @@ import "primereact/resources/primereact.min.css";
 import DashboardSectionWrapper from "./DashboardSectionWrapper";
 import { FilterMatchMode } from "primereact/api";
 import { MultiSelect, MultiSelectChangeEvent } from "primereact/multiselect";
-import { locale, addLocale } from "primereact/api";
+
 import { Button } from "@/components/ui/button";
 import ShadConfirmationDialog from "@/components/mainPage/common/logo/ShadConfirmationDialog";
 import {
@@ -20,13 +20,13 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
-
-declare module "primereact/api" {
-  export function addLocale(
-    locale: string,
-    localeSettings: Record<string, any>,
-  ): void;
-}
+import {
+  formatDate,
+  rowClassName,
+  setUpLocaleForDataTable,
+} from "@/lib/dataTableUtils";
+import { FaFileExcel } from "react-icons/fa";
+import Papa from "papaparse";
 
 type Props = {
   bookedAppointments: TG_BookedAppointment[];
@@ -48,169 +48,53 @@ const defaultFilters: DataTableFilterMeta = {
   clientId: { value: null, matchMode: FilterMatchMode.CONTAINS },
 };
 
-const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
+const BookedAppointmentsDataTable = ({ bookedAppointments }: Props) => {
   const [dynamicStyles, setDynamicStyles] = useState("");
   const { toast } = useToast();
   const [bookedAppointmentsState, setBookedAppointmentsState] =
     useState<TG_BookedAppointment[]>(bookedAppointments);
   const { data: session } = useSession();
 
-  locale("sk");
-  addLocale("sk", {
-    startsWith: "Začína na",
-    contains: "Obsahuje",
-    notContains: "Neobsahuje",
-    endsWith: "Končí na",
-    equals: "Rovná sa",
-    notEquals: "Nerovná sa",
-    noFilter: "Bez filtra",
-    filter: "Filter",
-    lt: "Menšie než",
-    lte: "Menšie než alebo rovné",
-    gt: "Väčšie než",
-    gte: "Väčšie než alebo rovné",
-    dateIs: "Dátum je",
-    dateIsNot: "Dátum nie je",
-    dateBefore: "Dátum je pred",
-    dateAfter: "Dátum je po",
-    custom: "Vlastné",
-    clear: "Vyčistiť",
-    apply: "Použiť",
-    matchAll: "Zodpovedá všetkým",
-    matchAny: "Zodpovedá akémukoľvek",
-    addRule: "Pridať pravidlo",
-    removeRule: "Odstrániť pravidlo",
-    accept: "Áno",
-    reject: "Nie",
-    choose: "Vybrať",
-    upload: "Nahrať súbor",
-    cancel: "Zrušiť",
-    completed: "Dokončené",
-    pending: "Čakajúce",
-    fileSizeTypes: ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"],
-    dayNames: [
-      "Nedeľa",
-      "Pondelok",
-      "Utorok",
-      "Streda",
-      "Štvrtok",
-      "Piatok",
-      "Sobota",
-    ],
-    dayNamesShort: ["Ned", "Pon", "Uto", "Str", "Štv", "Pia", "Sob"],
-    dayNamesMin: ["Ne", "Po", "Ut", "St", "Št", "Pi", "So"],
-    monthNames: [
-      "Január",
-      "Február",
-      "Marec",
-      "Apríl",
-      "Máj",
-      "Jún",
-      "Júl",
-      "August",
-      "September",
-      "Október",
-      "November",
-      "December",
-    ],
-    monthNamesShort: [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "Máj",
-      "Jún",
-      "Júl",
-      "Aug",
-      "Sep",
-      "Okt",
-      "Nov",
-      "Dec",
-    ],
-    chooseYear: "Vyberte rok",
-    chooseMonth: "Vyberte mesiac",
-    chooseDate: "Vyberte dátum",
-    prevDecade: "Predchádzajúce desaťročie",
-    nextDecade: "Nasledujúce desaťročie",
-    prevYear: "Predchádzajúci rok",
-    nextYear: "Nasledujúci rok",
-    prevMonth: "Predchádzajúci mesiac",
-    nextMonth: "Nasledujúci mesiac",
-    prevHour: "Predchádzajúca hodina",
-    nextHour: "Nasledujúca hodina",
-    prevMinute: "Predchádzajúca minúta",
-    nextMinute: "Nasledujúca minúta",
-    prevSecond: "Predchádzajúca sekunda",
-    nextSecond: "Nasledujúca sekunda",
-    am: "ráno",
-    pm: "popoludní",
-    today: "Dnes",
-    now: "Teraz",
-    weekHeader: "Týž.",
-    firstDayOfWeek: 1,
-    showMonthAfterYear: false,
-    dateFormat: "dd.mm.rrrr",
-    weak: "Slabé",
-    medium: "Stredné",
-    strong: "Silné",
-    passwordPrompt: "Zadejte heslo",
-    emptyFilterMessage: "Neboli nájdené žiadne výsledky",
-    searchMessage: "Je k dispozícií {0} výsledkov",
-    selectionMessage: "Vybraných {0} položiek",
-    emptySelectionMessage: "Žiadna vybraná položka",
-    emptySearchMessage: "Neboli nájdené žiadne výsledky",
-    emptyMessage: "Žiadne dostupné možnosti",
-    aria: {
-      trueLabel: "Pravda",
-      falseLabel: "Nepravda",
-      nullLabel: "Nevybrané",
-      star: "1 hviezda",
-      stars: "{star} hviezd",
-      selectAll: "Všetky položky vybrané",
-      unselectAll: "Všetky položky zrušené",
-      close: "Zavrieť",
-      previous: "Predchádzajúci",
-      next: "Ďalší",
-      navigation: "Navigácia",
-      scrollTop: "Posunúť hore",
-      moveTop: "Presunúť hore",
-      moveUp: "Presunúť hore",
-      moveDown: "Presunúť dole",
-      moveBottom: "Presunúť dole",
-      moveToTarget: "Presunúť na cieľ",
-      moveToSource: "Presunúť ku zdroju",
-      moveAllToTarget: "Presunúť všetko na cieľ",
-      moveAllToSource: "Presunúť všetko ku zdroju",
-      pageLabel: "{page}",
-      firstPageLabel: "Prvá strana",
-      lastPageLabel: "Posledná strana",
-      nextPageLabel: "Dalšia strana",
-      previousPageLabel: "Predchádzajúca strana",
-      rowsPerPageLabel: "Riadkov na stranu",
-      jumpToPageDropdownLabel: "Prejsť na stránku Dropdown",
-      jumpToPageInputLabel: "Prejsť na stránku Input",
-      selectRow: "Vybrať riadok",
-      unselectRow: "Zrušiť výber riadku",
-      expandRow: "Rozbaliť riadok",
-      collapseRow: "Zbaliť riadok",
-      showFilterMenu: "Zobraziť filter menu",
-      hideFilterMenu: "Skryť filter menu",
-      filterOperator: "Operátor filtra",
-      filterConstraint: "Obmedzenie filtra",
-      editRow: "Upraviť riadok",
-      saveEdit: "Uložiť úpravu",
-      cancelEdit: "Zrušiť úpravu",
-      listView: "Zobrazenie zoznamu",
-      gridView: "Zobrazenie mriežky",
-      slide: "Snímka",
-      slideNumber: "{slideNumber}",
-      zoomImage: "Priblížiť obrázok",
-      zoomIn: "Priblížiť",
-      zoomOut: "Oddialiť",
-      rotateRight: "Otočiť doprava",
-      rotateLeft: "Otočiť doľava",
-    },
-  });
+  setUpLocaleForDataTable();
+
+  const bookedAppointmentsToSlovakMapping: { [key: string]: string } = {
+    serviceTypeName: "Typ služby",
+    durationMinutes: "Trvanie",
+    cost: "Cena",
+    clientFirstName: "Meno",
+    clientSecondName: "Priezvisko",
+    capacity: "Kapacita",
+    startTime: "Začiatok",
+    appointmentBookedDate: "Dátum rezervácie",
+    clientId: "ID klienta",
+  };
+
+  const exportCSV = () => {
+    const csv = Papa.unparse({
+      fields: Object.keys(bookedAppointmentsToSlovakMapping),
+      data: bookedAppointmentsState.map((appt) => ({
+        serviceTypeName: appt.serviceTypeName,
+        durationMinutes: appt.durationMinutes,
+        cost: appt.cost,
+        clientFirstName: appt.clientFirstName,
+        clientSecondName: appt.clientSecondName,
+        capacity: appt.capacity,
+        startTime: formatDate(appt.startTime),
+        appointmentBookedDate: formatDate(appt.appointmentBookedDate),
+        clientId: appt.clientId,
+      })),
+    });
+
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", "rezervovane-terminy.csv");
+    link.style.visibility = "hidden";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   useEffect(() => {
     let styles = "";
@@ -227,21 +111,6 @@ const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
     });
     setDynamicStyles(styles);
   }, [bookedAppointments]);
-
-  const rowClassName = (data: TG_BookedAppointment) => {
-    return `row-bg-${data.hexColor.replace("#", "")}`;
-  };
-
-  const formatDate = (dateString: Date) => {
-    const date = new Date(dateString);
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
-    const hours = date.getHours().toString().padStart(2, "0");
-    const minutes = date.getMinutes().toString().padStart(2, "0");
-
-    return `${day}.${month}.${year} ${hours}:${minutes}`;
-  };
 
   const serviceTypeFilterTemplate = (
     options: ColumnFilterElementTemplateOptions,
@@ -369,6 +238,14 @@ const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
     );
   };
 
+  const header = session?.user?.roles.includes("Admin") && (
+    <div className="flex items-center justify-end gap-2">
+      <Button onClick={exportCSV} className="h-8 px-2 py-1" variant="default">
+        Exportovať do CSV <FaFileExcel />
+      </Button>
+    </div>
+  );
+
   return (
     <DashboardSectionWrapper
       title="Rezervované termíny"
@@ -388,6 +265,7 @@ const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
         size="small"
         groupRowsBy="appointmentId"
         rowGroupMode="rowspan"
+        header={header}
       >
         <Column
           field="startTime"
@@ -483,4 +361,4 @@ const BookedAppointmentsGrid = ({ bookedAppointments }: Props) => {
   );
 };
 
-export default BookedAppointmentsGrid;
+export default BookedAppointmentsDataTable;

@@ -7,7 +7,11 @@ import useScroll from "@/lib/hooks/useScroll";
 import Link from "next/link";
 import Image from "next/image";
 
-const Header = () => {
+type HeaderDesktopProps = {
+  links: any;
+};
+
+const HeaderDesktop = ({links}: HeaderDesktopProps) => {
   const [isTopOfPage, setIsTopOfPage] = useState<boolean>(true);
 
   useEffect(() => {
@@ -46,4 +50,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default HeaderDesktop;

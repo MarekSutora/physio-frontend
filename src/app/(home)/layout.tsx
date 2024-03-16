@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import HeaderDesktop from "@/components/mainPage/common/header/HeaderDesktop";
 import HeaderMobile from "@/components/mainPage/common/header/HeaderMobile";
 import Footer from "@/components/mainPage/common/footer/Footer";
+import HeaderWrapper from "@/components/mainPage/common/header/HeaderWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,8 +31,7 @@ export default function RootLayout({
       >
         <Providers>
           <div className="flex w-full flex-col">
-            <HeaderMobile />
-            <HeaderDesktop />
+            <HeaderWrapper />
             <main className="h-auto min-h-[603px] w-full bg-slate-50">
               {children}
             </main>

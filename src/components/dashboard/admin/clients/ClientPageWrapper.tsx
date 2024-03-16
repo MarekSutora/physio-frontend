@@ -5,9 +5,9 @@ import React, { useState } from "react";
 import DashboardSectionWrapper from "../../common/DashboardSectionWrapper";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import ClientNotesGridForm from "../../common/ClientNotesGridForm";
-import FinishedAppointmentsGrid from "../../common/FinishedAppointmentsGrid";
-import BookedAppointmentsGrid from "../../common/BookedAppointmentsGrid";
+import ClientNotesGridForm from "../../common/ClientNotesDataTableForm";
+import FinishedAppointmentsGrid from "../../common/FinishedAppointmentsDataTable";
+import BookedAppointmentsGrid from "../../common/BookedAppointmentsDataTable";
 
 type Props = {
   clientData: TClient | undefined;
