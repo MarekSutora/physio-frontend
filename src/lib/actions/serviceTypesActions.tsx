@@ -127,3 +127,28 @@ export async function deleteServiceTypeAction(id: number) {
     throw new Error(getErrorMessage(error));
   }
 }
+
+export async function getServiceTypeBySlugAction(
+  slug: string,
+): Promise<TG_ServiceType> {
+  try {
+    const url = `${process.env.BACKEND_API_URL}/service-types/${slug}`;
+    const res = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!res.ok) {
+      const errorData = await res.text();
+      throw new Error(errorData);
+    }
+
+    const data = await res.json();
+
+    return data;
+  } catch (error) {
+    throw new Error(getErrorMessage(error));
+  }
+}

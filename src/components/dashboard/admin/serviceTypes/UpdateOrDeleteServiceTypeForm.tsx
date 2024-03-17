@@ -36,13 +36,13 @@ type Props = {
 
 const UpdateOrDeleteServiceTypeForm = ({ serviceTypes }: Props) => {
   const [value, setValue] = React.useState(
-    serviceTypes.length > 0 ? serviceTypes[0].name : "",
+    serviceTypes.length > 0 ? serviceTypes[0].slug : "",
   );
   const [open, setOpen] = React.useState(false);
   const { toast } = useToast();
 
   const selectedServiceType = serviceTypes.find(
-    (serviceType) => serviceType.name === value,
+    (serviceType) => serviceType.slug === value,
   );
 
   const updateServiceTypeData = selectedServiceType
@@ -112,7 +112,7 @@ const UpdateOrDeleteServiceTypeForm = ({ serviceTypes }: Props) => {
               {serviceTypes.map((serviceType) => (
                 <CommandItem
                   key={serviceType.id}
-                  value={serviceType.name}
+                  value={serviceType.slug}
                   onSelect={(currentValue: string) => {
                     setValue(currentValue);
                     setOpen(false);
@@ -126,7 +126,7 @@ const UpdateOrDeleteServiceTypeForm = ({ serviceTypes }: Props) => {
         </PopoverContent>
       </Popover>
 
-      {selectedServiceType && ( // This line checks if selectedServiceType is defined
+      {selectedServiceType && (
         <ServiceTypeForm
           serviceType={updateServiceTypeData}
           onSubmit={handleSubmit}

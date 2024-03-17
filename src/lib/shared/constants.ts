@@ -54,7 +54,7 @@ export const dashboardLinks = {
       subMenuItems: [
         { text: "Nový termín", path: "/dashboard/admin/terminy/novy-termin" },
         {
-          text: "Rezervované termíny",
+          text: "Zarezervované termíny",
           path: "/dashboard/admin/terminy/zarezervovane-terminy",
         },
         {
@@ -258,8 +258,6 @@ export const PrimeReactLocaleSk = {
   },
 } as const;
 
-export const DesktopDashboardSectionStyle =
-  "border-slate-200 bg-white p-2 md:rounded-lg md:border-2" as const;
 
 export const SlovakMonths = [
   "Január",

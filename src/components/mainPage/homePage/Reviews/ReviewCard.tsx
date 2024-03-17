@@ -25,7 +25,7 @@ const ReviewCard = ({ review }: Props) => {
   };
 
   return (
-    <div className="justify-betweenbg-white m-auto flex h-64 w-full flex-col p-2 px-3 md:rounded-lg md:border-2">
+    <div className="justify-between bg-white m-auto flex h-64 w-full flex-col p-2 px-3 rounded-lg border-2">
       <div className="mb-0.5 flex w-full flex-row justify-between">
         <div className="h-10 text-3xl">{renderStars()}</div>
         <Link

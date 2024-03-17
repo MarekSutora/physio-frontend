@@ -93,6 +93,7 @@ const Reviews = () => {
             loop: true,
             align: "start",
           }}
+          className="w-5/6 m-auto"
         >
           <CarouselContent>
             {dummyReviews.map((review) => (
@@ -104,8 +105,8 @@ const Reviews = () => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
+          <CarouselPrevious  className="z-50"/>
+          <CarouselNext className="z-50"/>
         </Carousel>
       </div>
     </section>

@@ -1,5 +1,3 @@
-
-
 const nextConfig = {
   async rewrites() {
     return [
@@ -14,6 +12,10 @@ const nextConfig = {
       {
         protocol: "http",
         hostname: "**",
+      },
+      {
+        protocol: "https",
+        hostname: "i.postimg.cc",
       },
     ],
   },

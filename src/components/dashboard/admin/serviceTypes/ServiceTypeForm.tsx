@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Controller,
   SubmitHandler,
@@ -45,6 +45,7 @@ type Props = {
 library.add(Icons.fas);
 
 const ServiceTypeForm = ({ serviceType, children, onSubmit }: Props) => {
+  const [dynamicIcon, setDynamicIcon] = useState<IconName | null>(null);
   const form = useForm<TCU_ServiceType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -60,19 +61,27 @@ const ServiceTypeForm = ({ serviceType, children, onSubmit }: Props) => {
     },
   });
 
+  useEffect(() => {
+    const iconName = form.getValues("iconName");
+    const iconKey = iconName.replace("Fa", "").toLowerCase() as IconName;
+    const faIcon = (Icons as any)[
+      `fa${iconKey.charAt(0).toUpperCase() + iconKey.slice(1)}`
+    ];
+
+    setDynamicIcon(faIcon);
+  }, [form.watch("iconName")]);
+
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: "durationCosts",
   });
 
-  const renderIcon = (iconName: string) => {
-    const iconKey = iconName.replace("Fa", "").toLowerCase();
-
-    const faIcon = (Icons as any)[
-      `fa${iconKey.charAt(0).toUpperCase() + iconKey.slice(1)}`
-    ];
-
-    return <FontAwesomeIcon className="text-4xl" icon={faIcon as any} />;
+  const renderIcon = () => {
+    return dynamicIcon ? (
+      <FontAwesomeIcon className="w-1/3 text-4xl" icon={dynamicIcon as any} />
+    ) : (
+      <div className="w-1/3"></div> // This can be any placeholder
+    );
   };
 
   return (
@@ -114,14 +123,17 @@ const ServiceTypeForm = ({ serviceType, children, onSubmit }: Props) => {
       <div className="space-y-1">
         <Label htmlFor="iconName">Icon Name</Label>
         <div className="flex flex-row items-center gap-1">
-          {" "}
-          <Input id="iconName" {...form.register("iconName")} />
+          <Input
+            id="iconName"
+            {...form.register("iconName")}
+            className="w-2/3"
+          />
           {form.formState.errors.iconName && (
             <span className="text-sm font-medium text-destructive">
               {form.formState.errors.iconName.message}
             </span>
-          )}{" "}
-          {renderIcon(form.getValues("iconName"))}{" "}
+          )}
+          {renderIcon()}
         </div>
       </div>
       <div className="space-y-1">

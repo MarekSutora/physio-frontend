@@ -74,13 +74,12 @@ const DashboardMenuItem = ({
           <AnimatePresence>
             {toggledItemsWithSubMenu.includes(text) && (
               <motion.ul
-                style={{ overflow: "hidden" }}
                 variants={variants}
                 initial="closed"
                 animate="open"
                 exit="closed"
                 transition={{ duration: 0.5, ease: "easeInOut" }}
-                className="flex w-full flex-col text-white "
+                className="flex w-full flex-col text-white overflow-hidden"
               >
                 {subMenuItems.map((subLink) => (
                   <li key={subLink.text} onClick={mobileCloseFunction}>

@@ -54,8 +54,8 @@ const HeaderMobile = ({ links }: HeaderMobileProps) => {
           isOpen ? "fixed" : "stickyy",
         )}
       >
-        <div className="flex justify-end">
-          <HamburgerWrapper toggle={toggleOpen} />
+        <div className="flex justify-end pr-1">
+          <HamburgerWrapper toggle={toggleOpen} toggled={isOpen} />
         </div>
         <motion.nav
           initial={false}
@@ -78,6 +78,7 @@ const HeaderMobile = ({ links }: HeaderMobileProps) => {
                 text={link.text}
                 path={link.path}
                 subMenuItems={link.subMenuItems}
+                closeMenu={closeMenu}
               />
             ))}
             <div className="m-auto mt-5 flex gap-3" onClick={closeMenu}>
@@ -101,13 +102,19 @@ const HeaderMobile = ({ links }: HeaderMobileProps) => {
   );
 };
 
-const HamburgerWrapper = ({ toggle }: { toggle: any }) => {
+type HamburgerWrapperProps = {
+  toggle: any;
+  toggled: boolean;
+};
+
+const HamburgerWrapper = ({ toggle, toggled }: HamburgerWrapperProps) => {
   return (
     <Hamburger
       size={20}
       color="#000"
       label="Show menu"
       onToggle={toggle}
+      toggled={toggled}
       distance="sm"
       duration={0.5}
     />

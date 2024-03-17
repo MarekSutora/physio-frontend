@@ -3,19 +3,21 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaAngleDown } from "react-icons/fa";
 import { usePathname } from "next/navigation";
-
-type SubMenuItem = {
-  text: string;
-  path: string;
-};
+import { cn } from "@/lib/utils";
 
 type MobileMenuItemProps = {
   text: string;
   path?: string;
   subMenuItems?: { text: string; path: string }[];
+  closeMenu?: () => void;
 };
 
-const MobileMenuItem = ({ text, path, subMenuItems }: MobileMenuItemProps) => {
+const MobileMenuItem = ({
+  text,
+  path,
+  subMenuItems,
+  closeMenu,
+}: MobileMenuItemProps) => {
   const currentPath = usePathname();
   const isActive = path && currentPath === path;
   const [toggledItemsWithSubMenu, setToggledItemsWithSubMenu] = useState<
@@ -38,13 +40,14 @@ const MobileMenuItem = ({ text, path, subMenuItems }: MobileMenuItemProps) => {
   };
 
   return (
-    <div
-      className={`border-b border-gray-200 ${isActive ? "bg-gray-200" : "bg-white"}`}
-    >
+    <>
       {subMenuItems && subMenuItems.length > 0 ? (
-        <>
+        <div className="h-full w-full">
           <button
-            className={`flex w-full items-center justify-between p-4 text-left ${isActive ? "text-blue-600" : "text-gray-700"} hover:bg-gray-100`}
+            className={cn(
+              isActive && " bg-gray-200",
+              "flex w-full flex-row items-center justify-between gap-2 border-t-[1px] border-gray-200 py-2 pl-3 pr-5 text-lg font-medium",
+            )}
             onClick={() => handleItemWithSubMenuClick(text)}
           >
             <span className="w-full text-start">{text}</span>
@@ -54,7 +57,9 @@ const MobileMenuItem = ({ text, path, subMenuItems }: MobileMenuItemProps) => {
               }}
               transition={{ duration: 0.4, ease: "easeInOut" }}
             >
-              <FaAngleDown />
+              <div className="text-black">
+                <FaAngleDown />
+              </div>
             </motion.div>
           </button>
 
@@ -65,14 +70,21 @@ const MobileMenuItem = ({ text, path, subMenuItems }: MobileMenuItemProps) => {
                 initial="closed"
                 animate="open"
                 exit="closed"
-                transition={{ duration: 0.3 }}
-                className="pl-4"
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+                className="flex w-full flex-col overflow-hidden"
               >
                 {subMenuItems.map((subItem) => (
-                  <li key={subItem.text} className="py-2">
+                  <li
+                    key={subItem.text}
+                    className="flex h-12 items-center  justify-center"
+                    onClick={closeMenu}
+                  >
                     <Link
                       href={subItem.path}
-                      className={`block px-4 py-2 hover:bg-gray-100 ${currentPath === subItem.path ? "text-blue-600" : "text-gray-700"}`}
+                      className={cn(
+                        subItem.path === currentPath && "bg-gray-200",
+                        "flex  h-full  w-full items-center border-t-[1px] border-gray-200 pl-8 pr-2 text-base font-medium",
+                      )}
                     >
                       {subItem.text}
                     </Link>
@@ -81,16 +93,20 @@ const MobileMenuItem = ({ text, path, subMenuItems }: MobileMenuItemProps) => {
               </motion.ul>
             )}
           </AnimatePresence>
-        </>
+        </div>
       ) : (
         <Link
-          href={path || "#"}
-          className={`block p-4 ${isActive ? "text-blue-600" : "text-gray-700"} hover:bg-gray-100`}
+          className={cn(
+            isActive && "bg-gray-200",
+            "flex w-full flex-row items-center gap-2 border-t-[1px] border-gray-200 py-2 pl-3 pr-2 text-lg font-medium text-black transition-all duration-200",
+          )}
+          href={path!}
+          onClick={closeMenu}
         >
           {text}
         </Link>
       )}
-    </div>
+    </>
   );
 };
 

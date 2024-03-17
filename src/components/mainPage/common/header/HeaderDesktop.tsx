@@ -6,12 +6,13 @@ import NavbarDesktop from "./NavbarDesktop";
 import useScroll from "@/lib/hooks/useScroll";
 import Link from "next/link";
 import Image from "next/image";
+import { TMainPageLink } from "@/lib/shared/types";
 
 type HeaderDesktopProps = {
-  links: any;
+  links: TMainPageLink[];
 };
 
-const HeaderDesktop = ({links}: HeaderDesktopProps) => {
+const HeaderDesktop = ({ links }: HeaderDesktopProps) => {
   const [isTopOfPage, setIsTopOfPage] = useState<boolean>(true);
 
   useEffect(() => {
@@ -44,7 +45,7 @@ const HeaderDesktop = ({links}: HeaderDesktopProps) => {
             />
           </Link>
         </div>
-        <NavbarDesktop />
+        <NavbarDesktop links={links} />
       </div>
     </header>
   );
