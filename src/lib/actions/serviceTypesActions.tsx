@@ -58,7 +58,6 @@ export async function createNewServiceTypeAction(formData: TCU_ServiceType) {
 
     revalidateTag("service-types");
 
-    return true;
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }

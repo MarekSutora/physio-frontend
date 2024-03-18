@@ -2,10 +2,8 @@
 
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
-import { revalidateTag } from "next/cache";
 import { getErrorMessage } from "../utils";
 import { TClient, TClientNote } from "../shared/types";
-import { ca } from "date-fns/locale";
 
 export async function getClientsData(): Promise<TClient[]> {
   try {
@@ -36,7 +34,6 @@ export async function getClientsData(): Promise<TClient[]> {
 
     return data;
   } catch (error) {
-    console.log("error", error);
     throw new Error(getErrorMessage(error));
   }
 }

@@ -8,7 +8,7 @@ import { useToast } from "@/components/ui/use-toast";
 import AuthButtons from "@/components/auth/authButtons/AuthButtons";
 import ShadConfirmationDialog from "../common/logo/ShadConfirmationDialog";
 import {
-  createClientBookedAppointmentAction,
+  createBookedAppointmentAction,
   deleteAppointmentAction,
 } from "@/lib/actions/appointmentsActions";
 import { useAppointmentsStore } from "@/useAppointmentsStore";
@@ -55,7 +55,7 @@ const AppointmentCard = ({
   const tryBookAppointment = async (astdcId: number) => {
     if (isAuthenticated && session?.user.roles.includes("Client")) {
       try {
-        await createClientBookedAppointmentAction(astdcId);
+        await createBookedAppointmentAction(astdcId);
         removeAppointmentByAppId(astdcId);
         toast({
           variant: "success",

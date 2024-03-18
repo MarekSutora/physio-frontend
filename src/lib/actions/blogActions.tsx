@@ -91,7 +91,6 @@ export async function createBlogPostAction(formData: TBlogPost) {
 
     revalidateTag("blog-posts");
 
-    return true;
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }
@@ -125,44 +124,11 @@ export async function updateBlogPostAction(formData: TBlogPost) {
 
     revalidateTag("blog-posts");
 
-    return true;
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }
 }
 
-export async function hideBlogPostAction(blogPostId: number) {
-  try {
-    const session = await getServerSession(authOptions);
-
-    if (!session) {
-      throw new Error(
-        "Session not found. User must be logged in to perform this action.",
-      );
-    }
-
-    const url = `${process.env.BACKEND_API_URL}/blog-posts/hide/${blogPostId}`;
-
-    const res = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
-      },
-    });
-
-    if (!res.ok) {
-      const errorData = await res.text();
-      throw new Error(errorData);
-    }
-
-    revalidateTag("blog-posts");
-
-    return true;
-  } catch (error) {
-    throw new Error(getErrorMessage(error));
-  }
-}
 
 export async function deleteBlogPostAction(blogPostId: number) {
   try {
@@ -190,8 +156,7 @@ export async function deleteBlogPostAction(blogPostId: number) {
     }
 
     revalidateTag("blog-posts");
-
-    return true;
+    
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }

@@ -46,21 +46,22 @@ const NavbarDesktop = ({ links }: NavbarDesktopProps) => {
                   </div>
                 </div>
               ) : (
-                // For items without submenus, render a regular link
-                <div className="group relative flex cursor-pointer flex-col items-center justify-center">
-                  <Link
-                    href={link.path!}
-                    className={`relative block hover:[text-shadow:-.05px_-.05px_0_rgba(0,0,0,0.5),.05px_.05px_0_rgba(0,0,0,0.5)] ${
-                      currentPath === link.path
-                        ? "[text-shadow:-.05px_-.05px_0_rgba(0,0,0,0.5),.05px_.05px_0_rgba(0,0,0,0.5)]"
-                        : ""
-                    } before:absolute before:inset-x-0 before:bottom-0 before:h-0.5 before:origin-left before:scale-x-0 before:bg-primary before:transition-transform before:duration-200 hover:before:scale-x-100 ${
-                      currentPath === link.path ? "before:scale-x-100" : ""
-                    }`}
-                  >
-                    {link.text}
-                  </Link>
-                </div>
+                link.path && (
+                  <div className="group relative flex cursor-pointer flex-col items-center justify-center">
+                    <Link
+                      href={link.path!}
+                      className={`relative block hover:[text-shadow:-.05px_-.05px_0_rgba(0,0,0,0.5),.05px_.05px_0_rgba(0,0,0,0.5)] ${
+                        currentPath === link.path
+                          ? "[text-shadow:-.05px_-.05px_0_rgba(0,0,0,0.5),.05px_.05px_0_rgba(0,0,0,0.5)]"
+                          : ""
+                      } before:absolute before:inset-x-0 before:bottom-0 before:h-0.5 before:origin-left before:scale-x-0 before:bg-primary before:transition-transform before:duration-200 hover:before:scale-x-100 ${
+                        currentPath === link.path ? "before:scale-x-100" : ""
+                      }`}
+                    >
+                      {link.text}
+                    </Link>
+                  </div>
+                )
               )}
             </li>
           );

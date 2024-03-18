@@ -34,9 +34,7 @@ export async function getUnbookedAppointmentsAction(): Promise<
   return data;
 }
 
-export async function createAppointmentAction(
-  appointmentData: TC_Appointment,
-): Promise<boolean> {
+export async function createAppointmentAction(appointmentData: TC_Appointment) {
   try {
     const session = await getServerSession(authOptions);
 
@@ -62,52 +60,15 @@ export async function createAppointmentAction(
     }
 
     revalidateTag("unbooked-appointments");
-    // Assuming a successful creation returns true or similar positive confirmation
-    return true;
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }
 }
 
-export async function createAdminBookedAppointmentAction(
-  data: TC_AdminBookedAppointment,
-): Promise<boolean> {
-  try {
-    const session = await getServerSession(authOptions);
-
-    if (!session) {
-      throw new Error(
-        "Session not found. User must be logged in to perform this action.",
-      );
-    }
-
-    const url = `${process.env.BACKEND_API_URL}/appointments/admin-booked-appointments`;
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
-      },
-      body: JSON.stringify(data),
-    });
-
-    if (!response.ok) {
-      const errorData = await response.text();
-      throw new Error(errorData);
-    }
-
-    revalidateTag("booked-appointments");
-    revalidateTag("unbooked-appointments");
-    // Assuming a successful creation returns true or similar positive confirmation
-    return true;
-  } catch (error) {
-    throw new Error(getErrorMessage(error));
-  }
-}
-
-export async function createClientBookedAppointmentAction(
+export async function createBookedAppointmentAction(
   astdcId: number,
-): Promise<boolean> {
+  clientId?: number,
+) {
   try {
     const session = await getServerSession(authOptions);
 
@@ -117,7 +78,9 @@ export async function createClientBookedAppointmentAction(
       );
     }
 
-    const url = `${process.env.BACKEND_API_URL}/appointments/client-booked-appointments`;
+    let clientIdToUse = clientId ? clientId : session.user?.clientId;
+
+    const url = `${process.env.BACKEND_API_URL}/appointments/booked/${clientIdToUse}`;
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -134,8 +97,6 @@ export async function createClientBookedAppointmentAction(
 
     revalidateTag("booked-appointments");
     revalidateTag("unbooked-appointments");
-    // Assuming a successful creation returns true or similar positive confirmation
-    return true;
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }
@@ -143,7 +104,7 @@ export async function createClientBookedAppointmentAction(
 
 export async function deleteAppointmentAction(
   appointmentId: number,
-): Promise<boolean> {
+) {
   try {
     const session = await getServerSession(authOptions);
 
@@ -168,8 +129,7 @@ export async function deleteAppointmentAction(
     }
 
     revalidateTag("unbooked-appointments");
-    // Assuming a successful deletion returns true or similar positive confirmation
-    return true;
+
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }
@@ -315,7 +275,7 @@ export async function getAllFinishedAppointmentsAction(): Promise<
 
 export async function deleteBookedAppointmentAction(
   bookedAppointmentId: number,
-): Promise<void> {
+) {
   try {
     const session = await getServerSession(authOptions);
 
@@ -341,6 +301,7 @@ export async function deleteBookedAppointmentAction(
 
     revalidateTag("booked-appointments");
     revalidateTag("unbooked-appointments");
+    
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }

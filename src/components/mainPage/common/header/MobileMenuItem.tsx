@@ -95,16 +95,18 @@ const MobileMenuItem = ({
           </AnimatePresence>
         </div>
       ) : (
-        <Link
-          className={cn(
-            isActive && "bg-gray-200",
-            "flex w-full flex-row items-center gap-2 border-t-[1px] border-gray-200 py-2 pl-3 pr-2 text-lg font-medium text-black transition-all duration-200",
-          )}
-          href={path!}
-          onClick={closeMenu}
-        >
-          {text}
-        </Link>
+        path && (
+          <Link
+            className={cn(
+              isActive && "bg-gray-200",
+              "flex w-full flex-row items-center gap-2 border-t-[1px] border-gray-200 py-2 pl-3 pr-2 text-lg font-medium text-black transition-all duration-200",
+            )}
+            href={path}
+            onClick={closeMenu}
+          >
+            {text}
+          </Link>
+        )
       )}
     </>
   );
