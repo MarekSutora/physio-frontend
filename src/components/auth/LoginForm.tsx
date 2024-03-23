@@ -71,7 +71,7 @@ const LoginForm = ({ searchParams }: Props) => {
         setIsLoading(false);
         toast({
           variant: "destructive",
-          title: "Chyba pri prihlasovani. 🙁",
+          title: "Chyba pri prihlasovaní. 🙁",
           description:
             getErrorMessage(res?.error) === "fetch failed"
               ? "Skúste to prosím neskôr."
@@ -85,7 +85,7 @@ const LoginForm = ({ searchParams }: Props) => {
     } catch (error) {
       toast({
         variant: "destructive",
-        title: "Chyba pri prihlasovani. 🙁",
+        title: "Chyba pri prihlasovaní. 🙁",
         description: getErrorMessage(error) + " 🙄",
         className: "text-lg",
       });

@@ -7,8 +7,6 @@ import { getErrorMessage } from "../utils";
 import {
   TAppointment,
   TAppointmentDetail,
-  TAppointmentExerciseDetail,
-  TC_AdminBookedAppointment,
   TC_Appointment,
   TExerciseType,
   TG_BookedAppointment,

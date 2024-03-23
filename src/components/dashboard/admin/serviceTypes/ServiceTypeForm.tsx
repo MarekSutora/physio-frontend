@@ -69,6 +69,7 @@ const ServiceTypeForm = ({ serviceType, children, onSubmit }: Props) => {
     ];
 
     setDynamicIcon(faIcon);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form.watch("iconName")]);
 
   const { fields, append, remove } = useFieldArray({
@@ -80,7 +81,7 @@ const ServiceTypeForm = ({ serviceType, children, onSubmit }: Props) => {
     return dynamicIcon ? (
       <FontAwesomeIcon className="w-1/3 text-4xl" icon={dynamicIcon as any} />
     ) : (
-      <div className="w-1/3"></div> // This can be any placeholder
+      <div className="w-1/3"></div>
     );
   };
 

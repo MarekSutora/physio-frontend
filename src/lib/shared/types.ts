@@ -21,10 +21,10 @@ export type TG_ServiceType = {
   hexColor: string;
   iconName: string;
   imageUrl: string;
-  stdcs: DurationCosts[];
+  stdcs: ServiceTypeDurationCosts[];
 };
 
-export type DurationCosts = {
+export type ServiceTypeDurationCosts = {
   id?: number;
   durationMinutes: number;
   cost: number;

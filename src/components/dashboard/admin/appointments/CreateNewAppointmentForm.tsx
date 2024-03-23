@@ -27,6 +27,8 @@ const CreateNewAppointmentForm = ({ serviceTypes }: Props) => {
     ServiceTypeOptionType[]
   >([]);
 
+  console.log("serviceTypes", serviceTypes);
+
   const [capacity, setCapacity] = useState<number>(1);
 
   // Convert service types and their duration costs to select options
@@ -63,7 +65,7 @@ const CreateNewAppointmentForm = ({ serviceTypes }: Props) => {
   ) => {
     setSelectedOptions(selected.map((option) => ({ ...option })));
     if (selected.length > 1) {
-      setCapacity(1); 
+      setCapacity(1);
     }
   };
 

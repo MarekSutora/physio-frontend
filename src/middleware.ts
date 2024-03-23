@@ -3,8 +3,6 @@ import { withAuth } from "next-auth/middleware";
 import { pages } from "next/dist/build/templates/app-page";
 import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
 
-//TODO redirect client to dashboard/rezervacie, admin do dashboard/prehlad
-
 export default withAuth(
   function middleware(req) {
     if (req.nextUrl.pathname.startsWith("/dashboard") && !req.nextauth) {
