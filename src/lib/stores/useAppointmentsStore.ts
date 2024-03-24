@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { TG_UnbookedAppointment } from "./lib/shared/types";
+import { TG_UnbookedAppointment } from "../shared/types";
 
 interface AppointmentsStore {
   appointments: TG_UnbookedAppointment[];

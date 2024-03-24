@@ -22,7 +22,7 @@ import { enUS } from "date-fns/locale";
 import { TG_UnbookedAppointment, TG_ServiceType } from "@/lib/shared/types"; // Update the import path as needed
 import { cn } from "@/lib/utils";
 import ScheduleForTheDay from "./ScheduleForTheDay";
-import { useAppointmentsStore } from "@/useAppointmentsStore";
+import { useAppointmentsStore } from "@/lib/stores/useAppointmentsStore";
 
 type Props = {
   appointmentsData: TG_UnbookedAppointment[];
