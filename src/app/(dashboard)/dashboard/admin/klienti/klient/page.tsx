@@ -20,35 +20,35 @@ const Page = async (props: Props) => {
   let clientsBookedAppointments: TG_BookedAppointment[] = [];
   let clientsNotes: TClientNote[] = [];
 
-  const clientId = props.searchParams.Id;
+  const personId = props.searchParams.Id;
 
-  let clientIdNumber = -1;
-  if (clientId) {
-    clientIdNumber = parseInt(clientId as string);
+  let personIdNumber = -1;
+  if (personId) {
+    personIdNumber = parseInt(personId as string);
   }
 
   try {
-    client = await getClientById(clientIdNumber);
+    client = await getClientById(personIdNumber);
   } catch (error) {
     console.log(error);
   }
 
   try {
     clientsFinishedAppointments =
-      await getFinishedAppointmentsForClientAction(clientIdNumber);
+      await getFinishedAppointmentsForClientAction(personIdNumber);
   } catch (error) {
     console.log(error);
   }
 
   try {
     clientsBookedAppointments =
-      await getBookedAppointmentsForClientAction(clientIdNumber);
+      await getBookedAppointmentsForClientAction(personIdNumber);
   } catch (error) {
     console.log(error);
   }
 
   try {
-    clientsNotes = await getAllNotesForClient(clientIdNumber);
+    clientsNotes = await getAllNotesForClient(personIdNumber);
   } catch (error) {
     console.log(error);
   }

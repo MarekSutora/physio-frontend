@@ -47,7 +47,7 @@ export async function addNoteToClient(note: TClientNote): Promise<void> {
     );
   }
 
-  const url = `${process.env.BACKEND_API_URL}/clients/${note.clientId}/notes`;
+  const url = `${process.env.BACKEND_API_URL}/clients/${note.personId}/notes`;
   const response = await fetch(url, {
     method: "POST",
     headers: {

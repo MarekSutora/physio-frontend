@@ -17,7 +17,7 @@ import ShadConfirmationDialog from "@/components/mainPage/common/logo/ShadConfir
 
 type Props = {
   clientNotes: TClientNote[];
-  clientId: number;
+  personId: number;
 };
 
 const defaultFilters: DataTableFilterMeta = {
@@ -25,7 +25,7 @@ const defaultFilters: DataTableFilterMeta = {
   createdAt: { value: null, matchMode: FilterMatchMode.CONTAINS },
 };
 
-const ClientNotesGridForm = ({ clientNotes, clientId }: Props) => {
+const ClientNotesGridForm = ({ clientNotes, personId }: Props) => {
   const [clientNotesState, setClientNotesState] =
     useState<TClientNote[]>(clientNotes);
   const [note, setNote] = useState("");
@@ -35,7 +35,7 @@ const ClientNotesGridForm = ({ clientNotes, clientId }: Props) => {
     try {
       const newNote: TClientNote = {
         note: note,
-        clientId: clientId,
+        personId: personId,
         createdAt: new Date(Date.now()),
       };
 

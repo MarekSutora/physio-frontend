@@ -118,7 +118,7 @@ const ClientPageWrapper = ({
         {sectionToggled === "clientNotesSection" && clientData && (
           <ClientNotesGridForm
             clientNotes={clientNotes}
-            clientId={clientData?.personId}
+            personId={clientData?.personId}
           />
         )}
       </div>

@@ -216,7 +216,7 @@ export type TClient = {
 
 export type TClientNote = {
   id?: number;
-  clientId: number;
+  personId: number;
   note: string;
   createdAt?: Date;
 };

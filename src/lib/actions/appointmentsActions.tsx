@@ -65,7 +65,7 @@ export async function createAppointmentAction(appointmentData: TC_Appointment) {
 
 export async function createBookedAppointmentAction(
   astdcId: number,
-  clientId?: number,
+  personId?: number,
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -76,9 +76,9 @@ export async function createBookedAppointmentAction(
       );
     }
 
-    let clientIdToUse = clientId ? clientId : session.user?.clientId;
+    let personIdoUse = personId ? personId : session.user?.personId;
 
-    const url = `${process.env.BACKEND_API_URL}/appointments/booked/${clientIdToUse}`;
+    const url = `${process.env.BACKEND_API_URL}/appointments/booked/${personIdoUse}`;
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -100,9 +100,7 @@ export async function createBookedAppointmentAction(
   }
 }
 
-export async function deleteAppointmentAction(
-  appointmentId: number,
-) {
+export async function deleteAppointmentAction(appointmentId: number) {
   try {
     const session = await getServerSession(authOptions);
 
@@ -127,7 +125,6 @@ export async function deleteAppointmentAction(
     }
 
     revalidateTag("unbooked-appointments");
-
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }
@@ -168,7 +165,7 @@ export async function getAllBookedAppointmentsAction(): Promise<
 }
 
 export async function getBookedAppointmentsForClientAction(
-  clientId?: number,
+  personId?: number,
 ): Promise<TG_BookedAppointment[]> {
   try {
     const session = await getServerSession(authOptions);
@@ -178,9 +175,9 @@ export async function getBookedAppointmentsForClientAction(
       );
     }
 
-    let clientIdToUse = clientId ? clientId : session.user?.clientId;
+    let personIdToUse = personId ? personId : session.user?.personId;
 
-    let url = `${process.env.BACKEND_API_URL}/appointments/client/${clientIdToUse}/booked`;
+    let url = `${process.env.BACKEND_API_URL}/appointments/client/${personIdToUse}/booked`;
     const res = await fetch(url, {
       method: "GET",
       headers: {
@@ -203,7 +200,7 @@ export async function getBookedAppointmentsForClientAction(
 }
 
 export async function getFinishedAppointmentsForClientAction(
-  clientId?: number,
+  personId?: number,
 ): Promise<TG_BookedAppointment[]> {
   try {
     const session = await getServerSession(authOptions);
@@ -213,9 +210,9 @@ export async function getFinishedAppointmentsForClientAction(
       );
     }
 
-    let clientIdToUse = clientId ? clientId : session.user?.clientId;
+    let personIdToUse = personId ? personId : session.user?.personId;
 
-    let url = `${process.env.BACKEND_API_URL}/appointments/client/${clientIdToUse}/finished`;
+    let url = `${process.env.BACKEND_API_URL}/appointments/client/${personIdToUse}/finished`;
     const res = await fetch(url, {
       method: "GET",
       headers: {
@@ -299,7 +296,6 @@ export async function deleteBookedAppointmentAction(
 
     revalidateTag("booked-appointments");
     revalidateTag("unbooked-appointments");
-    
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }
