@@ -6,7 +6,7 @@ import Link from "next/link";
 import AuthButtons from "@/components/auth/authButtons/AuthButtons";
 import { motion, useCycle } from "framer-motion";
 import useDimensions from "@/lib/hooks/useDimensions";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/utils";
 import Hamburger from "hamburger-react";
 import MobileMenuItem from "./MobileMenuItem";
 import { TMainPageLink } from "@/lib/shared/types";

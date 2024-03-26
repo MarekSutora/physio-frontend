@@ -4,7 +4,7 @@ import { TClient, TClientNote, TG_BookedAppointment } from "@/lib/shared/types";
 import React, { useState } from "react";
 import DashboardSectionWrapper from "../../common/DashboardSectionWrapper";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/utils";
 import ClientNotesGridForm from "../../common/ClientNotesDataTableForm";
 import FinishedAppointmentsGrid from "../../common/FinishedAppointmentsDataTable";
 import BookedAppointmentsGrid from "../../common/BookedAppointmentsDataTable";

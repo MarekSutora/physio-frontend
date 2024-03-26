@@ -24,7 +24,7 @@ import {
   formatDate,
   rowClassName,
   setUpLocaleForDataTable,
-} from "@/lib/dataTableUtils";
+} from "@/lib/utils/dataTableUtils";
 import { FaFileExcel } from "react-icons/fa";
 import Papa from "papaparse";
 

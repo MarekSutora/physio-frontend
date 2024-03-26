@@ -1,5 +1,5 @@
 import { locale, addLocale } from "primereact/api";
-import { TG_BookedAppointment } from "./shared/types";
+import { TG_BookedAppointment } from "../shared/types";
 
 declare module "primereact/api" {
   export function addLocale(

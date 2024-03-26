@@ -19,7 +19,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import ClipLoader from "react-spinners/ClipLoader";
-import { getErrorMessage } from "@/lib/utils";
+import { getErrorMessage } from "@/lib/utils/utils";
 import { useRouter } from "next/navigation";
 
 type Props = {

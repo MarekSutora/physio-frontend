@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/utils";
 import NavbarDesktop from "./NavbarDesktop";
 import useScroll from "@/lib/hooks/useScroll";
 import Link from "next/link";

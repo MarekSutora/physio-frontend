@@ -2,7 +2,7 @@
 
 import React, { useCallback, useRef } from "react";
 import useDimensions from "@/lib/hooks/useDimensions";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/utils";
 import Hamburger from "hamburger-react";
 import { motion, useCycle } from "framer-motion";
 import DashboardNavUl from "../DashboardNavUl";

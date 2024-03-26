@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "@/app/globals.css";
 import Providers from "@/components/Providers";
 import DashboardNavigationPanel from "@/components/dashboard/navigation/DashboardNavigationPanel";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/utils";
 import DashboardHeader from "@/components/dashboard/navigation/DashboardHeader";
 import { Toaster } from "@/components/ui/toaster";
 import { Suspense } from "react";

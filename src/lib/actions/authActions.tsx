@@ -5,7 +5,7 @@ import {
   TResetPasswordFormData,
   TResponseResult,
 } from "../shared/types";
-import { getErrorMessage } from "../utils";
+import { getErrorMessage } from "../utils/utils";
 
 export async function registerClientAction(
   formData: TRegistrationFormData,

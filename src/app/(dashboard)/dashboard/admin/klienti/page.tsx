@@ -4,7 +4,7 @@ import ClientsGrid from "@/components/dashboard/admin/clients/ClientsDataTable";
 import DashboardSectionWrapper from "@/components/dashboard/common/DashboardSectionWrapper";
 import { getClientsData } from "@/lib/actions/clientsActions";
 import { TClient } from "@/lib/shared/types";
-import { getErrorMessage } from "@/lib/utils";
+import { getErrorMessage } from "@/lib/utils/utils";
 import { ca } from "date-fns/locale";
 import React from "react";
 

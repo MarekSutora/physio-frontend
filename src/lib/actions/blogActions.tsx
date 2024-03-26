@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 import { TBlogPost } from "../shared/types";
 import { revalidateTag } from "next/cache";
-import { getErrorMessage } from "../utils";
+import { getErrorMessage } from "../utils/utils";
 
 export async function getAllBlogPostsAction(): Promise<TBlogPost[]> {
   try {

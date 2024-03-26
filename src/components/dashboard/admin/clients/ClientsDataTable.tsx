@@ -9,7 +9,10 @@ import "primereact/resources/primereact.min.css";
 import DashboardSectionWrapper from "../../common/DashboardSectionWrapper";
 import { FilterMatchMode } from "primereact/api";
 import Link from "next/link";
-import { formatDate, setUpLocaleForDataTable } from "@/lib/dataTableUtils";
+import {
+  formatDate,
+  setUpLocaleForDataTable,
+} from "@/lib/utils/dataTableUtils";
 import Papa from "papaparse";
 import { Button } from "@/components/ui/button";
 import { FaFileExcel } from "react-icons/fa";

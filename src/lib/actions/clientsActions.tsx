@@ -2,7 +2,7 @@
 
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
-import { getErrorMessage } from "../utils";
+import { getErrorMessage } from "../utils/utils";
 import { TClient, TClientNote } from "../shared/types";
 
 export async function getClientsData(): Promise<TClient[]> {

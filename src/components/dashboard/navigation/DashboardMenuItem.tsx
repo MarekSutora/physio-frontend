@@ -1,7 +1,7 @@
 "use client";
 
 import { dashboardLinks } from "@/lib/shared/constants";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { useSession } from "next-auth/react";
 import Link from "next/dist/client/link";
@@ -79,7 +79,7 @@ const DashboardMenuItem = ({
                 animate="open"
                 exit="closed"
                 transition={{ duration: 0.5, ease: "easeInOut" }}
-                className="flex w-full flex-col text-white overflow-hidden"
+                className="flex w-full flex-col overflow-hidden text-white"
               >
                 {subMenuItems.map((subLink) => (
                   <li key={subLink.text} onClick={mobileCloseFunction}>

@@ -28,7 +28,7 @@ import {
   CommandItem,
 } from "@/components/ui/command";
 import { ChevronsUpDown } from "lucide-react";
-import { getErrorMessage } from "@/lib/utils";
+import { getErrorMessage } from "@/lib/utils/utils";
 
 type Props = {
   serviceTypes: TG_ServiceType[];

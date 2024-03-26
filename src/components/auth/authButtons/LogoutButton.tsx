@@ -3,7 +3,7 @@
 import React from "react";
 import { signOut } from "next-auth/react";
 import { PiSignOut } from "react-icons/pi";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/utils";
 
 type Props = {
   isDashboard?: boolean;
