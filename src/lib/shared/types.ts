@@ -87,7 +87,6 @@ export type TG_BookedAppointment = {
 //BLOG
 
 export type TBlogPost = {
-  id?: number;
   title: string;
   author: string;
   datePublished: string;

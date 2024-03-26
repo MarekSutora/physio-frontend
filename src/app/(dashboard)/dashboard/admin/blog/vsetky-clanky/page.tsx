@@ -12,7 +12,6 @@ const generateDummyData = (
   for (let i = 0; i < count; i++) {
     dummyData.push({
       ...sampleData,
-      id: i,
       title: `Title ${i} ${Math.random().toString(36).substring(2, 7)}`,
       author: `Author ${Math.random().toString(36).substring(2, 7)}`,
       datePublished: new Date(

@@ -31,28 +31,6 @@ export async function getAllBlogPostsAction(): Promise<TBlogPost[]> {
   }
 }
 
-export async function getBlogPostByIdAction(id: number): Promise<TBlogPost> {
-  try {
-    const url = `${process.env.BACKEND_API_URL}/blog-posts/${id}`;
-    const res = await fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (!res.ok) {
-      const errorData = await res.text();
-      throw new Error(errorData);
-    }
-
-    const blogPost = await res.json();
-    return blogPost;
-  } catch (error) {
-    throw new Error(getErrorMessage(error));
-  }
-}
-
 export async function createBlogPostAction(formData: TBlogPost) {
   const createBlogPost = {
     title: formData.title,
@@ -90,7 +68,6 @@ export async function createBlogPostAction(formData: TBlogPost) {
     }
 
     revalidateTag("blog-posts");
-
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }
@@ -106,7 +83,7 @@ export async function updateBlogPostAction(formData: TBlogPost) {
       );
     }
 
-    const url = `${process.env.BACKEND_API_URL}/blog-posts/${formData.id}`;
+    const url = `${process.env.BACKEND_API_URL}/blog-posts/${encodeURIComponent(formData.slug!)}`;
 
     const res = await fetch(url, {
       method: "PUT",
@@ -123,14 +100,12 @@ export async function updateBlogPostAction(formData: TBlogPost) {
     }
 
     revalidateTag("blog-posts");
-
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }
 }
 
-
-export async function deleteBlogPostAction(blogPostId: number) {
+export async function deleteBlogPostAction(slug: string) {
   try {
     const session = await getServerSession(authOptions);
 
@@ -140,7 +115,7 @@ export async function deleteBlogPostAction(blogPostId: number) {
       );
     }
 
-    const url = `${process.env.BACKEND_API_URL}/blog-posts/${blogPostId}`;
+    const url = `${process.env.BACKEND_API_URL}/blog-posts/${encodeURIComponent(slug)}`;
 
     const res = await fetch(url, {
       method: "DELETE",
@@ -156,7 +131,6 @@ export async function deleteBlogPostAction(blogPostId: number) {
     }
 
     revalidateTag("blog-posts");
-    
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }
@@ -166,7 +140,7 @@ export async function getBlogPostBySlugAction(
   slug: string,
 ): Promise<TBlogPost> {
   try {
-    const url = `${process.env.BACKEND_API_URL}/blog-posts/by-slug/${encodeURIComponent(slug)}`;
+    const url = `${process.env.BACKEND_API_URL}/blog-posts/${encodeURIComponent(slug)}`;
     const res = await fetch(url, {
       method: "GET",
       headers: {

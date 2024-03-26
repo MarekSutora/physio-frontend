@@ -47,8 +47,8 @@ const BlogPostsGrid = ({ _blogPosts }: Props) => {
 
   const handleDelete = async (rowData: TBlogPost) => {
     try {
-      await deleteBlogPostAction(rowData.id!);
-      setBlogPosts(blogPosts.filter((post) => post.id !== rowData.id));
+      await deleteBlogPostAction(rowData.slug!);
+      setBlogPosts(blogPosts.filter((post) => post.slug !== rowData.slug));
       toast({ variant: "success", title: "Post deleted successfully." });
     } catch (error) {
       toast({ variant: "destructive", title: "Failed to delete the post." });
