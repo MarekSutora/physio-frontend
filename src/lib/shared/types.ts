@@ -59,14 +59,14 @@ export type TG_ClientForBookedAppointment = {
 };
 
 export type TC_AdminBookedAppointment = {
-  clientId: number;
+  personId: number;
   startTime: Date;
   stdcId: number;
 };
 
 export type TC_ClientBookedAppointment = {
   arstdcId: number;
-  clientId: number;
+  personId: number;
 };
 
 export type TG_BookedAppointment = {
@@ -81,7 +81,7 @@ export type TG_BookedAppointment = {
   hexColor: string;
   capacity: number;
   appointmentBookedDate: Date;
-  clientId: number;
+  personId: number;
 };
 
 //BLOG

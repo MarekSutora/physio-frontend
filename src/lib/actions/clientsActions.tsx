@@ -64,7 +64,7 @@ export async function addNoteToClient(note: TClientNote): Promise<void> {
 }
 
 export async function getAllNotesForClient(
-  clientId: number,
+  personId: number,
 ): Promise<TClientNote[]> {
   try {
     const session = await getServerSession(authOptions);
@@ -75,7 +75,7 @@ export async function getAllNotesForClient(
       );
     }
 
-    const url = `${process.env.BACKEND_API_URL}/clients/${clientId}/notes`;
+    const url = `${process.env.BACKEND_API_URL}/clients/${personId}/notes`;
     const response = await fetch(url, {
       method: "GET",
       headers: {
@@ -96,7 +96,7 @@ export async function getAllNotesForClient(
   }
 }
 
-export async function getClientById(clientId: number): Promise<TClient> {
+export async function getClientById(personId: number): Promise<TClient> {
   const session = await getServerSession(authOptions);
 
   if (!session) {
@@ -105,7 +105,7 @@ export async function getClientById(clientId: number): Promise<TClient> {
     );
   }
 
-  const url = `${process.env.BACKEND_API_URL}/clients/${clientId}`;
+  const url = `${process.env.BACKEND_API_URL}/clients/${personId}`;
   const response = await fetch(url, {
     method: "GET",
     headers: {

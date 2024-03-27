@@ -80,8 +80,8 @@ const Page = async (props: Props) => {
                   <span>
                     {"Klient: "}
                     <span className="font-semibold">
-                      {ba.clientId
-                        ? +ba.clientId + " - "
+                      {ba.personId
+                        ? +ba.personId + " - "
                         : "Klient: Neznámy - "}
                       {ba.clientFirstName + " " + ba.clientSecondName + " - "}
                     </span>

@@ -33,7 +33,7 @@ const defaultFilters: DataTableFilterMeta = {
   capacity: { value: null, matchMode: FilterMatchMode.EQUALS },
   startTime: { value: null, matchMode: FilterMatchMode.CONTAINS },
   appointmentBookedDate: { value: null, matchMode: FilterMatchMode.CONTAINS },
-  clientId: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  personId: { value: null, matchMode: FilterMatchMode.CONTAINS },
 };
 
 const AdminFinishedAppointmentsDataTable = ({
@@ -53,7 +53,7 @@ const AdminFinishedAppointmentsDataTable = ({
     capacity: "Kapacita",
     startTime: "Začiatok",
     appointmentBookedDate: "Dátum zarezervovania",
-    clientId: "ID klienta",
+    personId: "ID klienta",
   };
 
   const exportCSV = () => {
@@ -68,7 +68,7 @@ const AdminFinishedAppointmentsDataTable = ({
         capacity: appointment.capacity,
         startTime: formatDate(appointment.startTime),
         appointmentBookedDate: formatDate(appointment.appointmentBookedDate),
-        clientId: appointment.clientId,
+        personId: appointment.personId,
       })),
     });
 
@@ -218,12 +218,12 @@ const AdminFinishedAppointmentsDataTable = ({
         )}
         {session?.user?.roles.includes("Admin") && (
           <Column
-            field="clientId"
+            field="personId"
             header="ID klienta"
             sortable
-            body={(rowData: TG_BookedAppointment) => rowData.clientId}
+            body={(rowData: TG_BookedAppointment) => rowData.personId}
             filter
-            filterField="clientId"
+            filterField="personId"
           />
         )}
         {session?.user?.roles.includes("Admin") && (
