@@ -53,6 +53,9 @@ export async function createNewServiceTypeAction(formData: TCU_ServiceType) {
 
     if (!res.ok) {
       const errorData = await res.text();
+      if (errorData.includes("Service type with this name already exists.")) {
+        throw new Error("Služba s týmto názvom už existuje.");
+      }
       throw new Error(errorData);
     }
 

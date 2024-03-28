@@ -56,8 +56,6 @@ const ResetPasswordForm = (props: Props) => {
   const onSubmit = async (formData: TResetPasswordFormData) => {
     setLoading(true);
 
-    console.log("formData", formData);
-
     try {
       await resetPasswordAction(formData);
       toast({

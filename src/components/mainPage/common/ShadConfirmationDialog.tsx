@@ -14,13 +14,12 @@ import {
 import { Button } from "@/components/ui/button";
 import ClipLoader from "react-spinners/ClipLoader";
 
-// Update the Props type to include onConfirm
 type Props = {
   children: React.ReactNode;
-  onConfirm: (...args: any[]) => Promise<void>; // The async function to be called on confirm
-  confirmArgs?: any[]; // Arguments to be passed to the onConfirm function
-  dialogTitle?: string; // Optional title for the dialog
-  dialogDescription?: string; // Optional description for the dialog
+  onConfirm: (...args: any[]) => Promise<void>; 
+  confirmArgs?: any[]; 
+  dialogTitle?: string; 
+  dialogDescription?: string; 
 };
 
 const ShadConfirmationDialog = ({

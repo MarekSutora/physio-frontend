@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils/utils";
 import DashboardHeader from "@/components/dashboard/navigation/DashboardHeader";
 import { Toaster } from "@/components/ui/toaster";
 import { Suspense } from "react";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,7 +34,26 @@ export default function RootLayout({
             <DashboardNavigationPanel />
             <main className="flex h-full max-h-full w-full flex-col items-start gap-2 bg-slate-50 p-2">
               <DashboardHeader />
-              <Suspense fallback={<p>Loading...</p>}>{children}</Suspense>
+              <Suspense
+                fallback={
+                  <ClipLoader
+                  color={"#298294"}
+                  loading={true}
+                  cssOverride={{
+                    width: "500px",
+                    height: "500px",
+                    display: "block",
+                    margin: "0 auto",
+                  }}
+                  size={100}
+                  aria-label="Loading Spinner"
+                  data-testid="loader"
+                  className="flex h-full w-full items-center justify-center"
+                />
+                }
+              >
+                {children}
+              </Suspense>
             </main>
           </div>
           <Toaster />

@@ -24,7 +24,7 @@ const Services = ({ serviceTypes }: Props) => {
         </h1>
         <div className="m-auto h-[1px] w-full bg-slate-200"></div>
       </div>
-      <div className="m-auto flex w-[93%] flex-col flex-wrap lg:w-[61.8%] lg:flex-row">
+      <div className="m-auto flex w-[93%] flex-col flex-wrap xl:w-[61.8%] xl:flex-row">
         {serviceTypes.length > 1 &&
           serviceTypes.map((serviceType, index) => (
             <ServiceCard key={index} serviceType={serviceType} />
@@ -56,7 +56,7 @@ const ServiceCard = ({ serviceType }: ServiceCardProps) => {
   return (
     <CardContainer
       className="group m-2 flex h-[500px] min-h-[500px] w-full flex-col justify-start rounded-lg border-2 border-slate-200 bg-white"
-      containerClassName="p-0 lg:w-1/2"
+      containerClassName="p-0 xl:w-1/2"
     >
       <CardBody className="h-full min-h-[500px] w-full">
         <div className="h-1/2 w-full">

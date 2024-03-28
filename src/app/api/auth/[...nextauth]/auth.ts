@@ -5,17 +5,27 @@ import NextAuth from "next-auth/next";
 import { getErrorMessage } from "@/lib/utils/utils";
 
 async function refreshToken(token: JWT): Promise<JWT> {
-  const res = await fetch(`${process.env.BACKEND_API_URL}/auth/refresh-token`, {
-    method: "POST",
-    body: JSON.stringify({ refreshToken: token.backendTokens.refreshToken }),
-    headers: { "Content-Type": "application/json" },
-  });
+  try {
+    const res = await fetch(
+      `${process.env.BACKEND_API_URL}/auth/refresh-token`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          refreshToken: token.backendTokens.refreshToken,
+        }),
+        headers: { "Content-Type": "application/json" },
+      },
+    );
 
-  const response = await res.json();
-  return {
-    ...token,
-    backendTokens: response,
-  };
+    const response = await res.json();
+    return {
+      ...token,
+      backendTokens: response,
+    };
+  } catch (error) {
+    console.log("refreshToken error", error);
+    throw new Error(getErrorMessage(error));
+  }
 }
 
 export const authOptions: AuthOptions = {

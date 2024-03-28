@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { createNewServiceTypeAction } from "@/lib/actions/serviceTypesActions";
 import ServiceTypeForm from "./ServiceTypeForm";
 import { TCU_ServiceType } from "@/lib/shared/types";
+import { getErrorMessage } from "@/lib/utils/utils";
 
 const AddServiceTypeForm = () => {
   const { toast } = useToast();
@@ -21,7 +22,7 @@ const AddServiceTypeForm = () => {
     } catch (error) {
       toast({
         variant: "destructive",
-        description: "Nepodarilo sa pridať. 🙄",
+        description: getErrorMessage(error),
         className: "text-lg",
       });
     }

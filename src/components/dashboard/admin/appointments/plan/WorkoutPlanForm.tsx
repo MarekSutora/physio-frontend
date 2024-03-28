@@ -27,7 +27,7 @@ import { CheckedState } from "@radix-ui/react-checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { updateAppointmentDetailsAction } from "@/lib/actions/appointmentsActions";
 import { toast } from "@/components/ui/use-toast";
-import ShadConfirmationDialog from "@/components/mainPage/common/logo/ShadConfirmationDialog";
+import ShadConfirmationDialog from "@/components/mainPage/common/ShadConfirmationDialog";
 
 type WorkoutPlanFormProps = {
   exerciseTypes: TExerciseType[];
@@ -83,7 +83,7 @@ const WorkoutPlanForm = ({
 
   const addExercise = () => {
     const maxOrder = Math.max(0, ...plannedExercises.map((e) => e.order));
-    const newOrder = maxOrder + 1; 
+    const newOrder = maxOrder + 1;
 
     const newExerciseToAdd = { ...newExercise, order: newOrder };
     setPlannedExercises([...plannedExercises, newExerciseToAdd]);

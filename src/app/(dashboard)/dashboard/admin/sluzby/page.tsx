@@ -6,6 +6,7 @@ import DashboardSectionWrapper from "@/components/dashboard/common/DashboardSect
 import { getServiceTypesAction } from "@/lib/actions/serviceTypesActions";
 import { TG_ServiceType } from "@/lib/shared/types";
 import React, { Suspense } from "react";
+import ClipLoader from "react-spinners/ClipLoader";
 
 type Props = {};
 
@@ -18,7 +19,21 @@ const Page = async () => {
   }
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense
+      fallback={
+        <ClipLoader
+          color={"#298294"}
+          loading={true}
+          cssOverride={{
+            display: "block",
+            margin: "0 auto",
+          }}
+          size={100}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      }
+    >
       <div className="flex h-full w-full flex-col gap-2 lg:flex-row">
         <DashboardSectionWrapper title="Upraviť/Odstrániť poskytované služby">
           <UpdateOrDeleteServiceTypeForm serviceTypes={serviceTypes} />

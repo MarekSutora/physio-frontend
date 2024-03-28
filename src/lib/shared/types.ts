@@ -97,43 +97,6 @@ export type TBlogPost = {
   slug?: string;
 };
 
-//OTHER
-
-export type TMainPageLink = {
-  text: string;
-  path?: string;
-  subMenuItems?: { text: string; path: string }[];
-};
-
-export type ServiceTypeOptionType = {
-  label: string;
-  value: string;
-  color: string | null;
-};
-
-export type TRegistrationFormData = {
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
-  email: string;
-  password: string;
-};
-
-export type TResponseResult = {
-  success: boolean;
-  message: string;
-};
-
-export type TReview = {
-  id: number;
-  author: string;
-  rating: number;
-  text: string;
-  date: Date;
-  link: string;
-  personPictureUrl: string;
-};
-
 //APPOINTMENT
 
 export type TAppointment = {
@@ -227,4 +190,49 @@ export type TResetPasswordFormData = {
   token: string;
   password: string;
   confirmPassword: string;
+};
+
+//OTHER
+
+export type TMainPageLink = {
+  text: string;
+  path?: string;
+  subMenuItems?: { text: string; path: string }[];
+};
+
+export type ServiceTypeOptionType = {
+  label: string;
+  value: string;
+  color: string | null;
+};
+
+export type TRegistrationFormData = {
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  email: string;
+  password: string;
+};
+
+export type TResponseResult = {
+  success: boolean;
+  message: string;
+};
+
+export type TReview = {
+  id: number;
+  author: string;
+  rating: number;
+  text: string;
+  date: Date;
+  link: string;
+  personPictureUrl: string;
+};
+
+export type TContactFormData = {
+  name: string;
+  secondName: string;
+  email: string;
+  phoneNumber: string;
+  message: string;
 };

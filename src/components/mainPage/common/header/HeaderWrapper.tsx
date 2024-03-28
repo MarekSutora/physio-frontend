@@ -13,7 +13,7 @@ const HeaderWrapper = async () => {
     console.log(error);
   }
 
-  let basicLinks: TMainPageLink[] = [
+  const basicLinks: TMainPageLink[] = [
     { text: "Domov", path: "/" },
     {
       text: "Služby",

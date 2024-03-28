@@ -7,7 +7,7 @@ type Props = {
 };
 
 const ReviewCard = ({ review }: Props) => {
-  const maxTextLength = 135;
+  const maxTextLength = 90;
 
   const renderStars = () => {
     let stars = [];
@@ -25,7 +25,7 @@ const ReviewCard = ({ review }: Props) => {
   };
 
   return (
-    <div className="justify-between bg-white m-auto flex h-64 w-full flex-col p-2 px-3 rounded-lg border-2">
+    <div className="m-auto flex h-64 w-full flex-col justify-between rounded-lg border-2 bg-white p-2 px-3">
       <div className="mb-0.5 flex w-full flex-row justify-between">
         <div className="h-10 text-3xl">{renderStars()}</div>
         <Link
@@ -58,13 +58,13 @@ const ReviewCard = ({ review }: Props) => {
           </svg>
         </Link>
       </div>
-      <p className="h-20 text-wrap">
+      <p className="h-full text-wrap">
         {review.text.length > maxTextLength
           ? `${review.text.substring(0, maxTextLength)}...`
           : review.text}
         {review.text.length > maxTextLength && (
           <Link
-            className="pl-1 text-blue-500 hover:underline"
+            className="z-40 pl-1 text-blue-500 hover:underline"
             href={review.link}
           >
             {"Prečítať celú recenziu"}

@@ -12,7 +12,7 @@ import { useToast } from "@/components/ui/use-toast";
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import { FilterMatchMode } from "primereact/api";
-import ShadConfirmationDialog from "@/components/mainPage/common/logo/ShadConfirmationDialog";
+import ShadConfirmationDialog from "@/components/mainPage/common/ShadConfirmationDialog";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 

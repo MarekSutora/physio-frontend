@@ -15,6 +15,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import DatePicker from "react-datepicker";
 import { sk } from "date-fns/locale";
 import "react-datepicker/dist/react-datepicker.css"; // Import CSS for react-datepicker
+import { getErrorMessage } from "@/lib/utils/utils";
 
 const RichTextEditor = dynamic(() => import("./RichTextEditor"), {
   ssr: false,
@@ -78,7 +79,7 @@ const BlogPostForm = ({ createNew, oldData }: BlogFormProps) => {
       toast({
         variant: "destructive",
         description: createNew
-          ? "Nepodarilo sa vytvoriť článok. 😔"
+          ? getErrorMessage(error)
           : "Nepodarilo sa upraviť článok. 😔",
         className: "text-lg",
       });

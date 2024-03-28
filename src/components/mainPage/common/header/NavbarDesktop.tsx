@@ -14,28 +14,26 @@ const NavbarDesktop = ({ links }: NavbarDesktopProps) => {
 
   return (
     <nav className="flex h-full w-auto items-center">
-      <ul className="mr-6 flex items-center justify-evenly gap-6 text-lg">
+      <ul className="mr-6 flex h-full items-center justify-evenly text-lg">
         {links.map((link) => {
-          const isLinkActive = currentPath === link.path;
           const hasSubMenuItems =
             link.subMenuItems && link.subMenuItems.length > 0;
 
           return (
             <li
               key={link.text}
-              className="group relative flex flex-col items-center justify-center"
+              className="group relative flex h-full flex-col items-center justify-center pr-6"
             >
               {hasSubMenuItems ? (
-                // For parent items with submenus, render a div to handle the click
-                <div className="cursor-pointer py-2 text-lg font-medium">
+                <div className="flex h-full cursor-pointer items-center text-lg font-medium">
                   {link.text}
-                  <FaAngleDown className="ml-1 inline" />
-                  <div className="absolute top-full mt-1 hidden group-hover:block">
-                    <ul className="bg-white shadow-lg">
+                  <FaAngleDown className="ml-1 inline transition-all duration-300 ease-in-out group-hover:rotate-180" />
+                  <div className="absolute top-full hidden group-hover:block">
+                    <ul className="w-56 border-t-[1px] bg-white shadow-lg">
                       {link.subMenuItems!.map((subItem) => (
                         <li
                           key={subItem.text}
-                          className="p-2 hover:bg-gray-200"
+                          className="border-b-[1px] p-2 hover:bg-gray-200"
                         >
                           <Link href={subItem.path} className="block">
                             {subItem.text}

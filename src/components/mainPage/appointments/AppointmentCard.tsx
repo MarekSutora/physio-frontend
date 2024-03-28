@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import AuthButtons from "@/components/auth/authButtons/AuthButtons";
-import ShadConfirmationDialog from "../common/logo/ShadConfirmationDialog";
+import ShadConfirmationDialog from "../common/ShadConfirmationDialog";
 import {
   createBookedAppointmentAction,
   deleteAppointmentAction,

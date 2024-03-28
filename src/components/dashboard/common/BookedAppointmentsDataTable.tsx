@@ -11,7 +11,7 @@ import { FilterMatchMode } from "primereact/api";
 import { MultiSelect, MultiSelectChangeEvent } from "primereact/multiselect";
 
 import { Button } from "@/components/ui/button";
-import ShadConfirmationDialog from "@/components/mainPage/common/logo/ShadConfirmationDialog";
+import ShadConfirmationDialog from "@/components/mainPage/common/ShadConfirmationDialog";
 import {
   deleteAppointmentAction,
   deleteBookedAppointmentAction,

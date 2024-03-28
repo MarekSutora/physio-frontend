@@ -13,7 +13,7 @@ import {
 } from "@/lib/actions/clientsActions";
 import { FilterMatchMode } from "primereact/api";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import ShadConfirmationDialog from "@/components/mainPage/common/logo/ShadConfirmationDialog";
+import ShadConfirmationDialog from "@/components/mainPage/common/ShadConfirmationDialog";
 
 type Props = {
   clientNotes: TClientNote[];

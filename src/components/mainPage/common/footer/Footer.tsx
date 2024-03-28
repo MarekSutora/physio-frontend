@@ -6,6 +6,13 @@ import { contactInfo } from "@/lib/shared/constants";
 import { FaPhone, FaLocationDot } from "react-icons/fa6";
 
 const Footer = () => {
+  const basicLinks = [
+    { text: "Domov", path: "/" },
+    { text: "Kontakt", path: "/kontakt" },
+    { text: "Blog", path: "/blog" },
+    { text: "Rezervácia", path: "/rezervacia" },
+  ];
+
   return (
     <footer className="h-auto w-full bg-primary text-white">
       <div className="mx-auto flex h-5/6 w-5/6 flex-col gap-2 md:flex-row md:gap-10 md:pt-2">
@@ -16,13 +23,13 @@ const Footer = () => {
             </h1>
             <nav>
               <ul className="text-md flex h-full flex-col justify-evenly gap-1 text-center text-sm md:text-left">
-                {/* {basicLinks.map((link) => (
+                {basicLinks.map((link) => (
                   <li key={link.text}>
                     <Link className="hover:underline" href={link.path}>
                       {link.text}
                     </Link>
                   </li>
-                ))} */}
+                ))}
               </ul>
             </nav>
           </div>
@@ -78,22 +85,22 @@ const Footer = () => {
       </nav>
 
       <nav className="mt-4 flex flex-col items-center justify-center text-center text-sm text-slate-400 md:flex-row md:gap-2">
-        <Link className="hover:underline" href="/GDPR">
+        <Link className="hover:underline" href="/obchodne-podmienky">
           Všeobecné obchodné podmienky
         </Link>
         &#8226;
-        <Link className="hover:underline" href="/GDPR">
+        <Link className="hover:underline" href="/ochrana-osobnych-udajov">
           Ochrana osobných údajov
         </Link>
         &#8226;
-        <Link className="hover:underline" href="/GDPR">
+        <Link className="hover:underline" href="/cookies">
           Cookies
         </Link>
       </nav>
 
       <div className="mx-auto mt-4 flex w-11/12 justify-between pb-1 text-sm text-slate-400">
         <div>
-          <p>&#169; 2024 MoveLife</p>
+          <p>&#169; 2024 MarekSutora</p>
         </div>
         <div>
           Vytvoril{" "}

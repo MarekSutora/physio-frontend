@@ -5,9 +5,9 @@ type Props = {}
 
 const Page = (props: Props) => {
   return (
-    <div>
+    <>
       <Contact />
-    </div>
+    </>
   )
 }
 

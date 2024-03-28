@@ -64,6 +64,9 @@ export async function createBlogPostAction(formData: TBlogPost) {
 
     if (!res.ok) {
       const errorData = await res.text();
+      if (errorData.includes("Blog post with this title already exists")) {
+        throw new Error("Blogový príspevok s týmto názvom už existuje.");
+      }
       throw new Error(errorData);
     }
 
