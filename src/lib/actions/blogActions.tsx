@@ -57,7 +57,7 @@ export async function createBlogPostAction(formData: TBlogPost) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${session.accessToken}`,
       },
       body: JSON.stringify(createBlogPost),
     });
@@ -92,7 +92,7 @@ export async function updateBlogPostAction(formData: TBlogPost) {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${session.accessToken}`,
       },
       body: JSON.stringify(formData),
     });
@@ -124,7 +124,7 @@ export async function deleteBlogPostAction(slug: string) {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${session.accessToken}`,
       },
     });
 

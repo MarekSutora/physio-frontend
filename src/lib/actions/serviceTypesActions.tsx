@@ -46,7 +46,7 @@ export async function createNewServiceTypeAction(formData: TCU_ServiceType) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${session.accessToken}`,
       },
       body: JSON.stringify(formData),
     });
@@ -81,7 +81,7 @@ export async function updateServiceTypeAction(formData: TCU_ServiceType) {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${session.accessToken}`,
       },
       body: JSON.stringify(formData),
     });
@@ -114,7 +114,7 @@ export async function deleteServiceTypeAction(id: number) {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${session.accessToken}`,
       },
     });
 

@@ -47,7 +47,7 @@ export async function createAppointmentAction(appointmentData: TC_Appointment) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${session.accessToken}`,
       },
       body: JSON.stringify(appointmentData),
     });
@@ -83,7 +83,7 @@ export async function createBookedAppointmentAction(
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${session.accessToken}`,
       },
       body: JSON.stringify({ astdcId }),
     });
@@ -115,7 +115,7 @@ export async function deleteAppointmentAction(appointmentId: number) {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${session.accessToken}`,
       },
     });
 
@@ -146,7 +146,7 @@ export async function getAllBookedAppointmentsAction(): Promise<
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${session.accessToken}`,
       },
       next: { tags: ["booked-appointments"] },
     });
@@ -182,7 +182,7 @@ export async function getBookedAppointmentsForClientAction(
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${session.accessToken}`,
       },
     });
 
@@ -217,7 +217,7 @@ export async function getFinishedAppointmentsForClientAction(
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${session.accessToken}`,
       },
     });
 
@@ -250,7 +250,7 @@ export async function getAllFinishedAppointmentsAction(): Promise<
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${session.accessToken}`,
       },
       next: { tags: ["all-finished-appointments"] },
     });
@@ -285,7 +285,7 @@ export async function deleteBookedAppointmentAction(
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${session.accessToken}`,
       },
     });
 
@@ -318,7 +318,7 @@ export async function getAppointmentByIdAction(
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${session.accessToken}`,
       },
       cache: "no-store",
     });
@@ -353,7 +353,7 @@ export async function updateAppointmentDetailsAction(
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${session.accessToken}`,
       },
       body: JSON.stringify(appointmentDetail),
     });
@@ -410,7 +410,7 @@ export async function markBookedAppointmentAsFinishedAction(
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${session.accessToken}`,
       },
     });
 

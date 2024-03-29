@@ -8,12 +8,7 @@ declare module "next-auth" {
       roles: string[];
       personId: int;
     };
-
-    backendTokens: {
-      accessToken: string;
-      refreshToken: string;
-      expirationDate: string;
-    };
+    accessToken: string;
   }
 }
 

@@ -21,7 +21,7 @@ export async function getClientsData(): Promise<TClient[]> {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${session.accessToken}`,
       },
     });
 
@@ -52,7 +52,7 @@ export async function addNoteToClient(note: TClientNote): Promise<void> {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${session.backendTokens.accessToken}`,
+      Authorization: `Bearer ${session.accessToken}`,
     },
     body: JSON.stringify(note),
   });
@@ -80,7 +80,7 @@ export async function getAllNotesForClient(
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${session.accessToken}`,
       },
     });
 
@@ -110,7 +110,7 @@ export async function getClientById(personId: number): Promise<TClient> {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${session.backendTokens.accessToken}`,
+      Authorization: `Bearer ${session.accessToken}`,
     },
   });
 
@@ -138,7 +138,7 @@ export async function deleteNoteFromClient(noteId: number): Promise<void> {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${session.accessToken}`,
       },
     });
 

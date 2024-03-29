@@ -8,7 +8,6 @@ import DashboardSectionWrapper from "@/components/dashboard/common/DashboardSect
 import AppointmentsCalendar from "@/components/mainPage/appointments/AppointmentsCalendar";
 import AppointmentsCalendarWrapper from "@/components/mainPage/appointments/AppointmentsCalendarWrapper";
 
-//TODO aj na mobile nechat pri tych sekciach zaokruhlene okraje, skusit spravit ten wrapper
 
 const Page = async () => {
   let serviceTypes: TG_ServiceType[] = [];

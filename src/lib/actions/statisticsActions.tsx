@@ -24,7 +24,7 @@ export async function getServiceTypeFinishedAppointmentsCountsAction(): Promise<
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${session.accessToken}`,
       },
     });
 
@@ -55,7 +55,7 @@ export async function getTotalRevenueStatisticsAction(): Promise<
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${session.accessToken}`,
       },
     });
 
@@ -86,7 +86,7 @@ export async function getNewClientsTrendAction(): Promise<
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${session.accessToken}`,
       },
     });
 
@@ -117,7 +117,7 @@ export async function getBlogPostViewsStatsAction(): Promise<
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${session.accessToken}`,
       },
     });
 
