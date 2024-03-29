@@ -2,6 +2,11 @@ import DashboardSectionWrapper from "@/components/dashboard/common/DashboardSect
 import AppointmentsCalendarWrapper from "@/components/mainPage/appointments/AppointmentsCalendarWrapper";
 import React from "react";
 
+export const metadata = {
+  title: "Rezervácia",
+  description: "Na tejto stránke si môžete rezervovať termín na vyšetrenie v prípade, že ste prihlásený.",
+};
+
 const Page = async () => {
   return (
     <DashboardSectionWrapper

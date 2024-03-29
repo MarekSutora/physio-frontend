@@ -6,6 +6,7 @@ import {
 import React from "react";
 import Image from "next/image";
 import { TBlogPost } from "@/lib/shared/types";
+import { Metadata } from "next";
 
 export async function generateStaticParams() {
   try {
@@ -26,6 +27,34 @@ export async function generateStaticParams() {
       },
     ];
   }
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  let blogPost: TBlogPost;
+
+  try {
+    blogPost = await getBlogPostBySlugAction(params.slug);
+  } catch (error) {
+    console.log(error);
+    throw new Error("Error fetching blog post");
+  }
+
+  return {
+    title: blogPost.title,
+    description:
+      blogPost.author +
+      " - " +
+      blogPost.datePublished +
+      " - " +
+      blogPost.keywordsString
+        .split(";")
+        .map((keyword, index) => "#" + keyword)
+        .join(" "),
+  };
 }
 
 const Page = async ({ params }: { params: { slug: string } }) => {

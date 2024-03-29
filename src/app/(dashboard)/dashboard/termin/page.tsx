@@ -99,7 +99,7 @@ const Page = async (props: Props) => {
             </div>
           </div>
         </DashboardSectionWrapper>
-        <DashboardSectionWrapper title={"Plan"} width="w-full">
+        <DashboardSectionWrapper title={"Plán"} width="w-full">
           <WorkoutPlanForm
             exerciseTypes={exerciseTypes}
             appointmentDetail={appointment.appointmentDetail}

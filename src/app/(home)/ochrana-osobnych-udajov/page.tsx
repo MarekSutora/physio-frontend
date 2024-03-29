@@ -1,7 +1,9 @@
 import DashboardSectionWrapper from "@/components/dashboard/common/DashboardSectionWrapper";
 import React from "react";
 
-type Props = {};
+export const metadata = {
+  title: "Ochrana osobných údajov",
+};
 
 const Page = () => {
   return (

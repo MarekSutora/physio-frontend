@@ -12,13 +12,9 @@ import Head from "next/head";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Diplomovka",
-  description: "Created by Marek",
+  title: "Fyzioterapia",
+  description: "Najlepšia fyzioterapia",
 };
-
-//f0f9f6
-//#f7fffc
-//#f5fffc
 
 export default function RootLayout({
   children,
@@ -26,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="m-0 h-full overflow-x-hidden p-0">
+    <html lang="sk" className="m-0 h-full overflow-x-hidden p-0">
       <body
         className={`${inter.className} m-0 h-full w-full bg-slate-50 p-0 text-gray-950`}
       >

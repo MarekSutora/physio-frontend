@@ -301,23 +301,34 @@ export async function deleteBookedAppointmentAction(
   }
 }
 
-//TODO auth
 export async function getAppointmentByIdAction(
   id: number,
 ): Promise<TAppointment> {
   try {
+    const session = await getServerSession(authOptions);
+
+    if (!session) {
+      throw new Error(
+        "Session not found. User must be logged in to perform this action.",
+      );
+    }
+
     const url = `${process.env.BACKEND_API_URL}/appointments/${id}`;
-    const res = await fetch(url, {
+    const response = await fetch(url, {
       method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+      },
       cache: "no-store",
     });
 
-    if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`);
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
     }
 
-    const data = await res.json();
-
+    const data = await response.json();
     return data;
   } catch (error) {
     throw new Error(getErrorMessage(error));

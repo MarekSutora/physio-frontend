@@ -12,8 +12,8 @@ import ClipLoader from "react-spinners/ClipLoader";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Diplomovka",
-  description: "Created by Marek",
+  title: "Fyzioterapia - Dashboard",
+  description: "Najlepšia fyzioterapia",
 };
 
 export default function RootLayout({
@@ -22,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="m-0 h-full w-full p-0">
+    <html lang="sk" className="m-0 h-full w-full p-0">
       <body
         className={cn(
           inter.className,
@@ -37,19 +37,19 @@ export default function RootLayout({
               <Suspense
                 fallback={
                   <ClipLoader
-                  color={"#298294"}
-                  loading={true}
-                  cssOverride={{
-                    width: "500px",
-                    height: "500px",
-                    display: "block",
-                    margin: "0 auto",
-                  }}
-                  size={100}
-                  aria-label="Loading Spinner"
-                  data-testid="loader"
-                  className="flex h-full w-full items-center justify-center"
-                />
+                    color={"#298294"}
+                    loading={true}
+                    cssOverride={{
+                      width: "500px",
+                      height: "500px",
+                      display: "block",
+                      margin: "0 auto",
+                    }}
+                    size={100}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                    className="flex h-full w-full items-center justify-center"
+                  />
                 }
               >
                 {children}

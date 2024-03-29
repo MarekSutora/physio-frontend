@@ -8,6 +8,11 @@ const BlogCard = dynamic(() => import("@/components/mainPage/blog/BlogCard"), {
   ssr: false,
 });
 
+export const metadata = {
+  title: "Blog",
+  description: "Na tejto stránke nájdete všetky články z blogu.",
+};
+
 const Page = async () => {
   let blogPosts: TBlogPost[] = [];
 

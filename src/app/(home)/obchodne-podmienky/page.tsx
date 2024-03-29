@@ -1,6 +1,10 @@
 import DashboardSectionWrapper from "@/components/dashboard/common/DashboardSectionWrapper";
 import React from "react";
 
+export const metadata = {
+  title: "Všeobecné obchodné podmienky",
+};
+
 const Page = () => {
   return (
     <div className="h-fit w-full p-10">

@@ -1,6 +1,11 @@
 import DashboardSectionWrapper from "@/components/dashboard/common/DashboardSectionWrapper";
 import React from "react";
 
+export const metadata = {
+  title: "Cookies",
+  description: "Informácie o cookies používaných na stránke.",
+};
+
 const Page = () => {
   return (
     <div className="h-fit w-full p-10">

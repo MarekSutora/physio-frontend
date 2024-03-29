@@ -163,13 +163,26 @@ const ExerciseDetailsRow = ({
                   key={exerciseType.id}
                   value={exerciseType.name}
                   onSelect={(currentValue: string) => {
-                    setValue(
-                      availableExercises.find(
-                        (e) =>
-                          e.name.toLowerCase() === currentValue.toLowerCase(),
-                      )?.id!,
+                    const selectedExerciseType = availableExercises.find(
+                      (e) =>
+                        e.name.toLowerCase() === currentValue.toLowerCase(),
                     );
-                    setOpen(false);
+                    if (selectedExerciseType) {
+                      setValue(selectedExerciseType.id);
+                      setOpen(false);
+                      const updatedPlannedExercises = plannedExercises.map(
+                        (pe) => {
+                          if (pe.order === exerciseDetails.order) {
+                            return {
+                              ...pe,
+                              exerciseType: selectedExerciseType,
+                            };
+                          }
+                          return pe;
+                        },
+                      );
+                      setPlannedExercises(updatedPlannedExercises);
+                    }
                   }}
                 >
                   {exerciseType.name}

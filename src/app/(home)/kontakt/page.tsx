@@ -1,14 +1,17 @@
-import Contact from '@/components/mainPage/homePage/Contact'
-import React from 'react'
+import Contact from "@/components/mainPage/homePage/Contact";
+import React from "react";
 
-type Props = {}
+export const metadata = {
+  title: "Kontakt",
+  description: "Kontaktný formulár",
+};
 
-const Page = (props: Props) => {
+const Page = () => {
   return (
     <>
       <Contact />
     </>
-  )
-}
+  );
+};
 
-export default Page
+export default Page;

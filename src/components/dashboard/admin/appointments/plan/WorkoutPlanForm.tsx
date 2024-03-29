@@ -179,19 +179,17 @@ const WorkoutPlanForm = ({
                       key={exerciseType.id}
                       value={exerciseType.name}
                       onSelect={(currentValue: string) => {
-                        const newExerciseType = exerciseTypes.find(
+                        const selectedExerciseType = exerciseTypes.find(
                           (e) =>
                             e.name.toLowerCase() === currentValue.toLowerCase(),
                         );
 
-                        setValue(newExerciseType?.id!);
+                        setValue(selectedExerciseType?.id!);
                         setOpen(false);
-                        const newNewExercise = {
+                        setNewExercise({
                           ...newExercise,
-                          newExerciseType,
-                        };
-
-                        setNewExercise(newNewExercise);
+                          exerciseType: selectedExerciseType!,
+                        });
                       }}
                     >
                       {exerciseType.name}

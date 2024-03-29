@@ -3,18 +3,18 @@
 import React, { useEffect, useState } from "react";
 import { cn } from "@/lib/utils/utils";
 import NavbarDesktop from "./NavbarDesktop";
-import useScroll from "@/lib/hooks/useScroll";
 import Link from "next/link";
 import Image from "next/image";
 import { TMainPageLink } from "@/lib/shared/types";
 import useMediaQuery from "@/lib/hooks/useMediaQuery";
+import LogoText from "../logo/LogoText";
 
 type HeaderDesktopProps = {
   links: TMainPageLink[];
 };
 
 const HeaderDesktop = ({ links }: HeaderDesktopProps) => {
-  const isAboveMediumScreens = useMediaQuery("(min-width: 	1280px)");
+  const isAboveMediumScreens = useMediaQuery("(min-width: 1280px)");
 
   const [isTopOfPage, setIsTopOfPage] = useState<boolean>(true);
 
@@ -41,13 +41,7 @@ const HeaderDesktop = ({ links }: HeaderDesktopProps) => {
           <div className="m-auto flex h-full w-5/6 flex-row items-center justify-between">
             <div className="w-52">
               <Link href="/">
-                <Image
-                  src="/logo_textright_910_225.svg"
-                  alt="MoveLife Logo"
-                  priority
-                  width={200}
-                  height={50}
-                />
+                <LogoText color="#298294"/>
               </Link>
             </div>
             <NavbarDesktop links={links} />

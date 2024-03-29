@@ -5,6 +5,7 @@ import {
 import { TG_ServiceType } from "@/lib/shared/types";
 import React from "react";
 import Image from "next/image";
+import { Metadata } from "next";
 
 export async function generateStaticParams() {
   try {
@@ -25,6 +26,26 @@ export async function generateStaticParams() {
       },
     ];
   }
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  let serviceType: TG_ServiceType;
+
+  try {
+    serviceType = await getServiceTypeBySlugAction(params.slug);
+  } catch (error) {
+    console.log(error);
+    throw new Error("Error fetching service type");
+  }
+
+  return {
+    title: serviceType.name,
+    description: serviceType.description,
+  };
 }
 
 const Page = async ({ params }: { params: { slug: string } }) => {
