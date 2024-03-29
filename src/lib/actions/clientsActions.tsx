@@ -4,12 +4,14 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 import { getErrorMessage } from "../utils/utils";
 import { TClient, TClientNote } from "../shared/types";
+import { getTokenForServerActions } from "./getTokenForServerActions";
 
 export async function getClientsData(): Promise<TClient[]> {
   try {
     const session = await getServerSession(authOptions);
+    const accessToken = await getTokenForServerActions();
 
-    if (!session) {
+    if (!session || !accessToken) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
@@ -21,7 +23,7 @@ export async function getClientsData(): Promise<TClient[]> {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     });
 
@@ -39,27 +41,32 @@ export async function getClientsData(): Promise<TClient[]> {
 }
 
 export async function addNoteToClient(note: TClientNote): Promise<void> {
-  const session = await getServerSession(authOptions);
+  try {
+    const session = await getServerSession(authOptions);
+    const accessToken = await getTokenForServerActions();
 
-  if (!session) {
-    throw new Error(
-      "Session not found. User must be logged in to perform this action.",
-    );
-  }
+    if (!session || !accessToken) {
+      throw new Error(
+        "Session not found. User must be logged in to perform this action.",
+      );
+    }
 
-  const url = `${process.env.BACKEND_API_URL}/clients/${note.personId}/notes`;
-  const response = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${session.accessToken}`,
-    },
-    body: JSON.stringify(note),
-  });
+    const url = `${process.env.BACKEND_API_URL}/clients/${note.personId}/notes`;
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify(note),
+    });
 
-  if (!response.ok) {
-    const errorData = await response.text();
-    throw new Error(errorData);
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
+    }
+  } catch (error) {
+    throw new Error(getErrorMessage(error));
   }
 }
 
@@ -68,8 +75,9 @@ export async function getAllNotesForClient(
 ): Promise<TClientNote[]> {
   try {
     const session = await getServerSession(authOptions);
+    const accessToken = await getTokenForServerActions();
 
-    if (!session) {
+    if (!session || !accessToken) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
@@ -80,7 +88,7 @@ export async function getAllNotesForClient(
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     });
 
@@ -97,37 +105,43 @@ export async function getAllNotesForClient(
 }
 
 export async function getClientById(personId: number): Promise<TClient> {
-  const session = await getServerSession(authOptions);
+  try {
+    const session = await getServerSession(authOptions);
+    const accessToken = await getTokenForServerActions();
 
-  if (!session) {
-    throw new Error(
-      "Session not found. User must be logged in to perform this action.",
-    );
+    if (!session || !accessToken) {
+      throw new Error(
+        "Session not found. User must be logged in to perform this action.",
+      );
+    }
+
+    const url = `${process.env.BACKEND_API_URL}/clients/${personId}`;
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw new Error(getErrorMessage(error));
   }
-
-  const url = `${process.env.BACKEND_API_URL}/clients/${personId}`;
-  const response = await fetch(url, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${session.accessToken}`,
-    },
-  });
-
-  if (!response.ok) {
-    const errorData = await response.text();
-    throw new Error(errorData);
-  }
-
-  const data = await response.json();
-  return data;
 }
 
 export async function deleteNoteFromClient(noteId: number): Promise<void> {
   try {
     const session = await getServerSession(authOptions);
+    const accessToken = await getTokenForServerActions();
 
-    if (!session) {
+    if (!session || !accessToken) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
@@ -138,7 +152,7 @@ export async function deleteNoteFromClient(noteId: number): Promise<void> {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     });
 

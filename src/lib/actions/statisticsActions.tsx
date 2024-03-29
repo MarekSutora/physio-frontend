@@ -7,13 +7,16 @@ import {
   TRevenueStatistics,
   TServiceTypeStatistics,
 } from "../shared/types";
+import { getTokenForServerActions } from "./getTokenForServerActions";
 
 export async function getServiceTypeFinishedAppointmentsCountsAction(): Promise<
   TServiceTypeStatistics[]
 > {
   try {
     const session = await getServerSession(authOptions);
-    if (!session) {
+    const accessToken = await getTokenForServerActions();
+
+    if (!session || !accessToken) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
@@ -24,7 +27,7 @@ export async function getServiceTypeFinishedAppointmentsCountsAction(): Promise<
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     });
 
@@ -44,7 +47,9 @@ export async function getTotalRevenueStatisticsAction(): Promise<
 > {
   try {
     const session = await getServerSession(authOptions);
-    if (!session) {
+    const accessToken = await getTokenForServerActions();
+
+    if (!session || !accessToken) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
@@ -55,7 +60,7 @@ export async function getTotalRevenueStatisticsAction(): Promise<
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     });
 
@@ -75,7 +80,9 @@ export async function getNewClientsTrendAction(): Promise<
 > {
   try {
     const session = await getServerSession(authOptions);
-    if (!session) {
+    const accessToken = await getTokenForServerActions();
+
+    if (!session || !accessToken) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
@@ -86,7 +93,7 @@ export async function getNewClientsTrendAction(): Promise<
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     });
 
@@ -106,7 +113,9 @@ export async function getBlogPostViewsStatsAction(): Promise<
 > {
   try {
     const session = await getServerSession(authOptions);
-    if (!session) {
+    const accessToken = await getTokenForServerActions();
+
+    if (!session || !accessToken) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
@@ -117,7 +126,7 @@ export async function getBlogPostViewsStatsAction(): Promise<
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     });
 

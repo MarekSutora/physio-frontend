@@ -85,9 +85,14 @@ const ServiceTypeForm = ({ serviceType, children, onSubmit }: Props) => {
     );
   };
 
+  const handleFormSubmit = async (data: TCU_ServiceType) => {
+    await onSubmit(data);
+    form.reset();
+  };
+
   return (
     <form
-      onSubmit={form.handleSubmit(onSubmit)}
+      onSubmit={form.handleSubmit(handleFormSubmit)}
       className="flex max-h-[720px] flex-col gap-2 overflow-y-auto px-2"
     >
       <Input id="id" type="hidden" {...form.register("id")} />

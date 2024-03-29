@@ -29,9 +29,9 @@ const AppointmentCard = ({
     selectedServiceTypeNames.includes(asti.name),
   );
 
-  const removeAppointmentByAppId = useAppointmentsStore(
-    (state) => state.removeAppointmentByAppId,
-  );
+  // const removeAppointmentByAppId = useAppointmentsStore(
+  //   (state) => state.removeAppointmentByAppId,
+  // );
 
   const handleDeleteAppointment = async (appId: number) => {
     try {
@@ -42,7 +42,7 @@ const AppointmentCard = ({
         title: "Termín úspešne zrušený.",
         className: "text-lg",
       });
-      removeAppointmentByAppId(appId);
+      //removeAppointmentByAppId(appId);
     } catch (error) {
       toast({
         variant: "destructive",
@@ -52,11 +52,11 @@ const AppointmentCard = ({
     }
   };
 
-  const tryBookAppointment = async (astdcId: number) => {
+  const bookAppointment = async (astdcId: number) => {
     if (isAuthenticated && session?.user.roles.includes("Client")) {
       try {
         await createBookedAppointmentAction(astdcId);
-        removeAppointmentByAppId(astdcId);
+        //removeAppointmentByAppId(astdcId);
         toast({
           variant: "success",
           title: "Termín úspešne zarezervovaný.",
@@ -124,7 +124,7 @@ const AppointmentCard = ({
 
             {session?.user.roles.includes("Client") && session?.user && (
               <ShadConfirmationDialog
-                onConfirm={tryBookAppointment}
+                onConfirm={bookAppointment}
                 confirmArgs={[item.astdcId]}
               >
                 <button

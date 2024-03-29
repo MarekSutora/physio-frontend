@@ -78,9 +78,13 @@ const BlogPostForm = ({ createNew, oldData }: BlogFormProps) => {
     } catch (error) {
       toast({
         variant: "destructive",
-        description: createNew
-          ? getErrorMessage(error)
-          : "Nepodarilo sa upraviť článok. 😔",
+        description:
+          getErrorMessage(error) ===
+          "Blogový príspevok s týmto názvom už existuje."
+            ? "Blogový príspevok s týmto názvom už existuje."
+            : createNew
+              ? "Chyba pri vytváraní článku."
+              : "Chyba pri upravovaní článku.",
         className: "text-lg",
       });
     }

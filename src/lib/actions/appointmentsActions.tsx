@@ -12,6 +12,7 @@ import {
   TG_BookedAppointment,
   TG_UnbookedAppointment,
 } from "../shared/types";
+import { getTokenForServerActions } from "./getTokenForServerActions";
 
 export async function getUnbookedAppointmentsAction(): Promise<
   TG_UnbookedAppointment[]
@@ -35,8 +36,9 @@ export async function getUnbookedAppointmentsAction(): Promise<
 export async function createAppointmentAction(appointmentData: TC_Appointment) {
   try {
     const session = await getServerSession(authOptions);
+    const accessToken = await getTokenForServerActions();
 
-    if (!session) {
+    if (!session || !accessToken) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
@@ -47,7 +49,7 @@ export async function createAppointmentAction(appointmentData: TC_Appointment) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify(appointmentData),
     });
@@ -69,8 +71,9 @@ export async function createBookedAppointmentAction(
 ) {
   try {
     const session = await getServerSession(authOptions);
+    const accessToken = await getTokenForServerActions();
 
-    if (!session) {
+    if (!session || !accessToken) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
@@ -83,7 +86,7 @@ export async function createBookedAppointmentAction(
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify({ astdcId }),
     });
@@ -103,8 +106,9 @@ export async function createBookedAppointmentAction(
 export async function deleteAppointmentAction(appointmentId: number) {
   try {
     const session = await getServerSession(authOptions);
+    const accessToken = await getTokenForServerActions();
 
-    if (!session) {
+    if (!session || !accessToken) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
@@ -115,7 +119,7 @@ export async function deleteAppointmentAction(appointmentId: number) {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     });
 
@@ -135,7 +139,9 @@ export async function getAllBookedAppointmentsAction(): Promise<
 > {
   try {
     const session = await getServerSession(authOptions);
-    if (!session) {
+    const accessToken = await getTokenForServerActions();
+
+    if (!session || !accessToken) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
@@ -146,7 +152,7 @@ export async function getAllBookedAppointmentsAction(): Promise<
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
       next: { tags: ["booked-appointments"] },
     });
@@ -169,7 +175,9 @@ export async function getBookedAppointmentsForClientAction(
 ): Promise<TG_BookedAppointment[]> {
   try {
     const session = await getServerSession(authOptions);
-    if (!session) {
+    const accessToken = await getTokenForServerActions();
+
+    if (!session || !accessToken) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
@@ -182,7 +190,7 @@ export async function getBookedAppointmentsForClientAction(
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     });
 
@@ -204,7 +212,9 @@ export async function getFinishedAppointmentsForClientAction(
 ): Promise<TG_BookedAppointment[]> {
   try {
     const session = await getServerSession(authOptions);
-    if (!session) {
+    const accessToken = await getTokenForServerActions();
+
+    if (!session || !accessToken) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
@@ -217,7 +227,7 @@ export async function getFinishedAppointmentsForClientAction(
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     });
 
@@ -239,7 +249,9 @@ export async function getAllFinishedAppointmentsAction(): Promise<
 > {
   try {
     const session = await getServerSession(authOptions);
-    if (!session) {
+    const accessToken = await getTokenForServerActions();
+
+    if (!session || !accessToken) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
@@ -250,7 +262,7 @@ export async function getAllFinishedAppointmentsAction(): Promise<
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
       next: { tags: ["all-finished-appointments"] },
     });
@@ -273,8 +285,9 @@ export async function deleteBookedAppointmentAction(
 ) {
   try {
     const session = await getServerSession(authOptions);
+    const accessToken = await getTokenForServerActions();
 
-    if (!session) {
+    if (!session || !accessToken) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
@@ -285,7 +298,7 @@ export async function deleteBookedAppointmentAction(
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     });
 
@@ -306,8 +319,9 @@ export async function getAppointmentByIdAction(
 ): Promise<TAppointment> {
   try {
     const session = await getServerSession(authOptions);
+    const accessToken = await getTokenForServerActions();
 
-    if (!session) {
+    if (!session || !accessToken) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
@@ -318,7 +332,7 @@ export async function getAppointmentByIdAction(
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
       cache: "no-store",
     });
@@ -341,8 +355,9 @@ export async function updateAppointmentDetailsAction(
 ): Promise<void> {
   try {
     const session = await getServerSession(authOptions);
+    const accessToken = await getTokenForServerActions();
 
-    if (!session) {
+    if (!session || !accessToken) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
@@ -353,7 +368,7 @@ export async function updateAppointmentDetailsAction(
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify(appointmentDetail),
     });
@@ -398,8 +413,9 @@ export async function markBookedAppointmentAsFinishedAction(
 ): Promise<void> {
   try {
     const session = await getServerSession(authOptions);
+    const accessToken = await getTokenForServerActions();
 
-    if (!session) {
+    if (!session || !accessToken) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
@@ -410,7 +426,7 @@ export async function markBookedAppointmentAsFinishedAction(
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     });
 
@@ -422,7 +438,6 @@ export async function markBookedAppointmentAsFinishedAction(
     revalidateTag("booked-appointments");
     revalidateTag("all-finished-appointments");
   } catch (error) {
-    console.log("error", error);
     throw new Error(getErrorMessage(error));
   }
 }

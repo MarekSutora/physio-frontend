@@ -22,7 +22,10 @@ const AddServiceTypeForm = () => {
     } catch (error) {
       toast({
         variant: "destructive",
-        description: getErrorMessage(error),
+        description:
+          getErrorMessage(error) === "Služba s týmto názvom už existuje."
+            ? "Služba s týmto názvom už existuje."
+            : "Chyba pri pridávaní novej služby.",
         className: "text-lg",
       });
     }

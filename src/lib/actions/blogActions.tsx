@@ -5,6 +5,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 import { TBlogPost } from "../shared/types";
 import { revalidateTag } from "next/cache";
 import { getErrorMessage } from "../utils/utils";
+import { getTokenForServerActions } from "./getTokenForServerActions";
 
 export async function getAllBlogPostsAction(): Promise<TBlogPost[]> {
   try {
@@ -44,8 +45,9 @@ export async function createBlogPostAction(formData: TBlogPost) {
 
   try {
     const session = await getServerSession(authOptions);
+    const accessToken = await getTokenForServerActions();
 
-    if (!session) {
+    if (!session || !accessToken) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
@@ -57,7 +59,7 @@ export async function createBlogPostAction(formData: TBlogPost) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify(createBlogPost),
     });
@@ -79,8 +81,9 @@ export async function createBlogPostAction(formData: TBlogPost) {
 export async function updateBlogPostAction(formData: TBlogPost) {
   try {
     const session = await getServerSession(authOptions);
+    const accessToken = await getTokenForServerActions();
 
-    if (!session) {
+    if (!session || !accessToken) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
@@ -92,7 +95,7 @@ export async function updateBlogPostAction(formData: TBlogPost) {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify(formData),
     });
@@ -111,8 +114,9 @@ export async function updateBlogPostAction(formData: TBlogPost) {
 export async function deleteBlogPostAction(slug: string) {
   try {
     const session = await getServerSession(authOptions);
+    const accessToken = await getTokenForServerActions();
 
-    if (!session) {
+    if (!session || !accessToken) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
@@ -124,7 +128,7 @@ export async function deleteBlogPostAction(slug: string) {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     });
 

@@ -5,7 +5,6 @@ import NextAuth from "next-auth/next";
 import { getErrorMessage } from "@/lib/utils/utils";
 
 async function refreshToken(token: JWT): Promise<JWT> {
-  console.log("refreshToken");
   try {
     const res = await fetch(
       `${process.env.BACKEND_API_URL}/auth/refresh-token`,
@@ -24,7 +23,6 @@ async function refreshToken(token: JWT): Promise<JWT> {
       backendTokens: response,
     };
   } catch (error) {
-    console.log("refreshToken error", error);
     throw new Error(getErrorMessage(error));
   }
 }
@@ -68,6 +66,8 @@ export const authOptions: AuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user }) {
+      //console.log("jwt", token, user);
+
       if (user) return { ...token, ...user };
 
       if (
@@ -80,7 +80,6 @@ export const authOptions: AuthOptions = {
     },
     async session({ session, token }) {
       session.user = token.user;
-      session.accessToken = token.backendTokens.accessToken;
 
       return session;
     },

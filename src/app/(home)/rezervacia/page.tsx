@@ -1,10 +1,13 @@
+export const dynamic = "force-dynamic";
+
 import DashboardSectionWrapper from "@/components/dashboard/common/DashboardSectionWrapper";
 import AppointmentsCalendarWrapper from "@/components/mainPage/appointments/AppointmentsCalendarWrapper";
 import React from "react";
 
 export const metadata = {
   title: "Rezervácia",
-  description: "Na tejto stránke si môžete rezervovať termín na vyšetrenie v prípade, že ste prihlásený.",
+  description:
+    "Na tejto stránke si môžete rezervovať termín na vyšetrenie v prípade, že ste prihlásený.",
 };
 
 const Page = async () => {

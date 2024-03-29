@@ -18,7 +18,7 @@ const LogoutButton = ({ isDashboard }: Props) => {
           : "w-full items-center pl-1 font-normal text-white  hover:bg-slate-100 hover:text-primary/85",
         "group flex h-8 items-center text-nowrap",
       )}
-      onClick={() => signOut({ callbackUrl: "/" })}
+      onClick={() => signOut({ redirect: false, callbackUrl: "/" })}
     >
       <PiSignOut className="inline-block h-6 w-6 group-hover:scale-[1.10]" />
       Odhlásiť sa
