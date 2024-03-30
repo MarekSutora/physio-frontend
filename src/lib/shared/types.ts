@@ -192,6 +192,13 @@ export type TResetPasswordFormData = {
   confirmPassword: string;
 };
 
+export type TUser = {
+  userId: string;
+  fullName: string;
+  roles: string[];
+  personId: number;
+};
+
 //OTHER
 
 export type TMainPageLink = {

@@ -7,8 +7,8 @@ import { headers } from "next/headers";
 export async function getTokenForServerActions() {
   const cookieStore = cookies().getAll();
 
-  const encodedToken = cookieStore.find(
-    (cookie) => cookie.name === "next-auth.session-token",
+  const encodedToken = cookieStore.find((cookie) =>
+    cookie.name.includes("next-auth.session-token"),
   )?.value;
 
   if (!encodedToken) {
@@ -20,5 +20,5 @@ export async function getTokenForServerActions() {
     secret: `${process.env.NEXTAUTH_SECRET}`,
   });
 
-  return decoded?.backendTokens.accessToken;
+  return decoded?.userTokens.accessToken;
 }

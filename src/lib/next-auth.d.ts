@@ -22,10 +22,10 @@ declare module "next-auth/jwt" {
       personId: int;
     };
 
-    backendTokens: {
+    userTokens: {
       accessToken: string;
       refreshToken: string;
-      expirationDate: string;
+      accessTokenExpirationDate: string;
     };
   }
 }
