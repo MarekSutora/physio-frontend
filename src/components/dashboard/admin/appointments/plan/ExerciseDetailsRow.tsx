@@ -18,12 +18,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { motion } from "framer-motion";
+import { usePlannedExercisesStore } from "@/lib/stores/usePlannedExercisesStore";
+import { useExerciseTypesStore } from "@/lib/stores/useExerciseTypesStore";
 
 type Props = {
   exerciseDetails: TAppointmentExerciseDetail;
-  plannedExercises: TAppointmentExerciseDetail[];
-  setPlannedExercises: (exercises: TAppointmentExerciseDetail[]) => void;
-  availableExercises: TExerciseType[];
+  onMove: (currentIndex: number, direction: "up" | "down") => void;
+  index: number;
+  highlight: boolean;
 };
 
 const labelMapping: { [key: string]: string } = {
@@ -37,24 +39,26 @@ const labelMapping: { [key: string]: string } = {
 
 const ExerciseDetailsRow = ({
   exerciseDetails,
-  setPlannedExercises,
-  plannedExercises,
-  availableExercises,
+  onMove,
+  index,
+  highlight,
 }: Props) => {
+  const { plannedExercises, setPlannedExercises } = usePlannedExercisesStore();
+  const exerciseTypes = useExerciseTypesStore((state) => state.exerciseTypes);
+
+  const [wasMoved, setWasMoved] = useState(false);
   const [value, setValue] = React.useState(exerciseDetails.exerciseType.id);
   const [open, setOpen] = React.useState(false);
-  const [isMoved, setIsMoved] = useState(false);
 
   useEffect(() => {
-    if (isMoved) {
-      const timer = setTimeout(() => setIsMoved(false), 300); // Reset background after 500ms
-      return () => clearTimeout(timer);
-    }
-  }, [isMoved]);
+    setValue(exerciseDetails.exerciseType.id);
+  }, [exerciseDetails.exerciseType.id]);
 
   const currentIndex = plannedExercises.findIndex(
     (exercise) => exercise.order === exerciseDetails.order,
   );
+
+  const isLast = index === plannedExercises.length - 1;
 
   const handleInputChange = (
     order: number,
@@ -83,23 +87,8 @@ const ExerciseDetailsRow = ({
   };
 
   const moveExercise = (direction: "up" | "down") => {
-    const newIndex = direction === "up" ? currentIndex - 1 : currentIndex + 1;
-    if (newIndex >= 0 && newIndex < plannedExercises.length) {
-      const newPlannedExercises = [...plannedExercises];
-      [newPlannedExercises[currentIndex], newPlannedExercises[newIndex]] = [
-        newPlannedExercises[newIndex],
-        newPlannedExercises[currentIndex],
-      ];
-
-      const updatedExercises = newPlannedExercises.map((exercise, index) => ({
-        ...exercise,
-        order: index + 1,
-      }));
-      setPlannedExercises(updatedExercises);
-      setIsMoved(true);
-    }
+    onMove(index, direction);
   };
-
   const handleDeletePlannedExercise = () => {
     const newPlannedExercises = plannedExercises
       .filter((exercise) => exercise.order !== exerciseDetails.order)
@@ -125,16 +114,20 @@ const ExerciseDetailsRow = ({
   return (
     <motion.div
       className="flex flex-row items-end gap-3"
-      animate={{ backgroundColor: isMoved ? "#298294" : "#ffffff" }} // Change these colors as needed
-      transition={{ duration: 0.5 }}
+      initial={{ scale: 1, backgroundColor: "#ffffff" }}
+      animate={{
+        scale: highlight ? 0.95 : 1,
+        backgroundColor: highlight ? "#e8e8e8" : "#ffffff",
+      }}
+      transition={{ duration: 0.2, ease: "easeIn" }}
     >
       <div className="flex flex-col gap-1">
-        {currentIndex > 0 && (
+        {index > 0 && ( 
           <button onClick={() => moveExercise("up")}>
             <ChevronUp />
           </button>
         )}
-        {currentIndex < plannedExercises.length - 1 && (
+        {!isLast && ( 
           <button onClick={() => moveExercise("down")}>
             <ChevronDown />
           </button>
@@ -149,7 +142,7 @@ const ExerciseDetailsRow = ({
             className="w-[200px] justify-between"
           >
             {value
-              ? availableExercises.find((e) => e.id === value)?.name
+              ? exerciseTypes.find((e) => e.id === value)?.name
               : "Vyber typ služby..."}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
@@ -158,12 +151,12 @@ const ExerciseDetailsRow = ({
           <Command>
             <CommandInput placeholder="Vyber typ služby..." required />
             <CommandGroup className="max-h-96 overflow-y-auto">
-              {availableExercises.map((exerciseType) => (
+              {exerciseTypes.map((exerciseType) => (
                 <CommandItem
                   key={exerciseType.id}
                   value={exerciseType.name}
                   onSelect={(currentValue: string) => {
-                    const selectedExerciseType = availableExercises.find(
+                    const selectedExerciseType = exerciseTypes.find(
                       (e) =>
                         e.name.toLowerCase() === currentValue.toLowerCase(),
                     );
@@ -235,8 +228,11 @@ const ExerciseDetailsRow = ({
           </div>
         ))}
       <div className="flex flex-row items-center gap-1 pb-2">
-        <Label htmlFor="successfullyPerformed">Úspešne vykonané</Label>
+        <Label htmlFor={"successfullyPerformed" + exerciseDetails.order}>
+          Úspešne vykonané
+        </Label>
         <Checkbox
+          id={"successfullyPerformed" + exerciseDetails.order}
           checked={exerciseDetails.successfullyPerformed}
           onCheckedChange={handleSPCheckboxChange}
         />

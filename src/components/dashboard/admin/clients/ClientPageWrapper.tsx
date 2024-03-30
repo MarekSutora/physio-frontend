@@ -54,7 +54,11 @@ const ClientPageWrapper = ({
             <div className="mx-2 h-6 w-[1px] bg-gray-300 lg:mx-0 lg:my-2 lg:h-[1px] lg:w-1/2"></div>
             <h2>
               <span>Telefónne číslo: </span>{" "}
-              <span className="font-semibold">{clientData.phoneNumber}</span>
+              <span className="font-semibold">
+                {clientData.phoneNumber
+                  ? clientData.phoneNumber
+                  : "+421900123456"}
+              </span>
             </h2>
             <div className="mx-2 h-6 w-[1px] bg-gray-300 lg:mx-0 lg:my-2 lg:h-[1px] lg:w-1/2"></div>
             <h2>

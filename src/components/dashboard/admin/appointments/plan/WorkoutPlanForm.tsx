@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -28,6 +28,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { updateAppointmentDetailsAction } from "@/lib/actions/appointmentsActions";
 import { toast } from "@/components/ui/use-toast";
 import ShadConfirmationDialog from "@/components/mainPage/common/ShadConfirmationDialog";
+import { usePlannedExercisesStore } from "@/lib/stores/usePlannedExercisesStore";
+import { useExerciseTypesStore } from "@/lib/stores/useExerciseTypesStore";
+import { useRouter } from "next/navigation";
 
 type WorkoutPlanFormProps = {
   exerciseTypes: TExerciseType[];
@@ -51,16 +54,30 @@ const WorkoutPlanForm = ({
   appointmentDetail,
   appointmentId,
 }: WorkoutPlanFormProps) => {
-  let initialPlannedExercises: TAppointmentExerciseDetail[] = [];
-  if (appointmentDetail && appointmentDetail.appointmentExerciseDetails) {
-    initialPlannedExercises = appointmentDetail.appointmentExerciseDetails.sort(
-      (a, b) => a.order - b.order,
-    );
-  }
+  const router = useRouter();
 
-  const [plannedExercises, setPlannedExercises] = useState<
-    TAppointmentExerciseDetail[]
-  >(initialPlannedExercises);
+  useEffect(() => {
+    router.refresh();
+  }, [router]);
+
+  const { plannedExercises, setPlannedExercises } = usePlannedExercisesStore();
+  const { setExerciseTypes } = useExerciseTypesStore();
+
+  useEffect(() => {
+    let initialPlannedExercises: TAppointmentExerciseDetail[] = [];
+    if (appointmentDetail && appointmentDetail.appointmentExerciseDetails) {
+      initialPlannedExercises =
+        appointmentDetail.appointmentExerciseDetails.sort(
+          (a, b) => a.order - b.order,
+        );
+    }
+
+    setPlannedExercises(initialPlannedExercises);
+  }, [appointmentDetail, setPlannedExercises]);
+
+  useEffect(() => {
+    setExerciseTypes(exerciseTypes);
+  }, [exerciseTypes, setExerciseTypes]);
 
   const [newExercise, setNewExercise] = useState<TAppointmentExerciseDetail>({
     exerciseType: exerciseTypes[0],
@@ -149,11 +166,7 @@ const WorkoutPlanForm = ({
 
   return (
     <div className="flex flex-col gap-2 px-2">
-      <PlannedExercisesList
-        plannedExercises={plannedExercises}
-        setPlannedExercises={setPlannedExercises}
-        someRandomExerciseNames={exerciseTypes}
-      />
+      <PlannedExercisesList />
       <div className="flex flex-col gap-2">
         <div className="flex flex-row flex-wrap items-end gap-2">
           <Popover open={open} onOpenChange={setOpen}>
