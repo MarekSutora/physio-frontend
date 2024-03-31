@@ -34,15 +34,16 @@ export async function getServiceTypesAction(): Promise<TG_ServiceType[]> {
 export async function createNewServiceTypeAction(formData: TCU_ServiceType) {
   try {
     const session = await getServerSession(authOptions);
-    const accessToken = await getTokenForServerActions();
+    const token = await getTokenForServerActions();
 
-    if (!session || !accessToken) {
+    if (!session || !token) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
     }
 
     const url = `${process.env.BACKEND_API_URL}/service-types`;
+    const accessToken = token.userTokens.accessToken;
 
     const res = await fetch(url, {
       method: "POST",
@@ -71,15 +72,16 @@ export async function createNewServiceTypeAction(formData: TCU_ServiceType) {
 export async function updateServiceTypeAction(formData: TCU_ServiceType) {
   try {
     const session = await getServerSession(authOptions);
-    const accessToken = await getTokenForServerActions();
+    const token = await getTokenForServerActions();
 
-    if (!session || !accessToken) {
+    if (!session || !token) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
     }
 
     const url = `${process.env.BACKEND_API_URL}/service-types/${formData.id}`;
+    const accessToken = token.userTokens.accessToken;
 
     const res = await fetch(url, {
       method: "PUT",
@@ -105,15 +107,17 @@ export async function updateServiceTypeAction(formData: TCU_ServiceType) {
 export async function deleteServiceTypeAction(id: number) {
   try {
     const session = await getServerSession(authOptions);
-    const accessToken = await getTokenForServerActions();
+    const token = await getTokenForServerActions();
 
-    if (!session || !accessToken) {
+    if (!session || !token) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
     }
 
     const url = `${process.env.BACKEND_API_URL}/service-types/${id}`;
+    const accessToken = token.userTokens.accessToken;
+
 
     const res = await fetch(url, {
       method: "DELETE",

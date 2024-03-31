@@ -10,7 +10,7 @@ export const metadata = {
     "Na tejto stránke si môžete rezervovať termín na vyšetrenie v prípade, že ste prihlásený.",
 };
 
-const Page = async () => {
+const Page = () => {
   return (
     <DashboardSectionWrapper
       width="w-5/6"

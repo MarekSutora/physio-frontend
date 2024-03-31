@@ -46,7 +46,6 @@ const ExerciseDetailsRow = ({
   const { plannedExercises, setPlannedExercises } = usePlannedExercisesStore();
   const exerciseTypes = useExerciseTypesStore((state) => state.exerciseTypes);
 
-  const [wasMoved, setWasMoved] = useState(false);
   const [value, setValue] = React.useState(exerciseDetails.exerciseType.id);
   const [open, setOpen] = React.useState(false);
 

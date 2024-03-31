@@ -81,15 +81,16 @@ export async function createBlogPostAction(formData: TBlogPost) {
 export async function updateBlogPostAction(formData: TBlogPost) {
   try {
     const session = await getServerSession(authOptions);
-    const accessToken = await getTokenForServerActions();
+    const token = await getTokenForServerActions();
 
-    if (!session || !accessToken) {
+    if (!session || !token) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
     }
 
     const url = `${process.env.BACKEND_API_URL}/blog-posts/${encodeURIComponent(formData.slug!)}`;
+    const accessToken = token.userTokens.accessToken;
 
     const res = await fetch(url, {
       method: "PUT",
@@ -114,15 +115,16 @@ export async function updateBlogPostAction(formData: TBlogPost) {
 export async function deleteBlogPostAction(slug: string) {
   try {
     const session = await getServerSession(authOptions);
-    const accessToken = await getTokenForServerActions();
+    const token = await getTokenForServerActions();
 
-    if (!session || !accessToken) {
+    if (!session || !token) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
     }
 
     const url = `${process.env.BACKEND_API_URL}/blog-posts/${encodeURIComponent(slug)}`;
+    const accessToken = token.userTokens.accessToken;
 
     const res = await fetch(url, {
       method: "DELETE",

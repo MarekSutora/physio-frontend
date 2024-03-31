@@ -91,7 +91,6 @@ const Page = async ({ params }: { params: { slug: string } }) => {
             </div>
           ))}
         </dl>
-        {/* Include any other information you want about the service type */}
       </div>
     </article>
   );

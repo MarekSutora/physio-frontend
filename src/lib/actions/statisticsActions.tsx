@@ -14,15 +14,17 @@ export async function getServiceTypeFinishedAppointmentsCountsAction(): Promise<
 > {
   try {
     const session = await getServerSession(authOptions);
-    const accessToken = await getTokenForServerActions();
+    const token = await getTokenForServerActions();
 
-    if (!session || !accessToken) {
+    if (!session || !token) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
     }
 
     const url = `${process.env.BACKEND_API_URL}/statistics/appointments-service-types`;
+    const accessToken = token.userTokens.accessToken;
+
     const response = await fetch(url, {
       method: "GET",
       headers: {
@@ -47,15 +49,17 @@ export async function getTotalRevenueStatisticsAction(): Promise<
 > {
   try {
     const session = await getServerSession(authOptions);
-    const accessToken = await getTokenForServerActions();
+    const token = await getTokenForServerActions();
 
-    if (!session || !accessToken) {
+    if (!session || !token) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
     }
 
     const url = `${process.env.BACKEND_API_URL}/statistics/revenue`;
+    const accessToken = token.userTokens.accessToken;
+
     const response = await fetch(url, {
       method: "GET",
       headers: {
@@ -80,15 +84,17 @@ export async function getNewClientsTrendAction(): Promise<
 > {
   try {
     const session = await getServerSession(authOptions);
-    const accessToken = await getTokenForServerActions();
+    const token = await getTokenForServerActions();
 
-    if (!session || !accessToken) {
+    if (!session || !token) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
     }
 
     const url = `${process.env.BACKEND_API_URL}/statistics/new-clients-trend`;
+    const accessToken = token.userTokens.accessToken;
+
     const response = await fetch(url, {
       method: "GET",
       headers: {
@@ -113,15 +119,17 @@ export async function getBlogPostViewsStatsAction(): Promise<
 > {
   try {
     const session = await getServerSession(authOptions);
-    const accessToken = await getTokenForServerActions();
+    const token = await getTokenForServerActions();
 
-    if (!session || !accessToken) {
+    if (!session || !token) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
     }
 
     const url = `${process.env.BACKEND_API_URL}/statistics/blog-post-views-stats`;
+    const accessToken = token.userTokens.accessToken;
+
     const response = await fetch(url, {
       method: "GET",
       headers: {

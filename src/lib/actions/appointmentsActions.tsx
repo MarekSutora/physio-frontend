@@ -36,15 +36,17 @@ export async function getUnbookedAppointmentsAction(): Promise<
 export async function createAppointmentAction(appointmentData: TC_Appointment) {
   try {
     const session = await getServerSession(authOptions);
-    const accessToken = await getTokenForServerActions();
+    const token = await getTokenForServerActions();
 
-    if (!session || !accessToken) {
+    if (!session || !token) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
     }
 
     const url = `${process.env.BACKEND_API_URL}/appointments/unbooked`;
+    const accessToken = token.userTokens.accessToken;
+
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -71,15 +73,16 @@ export async function createBookedAppointmentAction(
 ) {
   try {
     const session = await getServerSession(authOptions);
-    const accessToken = await getTokenForServerActions();
+    const token = await getTokenForServerActions();
 
-    if (!session || !accessToken) {
+    if (!session || !token) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
     }
 
-    let personIdoUse = personId ? personId : session.user?.personId;
+    const personIdoUse = personId ? personId : token.user?.personId;
+    const accessToken = token.userTokens.accessToken;
 
     const url = `${process.env.BACKEND_API_URL}/appointments/booked/${personIdoUse}`;
     const response = await fetch(url, {
@@ -106,15 +109,17 @@ export async function createBookedAppointmentAction(
 export async function deleteAppointmentAction(appointmentId: number) {
   try {
     const session = await getServerSession(authOptions);
-    const accessToken = await getTokenForServerActions();
+    const token = await getTokenForServerActions();
 
-    if (!session || !accessToken) {
+    if (!session || !token) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
     }
 
     const url = `${process.env.BACKEND_API_URL}/appointments/${appointmentId}`;
+    const accessToken = token.userTokens.accessToken;
+
     const response = await fetch(url, {
       method: "DELETE",
       headers: {
@@ -129,6 +134,7 @@ export async function deleteAppointmentAction(appointmentId: number) {
     }
 
     revalidateTag("unbooked-appointments");
+    revalidateTag("booked-appointments");
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }
@@ -139,9 +145,9 @@ export async function getAllBookedAppointmentsAction(): Promise<
 > {
   try {
     const session = await getServerSession(authOptions);
-    const accessToken = await getTokenForServerActions();
+    const token = await getTokenForServerActions();
 
-    if (!session || !accessToken) {
+    if (!session || !token) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
@@ -152,13 +158,15 @@ export async function getAllBookedAppointmentsAction(): Promise<
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${token.userTokens.accessToken}`,
       },
       next: { tags: ["booked-appointments"] },
     });
 
     if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`);
+      const errorMessage = await res.text();
+
+      throw new Error(getErrorMessage(errorMessage));
     }
 
     const data = await res.json();
@@ -175,17 +183,19 @@ export async function getBookedAppointmentsForClientAction(
 ): Promise<TG_BookedAppointment[]> {
   try {
     const session = await getServerSession(authOptions);
-    const accessToken = await getTokenForServerActions();
+    const token = await getTokenForServerActions();
 
-    if (!session || !accessToken) {
+    if (!session || !token) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
     }
 
-    let personIdToUse = personId ? personId : session.user?.personId;
+    const personIdToUse = personId ? personId : token.user.personId;
 
-    let url = `${process.env.BACKEND_API_URL}/appointments/client/${personIdToUse}/booked`;
+    const url = `${process.env.BACKEND_API_URL}/appointments/client/${personIdToUse}/booked`;
+    const accessToken = token.userTokens.accessToken;
+
     const res = await fetch(url, {
       method: "GET",
       headers: {
@@ -212,17 +222,19 @@ export async function getFinishedAppointmentsForClientAction(
 ): Promise<TG_BookedAppointment[]> {
   try {
     const session = await getServerSession(authOptions);
-    const accessToken = await getTokenForServerActions();
+    const token = await getTokenForServerActions();
 
-    if (!session || !accessToken) {
+    if (!session || !token) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
     }
 
-    let personIdToUse = personId ? personId : session.user?.personId;
+    const personIdToUse = personId ? personId : token.user.personId;
 
-    let url = `${process.env.BACKEND_API_URL}/appointments/client/${personIdToUse}/finished`;
+    const url = `${process.env.BACKEND_API_URL}/appointments/client/${personIdToUse}/finished`;
+    const accessToken = token.userTokens.accessToken;
+
     const res = await fetch(url, {
       method: "GET",
       headers: {
@@ -249,15 +261,17 @@ export async function getAllFinishedAppointmentsAction(): Promise<
 > {
   try {
     const session = await getServerSession(authOptions);
-    const accessToken = await getTokenForServerActions();
+    const token = await getTokenForServerActions();
 
-    if (!session || !accessToken) {
+    if (!session || !token) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
     }
 
-    let url = `${process.env.BACKEND_API_URL}/appointments/finished`;
+    const url = `${process.env.BACKEND_API_URL}/appointments/finished`;
+    const accessToken = token.userTokens.accessToken;
+
     const res = await fetch(url, {
       method: "GET",
       headers: {
@@ -285,15 +299,17 @@ export async function deleteBookedAppointmentAction(
 ) {
   try {
     const session = await getServerSession(authOptions);
-    const accessToken = await getTokenForServerActions();
+    const token = await getTokenForServerActions();
 
-    if (!session || !accessToken) {
+    if (!session || !token) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
     }
 
     const url = `${process.env.BACKEND_API_URL}/appointments/booked/${bookedAppointmentId}`;
+    const accessToken = token.userTokens.accessToken;
+
     const response = await fetch(url, {
       method: "DELETE",
       headers: {
@@ -304,7 +320,7 @@ export async function deleteBookedAppointmentAction(
 
     if (!response.ok) {
       const errorData = await response.text();
-      throw new Error(errorData);
+      throw new Error(getErrorMessage(errorData));
     }
 
     revalidateTag("booked-appointments");
@@ -319,15 +335,17 @@ export async function getAppointmentByIdAction(
 ): Promise<TAppointment> {
   try {
     const session = await getServerSession(authOptions);
-    const accessToken = await getTokenForServerActions();
+    const token = await getTokenForServerActions();
 
-    if (!session || !accessToken) {
+    if (!session || !token) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
     }
 
     const url = `${process.env.BACKEND_API_URL}/appointments/${id}`;
+    const accessToken = token.userTokens.accessToken;
+
     const response = await fetch(url, {
       method: "GET",
       headers: {
@@ -355,21 +373,24 @@ export async function updateAppointmentDetailsAction(
 ): Promise<void> {
   try {
     const session = await getServerSession(authOptions);
-    const accessToken = await getTokenForServerActions();
+    const token = await getTokenForServerActions();
 
-    if (!session || !accessToken) {
+    if (!session || !token) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
     }
 
-    const url = `${process.env.BACKEND_API_URL}/appointments/${appointmentId}/details`; // Endpoint might need to be updated
+    const url = `${process.env.BACKEND_API_URL}/appointments/${appointmentId}/details`;
+    const accessToken = token.userTokens.accessToken;
+
     const response = await fetch(url, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,
       },
+      cache: "no-store",
       body: JSON.stringify(appointmentDetail),
     });
 
@@ -377,7 +398,6 @@ export async function updateAppointmentDetailsAction(
       const errorData = await response.text();
       throw new Error(errorData);
     }
-    // Handle success response
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }

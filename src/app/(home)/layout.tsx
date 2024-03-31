@@ -3,11 +3,8 @@ import { Inter } from "next/font/google";
 import "@/app/globals.css";
 import Providers from "@/components/Providers";
 import { Toaster } from "@/components/ui/toaster";
-import HeaderDesktop from "@/components/mainPage/common/header/HeaderDesktop";
-import HeaderMobile from "@/components/mainPage/common/header/HeaderMobile";
 import Footer from "@/components/mainPage/common/footer/Footer";
 import HeaderWrapper from "@/components/mainPage/common/header/HeaderWrapper";
-import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 

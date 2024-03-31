@@ -58,7 +58,7 @@ const HeaderMobile = ({ links }: HeaderMobileProps) => {
           ></div>
           <header
             className={cn(
-              "top-0 z-50 block h-14 w-screen bg-white",
+              "top-0 z-50 block h-14 w-screen bg-white xl:hidden",
               isOpen ? "fixed" : "stickyy",
             )}
           >
@@ -69,7 +69,10 @@ const HeaderMobile = ({ links }: HeaderMobileProps) => {
               initial={false}
               animate={isOpen ? "open" : "closed"}
               custom={height}
-              className={`fixed top-[55px] z-50 h-full w-screen`}
+              className={cn(
+                "top-[55px] h-full w-screen xl:hidden",
+                isOpen ? "z-50 fixed" : "-z-50 hidden",
+              )}
               ref={containerRef}
             >
               <motion.div

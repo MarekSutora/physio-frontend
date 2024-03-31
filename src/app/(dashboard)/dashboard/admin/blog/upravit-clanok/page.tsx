@@ -21,7 +21,7 @@ const Page = async (props: Props) => {
   }
 
   return (
-    <DashboardSectionWrapper title={"Upraviť článok"}>
+    <DashboardSectionWrapper title="Upraviť článok">
       <BlogPostForm createNew={false} oldData={blogPost} />
     </DashboardSectionWrapper>
   );

@@ -8,16 +8,24 @@ const nextConfig = {
     ];
   },
   images: {
-    remotePatterns: [
-      {
-        protocol: "http",
-        hostname: "**",
-      },
-      {
-        protocol: "https",
-        hostname: "i.postimg.cc",
-      },
-    ],
+    remotePatterns:
+      process.env.NODE_ENV !== "production"
+        ? [
+            {
+              protocol: "http",
+              hostname: "**",
+            },
+            {
+              protocol: "https",
+              hostname: "i.postimg.cc",
+            },
+          ]
+        : [
+            {
+              protocol: "https",
+              hostname: "i.postimg.cc",
+            },
+          ],
   },
 };
 

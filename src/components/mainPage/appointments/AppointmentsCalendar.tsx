@@ -40,12 +40,11 @@ const AppointmentsCalendar = ({
     format(startOfToday(), "MMM-yyyy", { locale: enUS }),
   );
 
-  const appointments = appointmentsData;
-  //const setAppointments = useAppointmentsStore(
-  //   (state) => state.setAppointments,
-  //);
+  const setAppointments = useAppointmentsStore(
+    (state) => state.setAppointments,
+  );
 
-  //const appointments = useAppointmentsStore((state) => state.appointments);
+  const appointments = useAppointmentsStore((state) => state.appointments);
 
   useEffect(() => {
     const today = startOfToday();
@@ -62,9 +61,9 @@ const AppointmentsCalendar = ({
     setSelectedDay(initialSelectedDay);
   }, [appointments]);
 
-  // useEffect(() => {
-  //   setAppointments(appointmentsData);
-  // }, [appointmentsData, setAppointments]);
+  useEffect(() => {
+    setAppointments(appointmentsData);
+  }, [appointmentsData, setAppointments]);
 
   let firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
 
@@ -109,7 +108,7 @@ const AppointmentsCalendar = ({
           <h2 className="flex-auto select-none pl-5 text-lg font-semibold text-gray-900">
             {getMonthNameSk(
               format(firstDayCurrentMonth, "MMMM", { locale: enUS }),
-            )}{" "}
+            )}
             {format(firstDayCurrentMonth, "yyyy")}
           </h2>
           <button

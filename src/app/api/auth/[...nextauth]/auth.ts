@@ -1,4 +1,4 @@
-import { AuthOptions } from "next-auth";
+import { AuthOptions, Session } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials";
 import NextAuth from "next-auth/next";
@@ -82,7 +82,11 @@ export const authOptions: AuthOptions = {
       return await refreshToken(token);
     },
     async session({ session, token }) {
-      session.user = token.user;
+      session.user = {
+        fullName: token.user.fullName,
+        roles: token.user.roles,
+      };
+      session.expires = token.userTokens.accessTokenExpirationDate;
 
       return session;
     },
@@ -95,6 +99,7 @@ export const authOptions: AuthOptions = {
   },
   jwt: {
     secret: process.env.NEXTAUTH_SECRET,
+    maxAge: 24 * 60 * 60,
   },
 };
 

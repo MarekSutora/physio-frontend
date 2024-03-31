@@ -2,13 +2,22 @@
 
 import { cookies } from "next/headers";
 import { decode } from "next-auth/jwt";
-import { headers } from "next/headers";
 
 export async function getTokenForServerActions() {
   const cookieStore = cookies().getAll();
 
-  const encodedToken = cookieStore.find((cookie) =>
-    cookie.name.includes("next-auth.session-token"),
+  let cookieName: string;
+
+  console.log("process.env.VERCEL_ENV", process.env.VERCEL_ENV);
+
+  if (process.env.VERCEL_ENV && process.env.VERCEL_ENV === "production") {
+    cookieName = "__Secure-next-auth.session-token";
+  } else {
+    cookieName = "next-auth.session-token";
+  }
+
+  const encodedToken = cookieStore.find(
+    (cookie) => cookie.name === cookieName,
   )?.value;
 
   if (!encodedToken) {
@@ -20,5 +29,9 @@ export async function getTokenForServerActions() {
     secret: `${process.env.NEXTAUTH_SECRET}`,
   });
 
-  return decoded?.userTokens.accessToken;
+  if (!decoded) {
+    return null;
+  }
+
+  return decoded;
 }
