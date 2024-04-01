@@ -273,6 +273,7 @@ const RegistrationForm = () => {
               <Button
                 className="mt-2 w-full bg-primary active:scale-95"
                 type="submit"
+                aria-label="Zaregistrovať sa"
               >
                 Zaregistrovať sa
               </Button>

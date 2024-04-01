@@ -1,30 +1,6 @@
-// RichTextEditor.tsx
 import React from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import Editor from "ckeditor5-custom-build";
-
-const editorConfiguration = {
-  //TODO adjust this configuration
-  toolbar: [
-    "heading",
-    "|",
-    "bold",
-    "italic",
-    "link",
-    "bulletedList",
-    "numberedList",
-    "|",
-    "outdent",
-    "indent",
-    "|",
-    "insertImage",
-    "blockQuote",
-    "insertTable",
-    "mediaEmbed",
-    "undo",
-    "redo",
-  ],
-};
 
 type RichTextEditorProps = {
   onContentChange: (content: string) => void;
@@ -45,8 +21,7 @@ const RichTextEditor = ({
       </style>
 
       <CKEditor
-        editor={Editor}
-        config={editorConfiguration}
+        editor={Editor as any}
         data={initialContent}
         onChange={(event, editor) => {
           const data = editor.getData();

@@ -21,7 +21,6 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { TResetPasswordFormData } from "@/lib/shared/types";
 import { resetPasswordAction } from "@/lib/actions/authActions";
 
-// Define the form schema using Zod
 const formSchema = z
   .object({
     password: z.string().min(5, "Heslo musí mať aspoň 5 znakov."),
@@ -56,20 +55,18 @@ const ResetPasswordForm = (props: Props) => {
   const onSubmit = async (formData: TResetPasswordFormData) => {
     setLoading(true);
 
-    console.log("formData", formData);
-
     try {
       await resetPasswordAction(formData);
       toast({
         title: "Success",
-        description: "Password reset successful",
+        description: "Obnovenie hesla úspešné. Môžete sa prihlásiť.	",
       });
       router.push("/prihlasenie?emailConfirmed=success");
     } catch (error) {
-      console.log("Error resetting password", error);
       toast({
         title: "Error",
-        description: "An error occurred resetting the password",
+        description:
+          "Nastala chyba pri obnovovaní hesla. Skúste to prosím znova neskôr.",
       });
     }
     setLoading(false);
@@ -102,7 +99,7 @@ const ResetPasswordForm = (props: Props) => {
               name="password"
               render={({ field, fieldState }) => (
                 <FormItem>
-                  <FormLabel>New Password</FormLabel>
+                  <FormLabel>Nové heslo</FormLabel>
                   <FormControl>
                     <Input
                       type="password"
@@ -119,7 +116,7 @@ const ResetPasswordForm = (props: Props) => {
               name="confirmPassword"
               render={({ field, fieldState }) => (
                 <FormItem>
-                  <FormLabel>Confirm New Password</FormLabel>
+                  <FormLabel>Potvrdenie hesla</FormLabel>
                   <FormControl>
                     <Input
                       type="password"
@@ -132,7 +129,7 @@ const ResetPasswordForm = (props: Props) => {
               )}
             />
             <Button type="submit" className="mt-2 w-[220px]">
-              Reset Password
+              Obnoviť heslo
             </Button>
           </form>
         </Form>

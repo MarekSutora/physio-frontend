@@ -12,8 +12,9 @@ import { useToast } from "@/components/ui/use-toast";
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import { FilterMatchMode } from "primereact/api";
-import ShadConfirmationDialog from "@/components/mainPage/common/logo/ShadConfirmationDialog";
+import ShadConfirmationDialog from "@/components/mainPage/common/ShadConfirmationDialog";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 type Props = {
   _blogPosts: TBlogPost[];
@@ -46,8 +47,8 @@ const BlogPostsGrid = ({ _blogPosts }: Props) => {
 
   const handleDelete = async (rowData: TBlogPost) => {
     try {
-      await deleteBlogPostAction(rowData.id!);
-      setBlogPosts(blogPosts.filter((post) => post.id !== rowData.id));
+      await deleteBlogPostAction(rowData.slug!);
+      setBlogPosts(blogPosts.filter((post) => post.slug !== rowData.slug));
       toast({ variant: "success", title: "Post deleted successfully." });
     } catch (error) {
       toast({ variant: "destructive", title: "Failed to delete the post." });
@@ -57,6 +58,8 @@ const BlogPostsGrid = ({ _blogPosts }: Props) => {
   const actionBodyTemplate = (rowData: TBlogPost) => {
     return (
       <div className="flex flex-row gap-1">
+        <Link href={`./upravit-clanok?slug=${rowData.slug}`}>Update</Link>
+
         <ShadConfirmationDialog onConfirm={handleHide} confirmArgs={[rowData]}>
           <Button> {rowData.isHidden ? "Zverejniť" : "Skryť"}</Button>
         </ShadConfirmationDialog>

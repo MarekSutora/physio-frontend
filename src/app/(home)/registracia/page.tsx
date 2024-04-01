@@ -3,9 +3,12 @@ import registerPic from "@/root/public/login.png";
 import Image from "next/image";
 import RegistrationForm from "@/components/auth/RegistrationForm";
 
-type Props = {};
+export const metadata = {
+  title: "Registrácia",
+  description: "Registráčný formulár pre nových používateľov.",
+};
 
-const Page = (props: Props) => {
+const Page = () => {
   return (
     <section className="h-full w-full bg-white py-20">
       <div className="flex h-full items-center justify-center gap-7 md:flex-row">

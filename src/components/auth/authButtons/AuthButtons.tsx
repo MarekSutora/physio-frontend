@@ -36,7 +36,7 @@ type DashboardButtonProps = {
 const DashboardButton = ({ userRoles }: DashboardButtonProps) => {
   const linkPath = userRoles.includes("Admin")
     ? "/dashboard/admin/statistiky"
-    : "dashboard/klient/rezervacie";
+    : "dashboard/klient/rezervacia";
 
   return (
     <Link

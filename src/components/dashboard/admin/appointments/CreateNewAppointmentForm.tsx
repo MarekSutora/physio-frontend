@@ -6,7 +6,6 @@ import makeAnimated from "react-select/animated";
 import {
   ServiceTypeOptionType,
   TC_Appointment,
-  TG_ClientForBookedAppointment,
   TG_ServiceType,
 } from "@/lib/shared/types";
 import { Label } from "@/components/ui/label";
@@ -15,9 +14,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { createAppointmentAction } from "@/lib/actions/appointmentsActions";
 import { toast } from "@/components/ui/use-toast";
-import { getErrorMessage } from "@/lib/utils";
-
-//TODO po diplomovke - multi select pacientov aby sa dalo rezervovat viac ludi naraz (skupinovy trening)
 
 type Props = {
   serviceTypes: TG_ServiceType[];
@@ -31,12 +27,11 @@ const CreateNewAppointmentForm = ({ serviceTypes }: Props) => {
 
   const [capacity, setCapacity] = useState<number>(1);
 
-  // Convert service types and their duration costs to select options
   const serviceTypesOptions = serviceTypes.flatMap((serviceType) =>
     serviceType.stdcs.map((cost) => ({
       label: `${serviceType.name} - ${cost.durationMinutes}min - ${cost.cost}e`,
-      value: `${serviceType.id}-${cost.id}`, // Unique value using both IDs
-      color: serviceType.hexColor, // Use the hex color for option styling
+      value: `${serviceType.id}-${cost.id}`,
+      color: serviceType.hexColor,
     })),
   );
 
@@ -65,7 +60,7 @@ const CreateNewAppointmentForm = ({ serviceTypes }: Props) => {
   ) => {
     setSelectedOptions(selected.map((option) => ({ ...option })));
     if (selected.length > 1) {
-      setCapacity(1); // Automatically set capacity to 1 if more than one item is selected
+      setCapacity(1);
     }
   };
 
@@ -86,17 +81,15 @@ const CreateNewAppointmentForm = ({ serviceTypes }: Props) => {
       stdcIds,
     };
     try {
-      const success = await createAppointmentAction(appointmentData);
-      if (success) {
-        toast({
-          variant: "success",
-          title: "Available appointment created successfully!",
-        });
-      }
+      await createAppointmentAction(appointmentData);
+      toast({
+        variant: "success",
+        title: "Nový termín úspešne vytvorený! 🎉",
+      });
     } catch (error) {
       toast({
         variant: "destructive",
-        description: getErrorMessage(error),
+        description: "Chyba pri vytváraní termínu. Skúste to prosím znova. 🙄",
       });
     }
   };

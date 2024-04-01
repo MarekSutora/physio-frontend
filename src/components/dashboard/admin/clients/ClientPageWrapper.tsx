@@ -4,10 +4,10 @@ import { TClient, TClientNote, TG_BookedAppointment } from "@/lib/shared/types";
 import React, { useState } from "react";
 import DashboardSectionWrapper from "../../common/DashboardSectionWrapper";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import ClientNotesGridForm from "../../common/ClientNotesGridForm";
-import FinishedAppointmentsGrid from "../../common/FinishedAppointmentsGrid";
-import BookedAppointmentsGrid from "../../common/BookedAppointmentsGrid";
+import { cn } from "@/lib/utils/utils";
+import ClientNotesGridForm from "../../common/ClientNotesDataTableForm";
+import FinishedAppointmentsGrid from "../../common/FinishedAppointmentsDataTable";
+import BookedAppointmentsGrid from "../../common/BookedAppointmentsDataTable";
 
 type Props = {
   clientData: TClient | undefined;
@@ -54,7 +54,11 @@ const ClientPageWrapper = ({
             <div className="mx-2 h-6 w-[1px] bg-gray-300 lg:mx-0 lg:my-2 lg:h-[1px] lg:w-1/2"></div>
             <h2>
               <span>Telefónne číslo: </span>{" "}
-              <span className="font-semibold">{clientData.phoneNumber}</span>
+              <span className="font-semibold">
+                {clientData.phoneNumber
+                  ? clientData.phoneNumber
+                  : "+421900123456"}
+              </span>
             </h2>
             <div className="mx-2 h-6 w-[1px] bg-gray-300 lg:mx-0 lg:my-2 lg:h-[1px] lg:w-1/2"></div>
             <h2>
@@ -118,7 +122,7 @@ const ClientPageWrapper = ({
         {sectionToggled === "clientNotesSection" && clientData && (
           <ClientNotesGridForm
             clientNotes={clientNotes}
-            clientId={clientData?.personId}
+            personId={clientData?.personId}
           />
         )}
       </div>

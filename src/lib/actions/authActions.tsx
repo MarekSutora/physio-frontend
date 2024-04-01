@@ -5,7 +5,7 @@ import {
   TResetPasswordFormData,
   TResponseResult,
 } from "../shared/types";
-import { getErrorMessage } from "../utils";
+import { getErrorMessage } from "../utils/utils";
 
 export async function registerClientAction(
   formData: TRegistrationFormData,
@@ -23,7 +23,6 @@ export async function registerClientAction(
     );
 
     if (!res.ok) {
-      console.log("Error:", res);
       const errorMessage =
         (await res.json().then((data) => data.message)) ??
         "Skúste to prosím znova. 🙄";
@@ -36,7 +35,7 @@ export async function registerClientAction(
   }
 }
 
-export async function forgotPasswordAction(email: string): Promise<void> {
+export async function forgotPasswordAction(email: string) {
   try {
     const res = await fetch(
       `${process.env.BACKEND_API_URL}/auth/forgot-password`,
@@ -63,7 +62,7 @@ export async function forgotPasswordAction(email: string): Promise<void> {
 
 export async function resetPasswordAction(
   resetPasswordData: TResetPasswordFormData,
-): Promise<void> {
+) {
   try {
     const res = await fetch(
       `${process.env.BACKEND_API_URL}/auth/reset-password`,

@@ -4,8 +4,6 @@ import React, { useState } from "react";
 import { Chart } from "primereact/chart";
 import ComboBox from "./ComboBox";
 import { SlovakMonths } from "@/lib/shared/constants";
-
-// Assuming TNewClientsStatistics is imported or defined elsewhere in your codebase
 import { TNewClientsStatistics } from "@/lib/shared/types";
 
 type Props = {

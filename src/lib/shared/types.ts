@@ -3,23 +3,28 @@ export type TDurationCost = {
   cost: number;
 };
 
-export type TCU_ServiceType = {
+export type TServiceType = {
   id: number | null;
   name: string;
   description: string;
   hexColor: string;
   durationCosts: TDurationCost[];
+  imageUrl: string;
+  iconName: string;
 };
 
 export type TG_ServiceType = {
   id: number;
   name: string;
+  slug: string;
   description: string;
   hexColor: string;
-  stdcs: DurationCosts[];
+  iconName: string;
+  imageUrl: string;
+  stdcs: ServiceTypeDurationCosts[];
 };
 
-export type DurationCosts = {
+export type ServiceTypeDurationCosts = {
   id?: number;
   durationMinutes: number;
   cost: number;
@@ -54,14 +59,14 @@ export type TG_ClientForBookedAppointment = {
 };
 
 export type TC_AdminBookedAppointment = {
-  clientId: number;
+  personId: number;
   startTime: Date;
   stdcId: number;
 };
 
 export type TC_ClientBookedAppointment = {
   arstdcId: number;
-  clientId: number;
+  personId: number;
 };
 
 export type TG_BookedAppointment = {
@@ -76,52 +81,20 @@ export type TG_BookedAppointment = {
   hexColor: string;
   capacity: number;
   appointmentBookedDate: Date;
-  clientId: number;
+  personId: number;
 };
 
 //BLOG
 
 export type TBlogPost = {
-  id?: number;
   title: string;
   author: string;
-  datePublished: string;
+  datePublished: Date;
   keywordsString: string;
   mainImageUrl: string;
   htmlContent: string;
   isHidden: boolean;
   slug?: string;
-};
-
-//OTHER
-
-export type ServiceTypeOptionType = {
-  label: string;
-  value: string;
-  color: string | null;
-};
-
-export type TRegistrationFormData = {
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
-  email: string;
-  password: string;
-};
-
-export type TResponseResult = {
-  success: boolean;
-  message: string;
-};
-
-export type TReview = {
-  id: number;
-  author: string;
-  rating: number;
-  text: string;
-  date: Date;
-  link: string;
-  personPictureUrl: string;
 };
 
 //APPOINTMENT
@@ -205,7 +178,7 @@ export type TClient = {
 
 export type TClientNote = {
   id?: number;
-  clientId: number;
+  personId: number;
   note: string;
   createdAt?: Date;
 };
@@ -217,4 +190,56 @@ export type TResetPasswordFormData = {
   token: string;
   password: string;
   confirmPassword: string;
+};
+
+export type TUser = {
+  userId: string;
+  fullName: string;
+  roles: string[];
+  personId: number;
+};
+
+//OTHER
+
+export type TMainPageLink = {
+  text: string;
+  path?: string;
+  subMenuItems?: { text: string; path: string }[];
+};
+
+export type ServiceTypeOptionType = {
+  label: string;
+  value: string;
+  color: string | null;
+};
+
+export type TRegistrationFormData = {
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  email: string;
+  password: string;
+};
+
+export type TResponseResult = {
+  success: boolean;
+  message: string;
+};
+
+export type TReview = {
+  id: number;
+  author: string;
+  rating: number;
+  text: string;
+  date: Date;
+  link: string;
+  personPictureUrl: string;
+};
+
+export type TContactFormData = {
+  name: string;
+  secondName: string;
+  email: string;
+  phoneNumber: string;
+  message: string;
 };

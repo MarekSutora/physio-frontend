@@ -6,12 +6,12 @@ import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import AuthButtons from "@/components/auth/authButtons/AuthButtons";
-import ShadConfirmationDialog from "../common/logo/ShadConfirmationDialog";
+import ShadConfirmationDialog from "../common/ShadConfirmationDialog";
 import {
-  createClientBookedAppointmentAction,
+  createBookedAppointmentAction,
   deleteAppointmentAction,
 } from "@/lib/actions/appointmentsActions";
-import { getErrorMessage } from "@/lib/utils";
+import { useAppointmentsStore } from "@/lib/stores/useAppointmentsStore";
 
 type AppointmentCardProps = {
   appointment: TG_UnbookedAppointment;
@@ -27,6 +27,10 @@ const AppointmentCard = ({
 
   const visibleServiceTypes = appointment.serviceTypeInfos.filter((asti) =>
     selectedServiceTypeNames.includes(asti.name),
+  );
+
+  const removeAppointmentByAppId = useAppointmentsStore(
+    (state) => state.removeAppointmentByAppId,
   );
 
   const handleDeleteAppointment = async (appId: number) => {
@@ -48,10 +52,10 @@ const AppointmentCard = ({
     }
   };
 
-  const tryBookAppointment = async (astdcId: number) => {
+  const bookAppointment = async (astdcId: number) => {
     if (isAuthenticated && session?.user.roles.includes("Client")) {
       try {
-        await createClientBookedAppointmentAction(astdcId);
+        await createBookedAppointmentAction(astdcId);
         removeAppointmentByAppId(astdcId);
         toast({
           variant: "success",
@@ -118,9 +122,9 @@ const AppointmentCard = ({
               )}
             </div>
 
-            {!session?.user.roles.includes("Client") && session?.user && (
+            {session?.user.roles.includes("Client") && session?.user && (
               <ShadConfirmationDialog
-                onConfirm={tryBookAppointment}
+                onConfirm={bookAppointment}
                 confirmArgs={[item.astdcId]}
               >
                 <button
@@ -139,6 +143,3 @@ const AppointmentCard = ({
 };
 
 export default AppointmentCard;
-function removeAppointmentByAppId(appId: number) {
-  throw new Error("Function not implemented.");
-}

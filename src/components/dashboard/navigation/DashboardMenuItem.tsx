@@ -1,9 +1,7 @@
 "use client";
 
-import { dashboardLinks } from "@/lib/shared/constants";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/utils";
 import { AnimatePresence, motion } from "framer-motion";
-import { useSession } from "next-auth/react";
 import Link from "next/dist/client/link";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
@@ -48,13 +46,14 @@ const DashboardMenuItem = ({
   return (
     <>
       {subMenuItems ? (
-        <div className="h-full w-full border-b-[1px] border-white lg:border-0">
+        <div className="h-full w-full border-b-[1px] border-white xl:border-0">
           <button
             className={cn(
               isActive && "bg-white text-primary",
               !isActive && "group bg-primary text-white",
               "flex w-full flex-row items-center justify-between gap-2 py-2 pl-3 pr-2 text-lg font-medium",
             )}
+            aria-label="open submenu"
             onClick={() => handleItemWithSubMenuClick(text)}
           >
             <div className="scale-125 hover:underline group-hover:scale-[1.35] group-active:scale-[1.35]">
@@ -74,13 +73,12 @@ const DashboardMenuItem = ({
           <AnimatePresence>
             {toggledItemsWithSubMenu.includes(text) && (
               <motion.ul
-                style={{ overflow: "hidden" }}
                 variants={variants}
                 initial="closed"
                 animate="open"
                 exit="closed"
                 transition={{ duration: 0.5, ease: "easeInOut" }}
-                className="flex w-full flex-col text-white "
+                className="flex w-full flex-col overflow-hidden text-white"
               >
                 {subMenuItems.map((subLink) => (
                   <li key={subLink.text} onClick={mobileCloseFunction}>
@@ -89,7 +87,7 @@ const DashboardMenuItem = ({
                         subLink.path === currentPath && "bg-white text-primary",
                         !(subLink.path === currentPath) &&
                           "group text-white hover:bg-white hover:text-primary",
-                        "flex h-full w-full flex-row items-center justify-between gap-2 border-t-[1px] border-white py-2 pl-8 pr-2 text-base font-medium lg:border-0",
+                        "flex h-full w-full flex-row items-center justify-between gap-2 border-t-[1px] border-white py-2 pl-8 pr-2 text-base font-medium xl:border-0",
                       )}
                       href={subLink.path}
                     >
@@ -107,7 +105,7 @@ const DashboardMenuItem = ({
             isActive && "cursor-default bg-white text-primary",
             !isActive &&
               "ease-in-ou group text-white hover:bg-white hover:text-primary",
-            "flex w-full flex-row items-center gap-2 border-b-[1px] border-white py-2 pl-3 pr-2 text-lg font-medium transition-all duration-200 lg:border-0",
+            "flex w-full flex-row items-center gap-2 border-b-[1px] border-white py-2 pl-3 pr-2 text-lg font-medium transition-all duration-200 xl:border-0",
           )}
           href={path!}
           onClick={mobileCloseFunction}

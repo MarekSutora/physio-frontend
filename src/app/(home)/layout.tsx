@@ -3,20 +3,15 @@ import { Inter } from "next/font/google";
 import "@/app/globals.css";
 import Providers from "@/components/Providers";
 import { Toaster } from "@/components/ui/toaster";
-import HeaderDesktop from "@/components/mainPage/common/header/HeaderDesktop";
-import HeaderMobile from "@/components/mainPage/common/header/HeaderMobile";
 import Footer from "@/components/mainPage/common/footer/Footer";
+import HeaderWrapper from "@/components/mainPage/common/header/HeaderWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Diplomovka",
-  description: "Created by Marek",
+  title: "Fyzioterapia",
+  description: "Najlepšia fyzioterapia",
 };
-
-//f0f9f6
-//#f7fffc
-//#f5fffc
 
 export default function RootLayout({
   children,
@@ -24,14 +19,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="m-0 h-full p-0">
+    <html lang="sk" className="m-0 h-full overflow-x-hidden p-0">
       <body
-        className={`${inter.className} m-0 h-full w-full overflow-auto bg-slate-50 p-0 text-gray-950`}
+        className={`${inter.className} m-0 h-full w-full bg-slate-50 p-0 text-gray-950`}
       >
         <Providers>
           <div className="flex w-full flex-col">
-            <HeaderMobile />
-            <HeaderDesktop />
+            <HeaderWrapper />
             <main className="h-auto min-h-[603px] w-full bg-slate-50">
               {children}
             </main>

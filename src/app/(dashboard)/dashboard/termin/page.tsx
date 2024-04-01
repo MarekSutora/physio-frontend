@@ -80,8 +80,8 @@ const Page = async (props: Props) => {
                   <span>
                     {"Klient: "}
                     <span className="font-semibold">
-                      {ba.clientId
-                        ? +ba.clientId + " - "
+                      {ba.personId
+                        ? +ba.personId + " - "
                         : "Klient: Neznámy - "}
                       {ba.clientFirstName + " " + ba.clientSecondName + " - "}
                     </span>
@@ -99,7 +99,7 @@ const Page = async (props: Props) => {
             </div>
           </div>
         </DashboardSectionWrapper>
-        <DashboardSectionWrapper title={"Plan"} width="w-full">
+        <DashboardSectionWrapper title={"Plán"} width="w-full">
           <WorkoutPlanForm
             exerciseTypes={exerciseTypes}
             appointmentDetail={appointment.appointmentDetail}

@@ -3,16 +3,8 @@ import NextAuth from "next-auth";
 declare module "next-auth" {
   interface Session {
     user: {
-      userId: string;
       fullName: string;
       roles: string[];
-      clientId?: int;
-    };
-
-    backendTokens: {
-      accessToken: string;
-      refreshToken: string;
-      expirationDate: string;
     };
   }
 }
@@ -25,13 +17,13 @@ declare module "next-auth/jwt" {
       userId: string;
       fullName: string;
       roles: string[];
-      clientId?: int;
+      personId: int;
     };
 
-    backendTokens: {
+    userTokens: {
       accessToken: string;
       refreshToken: string;
-      expirationDate: string;
+      accessTokenExpirationDate: string;
     };
   }
 }

@@ -5,10 +5,6 @@ import { getServiceTypesAction } from "@/lib/actions/serviceTypesActions";
 import { TG_ServiceType } from "@/lib/shared/types";
 import React from "react";
 import DashboardSectionWrapper from "@/components/dashboard/common/DashboardSectionWrapper";
-import AppointmentsCalendar from "@/components/mainPage/appointments/AppointmentsCalendar";
-import AppointmentsCalendarWrapper from "@/components/mainPage/appointments/AppointmentsCalendarWrapper";
-
-//TODO aj na mobile nechat pri tych sekciach zaokruhlene okraje, skusit spravit ten wrapper
 
 const Page = async () => {
   let serviceTypes: TG_ServiceType[] = [];

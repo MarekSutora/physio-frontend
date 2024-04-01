@@ -12,14 +12,6 @@ import {
 } from "react-icons/fa";
 import React from "react";
 
-export const basicLinks = [
-  { text: "Domov", path: "/" },
-  { text: "Služby", path: "/sluzby" },
-  { text: "Blog", path: "/blog" },
-  { text: "Kontakt", path: "/kontakt" },
-  { text: "Rezervácia", path: "/rezervacia" },
-];
-
 export const userLinks = [
   { text: "Prihlásenie", path: "/prihlasenie" },
   { text: "Registrácia", path: "/registracia" },
@@ -62,13 +54,13 @@ export const dashboardLinks = {
       subMenuItems: [
         { text: "Nový termín", path: "/dashboard/admin/terminy/novy-termin" },
         {
-          text: "Rezervované termíny",
+          text: "Zarezervované termíny",
           path: "/dashboard/admin/terminy/zarezervovane-terminy",
         },
         {
           text: "História",
           path: "/dashboard/admin/terminy/historia",
-        }
+        },
       ],
       icon: React.createElement(FaCalendarAlt),
     },
@@ -86,8 +78,8 @@ export const dashboardLinks = {
       icon: React.createElement(FaUsers),
     },
     {
-      text: "Správa služieb",
-      path: "/dashboard/admin/sprava-sluzieb",
+      text: "Služby",
+      path: "/dashboard/admin/sluzby",
       icon: React.createElement(FaTools),
     },
   ],
@@ -98,7 +90,7 @@ export const dashboardLinks = {
       icon: React.createElement(FaCalendarCheck),
     },
     {
-      text: "Historia",
+      text: "História",
       path: "/dashboard/klient/historia",
       icon: React.createElement(FaHistory),
     },
@@ -266,8 +258,6 @@ export const PrimeReactLocaleSk = {
   },
 } as const;
 
-export const DesktopDashboardSectionStyle =
-  "border-slate-200 bg-white p-2 md:rounded-lg md:border-2" as const;
 
 export const SlovakMonths = [
   "Január",

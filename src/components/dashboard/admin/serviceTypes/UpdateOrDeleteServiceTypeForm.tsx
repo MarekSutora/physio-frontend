@@ -1,19 +1,13 @@
 "use client";
 
-import React, { useState, useEffect, use } from "react";
-import { useForm, Controller, useFieldArray } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import React from "react";
 import { useToast } from "@/components/ui/use-toast";
-import { HexColorPicker } from "react-colorful";
 import {
-  getServiceTypesAction,
   updateServiceTypeAction,
   deleteServiceTypeAction,
 } from "@/lib/actions/serviceTypesActions";
 import ServiceTypeForm from "./ServiceTypeForm";
-import { TCU_ServiceType, TG_ServiceType } from "@/lib/shared/types";
-import { Select } from "@/components/ui/select";
+import { TServiceType, TG_ServiceType } from "@/lib/shared/types";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -22,13 +16,13 @@ import {
 } from "@/components/ui/popover";
 import {
   Command,
-  CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
 } from "@/components/ui/command";
 import { ChevronsUpDown } from "lucide-react";
-import { getErrorMessage } from "@/lib/utils";
+import { getErrorMessage } from "@/lib/utils/utils";
+import ShadConfirmationDialog from "@/components/mainPage/common/ShadConfirmationDialog";
 
 type Props = {
   serviceTypes: TG_ServiceType[];
@@ -36,20 +30,20 @@ type Props = {
 
 const UpdateOrDeleteServiceTypeForm = ({ serviceTypes }: Props) => {
   const [value, setValue] = React.useState(
-    serviceTypes.length > 0 ? serviceTypes[0].name : "",
+    serviceTypes.length > 0 ? serviceTypes[0].slug : "",
   );
   const [open, setOpen] = React.useState(false);
   const { toast } = useToast();
 
   const selectedServiceType = serviceTypes.find(
-    (serviceType) => serviceType.name === value,
+    (serviceType) => serviceType.slug === value,
   );
 
   const updateServiceTypeData = selectedServiceType
     ? transformServiceTypeForUpdate(selectedServiceType)
     : null;
 
-  const handleSubmit = async (values: TCU_ServiceType) => {
+  const handleSubmit = async (values: TServiceType) => {
     try {
       if (selectedServiceType) {
         await updateServiceTypeAction(values);
@@ -112,7 +106,7 @@ const UpdateOrDeleteServiceTypeForm = ({ serviceTypes }: Props) => {
               {serviceTypes.map((serviceType) => (
                 <CommandItem
                   key={serviceType.id}
-                  value={serviceType.name}
+                  value={serviceType.slug}
                   onSelect={(currentValue: string) => {
                     setValue(currentValue);
                     setOpen(false);
@@ -126,20 +120,20 @@ const UpdateOrDeleteServiceTypeForm = ({ serviceTypes }: Props) => {
         </PopoverContent>
       </Popover>
 
-      {selectedServiceType && ( // This line checks if selectedServiceType is defined
+      {selectedServiceType && (
         <ServiceTypeForm
           serviceType={updateServiceTypeData}
           onSubmit={handleSubmit}
           key={selectedServiceType?.id || "new"}
         >
           <Button type="submit">Upraviť</Button>
-          <Button
-            type="button"
-            className="bg-destructive hover:bg-red-400"
-            onClick={handleDelete}
+          <ShadConfirmationDialog
+            onConfirm={handleDelete}
+            dialogTitle="Naozaj chcete odstrániť túto službu?"
+            dialogDescription="Táto akcia je nevratná."
           >
-            Odstrániť službu
-          </Button>
+            <Button variant="destructive">Odstrániť</Button>
+          </ShadConfirmationDialog>
         </ServiceTypeForm>
       )}
     </>
@@ -148,12 +142,14 @@ const UpdateOrDeleteServiceTypeForm = ({ serviceTypes }: Props) => {
 
 const transformServiceTypeForUpdate = (
   serviceType: TG_ServiceType,
-): TCU_ServiceType => {
+): TServiceType => {
   return {
     id: serviceType.id,
     name: serviceType.name,
     description: serviceType.description,
     hexColor: serviceType.hexColor,
+    iconName: serviceType.iconName,
+    imageUrl: serviceType.imageUrl,
     durationCosts: serviceType.stdcs.map((stdc) => ({
       durationMinutes: stdc.durationMinutes,
       cost: stdc.cost,

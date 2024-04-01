@@ -8,6 +8,11 @@ const BlogCard = dynamic(() => import("@/components/mainPage/blog/BlogCard"), {
   ssr: false,
 });
 
+export const metadata = {
+  title: "Blog",
+  description: "Na tejto stránke nájdete všetky články z blogu.",
+};
+
 const Page = async () => {
   let blogPosts: TBlogPost[] = [];
 
@@ -22,19 +27,19 @@ const Page = async () => {
     blogPosts.length > 0 ? Array(20).fill(blogPosts[0]) : [];
 
   return (
-    <div className="m-auto min-h-[605px] w-11/12  md:w-5/6 lg:w-4/6">
+    <section className="m-auto min-h-[605px] w-11/12  md:w-5/6 lg:w-4/6">
       <div className="flex h-full w-full flex-row flex-wrap">
         {firstPostCopies.length > 0 &&
           firstPostCopies.map((post, index) => (
-            <div
+            <article
               key={index}
               className={`p-4 md:p-2 lg:p-3 ${index === 0 || index === 1 ? " md:w-1/2" : "md:w-1/3"}`}
             >
               <BlogCard post={post} />
-            </div>
+            </article>
           ))}
       </div>
-    </div>
+    </section>
   );
 };
 

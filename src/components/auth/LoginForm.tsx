@@ -19,7 +19,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import ClipLoader from "react-spinners/ClipLoader";
-import { getErrorMessage } from "@/lib/utils";
+import { getErrorMessage } from "@/lib/utils/utils";
 import { useRouter } from "next/navigation";
 
 type Props = {
@@ -31,15 +31,15 @@ type LoginForm = {
   password: string;
 };
 
-type LoginFormData = z.infer<typeof formSchema>;
-
-const formSchema = z.object({
+const loginFormSchema = z.object({
   email: z
     .string()
-    .min(1, "Email musi byť vyplnený. 🙄")
-    .email("Neplatná emailová adresa. 🙄"),
-  password: z.string().min(1, "Heslo musí byť vyplnené. 🙄"),
+    .min(1, "Email musi byť vyplnený.")
+    .email("Neplatná emailová adresa."),
+  password: z.string().min(1, "Heslo musí byť vyplnené."),
 });
+
+type LoginFormData = z.infer<typeof loginFormSchema>;
 
 const LoginForm = ({ searchParams }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -47,7 +47,7 @@ const LoginForm = ({ searchParams }: Props) => {
   const router = useRouter();
 
   const form = useForm<LoginFormData>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(loginFormSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -71,7 +71,7 @@ const LoginForm = ({ searchParams }: Props) => {
         setIsLoading(false);
         toast({
           variant: "destructive",
-          title: "Chyba pri prihlasovani. 🙁",
+          title: "Chyba pri prihlasovaní. 🙁",
           description:
             getErrorMessage(res?.error) === "fetch failed"
               ? "Skúste to prosím neskôr."
@@ -85,7 +85,7 @@ const LoginForm = ({ searchParams }: Props) => {
     } catch (error) {
       toast({
         variant: "destructive",
-        title: "Chyba pri prihlasovani. 🙁",
+        title: "Chyba pri prihlasovaní. 🙁",
         description: getErrorMessage(error) + " 🙄",
         className: "text-lg",
       });
@@ -183,6 +183,7 @@ const LoginForm = ({ searchParams }: Props) => {
               <Button
                 type="submit"
                 className="m-auto mb-2 mt-1 w-5/6 bg-primary text-white hover:bg-primary/85 focus:bg-primary"
+                aria-label="Prihlásiť sa"
               >
                 Prihlásiť sa
               </Button>

@@ -2,17 +2,20 @@ import React from "react";
 import Image from "next/image";
 
 import image from "@/root/public/studio11.png";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
 
-type Props = {};
-
-const AboutMe = (props: Props) => {
+const AboutMe = () => {
   return (
-    <section className="m-auto flex h-full min-h-[500px] w-11/12 flex-col gap-6 pb-10 pt-20 lg:w-[61.8%] lg:flex-row lg:items-center lg:gap-10">
-      <div className="relative m-auto h-[500px] w-[500px] lg:m-0">
-        <div className="absolute -bottom-4 -left-4 z-0 h-[500px] w-[500px] rounded-lg bg-primary/50 shadow-lg"></div>
-        <div className="relative z-10 h-[500px] w-[500px] shadow-lg">
-          <Image src={image} alt="physiotherapist" className="rounded-lg" />
+    <section className="m-auto flex h-full w-11/12 flex-col gap-6 pb-10 pt-20 md:min-h-[500px] lg:w-[61.8%] lg:flex-row lg:items-center lg:gap-10">
+      <div className="relative m-auto h-[500px] w-full md:w-[500px] lg:m-0">
+        <div className="absolute -bottom-4 -left-4 z-0 h-[500px] w-full rounded-lg bg-primary/50 shadow-lg md:w-[500px] md:block hidden"></div>
+        <div className="relative z-10 h-[500px] w-full shadow-lg md:w-[500px]">
+          <Image
+            src={image}
+            alt="physiotherapist"
+            className="rounded-lg"
+            fill
+            style={{ objectFit: "cover" }}
+          />
         </div>
       </div>
       <div className="flex w-full flex-col lg:flex-grow">

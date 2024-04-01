@@ -17,10 +17,8 @@ const center = {
   lng: -109.2771494,
 };
 
-//TODO mobile view
-
 const App = () => {
-  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY; // Make sure to set your API key
+  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY; 
 
   return (
     <div className="w-full">
@@ -44,7 +42,6 @@ const App = () => {
               center={center}
               zoom={10}
             >
-              {/* Child components, such as markers, info windows, etc. */}
               <StreetViewPanorama
                 options={{
                   position: center,

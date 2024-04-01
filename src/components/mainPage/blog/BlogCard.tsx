@@ -11,15 +11,12 @@ type BlogCardProps = {
 };
 
 const stripHtml = (htmlString: string) => {
-  // Add spaces before and after block-level elements to preserve the text structure.
   let textWithSpaces = htmlString
     .replace(/<\/h[1-6]>|<\/p>|<\/div>|<br>/gi, " $& ")
     .replace(/<h[1-6]>/gi, " $& ");
 
-  // Remove HTML tags and then decode HTML entities
   let textOnly = textWithSpaces.replace(/<[^>]+>/g, "");
 
-  // Convert HTML entities into the characters they represent
   textOnly = textOnly
     .replace(/&amp;/g, "&")
     .replace(/&lt;/g, "<")
@@ -28,7 +25,6 @@ const stripHtml = (htmlString: string) => {
     .replace(/&#039;/g, "'")
     .replace(/&nbsp;/g, " ");
 
-  // Replace multiple spaces with a single space and trim the result.
   return textOnly.replace(/\s\s+/g, " ").trim();
 };
 
@@ -81,7 +77,11 @@ const BlogCard = ({ post }: BlogCardProps) => {
             <div className="flex flex-row justify-between px-6 pb-2 pt-4">
               <span className="text-sm text-gray-600">{post.author}</span>
               <time className="text-sm text-gray-600">
-                {new Date(post.datePublished).toLocaleDateString("sk")}
+                {new Date(post.datePublished).toLocaleDateString("sk", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
               </time>
             </div>
           </CardItem>

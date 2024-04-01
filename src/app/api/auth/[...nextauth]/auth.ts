@@ -2,20 +2,36 @@ import { AuthOptions } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials";
 import NextAuth from "next-auth/next";
-import { getErrorMessage } from "@/lib/utils";
+import { getErrorMessage } from "@/lib/utils/utils";
 
 async function refreshToken(token: JWT): Promise<JWT> {
-  const res = await fetch(`${process.env.BACKEND_API_URL}/auth/refresh-token`, {
-    method: "POST",
-    body: JSON.stringify({ refreshToken: token.backendTokens.refreshToken }),
-    headers: { "Content-Type": "application/json" },
-  });
+  try {
+    const res = await fetch(
+      `${process.env.BACKEND_API_URL}/auth/refresh-token`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          refreshToken: token.userTokens.refreshToken,
+        }),
+        headers: { "Content-Type": "application/json" },
+      },
+    );
 
-  const response = await res.json();
-  return {
-    ...token,
-    backendTokens: response,
-  };
+    if (!res.ok) {
+      const error = await res.text();
+
+      throw new Error(getErrorMessage(error));
+    }
+
+    const response = await res.json();
+
+    return {
+      ...token,
+      backendTokens: response,
+    };
+  } catch (error) {
+    throw new Error(getErrorMessage(error));
+  }
 }
 
 export const authOptions: AuthOptions = {
@@ -28,8 +44,6 @@ export const authOptions: AuthOptions = {
       },
       async authorize(credentials, req) {
         if (!credentials?.email || !credentials?.password) return null;
-        
-
 
         try {
           const res = await fetch(`${process.env.BACKEND_API_URL}/auth/login`, {
@@ -50,7 +64,6 @@ export const authOptions: AuthOptions = {
             }
           }
         } catch (error) {
-          console.log("authorize error", error);
           throw new Error(getErrorMessage(error));
         }
       },
@@ -62,20 +75,31 @@ export const authOptions: AuthOptions = {
 
       if (
         new Date().getTime() <
-        new Date(token.backendTokens.expirationDate).getTime()
+        new Date(token.userTokens.accessTokenExpirationDate).getTime()
       )
         return token;
 
       return await refreshToken(token);
     },
-
     async session({ session, token }) {
-
-      session.user = token.user;
-      session.backendTokens = token.backendTokens;
+      session.user = {
+        fullName: token.user.fullName,
+        roles: token.user.roles,
+      };
+      session.expires = token.userTokens.accessTokenExpirationDate;
 
       return session;
     },
+  },
+  pages: {
+    signIn: "/prihlasenie",
+  },
+  session: {
+    strategy: "jwt",
+  },
+  jwt: {
+    secret: process.env.NEXTAUTH_SECRET,
+    maxAge: 24 * 60 * 60,
   },
 };
 

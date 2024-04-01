@@ -3,17 +3,16 @@
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 import { revalidateTag } from "next/cache";
-import { getErrorMessage } from "../utils";
+import { getErrorMessage } from "../utils/utils";
 import {
   TAppointment,
   TAppointmentDetail,
-  TAppointmentExerciseDetail,
-  TC_AdminBookedAppointment,
   TC_Appointment,
   TExerciseType,
   TG_BookedAppointment,
   TG_UnbookedAppointment,
 } from "../shared/types";
+import { getTokenForServerAction } from "./getTokenForServerAction";
 
 export async function getUnbookedAppointmentsAction(): Promise<
   TG_UnbookedAppointment[]
@@ -34,24 +33,25 @@ export async function getUnbookedAppointmentsAction(): Promise<
   return data;
 }
 
-export async function createAppointmentAction(
-  appointmentData: TC_Appointment,
-): Promise<boolean> {
+export async function createAppointmentAction(appointmentData: TC_Appointment) {
   try {
     const session = await getServerSession(authOptions);
+    const token = await getTokenForServerAction();
 
-    if (!session) {
+    if (!session || !token) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
     }
 
     const url = `${process.env.BACKEND_API_URL}/appointments/unbooked`;
+    const accessToken = token.userTokens.accessToken;
+
     const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify(appointmentData),
     });
@@ -62,67 +62,34 @@ export async function createAppointmentAction(
     }
 
     revalidateTag("unbooked-appointments");
-    // Assuming a successful creation returns true or similar positive confirmation
-    return true;
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }
 }
 
-export async function createAdminBookedAppointmentAction(
-  data: TC_AdminBookedAppointment,
-): Promise<boolean> {
-  try {
-    const session = await getServerSession(authOptions);
-
-    if (!session) {
-      throw new Error(
-        "Session not found. User must be logged in to perform this action.",
-      );
-    }
-
-    const url = `${process.env.BACKEND_API_URL}/appointments/admin-booked-appointments`;
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
-      },
-      body: JSON.stringify(data),
-    });
-
-    if (!response.ok) {
-      const errorData = await response.text();
-      throw new Error(errorData);
-    }
-
-    revalidateTag("booked-appointments");
-    revalidateTag("unbooked-appointments");
-    // Assuming a successful creation returns true or similar positive confirmation
-    return true;
-  } catch (error) {
-    throw new Error(getErrorMessage(error));
-  }
-}
-
-export async function createClientBookedAppointmentAction(
+export async function createBookedAppointmentAction(
   astdcId: number,
-): Promise<boolean> {
+  personId?: number,
+) {
   try {
     const session = await getServerSession(authOptions);
+    const token = await getTokenForServerAction();
 
-    if (!session) {
+    if (!session || !token) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
     }
 
-    const url = `${process.env.BACKEND_API_URL}/appointments/client-booked-appointments`;
+    const personIdoUse = personId ? personId : token.user?.personId;
+    const accessToken = token.userTokens.accessToken;
+
+    const url = `${process.env.BACKEND_API_URL}/appointments/booked/${personIdoUse}`;
     const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify({ astdcId }),
     });
@@ -134,31 +101,30 @@ export async function createClientBookedAppointmentAction(
 
     revalidateTag("booked-appointments");
     revalidateTag("unbooked-appointments");
-    // Assuming a successful creation returns true or similar positive confirmation
-    return true;
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }
 }
 
-export async function deleteAppointmentAction(
-  appointmentId: number,
-): Promise<boolean> {
+export async function deleteAppointmentAction(appointmentId: number) {
   try {
     const session = await getServerSession(authOptions);
+    const token = await getTokenForServerAction();
 
-    if (!session) {
+    if (!session || !token) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
     }
 
     const url = `${process.env.BACKEND_API_URL}/appointments/${appointmentId}`;
+    const accessToken = token.userTokens.accessToken;
+
     const response = await fetch(url, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     });
 
@@ -168,8 +134,7 @@ export async function deleteAppointmentAction(
     }
 
     revalidateTag("unbooked-appointments");
-    // Assuming a successful deletion returns true or similar positive confirmation
-    return true;
+    revalidateTag("booked-appointments");
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }
@@ -180,7 +145,9 @@ export async function getAllBookedAppointmentsAction(): Promise<
 > {
   try {
     const session = await getServerSession(authOptions);
-    if (!session) {
+    const token = await getTokenForServerAction();
+
+    if (!session || !token) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
@@ -191,13 +158,15 @@ export async function getAllBookedAppointmentsAction(): Promise<
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${token.userTokens.accessToken}`,
       },
       next: { tags: ["booked-appointments"] },
     });
 
     if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`);
+      const errorMessage = await res.text();
+
+      throw new Error(getErrorMessage(errorMessage));
     }
 
     const data = await res.json();
@@ -210,24 +179,28 @@ export async function getAllBookedAppointmentsAction(): Promise<
 }
 
 export async function getBookedAppointmentsForClientAction(
-  clientId?: number,
+  personId?: number,
 ): Promise<TG_BookedAppointment[]> {
   try {
     const session = await getServerSession(authOptions);
-    if (!session) {
+    const token = await getTokenForServerAction();
+
+    if (!session || !token) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
     }
 
-    let clientIdToUse = clientId ? clientId : session.user?.clientId;
+    const personIdToUse = personId ? personId : token.user.personId;
 
-    let url = `${process.env.BACKEND_API_URL}/appointments/client/${clientIdToUse}/booked`;
+    const url = `${process.env.BACKEND_API_URL}/appointments/client/${personIdToUse}/booked`;
+    const accessToken = token.userTokens.accessToken;
+
     const res = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     });
 
@@ -245,24 +218,28 @@ export async function getBookedAppointmentsForClientAction(
 }
 
 export async function getFinishedAppointmentsForClientAction(
-  clientId?: number,
+  personId?: number,
 ): Promise<TG_BookedAppointment[]> {
   try {
     const session = await getServerSession(authOptions);
-    if (!session) {
+    const token = await getTokenForServerAction();
+
+    if (!session || !token) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
     }
 
-    let clientIdToUse = clientId ? clientId : session.user?.clientId;
+    const personIdToUse = personId ? personId : token.user.personId;
 
-    let url = `${process.env.BACKEND_API_URL}/appointments/client/${clientIdToUse}/finished`;
+    const url = `${process.env.BACKEND_API_URL}/appointments/client/${personIdToUse}/finished`;
+    const accessToken = token.userTokens.accessToken;
+
     const res = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     });
 
@@ -284,18 +261,22 @@ export async function getAllFinishedAppointmentsAction(): Promise<
 > {
   try {
     const session = await getServerSession(authOptions);
-    if (!session) {
+    const token = await getTokenForServerAction();
+
+    if (!session || !token) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
     }
 
-    let url = `${process.env.BACKEND_API_URL}/appointments/finished`;
+    const url = `${process.env.BACKEND_API_URL}/appointments/finished`;
+    const accessToken = token.userTokens.accessToken;
+
     const res = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
       next: { tags: ["all-finished-appointments"] },
     });
@@ -315,28 +296,31 @@ export async function getAllFinishedAppointmentsAction(): Promise<
 
 export async function deleteBookedAppointmentAction(
   bookedAppointmentId: number,
-): Promise<void> {
+) {
   try {
     const session = await getServerSession(authOptions);
+    const token = await getTokenForServerAction();
 
-    if (!session) {
+    if (!session || !token) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
     }
 
     const url = `${process.env.BACKEND_API_URL}/appointments/booked/${bookedAppointmentId}`;
+    const accessToken = token.userTokens.accessToken;
+
     const response = await fetch(url, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     });
 
     if (!response.ok) {
       const errorData = await response.text();
-      throw new Error(errorData);
+      throw new Error(getErrorMessage(errorData));
     }
 
     revalidateTag("booked-appointments");
@@ -346,23 +330,37 @@ export async function deleteBookedAppointmentAction(
   }
 }
 
-//TODO auth
 export async function getAppointmentByIdAction(
   id: number,
 ): Promise<TAppointment> {
   try {
+    const session = await getServerSession(authOptions);
+    const token = await getTokenForServerAction();
+
+    if (!session || !token) {
+      throw new Error(
+        "Session not found. User must be logged in to perform this action.",
+      );
+    }
+
     const url = `${process.env.BACKEND_API_URL}/appointments/${id}`;
-    const res = await fetch(url, {
+    const accessToken = token.userTokens.accessToken;
+
+    const response = await fetch(url, {
       method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
       cache: "no-store",
     });
 
-    if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`);
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
     }
 
-    const data = await res.json();
-
+    const data = await response.json();
     return data;
   } catch (error) {
     throw new Error(getErrorMessage(error));
@@ -375,20 +373,24 @@ export async function updateAppointmentDetailsAction(
 ): Promise<void> {
   try {
     const session = await getServerSession(authOptions);
+    const token = await getTokenForServerAction();
 
-    if (!session) {
+    if (!session || !token) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
     }
 
-    const url = `${process.env.BACKEND_API_URL}/appointments/${appointmentId}/details`; // Endpoint might need to be updated
+    const url = `${process.env.BACKEND_API_URL}/appointments/${appointmentId}/details`;
+    const accessToken = token.userTokens.accessToken;
+
     const response = await fetch(url, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
+      cache: "no-store",
       body: JSON.stringify(appointmentDetail),
     });
 
@@ -396,7 +398,6 @@ export async function updateAppointmentDetailsAction(
       const errorData = await response.text();
       throw new Error(errorData);
     }
-    // Handle success response
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }
@@ -432,8 +433,9 @@ export async function markBookedAppointmentAsFinishedAction(
 ): Promise<void> {
   try {
     const session = await getServerSession(authOptions);
+    const accessToken = await getTokenForServerAction();
 
-    if (!session) {
+    if (!session || !accessToken) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
@@ -444,7 +446,7 @@ export async function markBookedAppointmentAsFinishedAction(
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     });
 
@@ -456,7 +458,6 @@ export async function markBookedAppointmentAsFinishedAction(
     revalidateTag("booked-appointments");
     revalidateTag("all-finished-appointments");
   } catch (error) {
-    console.log("error", error);
     throw new Error(getErrorMessage(error));
   }
 }

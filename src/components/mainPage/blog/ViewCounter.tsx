@@ -8,7 +8,6 @@ type Props = {
 
 const ViewCounter = ({ blogSlug }: Props) => {
   useEffect(() => {
-    // Function to increment the view count
     const incrementViewCount = async () => {
       const url = `/apinet/blog-posts/${blogSlug}/increment-view-count`;
       try {

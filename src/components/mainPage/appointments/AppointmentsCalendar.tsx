@@ -20,9 +20,9 @@ import {
 } from "date-fns";
 import { enUS } from "date-fns/locale";
 import { TG_UnbookedAppointment, TG_ServiceType } from "@/lib/shared/types"; // Update the import path as needed
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/utils";
 import ScheduleForTheDay from "./ScheduleForTheDay";
-import { useAppointmentsStore } from "@/useAppointmentsStore";
+import { useAppointmentsStore } from "@/lib/stores/useAppointmentsStore";
 
 type Props = {
   appointmentsData: TG_UnbookedAppointment[];
@@ -39,9 +39,11 @@ const AppointmentsCalendar = ({
   let [currentMonth, setCurrentMonth] = useState(
     format(startOfToday(), "MMM-yyyy", { locale: enUS }),
   );
+
   const setAppointments = useAppointmentsStore(
     (state) => state.setAppointments,
   );
+
   const appointments = useAppointmentsStore((state) => state.appointments);
 
   useEffect(() => {
@@ -106,7 +108,7 @@ const AppointmentsCalendar = ({
           <h2 className="flex-auto select-none pl-5 text-lg font-semibold text-gray-900">
             {getMonthNameSk(
               format(firstDayCurrentMonth, "MMMM", { locale: enUS }),
-            )}{" "}
+            )}
             {format(firstDayCurrentMonth, "yyyy")}
           </h2>
           <button

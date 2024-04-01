@@ -1,5 +1,3 @@
-
-
 const nextConfig = {
   async rewrites() {
     return [
@@ -10,12 +8,24 @@ const nextConfig = {
     ];
   },
   images: {
-    remotePatterns: [
-      {
-        protocol: "http",
-        hostname: "**",
-      },
-    ],
+    remotePatterns:
+      process.env.NODE_ENV !== "production"
+        ? [
+            {
+              protocol: "http",
+              hostname: "**",
+            },
+            {
+              protocol: "https",
+              hostname: "i.postimg.cc",
+            },
+          ]
+        : [
+            {
+              protocol: "https",
+              hostname: "i.postimg.cc",
+            },
+          ],
   },
 };
 

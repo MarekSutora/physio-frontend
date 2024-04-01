@@ -1,4 +1,3 @@
-import DashboardSectionWrapper from "@/components/dashboard/common/DashboardSectionWrapper";
 import AppointmentsCalendar from "@/components/mainPage/appointments/AppointmentsCalendar";
 import { getUnbookedAppointmentsAction } from "@/lib/actions/appointmentsActions";
 import { getServiceTypesAction } from "@/lib/actions/serviceTypesActions";

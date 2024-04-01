@@ -1,30 +1,35 @@
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
-import { getErrorMessage } from "../utils";
+import { getErrorMessage } from "../utils/utils";
 import {
   TBlogPostViewsStats,
   TNewClientsStatistics,
   TRevenueStatistics,
   TServiceTypeStatistics,
 } from "../shared/types";
+import { getTokenForServerAction } from "./getTokenForServerAction";
 
 export async function getServiceTypeFinishedAppointmentsCountsAction(): Promise<
   TServiceTypeStatistics[]
 > {
   try {
     const session = await getServerSession(authOptions);
-    if (!session) {
+    const token = await getTokenForServerAction();
+
+    if (!session || !token) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
     }
 
     const url = `${process.env.BACKEND_API_URL}/statistics/appointments-service-types`;
+    const accessToken = token.userTokens.accessToken;
+
     const response = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     });
 
@@ -44,18 +49,22 @@ export async function getTotalRevenueStatisticsAction(): Promise<
 > {
   try {
     const session = await getServerSession(authOptions);
-    if (!session) {
+    const token = await getTokenForServerAction();
+
+    if (!session || !token) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
     }
 
     const url = `${process.env.BACKEND_API_URL}/statistics/revenue`;
+    const accessToken = token.userTokens.accessToken;
+
     const response = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     });
 
@@ -75,18 +84,22 @@ export async function getNewClientsTrendAction(): Promise<
 > {
   try {
     const session = await getServerSession(authOptions);
-    if (!session) {
+    const token = await getTokenForServerAction();
+
+    if (!session || !token) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
     }
 
     const url = `${process.env.BACKEND_API_URL}/statistics/new-clients-trend`;
+    const accessToken = token.userTokens.accessToken;
+
     const response = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     });
 
@@ -106,18 +119,22 @@ export async function getBlogPostViewsStatsAction(): Promise<
 > {
   try {
     const session = await getServerSession(authOptions);
-    if (!session) {
+    const token = await getTokenForServerAction();
+
+    if (!session || !token) {
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
     }
 
     const url = `${process.env.BACKEND_API_URL}/statistics/blog-post-views-stats`;
+    const accessToken = token.userTokens.accessToken;
+
     const response = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session.backendTokens.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     });
 

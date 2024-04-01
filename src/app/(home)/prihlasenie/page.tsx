@@ -2,7 +2,10 @@ import LoginForm from "@/components/auth/LoginForm";
 import loginPic from "@/root/public/login.png";
 import Image from "next/image";
 
-//TODO ked nejde api tak ukazuje fetch failed - treba nejaku inu message
+export const metadata = {
+  title: "Prihlásenie",
+  description: "Prihlásenie do aplikácie",
+};
 
 type Props = {
   searchParams: { [key: string]: string | string[] | undefined };
