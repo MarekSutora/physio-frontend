@@ -59,7 +59,6 @@ export async function createBlogPostAction(formData: TBlogPost) {
     }
 
     revalidateTag("blog-posts");
-    revalidatePath("/blog");
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }
@@ -94,7 +93,6 @@ export async function updateBlogPostAction(formData: TBlogPost) {
     }
 
     revalidateTag("blog-posts");
-    revalidatePath("/blog");
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }
@@ -128,7 +126,6 @@ export async function deleteBlogPostAction(slug: string) {
     }
 
     revalidateTag("blog-posts");
-    revalidatePath("/blog");
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }

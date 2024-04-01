@@ -64,7 +64,6 @@ export async function createNewServiceTypeAction(formData: TServiceType) {
     }
 
     revalidateTag("service-types");
-    revalidatePath("/sluzby");
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }
@@ -100,7 +99,6 @@ export async function updateServiceTypeAction(formData: TServiceType) {
     }
 
     revalidateTag("service-types");
-    revalidatePath("/sluzby");
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }
@@ -134,7 +132,6 @@ export async function deleteServiceTypeAction(id: number) {
     }
 
     revalidateTag("service-types");
-    revalidatePath("/sluzby");
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }
