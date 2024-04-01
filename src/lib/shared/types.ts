@@ -89,7 +89,7 @@ export type TG_BookedAppointment = {
 export type TBlogPost = {
   title: string;
   author: string;
-  datePublished: string;
+  datePublished: Date;
   keywordsString: string;
   mainImageUrl: string;
   htmlContent: string;

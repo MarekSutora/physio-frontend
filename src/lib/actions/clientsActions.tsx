@@ -4,12 +4,12 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 import { getErrorMessage } from "../utils/utils";
 import { TClient, TClientNote } from "../shared/types";
-import { getTokenForServerActions } from "./getTokenForServerActions";
+import { getTokenForServerAction } from "./getTokenForServerAction";
 
 export async function getClientsData(): Promise<TClient[]> {
   try {
     const session = await getServerSession(authOptions);
-    const token = await getTokenForServerActions();
+    const token = await getTokenForServerAction();
 
     if (!session || !token) {
       throw new Error(
@@ -44,7 +44,7 @@ export async function getClientsData(): Promise<TClient[]> {
 export async function addNoteToClient(note: TClientNote): Promise<void> {
   try {
     const session = await getServerSession(authOptions);
-    const token = await getTokenForServerActions();
+    const token = await getTokenForServerAction();
 
     if (!session || !token) {
       throw new Error(
@@ -78,7 +78,7 @@ export async function getAllNotesForClient(
 ): Promise<TClientNote[]> {
   try {
     const session = await getServerSession(authOptions);
-    const token = await getTokenForServerActions();
+    const token = await getTokenForServerAction();
 
     if (!session || !token) {
       throw new Error(
@@ -112,7 +112,7 @@ export async function getAllNotesForClient(
 export async function getClientById(personId: number): Promise<TClient> {
   try {
     const session = await getServerSession(authOptions);
-    const token = await getTokenForServerActions();
+    const token = await getTokenForServerAction();
 
     if (!session || !token) {
       throw new Error(
@@ -146,7 +146,7 @@ export async function getClientById(personId: number): Promise<TClient> {
 export async function deleteNoteFromClient(noteId: number): Promise<void> {
   try {
     const session = await getServerSession(authOptions);
-    const token = await getTokenForServerActions();
+    const token = await getTokenForServerAction();
 
     if (!session || !token) {
       throw new Error(

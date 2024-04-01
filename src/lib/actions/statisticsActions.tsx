@@ -7,14 +7,14 @@ import {
   TRevenueStatistics,
   TServiceTypeStatistics,
 } from "../shared/types";
-import { getTokenForServerActions } from "./getTokenForServerActions";
+import { getTokenForServerAction } from "./getTokenForServerAction";
 
 export async function getServiceTypeFinishedAppointmentsCountsAction(): Promise<
   TServiceTypeStatistics[]
 > {
   try {
     const session = await getServerSession(authOptions);
-    const token = await getTokenForServerActions();
+    const token = await getTokenForServerAction();
 
     if (!session || !token) {
       throw new Error(
@@ -49,7 +49,7 @@ export async function getTotalRevenueStatisticsAction(): Promise<
 > {
   try {
     const session = await getServerSession(authOptions);
-    const token = await getTokenForServerActions();
+    const token = await getTokenForServerAction();
 
     if (!session || !token) {
       throw new Error(
@@ -84,7 +84,7 @@ export async function getNewClientsTrendAction(): Promise<
 > {
   try {
     const session = await getServerSession(authOptions);
-    const token = await getTokenForServerActions();
+    const token = await getTokenForServerAction();
 
     if (!session || !token) {
       throw new Error(
@@ -119,7 +119,7 @@ export async function getBlogPostViewsStatsAction(): Promise<
 > {
   try {
     const session = await getServerSession(authOptions);
-    const token = await getTokenForServerActions();
+    const token = await getTokenForServerAction();
 
     if (!session || !token) {
       throw new Error(

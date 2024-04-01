@@ -5,7 +5,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 import { TCU_ServiceType, TG_ServiceType } from "../shared/types";
 import { revalidateTag } from "next/cache";
 import { getErrorMessage } from "../utils/utils";
-import { getTokenForServerActions } from "./getTokenForServerActions";
+import { getTokenForServerAction } from "./getTokenForServerAction";
 
 export async function getServiceTypesAction(): Promise<TG_ServiceType[]> {
   try {
@@ -34,7 +34,7 @@ export async function getServiceTypesAction(): Promise<TG_ServiceType[]> {
 export async function createNewServiceTypeAction(formData: TCU_ServiceType) {
   try {
     const session = await getServerSession(authOptions);
-    const token = await getTokenForServerActions();
+    const token = await getTokenForServerAction();
 
     if (!session || !token) {
       throw new Error(
@@ -72,7 +72,7 @@ export async function createNewServiceTypeAction(formData: TCU_ServiceType) {
 export async function updateServiceTypeAction(formData: TCU_ServiceType) {
   try {
     const session = await getServerSession(authOptions);
-    const token = await getTokenForServerActions();
+    const token = await getTokenForServerAction();
 
     if (!session || !token) {
       throw new Error(
@@ -107,7 +107,7 @@ export async function updateServiceTypeAction(formData: TCU_ServiceType) {
 export async function deleteServiceTypeAction(id: number) {
   try {
     const session = await getServerSession(authOptions);
-    const token = await getTokenForServerActions();
+    const token = await getTokenForServerAction();
 
     if (!session || !token) {
       throw new Error(
@@ -117,7 +117,6 @@ export async function deleteServiceTypeAction(id: number) {
 
     const url = `${process.env.BACKEND_API_URL}/service-types/${id}`;
     const accessToken = token.userTokens.accessToken;
-
 
     const res = await fetch(url, {
       method: "DELETE",

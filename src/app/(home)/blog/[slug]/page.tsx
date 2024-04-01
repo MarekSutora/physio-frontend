@@ -47,7 +47,11 @@ export async function generateMetadata({
     description:
       blogPost.author +
       " - " +
-      blogPost.datePublished +
+      new Date(blogPost.datePublished).toLocaleDateString("sk", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }) +
       " - " +
       blogPost.keywordsString
         .split(";")

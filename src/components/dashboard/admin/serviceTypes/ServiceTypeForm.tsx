@@ -18,6 +18,8 @@ import { TCU_ServiceType } from "@/lib/shared/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library, IconName } from "@fortawesome/fontawesome-svg-core";
 import * as Icons from "@fortawesome/free-solid-svg-icons";
+import ShadConfirmationDialog from "@/components/mainPage/common/ShadConfirmationDialog";
+import FormConfirmationDialog from "@/components/mainPage/common/FormConfirmationDialog";
 
 const durationCostSchema = z.object({
   durationMinutes: z.coerce
@@ -29,12 +31,12 @@ const durationCostSchema = z.object({
 
 const formSchema = z.object({
   id: z.any().optional(),
-  name: z.string().min(1, { message: "Name is required" }),
-  description: z.string().min(1, { message: "Description is required" }),
-  hexColor: z.string().min(1, { message: "Hex color is required" }),
+  name: z.string().min(1, { message: "Názov služby je povinný." }),
+  description: z.string().min(1, { message: "Popis je povinný." }),
+  hexColor: z.string().min(1, { message: "Výber farby je povinný." }),
   durationCosts: z.array(durationCostSchema),
-  imageUrl: z.string().url({ message: "Invalid URL" }),
-  iconName: z.string().min(1, { message: "Icon name is required" }),
+  imageUrl: z.string().url({ message: "Nesprávny formát URL adresy." }),
+  iconName: z.string().min(1, { message: "Názov ikony je povinný." }),
 });
 
 type Props = {
@@ -46,6 +48,8 @@ library.add(Icons.fas);
 
 const ServiceTypeForm = ({ serviceType, children, onSubmit }: Props) => {
   const [dynamicIcon, setDynamicIcon] = useState<IconName | null>(null);
+  const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] =
+    useState(false);
   const form = useForm<TCU_ServiceType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -85,9 +89,13 @@ const ServiceTypeForm = ({ serviceType, children, onSubmit }: Props) => {
     );
   };
 
-  const handleFormSubmit = async (data: TCU_ServiceType) => {
+  const onConfirmDialog = async (data: TCU_ServiceType) => {
+    setIsConfirmationDialogOpen(false);
     await onSubmit(data);
-    form.reset();
+  };
+
+  const handleFormSubmit = async (data: TCU_ServiceType) => {
+    setIsConfirmationDialogOpen(true);
   };
 
   return (
@@ -203,6 +211,11 @@ const ServiceTypeForm = ({ serviceType, children, onSubmit }: Props) => {
       >
         Pridať ďalšie
       </Button>
+      <FormConfirmationDialog
+        isOpen={isConfirmationDialogOpen}
+        onClose={() => setIsConfirmationDialogOpen(false)}
+        onConfirm={() => onConfirmDialog(form.getValues())}
+      ></FormConfirmationDialog>
       {children}
     </form>
   );

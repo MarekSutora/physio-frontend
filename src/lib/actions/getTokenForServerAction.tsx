@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 import { decode } from "next-auth/jwt";
 
-export async function getTokenForServerActions() {
+export async function getTokenForServerAction() {
   const cookieStore = cookies().getAll();
 
   let cookieName: string;

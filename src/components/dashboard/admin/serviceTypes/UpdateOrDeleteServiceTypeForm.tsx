@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/command";
 import { ChevronsUpDown } from "lucide-react";
 import { getErrorMessage } from "@/lib/utils/utils";
+import ShadConfirmationDialog from "@/components/mainPage/common/ShadConfirmationDialog";
 
 type Props = {
   serviceTypes: TG_ServiceType[];
@@ -126,13 +127,13 @@ const UpdateOrDeleteServiceTypeForm = ({ serviceTypes }: Props) => {
           key={selectedServiceType?.id || "new"}
         >
           <Button type="submit">Upraviť</Button>
-          <Button
-            type="button"
-            className="bg-destructive hover:bg-red-400"
-            onClick={handleDelete}
+          <ShadConfirmationDialog
+            onConfirm={handleDelete}
+            dialogTitle="Naozaj chcete odstrániť túto službu?"
+            dialogDescription="Táto akcia je nevratná."
           >
-            Odstrániť službu
-          </Button>
+            <Button variant="destructive">Odstrániť</Button>
+          </ShadConfirmationDialog>
         </ServiceTypeForm>
       )}
     </>

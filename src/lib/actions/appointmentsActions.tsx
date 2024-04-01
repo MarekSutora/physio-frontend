@@ -12,7 +12,7 @@ import {
   TG_BookedAppointment,
   TG_UnbookedAppointment,
 } from "../shared/types";
-import { getTokenForServerActions } from "./getTokenForServerActions";
+import { getTokenForServerAction } from "./getTokenForServerAction";
 
 export async function getUnbookedAppointmentsAction(): Promise<
   TG_UnbookedAppointment[]
@@ -36,7 +36,7 @@ export async function getUnbookedAppointmentsAction(): Promise<
 export async function createAppointmentAction(appointmentData: TC_Appointment) {
   try {
     const session = await getServerSession(authOptions);
-    const token = await getTokenForServerActions();
+    const token = await getTokenForServerAction();
 
     if (!session || !token) {
       throw new Error(
@@ -73,7 +73,7 @@ export async function createBookedAppointmentAction(
 ) {
   try {
     const session = await getServerSession(authOptions);
-    const token = await getTokenForServerActions();
+    const token = await getTokenForServerAction();
 
     if (!session || !token) {
       throw new Error(
@@ -109,7 +109,7 @@ export async function createBookedAppointmentAction(
 export async function deleteAppointmentAction(appointmentId: number) {
   try {
     const session = await getServerSession(authOptions);
-    const token = await getTokenForServerActions();
+    const token = await getTokenForServerAction();
 
     if (!session || !token) {
       throw new Error(
@@ -145,7 +145,7 @@ export async function getAllBookedAppointmentsAction(): Promise<
 > {
   try {
     const session = await getServerSession(authOptions);
-    const token = await getTokenForServerActions();
+    const token = await getTokenForServerAction();
 
     if (!session || !token) {
       throw new Error(
@@ -183,7 +183,7 @@ export async function getBookedAppointmentsForClientAction(
 ): Promise<TG_BookedAppointment[]> {
   try {
     const session = await getServerSession(authOptions);
-    const token = await getTokenForServerActions();
+    const token = await getTokenForServerAction();
 
     if (!session || !token) {
       throw new Error(
@@ -222,7 +222,7 @@ export async function getFinishedAppointmentsForClientAction(
 ): Promise<TG_BookedAppointment[]> {
   try {
     const session = await getServerSession(authOptions);
-    const token = await getTokenForServerActions();
+    const token = await getTokenForServerAction();
 
     if (!session || !token) {
       throw new Error(
@@ -261,7 +261,7 @@ export async function getAllFinishedAppointmentsAction(): Promise<
 > {
   try {
     const session = await getServerSession(authOptions);
-    const token = await getTokenForServerActions();
+    const token = await getTokenForServerAction();
 
     if (!session || !token) {
       throw new Error(
@@ -299,7 +299,7 @@ export async function deleteBookedAppointmentAction(
 ) {
   try {
     const session = await getServerSession(authOptions);
-    const token = await getTokenForServerActions();
+    const token = await getTokenForServerAction();
 
     if (!session || !token) {
       throw new Error(
@@ -335,7 +335,7 @@ export async function getAppointmentByIdAction(
 ): Promise<TAppointment> {
   try {
     const session = await getServerSession(authOptions);
-    const token = await getTokenForServerActions();
+    const token = await getTokenForServerAction();
 
     if (!session || !token) {
       throw new Error(
@@ -373,7 +373,7 @@ export async function updateAppointmentDetailsAction(
 ): Promise<void> {
   try {
     const session = await getServerSession(authOptions);
-    const token = await getTokenForServerActions();
+    const token = await getTokenForServerAction();
 
     if (!session || !token) {
       throw new Error(
@@ -433,7 +433,7 @@ export async function markBookedAppointmentAsFinishedAction(
 ): Promise<void> {
   try {
     const session = await getServerSession(authOptions);
-    const accessToken = await getTokenForServerActions();
+    const accessToken = await getTokenForServerAction();
 
     if (!session || !accessToken) {
       throw new Error(

@@ -14,10 +14,11 @@ import ClipLoader from "react-spinners/ClipLoader";
 
 type Props = {
   children: React.ReactNode;
-  onConfirm: (...args: any[]) => Promise<void>; 
-  confirmArgs?: any[]; 
-  dialogTitle?: string; 
-  dialogDescription?: string; 
+  onConfirm: (...args: any[]) => Promise<void>;
+  confirmArgs?: any[];
+  dialogTitle?: string;
+  dialogDescription?: string;
+  isOpen?: boolean;
 };
 
 const ShadConfirmationDialog = ({
@@ -26,6 +27,7 @@ const ShadConfirmationDialog = ({
   confirmArgs = [],
   dialogTitle = "Ste si istý, že chcete vykonat túto akciu?",
   dialogDescription = "",
+  isOpen = false,
 }: Props) => {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);

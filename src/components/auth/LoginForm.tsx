@@ -31,15 +31,15 @@ type LoginForm = {
   password: string;
 };
 
-type LoginFormData = z.infer<typeof formSchema>;
-
-const formSchema = z.object({
+const loginFormSchema = z.object({
   email: z
     .string()
-    .min(1, "Email musi byť vyplnený. 🙄")
-    .email("Neplatná emailová adresa. 🙄"),
-  password: z.string().min(1, "Heslo musí byť vyplnené. 🙄"),
+    .min(1, "Email musi byť vyplnený.")
+    .email("Neplatná emailová adresa."),
+  password: z.string().min(1, "Heslo musí byť vyplnené."),
 });
+
+type LoginFormData = z.infer<typeof loginFormSchema>;
 
 const LoginForm = ({ searchParams }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -47,7 +47,7 @@ const LoginForm = ({ searchParams }: Props) => {
   const router = useRouter();
 
   const form = useForm<LoginFormData>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(loginFormSchema),
     defaultValues: {
       email: "",
       password: "",

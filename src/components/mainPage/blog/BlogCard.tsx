@@ -77,7 +77,11 @@ const BlogCard = ({ post }: BlogCardProps) => {
             <div className="flex flex-row justify-between px-6 pb-2 pt-4">
               <span className="text-sm text-gray-600">{post.author}</span>
               <time className="text-sm text-gray-600">
-                {new Date(post.datePublished).toLocaleDateString("sk")}
+                {new Date(post.datePublished).toLocaleDateString("sk", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
               </time>
             </div>
           </CardItem>
