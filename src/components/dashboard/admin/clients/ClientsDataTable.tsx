@@ -31,8 +31,6 @@ const defaultFilters: DataTableFilterMeta = {
 };
 
 const ClientsDataTable = ({ clients }: Props) => {
-  const [clientsDataState, setClientsDataState] = useState<TClient[]>(clients); //TODO do buducnosti pre mazanie klientov
-
   setUpLocaleForDataTable();
 
   const clientAttributeToSlovakMapping: { [key: string]: string } = {
@@ -47,7 +45,7 @@ const ClientsDataTable = ({ clients }: Props) => {
   const exportCSV = () => {
     const csv = Papa.unparse({
       fields: Object.keys(clientAttributeToSlovakMapping),
-      data: clientsDataState.map((client) => ({
+      data: clients.map((client) => ({
         personId: client.personId,
         firstName: client.firstName,
         lastName: client.lastName,
@@ -92,7 +90,7 @@ const ClientsDataTable = ({ clients }: Props) => {
   return (
     <DashboardSectionWrapper title="Klienti">
       <DataTable
-        value={clientsDataState}
+        value={clients}
         paginator
         rows={11}
         emptyMessage="Nenašli sa žiadní klienti."

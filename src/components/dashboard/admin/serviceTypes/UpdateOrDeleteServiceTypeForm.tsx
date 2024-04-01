@@ -7,7 +7,7 @@ import {
   deleteServiceTypeAction,
 } from "@/lib/actions/serviceTypesActions";
 import ServiceTypeForm from "./ServiceTypeForm";
-import { TCU_ServiceType, TG_ServiceType } from "@/lib/shared/types";
+import { TServiceType, TG_ServiceType } from "@/lib/shared/types";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -43,7 +43,7 @@ const UpdateOrDeleteServiceTypeForm = ({ serviceTypes }: Props) => {
     ? transformServiceTypeForUpdate(selectedServiceType)
     : null;
 
-  const handleSubmit = async (values: TCU_ServiceType) => {
+  const handleSubmit = async (values: TServiceType) => {
     try {
       if (selectedServiceType) {
         await updateServiceTypeAction(values);
@@ -142,7 +142,7 @@ const UpdateOrDeleteServiceTypeForm = ({ serviceTypes }: Props) => {
 
 const transformServiceTypeForUpdate = (
   serviceType: TG_ServiceType,
-): TCU_ServiceType => {
+): TServiceType => {
   return {
     id: serviceType.id,
     name: serviceType.name,

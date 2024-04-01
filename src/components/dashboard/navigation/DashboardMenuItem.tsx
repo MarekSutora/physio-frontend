@@ -53,6 +53,7 @@ const DashboardMenuItem = ({
               !isActive && "group bg-primary text-white",
               "flex w-full flex-row items-center justify-between gap-2 py-2 pl-3 pr-2 text-lg font-medium",
             )}
+            aria-label="open submenu"
             onClick={() => handleItemWithSubMenuClick(text)}
           >
             <div className="scale-125 hover:underline group-hover:scale-[1.35] group-active:scale-[1.35]">

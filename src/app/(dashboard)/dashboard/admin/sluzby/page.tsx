@@ -8,8 +8,6 @@ import { TG_ServiceType } from "@/lib/shared/types";
 import React, { Suspense } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 
-type Props = {};
-
 const Page = async () => {
   let serviceTypes: TG_ServiceType[] = [];
   try {

@@ -25,16 +25,13 @@ const CreateNewAppointmentForm = ({ serviceTypes }: Props) => {
     ServiceTypeOptionType[]
   >([]);
 
-  console.log("serviceTypes", serviceTypes);
-
   const [capacity, setCapacity] = useState<number>(1);
 
-  // Convert service types and their duration costs to select options
   const serviceTypesOptions = serviceTypes.flatMap((serviceType) =>
     serviceType.stdcs.map((cost) => ({
       label: `${serviceType.name} - ${cost.durationMinutes}min - ${cost.cost}e`,
-      value: `${serviceType.id}-${cost.id}`, // Unique value using both IDs
-      color: serviceType.hexColor, // Use the hex color for option styling
+      value: `${serviceType.id}-${cost.id}`,
+      color: serviceType.hexColor,
     })),
   );
 

@@ -183,6 +183,7 @@ const LoginForm = ({ searchParams }: Props) => {
               <Button
                 type="submit"
                 className="m-auto mb-2 mt-1 w-5/6 bg-primary text-white hover:bg-primary/85 focus:bg-primary"
+                aria-label="Prihlásiť sa"
               >
                 Prihlásiť sa
               </Button>

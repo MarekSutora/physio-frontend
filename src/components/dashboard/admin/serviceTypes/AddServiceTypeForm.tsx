@@ -5,13 +5,13 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { createNewServiceTypeAction } from "@/lib/actions/serviceTypesActions";
 import ServiceTypeForm from "./ServiceTypeForm";
-import { TCU_ServiceType } from "@/lib/shared/types";
+import { TServiceType } from "@/lib/shared/types";
 import { getErrorMessage } from "@/lib/utils/utils";
 
 const AddServiceTypeForm = () => {
   const { toast } = useToast();
 
-  const handleSubmit = async (values: TCU_ServiceType) => {
+  const handleSubmit = async (values: TServiceType) => {
     try {
       await createNewServiceTypeAction(values);
       toast({
@@ -22,10 +22,7 @@ const AddServiceTypeForm = () => {
     } catch (error) {
       toast({
         variant: "destructive",
-        description:
-          getErrorMessage(error) === "Služba s týmto názvom už existuje."
-            ? "Služba s týmto názvom už existuje."
-            : "Chyba pri pridávaní novej služby.",
+        description: getErrorMessage(error),
         className: "text-lg",
       });
     }

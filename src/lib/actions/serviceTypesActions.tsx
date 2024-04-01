@@ -2,7 +2,7 @@
 
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
-import { TCU_ServiceType, TG_ServiceType } from "../shared/types";
+import { TServiceType, TG_ServiceType } from "../shared/types";
 import { revalidateTag } from "next/cache";
 import { getErrorMessage } from "../utils/utils";
 import { getTokenForServerAction } from "./getTokenForServerAction";
@@ -31,7 +31,7 @@ export async function getServiceTypesAction(): Promise<TG_ServiceType[]> {
   }
 }
 
-export async function createNewServiceTypeAction(formData: TCU_ServiceType) {
+export async function createNewServiceTypeAction(formData: TServiceType) {
   try {
     const session = await getServerSession(authOptions);
     const token = await getTokenForServerAction();
@@ -69,7 +69,7 @@ export async function createNewServiceTypeAction(formData: TCU_ServiceType) {
   }
 }
 
-export async function updateServiceTypeAction(formData: TCU_ServiceType) {
+export async function updateServiceTypeAction(formData: TServiceType) {
   try {
     const session = await getServerSession(authOptions);
     const token = await getTokenForServerAction();
