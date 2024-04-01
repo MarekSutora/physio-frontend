@@ -8,7 +8,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { TReview } from "@/lib/shared/types";
-import React, { useState } from "react";
+import React from "react";
 import ReviewCard from "./ReviewCard";
 
 const dummyReviews: TReview[] = [

@@ -11,15 +11,12 @@ type BlogCardProps = {
 };
 
 const stripHtml = (htmlString: string) => {
-  // Add spaces before and after block-level elements to preserve the text structure.
   let textWithSpaces = htmlString
     .replace(/<\/h[1-6]>|<\/p>|<\/div>|<br>/gi, " $& ")
     .replace(/<h[1-6]>/gi, " $& ");
 
-  // Remove HTML tags and then decode HTML entities
   let textOnly = textWithSpaces.replace(/<[^>]+>/g, "");
 
-  // Convert HTML entities into the characters they represent
   textOnly = textOnly
     .replace(/&amp;/g, "&")
     .replace(/&lt;/g, "<")
@@ -28,7 +25,6 @@ const stripHtml = (htmlString: string) => {
     .replace(/&#039;/g, "'")
     .replace(/&nbsp;/g, " ");
 
-  // Replace multiple spaces with a single space and trim the result.
   return textOnly.replace(/\s\s+/g, " ").trim();
 };
 

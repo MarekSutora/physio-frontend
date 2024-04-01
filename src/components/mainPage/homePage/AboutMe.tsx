@@ -2,11 +2,8 @@ import React from "react";
 import Image from "next/image";
 
 import image from "@/root/public/studio11.png";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
 
-type Props = {};
-
-const AboutMe = (props: Props) => {
+const AboutMe = () => {
   return (
     <section className="m-auto flex h-full w-11/12 flex-col gap-6 pb-10 pt-20 md:min-h-[500px] lg:w-[61.8%] lg:flex-row lg:items-center lg:gap-10">
       <div className="relative m-auto h-[500px] w-full md:w-[500px] lg:m-0">

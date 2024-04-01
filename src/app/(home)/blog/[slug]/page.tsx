@@ -4,7 +4,6 @@ import {
   getNonHiddenBlogPosts,
 } from "@/lib/actions/blogActions";
 import React from "react";
-import Image from "next/image";
 import { TBlogPost } from "@/lib/shared/types";
 import { Metadata } from "next";
 

@@ -21,7 +21,6 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { TResetPasswordFormData } from "@/lib/shared/types";
 import { resetPasswordAction } from "@/lib/actions/authActions";
 
-// Define the form schema using Zod
 const formSchema = z
   .object({
     password: z.string().min(5, "Heslo musí mať aspoň 5 znakov."),

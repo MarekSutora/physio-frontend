@@ -24,7 +24,7 @@ const Services = ({ serviceTypes }: Props) => {
         </h1>
         <div className="m-auto h-[1px] w-full bg-slate-200"></div>
       </div>
-      <div className="m-auto flex w-[93%] flex-col flex-wrap xl:w-[61.8%] xl:flex-row">
+      <div className="m-auto flex w-[93%] flex-col flex-wrap lg:w-[80%]  xl:w-[61.8%] xl:flex-row">
         {serviceTypes.length > 1 &&
           serviceTypes.map((serviceType, index) => (
             <ServiceCard key={index} serviceType={serviceType} />
@@ -47,9 +47,9 @@ const ServiceCard = ({ serviceType }: ServiceCardProps) => {
     ];
 
     return faIcon ? (
-      <FontAwesomeIcon icon={faIcon as any} />
+      <FontAwesomeIcon aria-label="Illustration Icon" icon={faIcon as any} />
     ) : (
-      <FontAwesomeIcon icon={faHeart} />
+      <FontAwesomeIcon aria-label="Illustration Icon" icon={faHeart} />
     );
   };
 
@@ -77,7 +77,7 @@ const ServiceCard = ({ serviceType }: ServiceCardProps) => {
           </h3>
         </div>
         <div className="flex h-1/2 flex-grow flex-col justify-between p-5">
-          <p className="md:mb-4 text-left text-gray-600">
+          <p className="text-left text-gray-600 md:mb-4">
             {serviceType.description.slice(0, 180) + "..."}
           </p>
           <ul className="self-stretch">

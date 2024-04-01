@@ -3,7 +3,6 @@ export const dynamic = "force-dynamic";
 import FinishedAppointmentsGrid from "@/components/dashboard/common/FinishedAppointmentsDataTable";
 import { getFinishedAppointmentsForClientAction } from "@/lib/actions/appointmentsActions";
 import { TG_BookedAppointment } from "@/lib/shared/types";
-import { get } from "http";
 import React from "react";
 
 const Page = async () => {

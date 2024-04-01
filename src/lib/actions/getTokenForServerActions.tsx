@@ -8,8 +8,6 @@ export async function getTokenForServerActions() {
 
   let cookieName: string;
 
-  console.log("process.env.VERCEL_ENV", process.env.VERCEL_ENV);
-
   if (process.env.VERCEL_ENV && process.env.VERCEL_ENV === "production") {
     cookieName = "__Secure-next-auth.session-token";
   } else {

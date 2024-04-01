@@ -1,19 +1,13 @@
 "use client";
 
-import React, { useState, useEffect, use } from "react";
-import { useForm, Controller, useFieldArray } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import React from "react";
 import { useToast } from "@/components/ui/use-toast";
-import { HexColorPicker } from "react-colorful";
 import {
-  getServiceTypesAction,
   updateServiceTypeAction,
   deleteServiceTypeAction,
 } from "@/lib/actions/serviceTypesActions";
 import ServiceTypeForm from "./ServiceTypeForm";
 import { TCU_ServiceType, TG_ServiceType } from "@/lib/shared/types";
-import { Select } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -22,7 +16,6 @@ import {
 } from "@/components/ui/popover";
 import {
   Command,
-  CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,

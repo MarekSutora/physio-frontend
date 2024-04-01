@@ -1,8 +1,6 @@
 import React from "react";
 import DashboardNavUl from "../DashboardNavUl";
 import Link from "next/link";
-import { signOut } from "next-auth/react";
-import { PiSignOut } from "react-icons/pi";
 import LogoText from "@/components/mainPage/common/logo/LogoText";
 import LogoutButton from "@/components/auth/authButtons/LogoutButton";
 

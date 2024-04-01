@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import { cn } from "@/lib/utils/utils";
 import NavbarDesktop from "./NavbarDesktop";
 import Link from "next/link";
-import Image from "next/image";
 import { TMainPageLink } from "@/lib/shared/types";
 import useMediaQuery from "@/lib/hooks/useMediaQuery";
 import LogoText from "../logo/LogoText";

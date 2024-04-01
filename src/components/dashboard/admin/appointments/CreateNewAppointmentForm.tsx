@@ -15,8 +15,6 @@ import { Input } from "@/components/ui/input";
 import { createAppointmentAction } from "@/lib/actions/appointmentsActions";
 import { toast } from "@/components/ui/use-toast";
 
-//TODO po diplomovke - multi select pacientov aby sa dalo rezervovat viac ludi naraz (skupinovy trening)
-
 type Props = {
   serviceTypes: TG_ServiceType[];
 };

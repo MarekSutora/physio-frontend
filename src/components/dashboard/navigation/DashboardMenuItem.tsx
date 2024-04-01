@@ -1,9 +1,7 @@
 "use client";
 
-import { dashboardLinks } from "@/lib/shared/constants";
 import { cn } from "@/lib/utils/utils";
 import { AnimatePresence, motion } from "framer-motion";
-import { useSession } from "next-auth/react";
 import Link from "next/dist/client/link";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";

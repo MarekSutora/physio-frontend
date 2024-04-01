@@ -1,5 +1,5 @@
-import { TAppointmentExerciseDetail, TExerciseType } from "@/lib/shared/types";
-import React, { useEffect, useState } from "react";
+import { TAppointmentExerciseDetail } from "@/lib/shared/types";
+import React, { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/popover";
 import {
   Command,
-  CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
@@ -20,6 +19,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { motion } from "framer-motion";
 import { usePlannedExercisesStore } from "@/lib/stores/usePlannedExercisesStore";
 import { useExerciseTypesStore } from "@/lib/stores/useExerciseTypesStore";
+import { useSession } from "next-auth/react";
+import { cn } from "@/lib/utils/utils";
 
 type Props = {
   exerciseDetails: TAppointmentExerciseDetail;
@@ -45,7 +46,7 @@ const ExerciseDetailsRow = ({
 }: Props) => {
   const { plannedExercises, setPlannedExercises } = usePlannedExercisesStore();
   const exerciseTypes = useExerciseTypesStore((state) => state.exerciseTypes);
-
+  const { data: session } = useSession();
   const [value, setValue] = React.useState(exerciseDetails.exerciseType.id);
   const [open, setOpen] = React.useState(false);
 
@@ -53,11 +54,9 @@ const ExerciseDetailsRow = ({
     setValue(exerciseDetails.exerciseType.id);
   }, [exerciseDetails.exerciseType.id]);
 
-  const currentIndex = plannedExercises.findIndex(
-    (exercise) => exercise.order === exerciseDetails.order,
-  );
-
   const isLast = index === plannedExercises.length - 1;
+
+  const isAdmin = session?.user.roles.includes("Admin");
 
   const handleInputChange = (
     order: number,
@@ -120,30 +119,35 @@ const ExerciseDetailsRow = ({
       }}
       transition={{ duration: 0.2, ease: "easeIn" }}
     >
-      <div className="flex flex-col gap-1">
-        {index > 0 && ( 
+      <div className={cn("flex flex-col gap-1", !isAdmin && "hidden")}>
+        {index > 0 && (
           <button onClick={() => moveExercise("up")}>
             <ChevronUp />
           </button>
         )}
-        {!isLast && ( 
+        {!isLast && (
           <button onClick={() => moveExercise("down")}>
             <ChevronDown />
           </button>
         )}
       </div>
       <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
+        <PopoverTrigger asChild disabled={!isAdmin}>
           <Button
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className="w-[200px] justify-between"
+            className="w-[200px] justify-between disabled:opacity-100"
           >
             {value
               ? exerciseTypes.find((e) => e.id === value)?.name
               : "Vyber typ služby..."}
-            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+            <ChevronsUpDown
+              className={cn(
+                "ml-2 h-4 w-4 shrink-0 opacity-50",
+                !isAdmin && "hidden",
+              )}
+            />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-[200px] p-0">
@@ -217,7 +221,10 @@ const ExerciseDetailsRow = ({
               />
             </div>
             <button
-              className="mb-[5px] h-full w-6 rounded-md bg-red-500 p-0.5 text-white"
+              className={cn(
+                "mb-[5px] h-full w-6 rounded-md bg-red-500 p-0.5 text-white",
+                !isAdmin && "hidden",
+              )}
               onClick={() =>
                 handleDeleteClick(key as keyof TAppointmentExerciseDetail)
               }
@@ -234,10 +241,12 @@ const ExerciseDetailsRow = ({
           id={"successfullyPerformed" + exerciseDetails.order}
           checked={exerciseDetails.successfullyPerformed}
           onCheckedChange={handleSPCheckboxChange}
+          disabled={!isAdmin}
+          className="disabled:opacity-100"
         />
       </div>
       <Button
-        className="h-8"
+        className={cn(!isAdmin && "hidden")}
         variant="destructive"
         onClick={handleDeletePlannedExercise}
       >

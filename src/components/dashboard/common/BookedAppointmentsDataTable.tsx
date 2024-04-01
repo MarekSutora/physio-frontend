@@ -32,10 +32,6 @@ type Props = {
   bookedAppointments: TG_BookedAppointment[];
 };
 
-//TODO date filtering
-//TODO mozno clear filter global a keyword search global
-//TODO warning server does not match client
-
 const defaultFilters: DataTableFilterMeta = {
   serviceTypeName: { value: null, matchMode: FilterMatchMode.IN },
   durationMinutes: { value: null, matchMode: FilterMatchMode.EQUALS },
@@ -200,12 +196,21 @@ const BookedAppointmentsDataTable = ({ bookedAppointments }: Props) => {
   const actionBodyTemplate = (rowData: TG_BookedAppointment) => {
     return (
       <div className="flex flex-row items-center gap-1">
-        <Link
-          href={`../../termin?appId=${rowData.appointmentId}`}
-          className="flex h-8 flex-row items-center rounded-sm bg-primary px-2 text-center text-sm font-medium text-white hover:bg-primary/85"
-        >
-          Otvoriť
-        </Link>
+        {session?.user?.roles.includes("Admin") ? (
+          <Link
+            href={`../../termin?appId=${rowData.appointmentId}`}
+            className="flex h-8 flex-row items-center rounded-sm bg-primary px-2 text-center text-sm font-medium text-white hover:bg-primary/85"
+          >
+            Otvoriť
+          </Link>
+        ) : (
+          <Link
+            href={`../termin?appId=${rowData.appointmentId}`}
+            className="flex h-8 flex-row items-center rounded-sm bg-primary px-2 text-center text-sm font-medium text-white hover:bg-primary/85"
+          >
+            Otvoriť
+          </Link>
+        )}
         {session?.user?.roles.includes("Admin") && (
           <div className="flex flex-row items-center gap-1">
             <ShadConfirmationDialog

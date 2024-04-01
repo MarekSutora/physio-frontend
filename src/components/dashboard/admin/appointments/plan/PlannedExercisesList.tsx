@@ -1,5 +1,3 @@
-import { TAppointmentExerciseDetail, TExerciseType } from "@/lib/shared/types";
-import { Dropdown } from "primereact/dropdown";
 import React, { useState } from "react";
 import ExerciseDetailsRow from "./ExerciseDetailsRow";
 import { usePlannedExercisesStore } from "@/lib/stores/usePlannedExercisesStore";
