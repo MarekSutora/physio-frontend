@@ -17,7 +17,7 @@ export async function generateStaticParams() {
       },
     }));
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return [
       {
         params: {
@@ -38,7 +38,7 @@ export async function generateMetadata({
   try {
     blogPost = await getBlogPostBySlugAction(params.slug);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw new Error("Error fetching blog post");
   }
 

@@ -29,13 +29,14 @@ const durationCostSchema = z.object({
 });
 
 const serviceTypeFormSchema = z.object({
-  id: z.number().int().optional(),
+  id: z.any().optional(),
   name: z
     .string()
     .min(3, { message: "Názov služby musí mať minimálne 3 znaky." })
     .max(150, { message: "Názov služby nesmie presiahnuť 150 znakov." }),
   description: z
     .string()
+    .min(1, { message: "Popis je povinný." })
     .max(10000, { message: "Popis nesmie presiahnuť 10000 znakov." }),
   hexColor: z
     .string()

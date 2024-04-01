@@ -3,7 +3,7 @@
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 import { TServiceType, TG_ServiceType } from "../shared/types";
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { getErrorMessage } from "../utils/utils";
 import { getTokenForServerAction } from "./getTokenForServerAction";
 
@@ -64,6 +64,7 @@ export async function createNewServiceTypeAction(formData: TServiceType) {
     }
 
     revalidateTag("service-types");
+    revalidatePath("/sluzby");
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }
@@ -99,6 +100,7 @@ export async function updateServiceTypeAction(formData: TServiceType) {
     }
 
     revalidateTag("service-types");
+    revalidatePath("/sluzby");
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }
@@ -132,6 +134,7 @@ export async function deleteServiceTypeAction(id: number) {
     }
 
     revalidateTag("service-types");
+    revalidatePath("/sluzby");
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }
