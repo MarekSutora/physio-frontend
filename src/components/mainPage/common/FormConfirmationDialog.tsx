@@ -17,7 +17,7 @@ type FormConfirmationDialogProps = {
   dialogTitle?: string;
   dialogDescription?: string;
   isOpen: boolean;
-  onClose: () => void; // Function to close the dialog
+  onClose: () => void;
 };
 
 const FormConfirmationDialog = ({

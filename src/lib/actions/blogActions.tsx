@@ -3,7 +3,7 @@
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 import { TBlogPost } from "../shared/types";
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { getErrorMessage } from "../utils/utils";
 import { getTokenForServerAction } from "./getTokenForServerAction";
 
@@ -16,7 +16,6 @@ export async function getAllBlogPostsAction(): Promise<TBlogPost[]> {
       headers: {
         "Content-Type": "application/json",
       },
-      next: { tags: ["blog-posts"] },
     });
 
     if (!res.ok) {
@@ -58,7 +57,9 @@ export async function createBlogPostAction(formData: TBlogPost) {
       if (!errorMessage) throw new Error("Pri vytváraní článku nastala chyba.");
       throw new Error(errorMessage);
     }
+
     revalidateTag("blog-posts");
+    revalidatePath("/blog");
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }
@@ -93,6 +94,7 @@ export async function updateBlogPostAction(formData: TBlogPost) {
     }
 
     revalidateTag("blog-posts");
+    revalidatePath("/blog");
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }
@@ -126,6 +128,7 @@ export async function deleteBlogPostAction(slug: string) {
     }
 
     revalidateTag("blog-posts");
+    revalidatePath("/blog");
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }
