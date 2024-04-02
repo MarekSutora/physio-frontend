@@ -193,7 +193,7 @@ export async function getBookedAppointmentsForClientAction(
 
     const personIdToUse = personId ? personId : token.user.personId;
 
-    const url = `${process.env.BACKEND_API_URL}/appointments/client/${personIdToUse}/booked`;
+    const url = `${process.env.BACKEND_API_URL}/appointments/clients/${personIdToUse}/booked`;
     const accessToken = token.userTokens.accessToken;
 
     const res = await fetch(url, {
@@ -247,7 +247,7 @@ export async function getFinishedAppointmentsForClientAction(
 
     if (!res.ok) {
       const errorMessage = await res.text();
-      
+
       throw new Error(errorMessage);
     }
 
@@ -335,7 +335,7 @@ export async function deleteBookedAppointmentAction(
 }
 
 export async function getAppointmentByIdAction(
-  id: number,
+  appointmentId: number,
 ): Promise<TAppointment> {
   try {
     const session = await getServerSession(authOptions);
@@ -347,7 +347,7 @@ export async function getAppointmentByIdAction(
       );
     }
 
-    const url = `${process.env.BACKEND_API_URL}/appointments/${id}`;
+    const url = `${process.env.BACKEND_API_URL}/appointments/${appointmentId}`;
     const accessToken = token.userTokens.accessToken;
 
     const response = await fetch(url, {
