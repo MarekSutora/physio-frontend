@@ -41,7 +41,7 @@ export async function getClientsData(): Promise<TClient[]> {
   }
 }
 
-export async function addNoteToClient(note: TClientNote): Promise<void> {
+export async function addNoteToClient(note: TClientNote): Promise<number> {
   try {
     const session = await getServerSession(authOptions);
     const token = await getTokenForServerAction();
@@ -68,6 +68,10 @@ export async function addNoteToClient(note: TClientNote): Promise<void> {
       const errorData = await response.text();
       throw new Error(errorData);
     }
+
+    const data = await response.json();
+
+    return data;
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }
@@ -170,6 +174,7 @@ export async function deleteNoteFromClient(noteId: number): Promise<void> {
       throw new Error(errorData);
     }
   } catch (error) {
+    console.warn("Error deleting note", error);
     throw new Error(getErrorMessage(error));
   }
 }

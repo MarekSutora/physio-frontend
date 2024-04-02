@@ -16,6 +16,7 @@ export async function getAllBlogPostsAction(): Promise<TBlogPost[]> {
       headers: {
         "Content-Type": "application/json",
       },
+      next: { revalidate: 0 },
     });
 
     if (!res.ok) {
@@ -141,6 +142,7 @@ export async function getBlogPostBySlugAction(
       headers: {
         "Content-Type": "application/json",
       },
+      next: { revalidate: 0 },
     });
 
     if (!res.ok) {
