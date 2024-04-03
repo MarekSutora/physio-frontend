@@ -127,7 +127,7 @@ const LoginForm = ({ searchParams }: Props) => {
           )}
 
           <h1 className="text-center text-4xl font-bold text-gray-800">
-            Vitajte späť!
+            Vitajte späť! 🏋🏻
           </h1>
           <Form {...form}>
             <form

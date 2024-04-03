@@ -24,11 +24,11 @@ const Services = ({ serviceTypes }: Props) => {
         </h1>
         <div className="m-auto h-[1px] w-full bg-slate-200"></div>
       </div>
-  <div className="m-auto flex w-[93%] flex-col flex-wrap lg:w-[80%] lg:flex-row xl:w-[61.8%]">
-    {serviceTypes.map((serviceType) => (
-      <ServiceCard key={serviceType.slug} serviceType={serviceType} />
-    ))}
-  </div>
+      <div className="m-auto flex w-[93%] flex-col flex-wrap lg:w-[85%] lg:flex-row xl:w-[61.8%]">
+        {serviceTypes.map((serviceType) => (
+          <ServiceCard key={serviceType.slug} serviceType={serviceType} />
+        ))}
+      </div>
     </section>
   );
 };
@@ -54,10 +54,10 @@ const ServiceCard = ({ serviceType }: ServiceCardProps) => {
 
   return (
     <CardContainer
-      className="group m-2 flex h-[500px] min-h-[500px] w-full flex-col justify-start rounded-lg border-2 border-slate-200 bg-white"
+      className="group m-2 flex h-[600px] min-h-[600px] w-full flex-col justify-start rounded-lg border-2 border-slate-200 bg-white"
       containerClassName="p-0 lg:w-1/2 w-full"
     >
-      <CardBody className="h-full min-h-[500px] w-full">
+      <CardBody className="h-full min-h-[600px] w-full">
         <div className="h-1/2 w-full">
           <div className="absolute left-4 top-4 z-10 h-10 w-10 text-5xl text-white">
             {renderIcon(serviceType.iconName)}
@@ -76,7 +76,7 @@ const ServiceCard = ({ serviceType }: ServiceCardProps) => {
           </h3>
         </div>
         <div className="flex h-1/2 flex-grow flex-col justify-between p-5">
-          <p className="text-left text-gray-600 md:mb-4">
+          <p className="text-left text-gray-600 md:mb-2">
             {serviceType.description.slice(0, 180) + "..."}
           </p>
           <ul className="self-stretch">

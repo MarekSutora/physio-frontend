@@ -24,11 +24,9 @@ export default function RootLayout({
         className={`${inter.className} m-0 h-full w-full bg-slate-50 p-0 text-gray-950`}
       >
         <Providers>
-          <div className="flex w-full flex-col">
+          <div className="flex h-full w-full flex-col justify-between">
             <HeaderWrapper />
-            <main className="h-auto min-h-[603px] w-full bg-slate-50">
-              {children}
-            </main>
+            <main className="h-fit w-full bg-slate-50">{children}</main>
             <Footer />
             <Toaster />
           </div>

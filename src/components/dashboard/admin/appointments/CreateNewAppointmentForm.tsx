@@ -74,7 +74,7 @@ const CreateNewAppointmentForm = ({ serviceTypes }: Props) => {
     const stdcIds = selectedOptions.map((option) =>
       parseInt(option.value.split("-")[1]),
     );
-
+    console.log(startTime);
     const appointmentData: TC_Appointment = {
       startTime,
       capacity,

@@ -21,7 +21,6 @@ import { FaPhone } from "react-icons/fa";
 import Link from "next/link";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/components/ui/use-toast";
-import ShadConfirmationDialog from "../common/ShadConfirmationDialog";
 import { sendContactFormEmail } from "@/lib/actions/generalActions";
 import ClipLoader from "react-spinners/ClipLoader";
 import { cn } from "@/lib/utils/utils";
@@ -76,7 +75,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="w-full bg-slate-50" id="kontakt">
+    <section className="h-full w-full bg-slate-50 py-5">
       <div className="flex w-full flex-row gap-3 pb-6">
         <div className="m-auto h-[1px] w-full bg-slate-200"></div>
         <h1 className="w-full text-nowrap pb-3 text-center text-4xl font-semibold">
@@ -84,7 +83,7 @@ const Contact = () => {
         </h1>
         <div className="m-auto h-[1px] w-full bg-slate-200"></div>
       </div>
-      <section className="m-auto w-5/6 pb-10 lg:w-[61.8%]">
+      <div className="m-auto w-5/6 pb-10 lg:w-[70%]">
         <div
           className={cn(
             isLoading && "flex h-full w-full items-center justify-center p-0",
@@ -244,8 +243,8 @@ const Contact = () => {
             </nav>
           </section>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 };
 

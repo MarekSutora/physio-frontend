@@ -108,7 +108,7 @@ const AppointmentsCalendar = ({
           <h2 className="flex-auto select-none pl-5 text-lg font-semibold text-gray-900">
             {getMonthNameSk(
               format(firstDayCurrentMonth, "MMMM", { locale: enUS }),
-            )}
+            )}{" "}
             {format(firstDayCurrentMonth, "yyyy")}
           </h2>
           <button
@@ -121,7 +121,7 @@ const AppointmentsCalendar = ({
               isCurrentMonth && "cursor-default opacity-0",
             )}
           >
-            <span className="sr-only">Predosli mesiac</span>
+            <span className="sr-only">Predošlý mesiac</span>
             <FaAngleLeft className="h-6 w-6" aria-hidden="true" />
           </button>
           <button
@@ -129,7 +129,7 @@ const AppointmentsCalendar = ({
             type="button"
             className="-my-1.5 -mr-1.5 ml-2 flex flex-none items-center justify-center rounded-lg p-1.5 text-gray-700 hover:bg-slate-200 hover:text-gray-900"
           >
-            <span className="sr-only">Dalsi mesiac</span>
+            <span className="sr-only">Ďalší mesiac</span>
             <FaAngleRight className="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
@@ -181,9 +181,13 @@ const AppointmentsCalendar = ({
                 {appointments.some((res) =>
                   isSameDay(parseISO(res.startTime), day),
                 ) ? (
-                  <div className="m-auto h-1 w-8 rounded-lg bg-primary"></div>
+                  isEqual(day, selectedDay) ? (
+                    <div className="m-auto h-1 w-8 rounded-sm bg-primary"></div>
+                  ) : (
+                    <div className="m-auto h-1 w-8 rounded-sm bg-primary/30"></div>
+                  )
                 ) : (
-                  <div className="m-auto h-1 w-8"></div>
+                  <div className="m-auto h-1 w-8 rounded-sm"></div>
                 )}
               </div>
             );

@@ -14,63 +14,63 @@ import ReviewCard from "./ReviewCard";
 const dummyReviews: TReview[] = [
   {
     id: 1,
-    author: "John Doe",
+    author: "Ján Novák",
     rating: 5,
-    text: "Excellent service, highly recommend! The team was professional, courteous, and incredibly helpful throughout the process...",
+    text: "Vynikajúci servis, vysoko odporúčam! Tím bol profesionálny, zdvorilý a počas celého procesu nesmierne nápomocný...",
     date: new Date("2021-10-01T00:00:00Z"),
     link: "https://www.mareksutora.sk",
     personPictureUrl: "/personSilhouette.png",
   },
   {
     id: 2,
-    author: "Jane Smith",
+    author: "Ema Horváthová",
     rating: 4,
-    text: "Great experience overall. A few hiccups here and there, but the staff was quick to resolve them.",
+    text: "Celkovo skvelá skúsenosť. Občasné prekážky tu a tam, ale personál ich rýchlo vyriešil.",
     date: new Date("2021-09-01T00:00:00Z"),
     link: "https://www.mareksutora.sk",
     personPictureUrl: "/personSilhouette.png",
   },
   {
     id: 3,
-    author: "Emily Johnson",
+    author: "Lucia Kováčová",
     rating: 5,
-    text: "I'm thoroughly impressed by the quality and speed of the service. Will be returning for sure!",
+    text: "Som úplne ohromená kvalitou a rýchlosťou služby. Určite sa vrátim!",
     date: new Date("2021-08-01T00:00:00Z"),
     link: "https://www.mareksutora.sk",
     personPictureUrl: "/personSilhouette.png",
   },
   {
     id: 4,
-    author: "Michael Brown",
+    author: "Michal Pospíšil",
     rating: 3,
-    text: "Decent work, but I believe there's room for improvement. Good for the price point, nonetheless.",
+    text: "Slušná práca, ale myslím, že je priestor na zlepšenie. Napriek tomu dobré z hľadiska ceny.",
     date: new Date("2021-07-01T00:00:00Z"),
     link: "https://www.mareksutora.sk",
     personPictureUrl: "/personSilhouette.png",
   },
   {
     id: 5,
-    author: "Jessica Garcia",
+    author: "Keanu Reeves",
     rating: 4,
-    text: "Very friendly staff and excellent customer service. They went above and beyond to meet my needs.",
+    text: "Veľmi priateľský personál a vynikajúca starostlivosť o zákazníka. Urobili všetko možné, aby vyhoveli mojim potrebám.",
     date: new Date("2021-06-01T00:00:00Z"),
     link: "https://www.mareksutora.sk",
     personPictureUrl: "/personSilhouette.png",
   },
   {
     id: 6,
-    author: "William Davis",
+    author: "Chuck Norris",
     rating: 5,
-    text: "Outstanding attention to detail and a very personal touch. I felt like my preferences were prioritized.",
+    text: "Výnimočná pozornosť k detailu a veľmi osobný prístup. Mal som pocit, že moje preferencie boli prioritné.",
     date: new Date("2021-05-01T00:00:00Z"),
     link: "https://www.mareksutora.sk",
     personPictureUrl: "/personSilhouette.png",
   },
   {
     id: 7,
-    author: "Linda Martinez",
+    author: "Ľudmila Martínezová",
     rating: 2,
-    text: "The service was subpar compared to my previous experiences elsewhere. Unlikely to recommend. The service was subpar compared to my previous experiences elsewhere. Unlikely to recommend.",
+    text: "Služba bola podpriemerná v porovnaní s mojimi predchádzajúcimi skúsenosťami inde. Pravdepodobne nebudem odporúčať.",
     date: new Date("2021-04-01T00:00:00Z"),
     link: "https://www.mareksutora.sk",
     personPictureUrl: "/personSilhouette.png",
@@ -93,7 +93,7 @@ const Reviews = () => {
             loop: true,
             align: "start",
           }}
-          className="w-5/6 m-auto"
+          className="m-auto w-5/6"
         >
           <CarouselContent>
             {dummyReviews.map((review) => (
@@ -105,8 +105,8 @@ const Reviews = () => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious  className="z-50"/>
-          <CarouselNext className="z-50"/>
+          <CarouselPrevious className="z-50" />
+          <CarouselNext className="z-50" />
         </Carousel>
       </div>
     </section>

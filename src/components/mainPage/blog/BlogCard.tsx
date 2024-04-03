@@ -40,14 +40,17 @@ const BlogCard = ({ post }: BlogCardProps) => {
           className="flex h-full w-full flex-col rounded-lg bg-white shadow-md"
           href={`/blog/${post.slug}`}
         >
-          <CardItem translateZ="70" className="h-1/2 w-full">
+          <CardItem
+            translateZ="70"
+            className="relative h-80 w-full overflow-hidden"
+          >
             <Image
               src={post.mainImageUrl}
               alt={post.title}
-              width={800}
-              height={300}
-              quality={100}
-              className="rounded-t-lg object-cover"
+              quality={80}
+              fill
+              style={{ objectFit: "cover", objectPosition: "10% 10%" }}
+              className="rounded-t-lg"
             />
           </CardItem>
           <CardItem className="h-full w-full p-4" translateZ="80">

@@ -26,11 +26,11 @@ export default function RootLayout({
       <body
         className={cn(
           inter.className,
-          "m-0 h-full w-full bg-white p-0 text-gray-950",
+          "m-0 h-full w-full bg-white p-0 text-black",
         )}
       >
         <Providers>
-          <div className="flex h-full w-full flex-grow flex-col overflow-y-auto xl:flex-row">
+          <div className="flex h-full max-h-screen w-full flex-col xl:flex-row">
             <DashboardNavigationPanel />
             <main className="flex h-full max-h-full w-full flex-col items-start gap-2 bg-slate-50 p-2">
               <DashboardHeader />

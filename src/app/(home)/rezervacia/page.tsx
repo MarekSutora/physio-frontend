@@ -12,12 +12,11 @@ export const metadata = {
 
 const Page = () => {
   return (
-    <DashboardSectionWrapper
-      width="w-5/6"
-      additionalClasses="min-h-[600px] m-auto my-4"
-    >
-      <AppointmentsCalendarWrapper />
-    </DashboardSectionWrapper>
+    <div className="flex h-full min-h-[600px] items-center justify-center p-7">
+      <DashboardSectionWrapper width="w-5/6">
+        <AppointmentsCalendarWrapper />
+      </DashboardSectionWrapper>
+    </div>
   );
 };
 

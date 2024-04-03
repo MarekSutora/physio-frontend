@@ -260,7 +260,7 @@ const BookedAppointmentsDataTable = ({ bookedAppointments }: Props) => {
       <DataTable
         value={bookedAppointmentsState}
         paginator
-        rows={13}
+        rows={12}
         emptyMessage="Nenašli sa žiadne výsledky"
         rowClassName={rowClassName}
         filters={defaultFilters}

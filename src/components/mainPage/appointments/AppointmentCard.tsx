@@ -75,7 +75,7 @@ const AppointmentCard = ({
   return (
     <div className="flex w-full flex-col gap-1 rounded-lg border-l border-r border-t px-3 py-1 last:border-b">
       <div className=" flex flex-row justify-between">
-        <time className="pr-4 pt-1 text-lg font-semibold">
+        <time className="pr-5 pt-1 text-lg font-semibold">
           {format(new Date(appointment.startTime), "HH:mm", { locale: sk })}
         </time>
         {session?.user.roles.includes("Admin") ? (
@@ -90,7 +90,7 @@ const AppointmentCard = ({
         ) : (
           !session?.user && (
             <div className="flex flex-row items-center justify-center">
-              <p className="w-full pr-6 text-sm font-medium text-destructive">
+              <p className="w-full pr-3 text-sm font-medium text-destructive">
                 Na rezervovanie termínu musíte byť prihlásený
               </p>
               <AuthButtons />
