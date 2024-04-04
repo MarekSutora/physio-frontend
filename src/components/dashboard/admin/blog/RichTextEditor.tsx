@@ -7,6 +7,68 @@ type RichTextEditorProps = {
   initialContent?: string;
 };
 
+const editorConfig = {
+  toolbar: {
+    items: [
+      "heading",
+      "bold",
+      "italic",
+      "strikethrough",
+      "underline",
+      "superscript",
+      "subscript",
+      "link",
+      "bulletedList",
+      "numberedList",
+      "todoList",
+      "fontColor",
+      "fontFamily",
+      "fontSize",
+      "fontBackgroundColor",
+      "|",
+      "outdent",
+      "indent",
+      "|",
+      "imageInsert",
+      "blockQuote",
+      "insertTable",
+      "mediaEmbed",
+      "undo",
+      "redo",
+      "alignment",
+      "findAndReplace",
+      "selectAll",
+      "highlight",
+      "removeFormat",
+      "specialCharacters",
+      "restrictedEditingException",
+      "accessibilityHelp",
+    ],
+  },
+  language: "sk",
+  image: {
+    toolbar: [
+      "imageTextAlternative",
+      "toggleImageCaption",
+      "imageStyle:inline",
+      "imageStyle:block",
+      "imageStyle:side",
+      "linkImage",
+    ],
+  },
+  table: {
+    contentToolbar: [
+      "tableColumn",
+      "tableRow",
+      "mergeTableCells",
+      "tableCellProperties",
+      "tableProperties",
+    ],
+  },
+  removePlugins: ["Title"],
+  placeholder: "",
+};
+
 const RichTextEditor = ({
   onContentChange,
   initialContent = "",
@@ -21,6 +83,7 @@ const RichTextEditor = ({
       </style>
 
       <CKEditor
+        config={editorConfig}
         editor={Editor as any}
         data={initialContent}
         onChange={(event, editor) => {

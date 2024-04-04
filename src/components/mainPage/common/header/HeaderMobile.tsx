@@ -47,19 +47,19 @@ const HeaderMobile = ({ links }: HeaderMobileProps) => {
   };
 
   return (
-    <>
+    <div className="h-14">
       {!isAboveMediumScreens && (
         <>
           <div
             className={cn(
-              isOpen ? "block h-14 bg-white" : "hidden h-0",
-              " w-full",
+              isOpen ? "block h-80 bg-black" : "hidden h-0",
+              "w-full",
             )}
           ></div>
           <header
             className={cn(
               "top-0 z-50 block h-14 w-screen bg-white xl:hidden",
-              isOpen ? "fixed" : "stickyy",
+              isOpen ? "fixed" : "sticky",
             )}
           >
             <div className="flex justify-end pr-3">
@@ -71,7 +71,7 @@ const HeaderMobile = ({ links }: HeaderMobileProps) => {
               custom={height}
               className={cn(
                 "top-[55px] h-full w-screen xl:hidden",
-                isOpen ? "z-50 fixed" : "-z-50 hidden",
+                isOpen ? "fixed z-50" : "-z-50 hidden",
               )}
               ref={containerRef}
             >
@@ -111,7 +111,7 @@ const HeaderMobile = ({ links }: HeaderMobileProps) => {
           </header>
         </>
       )}
-    </>
+    </div>
   );
 };
 

@@ -39,13 +39,19 @@ const ClientNotesGridForm = ({ clientNotes, personId }: Props) => {
         createdAt: new Date(Date.now()),
       };
 
-      await addNoteToClient(newNote);
+      const noteId = await addNoteToClient(newNote);
+
+      console.log("noteId", noteId);
 
       toast({
         variant: "success",
         title: "Poznámka bola úspešne pridaná.",
         className: "text-lg",
       });
+
+      newNote.id = noteId;
+
+      console.log("newNote", newNote);
 
       setClientNotesState([...clientNotesState, newNote]);
       setNote("");
@@ -91,7 +97,9 @@ const ClientNotesGridForm = ({ clientNotes, personId }: Props) => {
             <Button>Otvoriť</Button>
           </DialogTrigger>
           <DialogContent contentEditable={false}>
-            <Label htmlFor="note">{formatDate(rowData.createdAt!)}</Label>
+            <Label htmlFor="note">
+              {new Date(rowData.createdAt!).toLocaleString("sk")}
+            </Label>
             <Textarea
               className="h-auto min-h-80 w-full"
               id="note"
@@ -109,17 +117,6 @@ const ClientNotesGridForm = ({ clientNotes, personId }: Props) => {
         </ShadConfirmationDialog>
       </div>
     );
-  };
-
-  const formatDate = (dateString: Date) => {
-    const date = new Date(dateString);
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
-    const hours = date.getHours().toString().padStart(2, "0");
-    const minutes = date.getMinutes().toString().padStart(2, "0");
-
-    return `${day}.${month}.${year} ${hours}:${minutes}`;
   };
 
   return (
@@ -147,7 +144,7 @@ const ClientNotesGridForm = ({ clientNotes, personId }: Props) => {
         showHeaders
         filters={defaultFilters}
         sortField="createdAt"
-        sortOrder={-1}
+        defaultSortOrder={1}
       >
         <Column
           field="note"
@@ -170,7 +167,9 @@ const ClientNotesGridForm = ({ clientNotes, personId }: Props) => {
         <Column
           field="createdAt"
           header="Vytvorené"
-          body={(rowData: TClientNote) => formatDate(rowData.createdAt!)}
+          body={(rowData: TClientNote) =>
+            new Date(rowData.createdAt!).toLocaleString("sk")
+          }
           style={{ width: "10%" }}
           sortable
           filter

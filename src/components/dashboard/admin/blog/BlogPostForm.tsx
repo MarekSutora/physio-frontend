@@ -25,6 +25,7 @@ const RichTextEditor = dynamic(() => import("./RichTextEditor"), {
 });
 
 const blogPostSchema = z.object({
+  slug: z.any().optional(),
   title: z
     .string()
     .min(1, "Názov je povinný.")
@@ -34,12 +35,15 @@ const blogPostSchema = z.object({
     .min(1, "Autor je povinný.")
     .max(100, "Autor musí byť kratší ako 100 znakov."),
   datePublished: z.date(),
-  htmlContent: z.string().min(1, "Obsah HTML je povinný."),
+  htmlContent: z.string().min(1, "Obsah je povinný."),
   keywordsString: z
     .string()
     .min(1, "Reťazec kľúčových slov je povinný.")
     .max(300, "Reťazec kľúčových slov musí byť kratší ako 300 znakov."),
-  mainImageUrl: z.string().min(1, "URL hlavného obrázka je povinný."),
+  mainImageUrl: z
+    .string()
+    .url("Nespĺňa podmienky URL.")
+    .min(1, "URL hlavného obrázka je povinný."),
   isHidden: z.boolean(),
 });
 
@@ -51,28 +55,27 @@ type BlogFormProps = {
 const BlogPostForm = ({ createNew, oldData }: BlogFormProps) => {
   const { toast } = useToast();
 
-  const defaultValues = {
-    title: oldData?.title || "",
-    author: oldData?.author || "",
-    datePublished: oldData?.datePublished || new Date(),
-    htmlContent: oldData?.htmlContent || "",
-    keywordsString: oldData?.keywordsString || "",
-    mainImageUrl: oldData?.mainImageUrl || "",
-    isHidden: oldData?.isHidden || false,
-  };
-
-  const {
-    control,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-    register,
-  } = useForm<TBlogPost>({
-    defaultValues,
+  const form = useForm<TBlogPost>({
     resolver: zodResolver(blogPostSchema),
+    defaultValues: {
+      slug: oldData?.slug || "",
+      title: oldData?.title || "",
+      author: oldData?.author || "",
+      datePublished: oldData?.datePublished
+        ? new Date(oldData?.datePublished)
+        : new Date(),
+      htmlContent: oldData?.htmlContent || "",
+      keywordsString: oldData?.keywordsString || "",
+      mainImageUrl: oldData?.mainImageUrl || "",
+      isHidden: oldData?.isHidden || false,
+    },
   });
 
+  console.log(form.formState.errors);
+
   const onSubmit = async (blogPost: TBlogPost) => {
+    console.log(blogPost);
+
     try {
       if (createNew) {
         await createBlogPostAction(blogPost);
@@ -104,21 +107,22 @@ const BlogPostForm = ({ createNew, oldData }: BlogFormProps) => {
   return (
     <form
       className="prose m-auto px-5 md:prose-lg lg:prose-xl prose-img:m-auto prose-img:px-0 md:p-0 lg:p-0"
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={form.handleSubmit(onSubmit)}
     >
       <div className="flex flex-col gap-2">
         <div className="flex flex-row gap-1">
+          <Input id="slug" type="hidden" {...form.register("slug")} />
           <div className="flex w-1/2 flex-col gap-1">
             <Label htmlFor="title">Názov</Label>
             <Input
               id="title"
               type="text"
-              {...register("title")}
-              className={`h-9 ${errors.title ? "border-red-500" : ""}`}
+              {...form.register("title")}
+              className={`h-9 ${form.formState.errors.title ? "border-red-500" : ""}`}
             />
-            {errors.title && (
+            {form.formState.errors.title && (
               <span className="text-sm font-medium text-destructive">
-                {errors.title.message}
+                {form.formState.errors.title.message}
               </span>
             )}
           </div>
@@ -128,12 +132,12 @@ const BlogPostForm = ({ createNew, oldData }: BlogFormProps) => {
             <Input
               id="author"
               type="text"
-              {...register("author")}
-              className={`h-9 ${errors.author ? "border-red-500" : ""}`}
+              {...form.register("author")}
+              className={`h-9 ${form.formState.errors.author ? "border-red-500" : ""}`}
             />
-            {errors.author && (
+            {form.formState.errors.author && (
               <span className="text-sm font-medium text-destructive">
-                {errors.author.message}
+                {form.formState.errors.author.message}
               </span>
             )}
           </div>
@@ -143,20 +147,28 @@ const BlogPostForm = ({ createNew, oldData }: BlogFormProps) => {
           <div className="flex h-14 w-1/2 flex-col gap-1">
             <Label htmlFor="datePublished">Publikované</Label>
             <Controller
-              control={control}
+              control={form.control}
               name="datePublished"
-              render={({ field }) => (
-                <DatePicker
-                  selected={field.value}
-                  onChange={(date) =>
-                    setValue("datePublished", date ? date : new Date())
-                  }
-                  dateFormat="dd.MM.yyyy"
-                  locale={sk}
-                  placeholderText="Vyberte dátum"
-                  className="mb-3 h-9 w-full cursor-pointer select-none rounded-md border text-center"
-                  popperClassName="z-50"
-                />
+              render={({
+                field: { onChange, value },
+                fieldState: { error },
+              }) => (
+                <>
+                  <DatePicker
+                    selected={value}
+                    onChange={(date: Date) => onChange(date)}
+                    dateFormat="dd.MM.yyyy"
+                    locale={sk}
+                    placeholderText="Vyberte dátum"
+                    className="mb-3 h-9 w-full cursor-pointer select-none rounded-md border text-center"
+                    popperClassName="z-50"
+                  />
+                  {error && (
+                    <span className="text-sm font-medium text-destructive">
+                      {error.message}
+                    </span>
+                  )}
+                </>
               )}
             />
           </div>
@@ -165,12 +177,12 @@ const BlogPostForm = ({ createNew, oldData }: BlogFormProps) => {
             <Input
               id="mainImageUrl"
               type="text"
-              {...register("mainImageUrl")}
-              className={`h-9 ${errors.mainImageUrl ? "border-red-500" : ""}`}
+              {...form.register("mainImageUrl")}
+              className={`h-9 ${form.formState.errors.mainImageUrl ? "border-red-500" : ""}`}
             />
-            {errors.mainImageUrl && (
+            {form.formState.errors.mainImageUrl && (
               <span className="text-sm font-medium text-destructive">
-                {errors.mainImageUrl.message}
+                {form.formState.errors.mainImageUrl.message}
               </span>
             )}
           </div>
@@ -182,12 +194,12 @@ const BlogPostForm = ({ createNew, oldData }: BlogFormProps) => {
             <Input
               id="keywordsString"
               type="text"
-              {...register("keywordsString")}
-              className={`h-9 ${errors.keywordsString ? "border-red-500" : ""}`}
+              {...form.register("keywordsString")}
+              className={`h-9 ${form.formState.errors.keywordsString ? "border-red-500" : ""}`}
             />
-            {errors.keywordsString && (
+            {form.formState.errors.keywordsString && (
               <span className="text-sm font-medium text-destructive">
-                {errors.keywordsString.message}
+                {form.formState.errors.keywordsString.message}
               </span>
             )}
           </div>
@@ -195,8 +207,14 @@ const BlogPostForm = ({ createNew, oldData }: BlogFormProps) => {
             <Label htmlFor="isHidden">Skrytý</Label>
             <Checkbox
               id="isHidden"
-              {...register("isHidden")}
-              defaultChecked={defaultValues.isHidden}
+              {...form.register("isHidden")}
+              checked={form.watch("isHidden")}
+              onCheckedChange={(value) => {
+                form.setValue(
+                  "isHidden",
+                  value !== "indeterminate" ? value : false,
+                );
+              }}
             />
           </div>
         </div>
@@ -204,7 +222,7 @@ const BlogPostForm = ({ createNew, oldData }: BlogFormProps) => {
         <div className="flex flex-col gap-2">
           <Label htmlFor="htmlContent">Obsah</Label>
           <Controller
-            control={control}
+            control={form.control}
             name="htmlContent"
             render={({ field: { onChange, value }, fieldState: { error } }) => (
               <>

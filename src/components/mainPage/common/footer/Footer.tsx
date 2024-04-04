@@ -14,8 +14,8 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="h-auto w-full bg-primary text-white">
-      <div className="mx-auto flex h-5/6 w-5/6 flex-col gap-2 md:flex-row md:gap-10 md:pt-2">
+    <footer className="h-full w-full bg-primary text-white">
+      <div className="mx-auto flex h-5/6 w-5/6 flex-col gap-2 md:pt-2">
         <section className="flex w-full flex-col items-center justify-center gap-2 md:flex-row md:pt-4">
           <div className="w-52">
             <h1 className="md:text pb-2 text-center text-xl font-bold md:text-left">
@@ -68,48 +68,47 @@ const Footer = () => {
             </nav>
           </div>
         </section>
-      </div>
+        <nav className="mt-1 w-full">
+          <ul className="flex justify-center gap-1">
+            {socialMediaLinks.map((link, index) => (
+              <li key={index}>
+                <Link href={link.path}>
+                  <div className="text-3xl text-slate-50 transition-all duration-300 ease-in-out hover:scale-125">
+                    {link.icon}
+                  </div>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
-      <nav className="mt-4 w-full">
-        <ul className="flex justify-center gap-1">
-          {socialMediaLinks.map((link, index) => (
-            <li key={index}>
-              <Link href={link.path}>
-                <div className="text-3xl text-slate-50 transition-all duration-300 ease-in-out hover:scale-125">
-                  {link.icon}
-                </div>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
+        <nav className="mt-1 flex flex-col items-center justify-center text-center text-sm text-slate-400 md:flex-row md:gap-2">
+          <Link className="hover:underline" href="/obchodne-podmienky">
+            Všeobecné obchodné podmienky
+          </Link>
+          &#8226;
+          <Link className="hover:underline" href="/ochrana-osobnych-udajov">
+            Ochrana osobných údajov
+          </Link>
+          &#8226;
+          <Link className="hover:underline" href="/cookies">
+            Cookies
+          </Link>
+        </nav>
 
-      <nav className="mt-4 flex flex-col items-center justify-center text-center text-sm text-slate-400 md:flex-row md:gap-2">
-        <Link className="hover:underline" href="/obchodne-podmienky">
-          Všeobecné obchodné podmienky
-        </Link>
-        &#8226;
-        <Link className="hover:underline" href="/ochrana-osobnych-udajov">
-          Ochrana osobných údajov
-        </Link>
-        &#8226;
-        <Link className="hover:underline" href="/cookies">
-          Cookies
-        </Link>
-      </nav>
-
-      <div className="mx-auto mt-4 flex w-11/12 justify-between pb-1 text-sm text-slate-400">
-        <div>
-          <p>&#169; 2024 MarekSutora</p>
-        </div>
-        <div>
-          Vytvoril{" "}
-          <a
-            className="underline"
-            href="https://www.linkedin.com/in/marek-%C5%A1%C3%BAtora-9867b4269/"
-          >
-            Marek Šútora
-          </a>
+        <div className="mx-auto mt-1 flex w-11/12 justify-between pb-1 text-sm text-slate-400">
+          <div>
+            <p>&#169; 2024 MarekSutora</p>
+          </div>
+          <div>
+            Vytvoril{" "}
+            <a
+              className="underline"
+              href="https://www.linkedin.com/in/marek-%C5%A1%C3%BAtora-9867b4269/"
+            >
+              Marek Šútora
+            </a>
+          </div>
         </div>
       </div>
     </footer>

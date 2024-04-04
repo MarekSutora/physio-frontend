@@ -27,31 +27,31 @@ const ClientPageWrapper = ({
   );
 
   return (
-    <div className="flex h-full w-full flex-col gap-2 md:flex-row">
+    <div className="flex h-full w-full flex-col gap-2 xl:flex-row">
       <DashboardSectionWrapper
         title="Client Information"
-        height="h-fit md:h-full"
-        width="w-full md:w-1/4"
+        height="h-fit xl:h-full"
+        width="w-full xl:w-1/4"
       >
         {clientData && (
-          <div className="mx-5 mt-6 flex flex-row flex-wrap md:flex-col lg:mx-0">
+          <div className="mx-5 mt-6 flex flex-row flex-wrap xl:flex-col lg:mx-0">
             <h2>
               <span>Id: </span>{" "}
               <span className="font-semibold">{clientData.personId}</span>
             </h2>
-            <div className="mx-2 h-6 w-[1px] bg-gray-300 lg:mx-0 lg:my-2 lg:h-[1px] lg:w-1/2"></div>
+            <div className="mx-2 h-6 w-[1px] bg-gray-300 xl:mx-0 xl:my-2 xl:h-[1px] xl:w-1/2"></div>
             <h2>
               <span>Meno: </span>{" "}
               <span className="font-semibold">
                 {clientData.firstName} {clientData.lastName}
               </span>
             </h2>
-            <div className="mx-2 h-6 w-[1px] bg-gray-300 lg:mx-0 lg:my-2 lg:h-[1px] lg:w-1/2"></div>
+            <div className="mx-2 h-6 w-[1px] bg-gray-300 xl:mx-0 xl:my-2 xl:h-[1px] xl:w-1/2"></div>
             <h2>
               <span>Email: </span>{" "}
               <span className="font-semibold">{clientData.email}</span>
             </h2>
-            <div className="mx-2 h-6 w-[1px] bg-gray-300 lg:mx-0 lg:my-2 lg:h-[1px] lg:w-1/2"></div>
+            <div className="mx-2 h-6 w-[1px] bg-gray-300 xl:mx-0 xl:my-2 xl:h-[1px] xl:w-1/2"></div>
             <h2>
               <span>Telefónne číslo: </span>{" "}
               <span className="font-semibold">
@@ -60,7 +60,7 @@ const ClientPageWrapper = ({
                   : "+421900123456"}
               </span>
             </h2>
-            <div className="mx-2 h-6 w-[1px] bg-gray-300 lg:mx-0 lg:my-2 lg:h-[1px] lg:w-1/2"></div>
+            <div className="mx-2 h-6 w-[1px] bg-gray-300 xl:mx-0 xl:my-2 xl:h-[1px] xl:w-1/2"></div>
             <h2>
               <span>Dátum registrácie: </span>
               <span className="font-semibold">
@@ -71,7 +71,7 @@ const ClientPageWrapper = ({
         )}
       </DashboardSectionWrapper>
 
-      <div className="flex w-full flex-col gap-2 md:w-3/4">
+      <div className="flex w-full flex-col gap-2 xl:w-3/4">
         <DashboardSectionWrapper height="h-fit" width="w-full">
           <div className="flex flex-row flex-wrap gap-2">
             <Button

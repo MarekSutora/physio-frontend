@@ -4,7 +4,9 @@ import React from "react";
 import {
   GoogleMap,
   LoadScript,
+  Marker,
   StreetViewPanorama,
+  useJsApiLoader,
 } from "@react-google-maps/api";
 
 const containerStyle = {
@@ -18,7 +20,7 @@ const center = {
 };
 
 const App = () => {
-  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY; 
+  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
   return (
     <div className="w-full">
@@ -36,7 +38,9 @@ const App = () => {
               mapContainerStyle={containerStyle}
               center={center}
               zoom={10}
-            ></GoogleMap>
+            >
+              <Marker position={center} />
+            </GoogleMap>
             <GoogleMap
               mapContainerStyle={containerStyle}
               center={center}

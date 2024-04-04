@@ -6,6 +6,7 @@ import {
 import React from "react";
 import { TBlogPost } from "@/lib/shared/types";
 import { Metadata } from "next";
+import Image from "next/image";
 
 export async function generateStaticParams() {
   try {
@@ -93,9 +94,20 @@ const Page = async ({ params }: { params: { slug: string } }) => {
         </p>
       </header>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      {mainImageUrl && <img src={mainImageUrl} alt={title} />}
+      {mainImageUrl && (
+        <div className="relative h-[430px] w-full overflow-hidden">
+          <Image
+            src={mainImageUrl}
+            alt={title}
+            quality={80}
+            fill
+            style={{ objectFit: "cover", objectPosition: "10% 10%" }}
+            className="rounded-t-lg"
+          />
+        </div>
+      )}
       <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
-      <footer className="flex flex-row flex-wrap gap-1 p-4 pb-8">
+      <footer className="flex flex-row flex-wrap gap-1 pb-8">
         {keywordsString.split(";").map((keyword, index) => (
           <i
             key={index}

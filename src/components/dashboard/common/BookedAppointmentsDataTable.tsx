@@ -260,7 +260,7 @@ const BookedAppointmentsDataTable = ({ bookedAppointments }: Props) => {
       <DataTable
         value={bookedAppointmentsState}
         paginator
-        rows={13}
+        rows={12}
         emptyMessage="Nenašli sa žiadne výsledky"
         rowClassName={rowClassName}
         filters={defaultFilters}
@@ -279,7 +279,6 @@ const BookedAppointmentsDataTable = ({ bookedAppointments }: Props) => {
           body={(rowData: TG_BookedAppointment) =>
             formatDate(rowData.startTime)
           }
-          style={{ width: "200px", minWidth: "200px" }}
           filter
           filterField="startTime"
         />
@@ -288,7 +287,6 @@ const BookedAppointmentsDataTable = ({ bookedAppointments }: Props) => {
           header="Typ služby"
           sortable
           body={(rowData: TG_BookedAppointment) => rowData.serviceTypeName}
-          style={{ width: "200px" }}
           filter
           filterElement={serviceTypeFilterTemplate}
           showFilterMatchModes={false}
@@ -345,6 +343,13 @@ const BookedAppointmentsDataTable = ({ bookedAppointments }: Props) => {
             filterField="clientSecondName"
           />
         )}
+        <Column
+          field="bookedAppointmentDate"
+          header="Dátum zarezervovania"
+          filter
+          filterField="bookedAppointmentDate"
+          sortable
+        />
         {session?.user?.roles.includes("Admin") && (
           <Column
             field="capacity"
@@ -356,11 +361,7 @@ const BookedAppointmentsDataTable = ({ bookedAppointments }: Props) => {
             hidden
           />
         )}
-        <Column
-          header="Akcie"
-          body={actionBodyTemplate}
-          style={{ width: "330px" }}
-        />
+        <Column header="Akcie" body={actionBodyTemplate} />
       </DataTable>
     </DashboardSectionWrapper>
   );

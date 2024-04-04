@@ -4,6 +4,7 @@ import { FaAngleDown } from "react-icons/fa";
 import AuthButtons from "@/components/auth/authButtons/AuthButtons";
 import { usePathname } from "next/navigation";
 import { TMainPageLink } from "@/lib/shared/types";
+import { cn } from "@/lib/utils/utils";
 
 type NavbarDesktopProps = {
   links: TMainPageLink[];
@@ -25,11 +26,21 @@ const NavbarDesktop = ({ links }: NavbarDesktopProps) => {
               className="group relative flex h-full flex-col items-center justify-center pr-6"
             >
               {hasSubMenuItems ? (
-                <div className="flex h-full cursor-pointer items-center text-lg font-medium">
-                  {link.text}
-                  <FaAngleDown className="ml-1 inline transition-all duration-300 ease-in-out group-hover:rotate-180" />
+                <div className="flex h-full cursor-pointer items-center text-lg group">
+                  <span
+                    className={cn(
+                      "relative block group-hover:[text-shadow:-.05px_-.05px_0_rgba(0,0,0,0.5),.05px_.05px_0_rgba(0,0,0,0.5)]",
+                      {
+                        "[text-shadow:-.05px_-.05px_0_rgba(0,0,0,0.5),.05px_.05px_0_rgba(0,0,0,0.5)]":
+                          currentPath.includes("sluzby"),
+                      },
+                    )}
+                  >
+                    {link.text}
+                    <FaAngleDown className="ml-1 inline transition-all duration-300 ease-in-out group-hover:rotate-180" />
+                  </span>
                   <div className="absolute top-full hidden group-hover:block">
-                    <ul className="w-56 border-t-[1px] bg-white shadow-lg">
+                    <ul className="w-56 border-t-[1px] bg-white">
                       {link.subMenuItems!.map((subItem) => (
                         <li
                           key={subItem.text}
