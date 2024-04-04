@@ -7,9 +7,10 @@ import { cn } from "@/lib/utils/utils";
 
 type Props = {
   isDashboard?: boolean;
+  className?: string;
 };
 
-const LogoutButton = ({ isDashboard }: Props) => {
+const LogoutButton = ({ isDashboard, className }: Props) => {
   return (
     <button
       className={cn(
@@ -17,6 +18,7 @@ const LogoutButton = ({ isDashboard }: Props) => {
           ? " rounded-sm border border-primary px-[4px] py-[4px] font-semibold text-primary shadow-lg transition-all ease-in-out hover:bg-primary  hover:text-white"
           : "w-full items-center pl-1 font-normal text-white  hover:bg-slate-100 hover:text-primary/85",
         "group flex h-8 items-center text-nowrap",
+        className,
       )}
       onClick={() => signOut({ redirect: false, callbackUrl: "/" })}
     >

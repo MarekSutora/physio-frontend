@@ -23,7 +23,10 @@ import { resetPasswordAction } from "@/lib/actions/authActions";
 
 const formSchema = z
   .object({
-    password: z.string().min(5, "Heslo musí mať aspoň 5 znakov."),
+    password: z
+      .string()
+      .min(5, "Heslo musí mať aspoň 5 znakov.")
+      .max(256, "Heslo je príliš dlhé."),
     confirmPassword: z.string(),
     token: z.string(),
     email: z.string().email("Neplatná emailová adresa."),

@@ -23,9 +23,7 @@ export async function registerClientAction(
     );
 
     if (!res.ok) {
-      const errorMessage =
-        (await res.json().then((data) => data.message)) ??
-        "Skúste to prosím znova. 🙄";
+      const errorMessage = (await res.text()) ?? "Skúste to prosím znova. 🙄";
       return { message: errorMessage, success: false };
     }
 
@@ -49,10 +47,7 @@ export async function forgotPasswordAction(email: string) {
     );
 
     if (!res.ok) {
-      console.log("Error:", res);
-      const errorMessage =
-        (await res.json().then((data) => data.message)) ??
-        "Skúste to prosím znova. 🙄";
+      const errorMessage = (await res.text()) ?? "Skúste to prosím znova. 🙄";
       throw new Error(errorMessage);
     }
   } catch (error) {
@@ -77,9 +72,7 @@ export async function resetPasswordAction(
 
     if (!res.ok) {
       console.log("Error:", res);
-      const errorMessage =
-        (await res.json().then((data) => data.message)) ??
-        "Skúste to prosím znova. 🙄";
+      const errorMessage = (await res.text()) ?? "Skúste to prosím znova. 🙄";
       throw new Error(errorMessage);
     }
   } catch (error) {

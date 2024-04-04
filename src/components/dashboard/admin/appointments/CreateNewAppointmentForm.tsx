@@ -136,7 +136,7 @@ const CreateNewAppointmentForm = ({ serviceTypes }: Props) => {
         />
       </div>
       <div className="mt-4">
-        <Button type="submit" className="btn">
+        <Button type="submit" className="w-full">
           Odoslať
         </Button>
       </div>

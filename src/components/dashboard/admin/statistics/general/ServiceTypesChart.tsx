@@ -110,7 +110,12 @@ const ServiceTypesStatsChart = ({ serviceTypeStats }: Props) => {
         ></ComboBox>
       </div>
       <div className="m-auto md:w-[87%]">
-        <Chart type="bar" data={getChartData()} options={chartOptions} />
+        <Chart
+          type="bar"
+          data={getChartData()}
+          options={chartOptions}
+          className="h-full"
+        />
       </div>
     </div>
   );

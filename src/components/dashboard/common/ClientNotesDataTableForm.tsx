@@ -32,6 +32,10 @@ const ClientNotesGridForm = ({ clientNotes, personId }: Props) => {
   const { toast } = useToast();
 
   const handleAddNote = async () => {
+    if (note.length > 10000) {
+      return;
+    }
+
     try {
       const newNote: TClientNote = {
         note: note,
@@ -41,8 +45,6 @@ const ClientNotesGridForm = ({ clientNotes, personId }: Props) => {
 
       const noteId = await addNoteToClient(newNote);
 
-      console.log("noteId", noteId);
-
       toast({
         variant: "success",
         title: "Poznámka bola úspešne pridaná.",
@@ -50,8 +52,6 @@ const ClientNotesGridForm = ({ clientNotes, personId }: Props) => {
       });
 
       newNote.id = noteId;
-
-      console.log("newNote", newNote);
 
       setClientNotesState([...clientNotesState, newNote]);
       setNote("");
@@ -66,6 +66,7 @@ const ClientNotesGridForm = ({ clientNotes, personId }: Props) => {
   };
 
   const handleDeleteNote = async (noteId: number) => {
+    console.log("Deleting note", noteId);
     try {
       await deleteNoteFromClient(noteId);
 
@@ -129,6 +130,11 @@ const ClientNotesGridForm = ({ clientNotes, personId }: Props) => {
         autoFocus={true}
         value={note}
       />
+      {note.length > 10000 && (
+        <span className="text-sm text-red-500">
+          Poznámka nesmie byť dlhšia ako 10000 znakov.
+        </span>
+      )}
       <Button className="mt-2 w-full" onClick={handleAddNote}>
         Pridať poznamku
       </Button>
@@ -136,15 +142,13 @@ const ClientNotesGridForm = ({ clientNotes, personId }: Props) => {
         value={clientNotesState}
         className="w-full max-w-full"
         paginator
-        rows={7}
+        rows={6}
         emptyMessage="Nenašli sa žiadne poznámky"
         filterLocale="sk"
         dataKey="id"
         size="small"
         showHeaders
         filters={defaultFilters}
-        sortField="createdAt"
-        defaultSortOrder={1}
       >
         <Column
           field="note"

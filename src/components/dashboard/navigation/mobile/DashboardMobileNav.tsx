@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils/utils";
 import Hamburger from "hamburger-react";
 import { motion, useCycle } from "framer-motion";
 import DashboardNavUl from "../DashboardNavUl";
+import LogoutButton from "@/components/auth/authButtons/LogoutButton";
 
 const DashboardMobileNav = () => {
   const containerRef = useRef(null);
@@ -41,7 +42,7 @@ const DashboardMobileNav = () => {
       <div
         className={cn(
           "left-0 right-0 top-0 z-50 block h-14 w-full bg-primary text-white xl:hidden",
-          isOpen ? "fixed" : "stickyy",
+          isOpen ? "fixed" : "sticky",
         )}
       >
         <button className="flex h-full w-full justify-end">
@@ -60,7 +61,7 @@ const DashboardMobileNav = () => {
             variants={sidebar}
             className="absolute inset-0 right-0 w-full bg-white"
           >
-            <div className="flex h-full w-full flex-col overflow-y-visible border-t border-slate-200 bg-primary font-semibold">
+            <div className="h-full w-full justify-between border-t border-slate-200 bg-primary font-semibold">
               <DashboardNavUl mobileCloseFunction={closeMenu} />
             </div>
           </motion.div>

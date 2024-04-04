@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import { dashboardLinks } from "@/lib/shared/constants";
 import DashboardMenuItem from "./DashboardMenuItem";
 import { useRouter } from "next/navigation";
+import LogoutButton from "@/components/auth/authButtons/LogoutButton";
 
 type Props = {
   mobileCloseFunction?: () => void;
@@ -15,7 +16,7 @@ const DashboardNavUl = ({ mobileCloseFunction }: Props) => {
   const user = session?.user;
 
   const router = useRouter();
-  
+
   useEffect(() => {
     if (status === "loading") return;
 
@@ -25,26 +26,32 @@ const DashboardNavUl = ({ mobileCloseFunction }: Props) => {
   }, [user, router, status]);
 
   return (
-    <ul className="flex h-full flex-col">
-      {user?.roles.includes("Admin") &&
-        dashboardLinks.admin.map((link) => (
-          <li key={link.text}>
-            <DashboardMenuItem
-              {...link}
-              mobileCloseFunction={mobileCloseFunction}
-            />
-          </li>
-        ))}
-      {user?.roles.includes("Client") &&
-        dashboardLinks.client.map((link) => (
-          <li key={link.text}>
-            <DashboardMenuItem
-              {...link}
-              mobileCloseFunction={mobileCloseFunction}
-            />
-          </li>
-        ))}
-    </ul>
+    <>
+      <ul className="flex h-full flex-col">
+        {user?.roles.includes("Admin") &&
+          dashboardLinks.admin.map((link) => (
+            <li key={link.text}>
+              <DashboardMenuItem
+                {...link}
+                mobileCloseFunction={mobileCloseFunction}
+              />
+            </li>
+          ))}
+        {user?.roles.includes("Client") &&
+          dashboardLinks.client.map((link) => (
+            <li key={link.text}>
+              <DashboardMenuItem
+                {...link}
+                mobileCloseFunction={mobileCloseFunction}
+              />
+            </li>
+          ))}
+        <LogoutButton
+          isDashboard={true}
+          className="border-b-[1px] border-white py-2 xl:hidden xl:border-0 xl:py-0"
+        />
+      </ul>
+    </>
   );
 };
 

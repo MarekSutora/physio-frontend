@@ -1,5 +1,5 @@
 import DashboardSectionWrapper from "@/components/dashboard/common/DashboardSectionWrapper";
-import BlogPostsGrid from "@/components/dashboard/admin/blog/BlogPostsGrid";
+import BlogPostsGrid from "@/components/dashboard/admin/blog/BlogPostsDataTable";
 import { getAllBlogPostsAction } from "@/lib/actions/blogActions";
 import { TBlogPost } from "@/lib/shared/types";
 import React from "react";

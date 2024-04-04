@@ -36,7 +36,10 @@ const loginFormSchema = z.object({
     .string()
     .min(1, "Email musi byť vyplnený.")
     .email("Neplatná emailová adresa."),
-  password: z.string().min(1, "Heslo musí byť vyplnené."),
+  password: z
+    .string()
+    .min(1, "Heslo musí byť vyplnené.")
+    .max(256, "Heslo je príliš dlhé."),
 });
 
 type LoginFormData = z.infer<typeof loginFormSchema>;
