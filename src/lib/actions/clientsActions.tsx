@@ -174,7 +174,7 @@ export async function deleteNoteFromClient(noteId: number): Promise<void> {
       throw new Error(errorData);
     }
   } catch (error) {
-    console.warn("Error deleting note", error);
+    console.error("Error deleting note", error);
     throw new Error(getErrorMessage(error));
   }
 }

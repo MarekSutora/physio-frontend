@@ -64,6 +64,7 @@ export const authOptions: AuthOptions = {
             }
           }
         } catch (error) {
+          console.error("authorize:", error);
           throw new Error(getErrorMessage(error));
         }
       },
