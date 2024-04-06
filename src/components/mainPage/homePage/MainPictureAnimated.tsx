@@ -38,9 +38,7 @@ const MainPictureAnimated = () => {
           style={{ objectFit: "cover" }}
           className="backdrop-brightness-50"
           quality={80}
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 66vw"
-          loading="eager"
-          priority
+          sizes="(max-width: 768px) 90vw, (max-width: 1200px) 75vw, 66vw"
           placeholder="blur"
         />
       </motion.div>
