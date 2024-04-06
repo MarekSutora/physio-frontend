@@ -6,9 +6,8 @@ import Image from "next/image";
 
 import image1 from "@/root/public/MainImages/greenStudioPeople.webp";
 import image2 from "@/root/public/MainImages/greenStudioPeople2.webp";
-import image3 from "@/root/public/MainImages/greenStudioPeople3.webp";
 
-const images = [image1, image2, image3];
+const images = [image1, image2];
 
 const MainPictureAnimated = () => {
   const [currentImage, setCurrentImage] = useState(0);
@@ -37,6 +36,7 @@ const MainPictureAnimated = () => {
           style={{ objectFit: "cover" }}
           className="backdrop-brightness-50"
           priority
+          quality={90}
         />
       </motion.div>
     </AnimatePresence>
