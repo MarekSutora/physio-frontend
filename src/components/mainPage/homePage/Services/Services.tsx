@@ -1,7 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons"; // A default icon
-import { library, IconName } from "@fortawesome/fontawesome-svg-core";
+import { library } from "@fortawesome/fontawesome-svg-core";
 import * as Icons from "@fortawesome/free-solid-svg-icons";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 import Link from "next/link";
@@ -65,7 +65,7 @@ const ServiceCard = ({ serviceType }: ServiceCardProps) => {
           <Image
             src={serviceType.imageUrl || "/login.png"}
             alt={serviceType.name}
-            quality={100}
+            quality={90}
             fill
             style={{ objectFit: "cover" }}
             className="rounded-t-lg object-cover"

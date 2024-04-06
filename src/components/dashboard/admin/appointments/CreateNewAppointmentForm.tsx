@@ -97,7 +97,7 @@ const CreateNewAppointmentForm = ({ serviceTypes }: Props) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="space-y-1">
-        <Label htmlFor="serviceTypes">Typ sluzby</Label>
+        <Label htmlFor="serviceTypes">Typ služby</Label>
         <Select
           id="serviceTypes"
           instanceId="serviceTypes"
@@ -137,7 +137,7 @@ const CreateNewAppointmentForm = ({ serviceTypes }: Props) => {
       </div>
       <div className="mt-4">
         <Button type="submit" className="w-full">
-          Odoslať
+          Vytvoriť
         </Button>
       </div>
     </form>

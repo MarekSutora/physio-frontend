@@ -77,9 +77,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
         >
           {serviceType.name}
         </h1>
-        <div style={{ position: "absolute", top: "10px", left: "10px" }}>
-          {/* Render icon here */}
-        </div>
+        <div style={{ position: "absolute", top: "10px", left: "10px" }}></div>
       </div>
       <div style={{ padding: "15px" }}>
         <p>{serviceType.description}</p>
