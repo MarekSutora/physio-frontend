@@ -29,6 +29,7 @@ export async function registerClientAction(
 
     return { message: "Registrácia prebehla úspešne. 🎉", success: true };
   } catch (error) {
+    console.error("registerClientAction:", error);
     throw new Error(getErrorMessage(error));
   }
 }
@@ -51,6 +52,7 @@ export async function forgotPasswordAction(email: string) {
       throw new Error(errorMessage);
     }
   } catch (error) {
+    console.error("forgotPasswordAction:", error);
     throw new Error(getErrorMessage(error));
   }
 }
@@ -76,6 +78,7 @@ export async function resetPasswordAction(
       throw new Error(errorMessage);
     }
   } catch (error) {
+    console.error("resetPasswordAction:", error);
     throw new Error(getErrorMessage(error));
   }
 }
