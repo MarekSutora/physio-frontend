@@ -72,7 +72,6 @@ const Contact = () => {
   };
 
   return (
-    <div className="m-auto w-5/6 pb-10 lg:w-[70%]">
       <div
         className={cn(
           isLoading && "flex h-full w-full items-center justify-center p-0",
@@ -185,7 +184,7 @@ const Contact = () => {
           </Form>
         )}
       </div>
-    </div>
+
   );
 };
 
