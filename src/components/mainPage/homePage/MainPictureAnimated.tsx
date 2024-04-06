@@ -1,23 +1,26 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
 import image1 from "@/root/public/MainImages/greenStudioPeople.webp";
 import image2 from "@/root/public/MainImages/greenStudioPeople2.webp";
+import image3 from "@/root/public/MainImages/greenStudioPeople3.webp";
 
-const images = [image1, image2];
+const images = [image1, image2, image3];
 
 const MainPictureAnimated = () => {
   const [currentImage, setCurrentImage] = useState(0);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImage((prev) => (prev + 1) % images.length);
-    }, 7000);
-    return () => clearInterval(interval);
+  const changeImage = useCallback(() => {
+    setCurrentImage((prev) => (prev + 1) % images.length);
   }, []);
+
+  useEffect(() => {
+    const interval = setInterval(changeImage, 7000);
+    return () => clearInterval(interval);
+  }, [changeImage]);
 
   return (
     <AnimatePresence>
@@ -35,7 +38,7 @@ const MainPictureAnimated = () => {
           fill
           style={{ objectFit: "cover" }}
           className="backdrop-brightness-50"
-          priority
+          priority={currentImage === 0}
           quality={90}
         />
       </motion.div>
