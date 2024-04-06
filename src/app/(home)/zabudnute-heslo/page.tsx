@@ -57,7 +57,7 @@ const ForgotPasswordPage = () => {
     <DashboardSectionWrapper additionalClasses="m-auto h-[350px] w-[400px] mt-[100px] flex justify-center items-center">
       {loading ? (
         <ClipLoader
-          color={"#298294"}
+          color={"#1f6678"}
           loading={loading}
           cssOverride={{
             display: "block",

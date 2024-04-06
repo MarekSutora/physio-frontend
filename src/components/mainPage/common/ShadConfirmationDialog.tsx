@@ -46,7 +46,7 @@ const ShadConfirmationDialog = ({
         <AlertDialogContent className="rounded-sm">
           {isLoading ? (
             <ClipLoader
-              color={"#298294"}
+              color={"#1f6678"}
               loading={isLoading}
               cssOverride={{
                 display: "block",

@@ -40,7 +40,9 @@ const HeaderDesktop = ({ links }: HeaderDesktopProps) => {
           <div className="m-auto flex h-full w-5/6 flex-row items-center justify-between">
             <div className="w-52">
               <Link href="/">
-                <LogoText color="#298294" />
+                <span aria-label="Go to homepage">
+                  <LogoText color="#1f6678" />
+                </span>
               </Link>
             </div>
             <NavbarDesktop links={links} />

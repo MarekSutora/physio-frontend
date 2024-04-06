@@ -100,7 +100,7 @@ const LoginForm = ({ searchParams }: Props) => {
     <div className="flex w-96 flex-col justify-start ">
       {isLoading ? (
         <ClipLoader
-          color={"#298294"}
+          color={"#1f6678"}
           loading={isLoading}
           cssOverride={{
             display: "block",
