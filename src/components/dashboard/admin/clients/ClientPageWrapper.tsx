@@ -29,12 +29,12 @@ const ClientPageWrapper = ({
   return (
     <div className="flex h-full w-full flex-col gap-2 xl:flex-row">
       <DashboardSectionWrapper
-        title="Client Information"
+        title="Informácie o klientovi"
         height="h-fit xl:h-full"
         width="w-full xl:w-1/4"
       >
         {clientData && (
-          <div className="mx-5 mt-6 flex flex-row flex-wrap xl:flex-col lg:mx-0">
+          <div className="mx-5 mt-6 flex flex-row flex-wrap lg:mx-0 xl:flex-col">
             <h2>
               <span>Id: </span>{" "}
               <span className="font-semibold">{clientData.personId}</span>

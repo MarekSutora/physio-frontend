@@ -27,7 +27,7 @@ const defaultFilters: DataTableFilterMeta = {
   isHidden: { value: null, matchMode: FilterMatchMode.CONTAINS },
 };
 
-const BlogPostsGrid = ({ _blogPosts }: Props) => {
+const BlogPostsDataTable = ({ _blogPosts }: Props) => {
   const { toast } = useToast();
   const [blogPosts, setBlogPosts] = useState<TBlogPost[]>(_blogPosts);
 
@@ -57,18 +57,28 @@ const BlogPostsGrid = ({ _blogPosts }: Props) => {
 
   const actionBodyTemplate = (rowData: TBlogPost) => {
     return (
-      <div className="flex flex-row gap-1">
-        <Link href={`./upravit-clanok?slug=${rowData.slug}`}>Update</Link>
+      <div className="flex flex-row items-center justify-center gap-1">
+        <Link
+          href={`./upravit-clanok?slug=${rowData.slug}`}
+          className="h-8 rounded-md border-[1px] border-gray-500 px-1 pt-0.5 text-center"
+        >
+          Otvoriť
+        </Link>
 
         <ShadConfirmationDialog onConfirm={handleHide} confirmArgs={[rowData]}>
-          <Button> {rowData.isHidden ? "Zverejniť" : "Skryť"}</Button>
+          <Button className="h-8">
+            {" "}
+            {rowData.isHidden ? "Zverejniť" : "Skryť"}
+          </Button>
         </ShadConfirmationDialog>
 
         <ShadConfirmationDialog
           onConfirm={handleDelete}
           confirmArgs={[rowData]}
         >
-          <Button variant={"destructive"}>Vymazať</Button>
+          <Button className="h-8" variant={"destructive"}>
+            Vymazať
+          </Button>
         </ShadConfirmationDialog>
       </div>
     );
@@ -124,4 +134,4 @@ const BlogPostsGrid = ({ _blogPosts }: Props) => {
   );
 };
 
-export default BlogPostsGrid;
+export default BlogPostsDataTable;

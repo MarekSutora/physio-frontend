@@ -1,9 +1,8 @@
 "use client";
 
-import React from "react";
+import React, { useState, useCallback } from "react";
 import {
   GoogleMap,
-  LoadScript,
   Marker,
   StreetViewPanorama,
   useJsApiLoader,
@@ -19,46 +18,50 @@ const center = {
   lng: -109.2771494,
 };
 
-const App = () => {
-  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+function MapComponent() {
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
+  });
 
-  return (
-    <div className="w-full">
-      <div className="flex w-full flex-row gap-3">
-        <div className="m-auto h-[1px] w-full bg-slate-200"></div>
-        <h1 className="w-full text-nowrap pb-3 text-center text-4xl font-semibold">
-          Tu sa nachádzame
-        </h1>
-        <div className="m-auto h-[1px] w-full bg-slate-200"></div>
-      </div>
-      <section className="m-auto w-full">
-        <LoadScript googleMapsApiKey={apiKey!}>
-          <div className="flex flex-col shadow-xl lg:flex-row">
-            <GoogleMap
-              mapContainerStyle={containerStyle}
-              center={center}
-              zoom={10}
-            >
-              <Marker position={center} />
-            </GoogleMap>
-            <GoogleMap
-              mapContainerStyle={containerStyle}
-              center={center}
-              zoom={10}
-            >
-              <StreetViewPanorama
-                options={{
-                  position: center,
-                  pov: { heading: 95, pitch: 5 },
-                  visible: true,
-                }}
-              />
-            </GoogleMap>
-          </div>
-        </LoadScript>
-      </section>
-    </div>
-  );
-};
+  const [map, setMap] = useState<null>(null);
 
-export default App;
+  const onLoad = useCallback((map: any) => {
+    setMap(map);
+  }, []);
+
+  const onUnmount = useCallback(() => {
+    setMap(null);
+  }, []);
+
+  return isLoaded ? (
+    <>
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        zoom={10}
+        onLoad={onLoad}
+        onUnmount={onUnmount}
+      >
+        <Marker position={center} />
+      </GoogleMap>
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        zoom={10}
+        onLoad={onLoad}
+        onUnmount={onUnmount}
+      >
+        <StreetViewPanorama
+          options={{
+            position: center,
+            pov: { heading: 95, pitch: 5 },
+            visible: true,
+          }}
+        />
+      </GoogleMap>
+    </>
+  ) : null;
+}
+
+export default React.memo(MapComponent);

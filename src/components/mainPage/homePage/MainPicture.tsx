@@ -1,51 +1,16 @@
-"use client";
-
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
-
-import image1 from "@/root/public/MainImages/greenStudioPeople.webp";
-import image2 from "@/root/public/MainImages/greenStudioPeople2.webp";
-import image3 from "@/root/public/MainImages/greenStudioPeople3.webp";
+import React from "react";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import Link from "next/link";
+import MainPictureAnimated from "./MainPictureAnimated";
 
-const images = [image1, image2, image3];
 
 const MainPicture = () => {
-  const [currentImage, setCurrentImage] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImage((prev) => (prev + 1) % images.length);
-    }, 7000);
-    return () => clearInterval(interval);
-  }, []);
-
   const words = "„Lorem ipsum dolor sit amet, consectetur adipiscing elit.“";
 
   return (
     <section className="relative mb-10 h-[400px] w-full text-center drop-shadow-lg lg:h-[600px]">
       <div className="relative h-full w-full overflow-hidden saturate-[1.3]">
-        {/* //TODO do samostatneho komponentu */}
-        <AnimatePresence>
-          <motion.div
-            key={currentImage}
-            initial={{ opacity: 0, scale: 1 }}
-            animate={{ opacity: 1, scale: 1.1 }}
-            exit={{ opacity: 0 }}
-            transition={{ opacity: { duration: 2 }, scale: { duration: 7 } }}
-            className="absolute inset-0"
-          >
-            <Image
-              src={images[currentImage]}
-              alt="representative-picture"
-              fill
-              style={{ objectFit: "cover" }}
-              className="backdrop-brightness-50"
-            />
-          </motion.div>
-        </AnimatePresence>
+        <MainPictureAnimated />
       </div>
 
       <div className="absolute inset-0 bg-black opacity-70" />

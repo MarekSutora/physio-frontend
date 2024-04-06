@@ -246,7 +246,10 @@ const ExerciseDetailsRow = ({
         />
       </div>
       <Button
-        className={cn(!isAdmin && "hidden")}
+        className={cn(
+          !isAdmin && "hidden",
+          "h-7 mb-1",
+        )}
         variant="destructive"
         onClick={handleDeletePlannedExercise}
       >

@@ -79,37 +79,23 @@ const dummyReviews: TReview[] = [
 
 const Reviews = () => {
   return (
-    <section className="w-full">
-      <div className="flex w-full flex-row gap-3 pb-6">
-        <div className="m-auto h-[1px] w-full bg-slate-200"></div>
-        <h1 className="w-full text-nowrap pb-3 text-center text-4xl font-semibold">
-          Recenzie
-        </h1>
-        <div className="m-auto h-[1px] w-full bg-slate-200"></div>
-      </div>
-      <div className="m-auto w-5/6 py-5 lg:w-[61.8%]">
-        <Carousel
-          opts={{
-            loop: true,
-            align: "start",
-          }}
-          className="m-auto w-5/6"
-        >
-          <CarouselContent>
-            {dummyReviews.map((review) => (
-              <CarouselItem
-                key={review.id}
-                className="md:basis-1/2 2xl:basis-1/3"
-              >
-                <ReviewCard key={review.id} review={review} />
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious className="z-50" />
-          <CarouselNext className="z-50" />
-        </Carousel>
-      </div>
-    </section>
+    <Carousel
+      opts={{
+        loop: true,
+        align: "start",
+      }}
+      className="m-auto w-5/6"
+    >
+      <CarouselContent>
+        {dummyReviews.map((review) => (
+          <CarouselItem key={review.id} className="md:basis-1/2 2xl:basis-1/3">
+            <ReviewCard key={review.id} review={review} />
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      <CarouselPrevious className="z-50" />
+      <CarouselNext className="z-50" />
+    </Carousel>
   );
 };
 

@@ -13,8 +13,32 @@ const Home = () => {
       <AboutMe />
       <MovingPicture />
       <ServicesWrapper />
-      <Reviews />
-      <GoogleMapLocation />
+      <section className="w-full">
+        <div className="flex w-full flex-row gap-3 pb-6">
+          <div className="m-auto h-[1px] w-full bg-slate-200"></div>
+          <h1 className="w-full text-nowrap pb-3 text-center text-4xl font-semibold">
+            Recenzie
+          </h1>
+          <div className="m-auto h-[1px] w-full bg-slate-200"></div>
+        </div>
+        <div className="m-auto w-5/6 py-5 lg:w-[61.8%]">
+          <Reviews />
+        </div>
+      </section>
+      <div className="w-full">
+        <div className="flex w-full flex-row gap-3">
+          <div className="m-auto h-[1px] w-full bg-slate-200"></div>
+          <h1 className="w-full text-nowrap pb-3 text-center text-4xl font-semibold">
+            Tu sa nachádzame
+          </h1>
+          <div className="m-auto h-[1px] w-full bg-slate-200"></div>
+        </div>
+        <section className="m-auto w-full">
+          <div className="flex flex-col shadow-xl lg:flex-row">
+            <GoogleMapLocation />
+          </div>
+        </section>
+      </div>
     </div>
   );
 };

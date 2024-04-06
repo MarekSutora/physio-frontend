@@ -44,7 +44,10 @@ const serviceTypeFormSchema = z.object({
     .max(7, { message: "Hex farba musí mať presne 7 znakov." }),
   durationCosts: z.array(durationCostSchema),
   imageUrl: z.string().url({ message: "Formát URL adresy je neplatný." }),
-  iconName: z.string().min(1, { message: "Názov ikony je povinný." }),
+  iconName: z
+    .string()
+    .min(1, { message: "Názov ikony je povinný." })
+    .max(50, { message: "Názov ikony nesmie presiahnuť 50 znakov." }),
 });
 
 type Props = {

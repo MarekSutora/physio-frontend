@@ -38,12 +38,12 @@ const formSchema = z
     firstName: z
       .string()
       .min(1, "Meno je povinné. 🙄")
-      .max(50, "Meno nesmie mať viac ako 50 znakov. 🙄"),
+      .max(50, "Meno nesmie mať viac ako 100 znakov. 🙄"),
     lastName: z
       .string()
       .min(1, "Priezvisko je povinné. 🙄")
-      .max(50, "Priezvisko nesmie mať viac ako 50 znakov. 🙄"),
-    phoneNumber: z.string().min(1, "Telefónne číslo musí byť vyplnené. 🙄"),
+      .max(50, "Priezvisko nesmie mať viac ako 100 znakov. 🙄"),
+    phoneNumber: z.string().min(1, "Telefónne číslo musí byť vyplnené. 🙄").max(100, "Telefónne číslo príliš dlhé"),
     email: z.string().email("Neplatná emailová adresa. 🙄"),
     password: passwordSchema,
     confirmedPassword: z.string(),

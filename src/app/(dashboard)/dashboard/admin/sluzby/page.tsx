@@ -33,11 +33,11 @@ const Page = async () => {
       }
     >
       <div className="flex h-full w-full flex-col gap-2 lg:flex-row">
-        <DashboardSectionWrapper title="Upraviť/Odstrániť poskytované služby">
-          <UpdateOrDeleteServiceTypeForm serviceTypes={serviceTypes} />
-        </DashboardSectionWrapper>
         <DashboardSectionWrapper title="Pridať novú službu">
           <AddServiceTypeForm />
+        </DashboardSectionWrapper>
+        <DashboardSectionWrapper title="Upraviť/Odstrániť poskytované služby">
+          <UpdateOrDeleteServiceTypeForm serviceTypes={serviceTypes} />
         </DashboardSectionWrapper>
       </div>
     </Suspense>
