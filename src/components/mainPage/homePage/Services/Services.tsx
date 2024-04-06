@@ -65,10 +65,11 @@ const ServiceCard = ({ serviceType }: ServiceCardProps) => {
           <Image
             src={serviceType.imageUrl || "/login.png"}
             alt={serviceType.name}
-            quality={90}
+            quality={80}
             fill
             style={{ objectFit: "cover" }}
             className="rounded-t-lg object-cover"
+            loading="lazy"
           />
           <div className="absolute inset-0 rounded-t-lg bg-black opacity-60" />
           <h3 className="absolute bottom-4 left-4 text-xl font-semibold text-white drop-shadow-md">

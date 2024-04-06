@@ -43,7 +43,10 @@ const formSchema = z
       .string()
       .min(1, "Priezvisko je povinné. 🙄")
       .max(50, "Priezvisko nesmie mať viac ako 100 znakov. 🙄"),
-    phoneNumber: z.string().min(1, "Telefónne číslo musí byť vyplnené. 🙄").max(100, "Telefónne číslo príliš dlhé"),
+    phoneNumber: z
+      .string()
+      .min(1, "Telefónne číslo musí byť vyplnené. 🙄")
+      .max(100, "Telefónne číslo príliš dlhé"),
     email: z.string().email("Neplatná emailová adresa. 🙄"),
     password: passwordSchema,
     confirmedPassword: z.string(),
@@ -128,7 +131,7 @@ const RegistrationForm = () => {
     <div className="flex w-96 flex-col justify-start">
       {isLoading ? (
         <ClipLoader
-          color={"#298294"}
+          color={"#1f6678"}
           loading={isLoading}
           cssOverride={{
             display: "block",

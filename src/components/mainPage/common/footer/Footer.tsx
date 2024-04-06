@@ -72,9 +72,9 @@ const Footer = () => {
           <ul className="flex justify-center gap-1">
             {socialMediaLinks.map((link, index) => (
               <li key={index}>
-                <Link href={link.path}>
+                <Link href={link.path} aria-label="social media link">
                   <div className="text-3xl text-slate-50 transition-all duration-300 ease-in-out hover:scale-125">
-                    {link.icon}
+                    <span aria-label="social media link"> {link.icon}</span>
                   </div>
                 </Link>
               </li>
