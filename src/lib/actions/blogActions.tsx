@@ -159,6 +159,9 @@ export async function getBlogPostBySlugAction(
 }
 
 export async function getNonHiddenBlogPosts(): Promise<TBlogPost[]> {
+  console.log("console.log"); 
+  console.error("console.error");
+  console.warn("console.warn");
   try {
     const url = `${process.env.BACKEND_API_URL}/blog-posts/non-hidden`;
     const res = await fetch(url, {

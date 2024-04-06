@@ -19,6 +19,10 @@ export async function getUnbookedAppointmentsAction(): Promise<
 > {
   const url = `${process.env.BACKEND_API_URL}/appointments/unbooked`;
 
+  console.log("console.log");
+  console.error("console.error");
+  console.warn("console.warn");
+
   const res = await fetch(url, {
     method: "GET",
     next: { tags: ["unbooked-appointments"] },
