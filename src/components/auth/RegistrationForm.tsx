@@ -23,14 +23,16 @@ import DashboardSectionWrapper from "../dashboard/common/DashboardSectionWrapper
 
 const passwordSchema = z
   .string()
-  .min(7, { message: "Heslo musí obsahovať aspoň 7 znakov." })
-  .regex(/\d/, { message: "Heslo musí obsahovať aspoň jednu číslicu." })
-  .regex(/[a-z]/, { message: "Heslo musí obsahovať aspoň jedno malé písmeno." })
+  .min(7, { message: "Heslo musí obsahovať aspoň 7 znakov. 🙄" })
+  .regex(/\d/, { message: "Heslo musí obsahovať aspoň jednu číslicu. 🙄" })
+  .regex(/[a-z]/, {
+    message: "Heslo musí obsahovať aspoň jedno malé písmeno. 🙄",
+  })
   .regex(/[A-Z]/, {
-    message: "Heslo musí obsahovať aspoň jedno veľké písmeno.",
+    message: "Heslo musí obsahovať aspoň jedno veľké písmeno. 🙄",
   })
   .regex(/\W/, {
-    message: "Heslo musí obsahovať aspoň jeden nealfanumerický znak.",
+    message: "Heslo musí obsahovať aspoň jeden nealfanumerický znak. 🙄",
   });
 
 const formSchema = z
@@ -118,12 +120,10 @@ const RegistrationForm = () => {
 
   if (registrationSuccess) {
     return (
-      <DashboardSectionWrapper>
-        <div className="m-3 rounded-lg border-2 border-green-700/70 bg-green-300 p-5 text-center text-green-900">
-          <h1 className="text-2xl font-semibold">Registrácia Úspešná!</h1>
-          <p>Prosím, skontrolujte svoj email na potvrdenie účtu.</p>
-        </div>
-      </DashboardSectionWrapper>
+      <div className="m-3 rounded-lg border-2 border-green-700/70 bg-green-300 p-5 text-center text-green-900">
+        <h1 className="text-2xl font-semibold">Registrácia Úspešná!</h1>
+        <p>Prosím, skontrolujte svoj email na potvrdenie účtu.</p>
+      </div>
     );
   }
 
@@ -131,7 +131,7 @@ const RegistrationForm = () => {
     <div className="flex w-96 flex-col justify-start">
       {isLoading ? (
         <ClipLoader
-          color={"#1f6678"}
+          color={"#298294"}
           loading={isLoading}
           cssOverride={{
             display: "block",
@@ -229,11 +229,7 @@ const RegistrationForm = () => {
                   <FormItem>
                     <FormLabel>Potvrdenie hesla</FormLabel>
                     <FormControl>
-                      <Input
-                        type="password"
-                        autoComplete="new-password"
-                        {...field}
-                      />
+                      <Input type="password" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -259,14 +255,17 @@ const RegistrationForm = () => {
                         >
                           obchodnými podmienkami
                         </Link>{" "}
-                        a{" "}
+                        ,{" "}
                         <Link
                           href="/ochrana-sukromia"
                           className="text-blue-500"
                         >
                           ochranou osobných údajov
+                        </Link>{" "}
+                        a{" "}
+                        <Link href="/cookies" className="text-blue-500">
+                          cookies politikou
                         </Link>
-                        .
                       </FormLabel>
                     </div>
                     <FormMessage className="mb-2" />

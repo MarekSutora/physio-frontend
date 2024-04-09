@@ -40,11 +40,12 @@ const AppointmentsCalendar = ({
     format(startOfToday(), "MMM-yyyy", { locale: enUS }),
   );
 
-  const setAppointments = useAppointmentsStore(
-    (state) => state.setAppointments,
-  );
+  // const setAppointments = useAppointmentsStore(
+  //   (state) => state.setAppointments,
+  // );
 
-  const appointments = useAppointmentsStore((state) => state.appointments);
+  // const appointments = useAppointmentsStore((state) => state.appointments);
+  const appointments = appointmentsData;
 
   useEffect(() => {
     const today = startOfToday();
@@ -61,9 +62,9 @@ const AppointmentsCalendar = ({
     setSelectedDay(initialSelectedDay);
   }, [appointments]);
 
-  useEffect(() => {
-    setAppointments(appointmentsData);
-  }, [appointmentsData, setAppointments]);
+  // useEffect(() => {
+  //   setAppointments(appointmentsData);
+  // }, [appointmentsData, setAppointments]);
 
   let firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
 

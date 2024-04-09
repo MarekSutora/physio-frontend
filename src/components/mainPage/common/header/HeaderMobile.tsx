@@ -47,9 +47,9 @@ const HeaderMobile = ({ links }: HeaderMobileProps) => {
   };
 
   return (
-    <div className="h-14">
+    <>
       {!isAboveMediumScreens && (
-        <>
+        <div className="h-14">
           <div
             className={cn(
               isOpen ? "block h-80 bg-black" : "hidden h-0",
@@ -109,9 +109,9 @@ const HeaderMobile = ({ links }: HeaderMobileProps) => {
               </motion.ul>
             </motion.nav>
           </header>
-        </>
+        </div>
       )}
-    </div>
+    </>
   );
 };
 

@@ -72,119 +72,118 @@ const Contact = () => {
   };
 
   return (
-      <div
-        className={cn(
-          isLoading && "flex h-full w-full items-center justify-center p-0",
-          "flex w-full flex-col gap-10 lg:flex-row lg:gap-10",
-        )}
-      >
-        {isLoading ? (
-          <ClipLoader
-            color={"#1f6678"}
-            loading={isLoading}
-            cssOverride={{
-              width: "300px",
-              height: "300px",
-              display: "block",
-              margin: "0 auto",
-            }}
-            size={100}
-            aria-label="Loading Spinner"
-            data-testid="loader"
-            className="flex h-full w-full items-center justify-center"
-          />
-        ) : (
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="w-full space-y-4 lg:pr-28"
+    <div
+      className={cn(
+        isLoading && "flex h-full w-full items-center justify-center p-0",
+        "flex w-full flex-col gap-10 lg:flex-row lg:gap-10",
+      )}
+    >
+      {isLoading ? (
+        <ClipLoader
+          color={"#298294"}
+          loading={isLoading}
+          cssOverride={{
+            width: "300px",
+            height: "300px",
+            display: "block",
+            margin: "0 auto",
+          }}
+          size={100}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+          className="flex h-full w-full items-center justify-center"
+        />
+      ) : (
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="w-full space-y-4 lg:pr-28"
+          >
+            <div className="flex flex-row gap-5">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem className="w-full space-y-1">
+                    <FormLabel className="text-md">
+                      Meno <span className="text-red-500">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Input type="text" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="secondName"
+                render={({ field }) => (
+                  <FormItem className="w-full space-y-1">
+                    <FormLabel className="text-md">
+                      Priezvisko <span className="text-red-500">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Input type="text" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem className="space-y-1">
+                  <FormLabel className="text-md">
+                    Email <span className="text-red-500">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Input type="email" autoComplete="email" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="phoneNumber"
+              render={({ field }) => (
+                <FormItem className="space-y-1">
+                  <FormLabel className="text-md">Telefónne číslo</FormLabel>
+                  <FormControl>
+                    <Input type="tel" autoComplete="tel" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="message"
+              render={({ field }) => (
+                <FormItem className="space-y-1">
+                  <FormLabel className="text-md">
+                    Správa <span className="text-red-500">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Textarea className="h-52" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button
+              type="submit"
+              className="w-full bg-primary text-white hover:bg-primary/90 focus:bg-primary/90"
             >
-              <div className="flex flex-row gap-5">
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem className="w-full space-y-1">
-                      <FormLabel className="text-md">
-                        Meno <span className="text-red-500">*</span>
-                      </FormLabel>
-                      <FormControl>
-                        <Input type="text" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="secondName"
-                  render={({ field }) => (
-                    <FormItem className="w-full space-y-1">
-                      <FormLabel className="text-md">
-                        Priezvisko <span className="text-red-500">*</span>
-                      </FormLabel>
-                      <FormControl>
-                        <Input type="text" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem className="space-y-1">
-                    <FormLabel className="text-md">
-                      Email <span className="text-red-500">*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input type="email" autoComplete="email" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="phoneNumber"
-                render={({ field }) => (
-                  <FormItem className="space-y-1">
-                    <FormLabel className="text-md">Telefónne číslo</FormLabel>
-                    <FormControl>
-                      <Input type="tel" autoComplete="tel" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="message"
-                render={({ field }) => (
-                  <FormItem className="space-y-1">
-                    <FormLabel className="text-md">
-                      Správa <span className="text-red-500">*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Textarea className="h-52" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button
-                type="submit"
-                className="w-full bg-primary text-white hover:bg-primary/90 focus:bg-primary/90"
-              >
-                Odoslať
-              </Button>
-            </form>
-          </Form>
-        )}
-      </div>
-
+              Odoslať
+            </Button>
+          </form>
+        </Form>
+      )}
+    </div>
   );
 };
 

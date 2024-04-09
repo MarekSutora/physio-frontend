@@ -79,7 +79,7 @@ const ResetPasswordForm = (props: Props) => {
     <DashboardSectionWrapper additionalClasses="m-auto flex  w-[350px] h-[310px]">
       {loading ? (
         <ClipLoader
-          color={"#1f6678"}
+          color={"#298294"}
           loading={loading}
           cssOverride={{
             display: "block",

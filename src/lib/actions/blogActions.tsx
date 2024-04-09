@@ -36,19 +36,13 @@ export async function createBlogPostAction(formData: TBlogPost) {
   try {
     const session = await getServerSession(authOptions);
     const token = await getTokenForServerAction();
-    if (!session || !token) {
-      throw new Error(
-        "Session not found. User must be logged in to perform this action.",
-      );
-    }
-    const url = `${process.env.BACKEND_API_URL}/blog-posts`;
-    const accessToken = token.userTokens.accessToken;
+    if (!session || !token) 
+      throw new Error("Session not found. User must be logged in to perform this action.",);
 
-    const res = await fetch(url, {
-      method: "POST",
-      headers: {
+    const res = await fetch(`${process.env.BACKEND_API_URL}/blog-posts`, {
+      method: "POST", headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${token.userTokens.accessToken}`,
       },
       body: JSON.stringify(formData),
     });
@@ -61,6 +55,7 @@ export async function createBlogPostAction(formData: TBlogPost) {
 
     revalidateTag("blog-posts");
   } catch (error) {
+    console.error(getErrorMessage(error));
     throw new Error(getErrorMessage(error));
   }
 }

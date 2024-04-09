@@ -37,7 +37,7 @@ export default function RootLayout({
               <Suspense
                 fallback={
                   <ClipLoader
-                    color={"#1f6678"}
+                    color={"#298294"}
                     loading={true}
                     cssOverride={{
                       width: "500px",

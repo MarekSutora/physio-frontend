@@ -16,14 +16,12 @@ const AddServiceTypeForm = () => {
       await createNewServiceTypeAction(values);
       toast({
         variant: "success",
-        title: "Úspešne pridaná nová služba. 🎉",
-        className: "text-lg",
+        description: "Úspešne pridaná nová služba. 🎉",
       });
     } catch (error) {
       toast({
         variant: "destructive",
         description: getErrorMessage(error),
-        className: "text-lg",
       });
     }
   };

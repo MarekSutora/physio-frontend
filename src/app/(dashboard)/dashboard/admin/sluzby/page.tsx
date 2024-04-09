@@ -20,7 +20,7 @@ const Page = async () => {
     <Suspense
       fallback={
         <ClipLoader
-          color={"#1f6678"}
+          color={"#298294"}
           loading={true}
           cssOverride={{
             display: "block",

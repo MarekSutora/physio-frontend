@@ -81,10 +81,10 @@ export async function createBookedAppointmentAction(
       );
     }
 
-    const personIdoUse = personId ? personId : token.user?.personId;
+    const personIdToUse = personId ? personId : token.user?.personId;
     const accessToken = token.userTokens.accessToken;
 
-    const url = `${process.env.BACKEND_API_URL}/appointments/booked/${personIdoUse}`;
+    const url = `${process.env.BACKEND_API_URL}/appointments/booked/${personIdToUse}`;
     const response = await fetch(url, {
       method: "POST",
       headers: {

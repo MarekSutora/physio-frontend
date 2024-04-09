@@ -29,7 +29,7 @@ const CreateNewAppointmentForm = ({ serviceTypes }: Props) => {
 
   const serviceTypesOptions = serviceTypes.flatMap((serviceType) =>
     serviceType.stdcs.map((cost) => ({
-      label: `${serviceType.name} - ${cost.durationMinutes}min - ${cost.cost}e`,
+      label: `${serviceType.name} - ${cost.durationMinutes}min - ${cost.cost}€`,
       value: `${serviceType.id}-${cost.id}`,
       color: serviceType.hexColor,
     })),

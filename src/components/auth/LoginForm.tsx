@@ -97,10 +97,10 @@ const LoginForm = ({ searchParams }: Props) => {
   };
 
   return (
-    <div className="flex w-96 flex-col justify-start ">
+    <div className="flex w-96 flex-col justify-start">
       {isLoading ? (
         <ClipLoader
-          color={"#1f6678"}
+          color={"#298294"}
           loading={isLoading}
           cssOverride={{
             display: "block",
@@ -125,7 +125,7 @@ const LoginForm = ({ searchParams }: Props) => {
               <h1 className="text-2xl font-semibold">
                 Potvrdenie emailu úspešné!
               </h1>
-              <p>Teraz sa mozete prihlasit.</p>
+              <p>Teraz sa môžete prihlásiť.</p>
             </div>
           )}
 
