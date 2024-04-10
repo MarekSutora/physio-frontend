@@ -84,10 +84,10 @@ const AppointmentCard = ({
         ) : (
           !session?.user && (
             <div className="flex flex-row items-center justify-center">
-              <p className="text-sm w-full pr-3 font-medium text-destructive md:text-sm">
+              <p className="text-sm w-full pr-3 font-medium text-destructive">
                 Na rezervovanie termínu musíte byť prihlásený
               </p>
-              <AuthButtons additionalClassnames="flex-col" />
+              <AuthButtons additionalClassnames="flex-col lg:flex-row" />
             </div>
           )
         )}
