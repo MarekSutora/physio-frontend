@@ -58,6 +58,7 @@ export async function createBlogPostAction(formData: TBlogPost) {
       throw new Error(errorMessage);
     }
 
+    revalidatePath("/blog/[slug]", "page");
     revalidatePath("/blog");
     revalidateTag("blog-posts");
   } catch (error) {
@@ -95,6 +96,7 @@ export async function updateBlogPostAction(formData: TBlogPost) {
       throw new Error(resErrorMessage);
     }
 
+    revalidatePath("/blog/[slug]", "page");
     revalidatePath("/blog");
     revalidateTag("blog-posts");
   } catch (error) {
@@ -131,6 +133,7 @@ export async function deleteBlogPostAction(slug: string) {
       throw new Error(resErrorMessage);
     }
 
+    revalidatePath("/blog/[slug]", "page");
     revalidatePath("/blog");
     revalidateTag("blog-posts");
   } catch (error) {
