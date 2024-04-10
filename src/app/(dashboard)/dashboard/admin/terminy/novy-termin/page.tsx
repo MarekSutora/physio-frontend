@@ -12,7 +12,7 @@ const Page = async () => {
   try {
     serviceTypes = await getServiceTypesAction();
   } catch (error) {
-    console.log(error);
+    serviceTypes = [];
   }
 
   return (
@@ -24,13 +24,6 @@ const Page = async () => {
       >
         <CreateNewAppointmentForm serviceTypes={serviceTypes} />
       </DashboardSectionWrapper>
-      {/* <DashboardSectionWrapper
-        title={"Zoznam termínov"}
-        width={"w-full lg:w-3/5"}
-        height="h-auto max-h-full"
-      >
-        <AppointmentsCalendarWrapper columnLayout={true} />
-      </DashboardSectionWrapper> */}
     </div>
   );
 };

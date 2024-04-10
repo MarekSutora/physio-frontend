@@ -16,19 +16,13 @@ const Page = async () => {
     serviceTypesData = await getServiceTypesAction();
   } catch (error) {
     unbookedAppointmentsData = [];
-    console.log(error);
   }
-
-  const [unbookedAppointments, serviceTypes] = await Promise.all([
-    unbookedAppointmentsData,
-    serviceTypesData,
-  ]);
 
   return (
     <DashboardSectionWrapper>
       <AppointmentsCalendar
-        appointmentsData={unbookedAppointments}
-        serviceTypes={serviceTypes}
+        appointmentsData={unbookedAppointmentsData}
+        serviceTypes={serviceTypesData}
       />
     </DashboardSectionWrapper>
   );

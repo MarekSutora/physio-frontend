@@ -38,8 +38,8 @@ export async function generateMetadata({
   try {
     blogPost = await getBlogPostBySlugAction(params.slug);
   } catch (error) {
-    console.error(error);
-    throw new Error("Error generating metadata.");
+    console.log(error);
+    return { title: "Blog", description: "Popis blogu" };
   }
 
   return {

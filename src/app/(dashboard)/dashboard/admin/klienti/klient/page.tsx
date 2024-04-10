@@ -31,27 +31,27 @@ const Page = async (props: Props) => {
   try {
     client = await getClientById(personIdNumber);
   } catch (error) {
-    console.error(getErrorMessage(error));
+    client = undefined;
   }
 
   try {
     clientsFinishedAppointments =
       await getFinishedAppointmentsForClientAction(personIdNumber);
   } catch (error) {
-    console.error(getErrorMessage(error));
+    clientsFinishedAppointments = [];
   }
 
   try {
     clientsBookedAppointments =
       await getBookedAppointmentsForClientAction(personIdNumber);
   } catch (error) {
-    console.error(getErrorMessage(error));
+    clientsBookedAppointments = [];
   }
 
   try {
     clientsNotes = await getAllNotesForClient(personIdNumber);
   } catch (error) {
-    console.error(getErrorMessage(error));
+    clientsNotes = [];
   }
 
   return (

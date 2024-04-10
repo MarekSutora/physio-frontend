@@ -42,7 +42,7 @@ export async function generateMetadata({
     serviceType = await getServiceTypeBySlugAction(params.slug);
   } catch (error) {
     console.log(error);
-    throw new Error("Error fetching service type");
+    return { title: "Služba", description: "Popis služby"};
   }
 
   return {
@@ -89,7 +89,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
           quality={50}
         />
         {/* Service name */}
-        <div className="absolute top-2 left-2 z-10 h-12 w-12 text-gray-100">
+        <div className="absolute left-2 top-2 z-10 h-12 w-12 text-gray-100">
           {renderIcon(serviceType.iconName)}
         </div>
         <div className="absolute inset-0 bg-black opacity-10" />
