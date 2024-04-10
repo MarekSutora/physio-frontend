@@ -15,6 +15,7 @@ const Page = async () => {
     unbookedAppointmentsData = await getUnbookedAppointmentsAction();
     serviceTypesData = await getServiceTypesAction();
   } catch (error) {
+    unbookedAppointmentsData = [];
     console.log(error);
   }
 

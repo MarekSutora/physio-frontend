@@ -92,7 +92,7 @@ const RevenueStatsChart = ({ revenueStats }: Props) => {
           onSelect={handleYearChange}
         />
       </div>
-      <div className="m-auto md:w-[87%]">
+      <div className="m-auto md:w-[87%]  w-full">
         <Chart type="line" data={getChartData()} options={chartOptions} />
       </div>
     </div>

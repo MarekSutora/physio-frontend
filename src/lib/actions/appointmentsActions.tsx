@@ -14,7 +14,6 @@ import {
 } from "../shared/types";
 import { getTokenForServerAction } from "./getTokenForServerAction";
 
-
 export async function getUnbookedAppointmentsAction(): Promise<
   TG_UnbookedAppointment[]
 > {
@@ -179,9 +178,8 @@ export async function getAllBookedAppointmentsAction(): Promise<
     });
 
     if (!res.ok) {
-      const errorMessage = await res.text();
-
-      throw new Error(getErrorMessage(errorMessage));
+      const resErrorMessage = await res.text();
+      throw new Error(resErrorMessage);
     }
 
     const data = await res.json();
@@ -220,7 +218,8 @@ export async function getBookedAppointmentsForClientAction(
     });
 
     if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`);
+      const resErrorMessage = await res.text();
+      throw new Error(resErrorMessage);
     }
 
     const data = await res.json();

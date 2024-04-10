@@ -155,6 +155,7 @@ const ClientNotesGridForm = ({ clientNotes, personId }: Props) => {
           header="Poznámka"
           style={{
             width: "74%",
+            minWidth: "130px",
             maxWidth: "400px",
             textWrap: "wrap",
             overflowWrap: "break-word",

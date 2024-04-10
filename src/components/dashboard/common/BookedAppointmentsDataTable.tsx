@@ -103,12 +103,12 @@ const BookedAppointmentsDataTable = ({ bookedAppointments }: Props) => {
         .${colorClass}:hover {
           background-color: ${appointment.hexColor}28;
         }
-      `;
+        .p-rowgroup-header > td {
+          padding: 5px;
+        }`;
     });
     setDynamicStyles(styles);
   }, [bookedAppointments]);
-
-console.log("bookedAppointments", bookedAppointments)
 
   const serviceTypeFilterTemplate = (
     options: ColumnFilterElementTemplateOptions,
@@ -123,7 +123,7 @@ console.log("bookedAppointments", bookedAppointments)
           options.filterApplyCallback(e.value)
         }
         optionLabel="typ"
-        placeholder="Vyber typ"
+        placeholder="Vyberte typ"
         className="p-column-filter"
         itemTemplate={(option) => {
           return <span>{option}</span>;
@@ -276,7 +276,7 @@ console.log("bookedAppointments", bookedAppointments)
         dataKey="id"
         size="small"
         groupRowsBy="appointmentId"
-        rowGroupMode="rowgroup"
+        rowGroupMode="subheader"
         header={header}
         sortField="appointmentBookedDate"
       >

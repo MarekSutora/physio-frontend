@@ -23,7 +23,7 @@ type FormConfirmationDialogProps = {
 const FormConfirmationDialog = ({
   onConfirm,
   confirmArgs = [],
-  dialogTitle = "Are you sure you want to perform this action?",
+  dialogTitle = "Ste si istý, že chcete vykonat túto akciu?",
   dialogDescription = "",
   isOpen,
   onClose,
@@ -71,11 +71,11 @@ const FormConfirmationDialog = ({
                 {dialogDescription}
               </AlertDialogDescription>
             </AlertDialogHeader>
-            <AlertDialogFooter className="m-auto flex w-full flex-row gap-4 sm:items-center sm:justify-center">
+            <AlertDialogFooter className="m-auto flex w-full flex-row gap-4 items-center justify-center">
               <AlertDialogCancel
                 onClick={onClose}
                 disabled={isLoading}
-                className="border-[1px] border-gray-500 text-black"
+                className="border-[1px] mt-0 border-gray-500 text-black"
               >
                 Zrušiť
               </AlertDialogCancel>

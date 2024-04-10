@@ -31,6 +31,7 @@ export async function getServiceTypeFinishedAppointmentsCountsAction(): Promise<
         "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,
       },
+      next: { revalidate: 3600 },
     });
 
     if (!res.ok) {
@@ -42,7 +43,10 @@ export async function getServiceTypeFinishedAppointmentsCountsAction(): Promise<
     return data;
   } catch (error) {
     const errorMessage = getErrorMessage(error);
-    console.error("getServiceTypeFinishedAppointmentsCountsAction", errorMessage);
+    console.error(
+      "getServiceTypeFinishedAppointmentsCountsAction",
+      errorMessage,
+    );
     throw new Error(errorMessage);
   }
 }
@@ -69,6 +73,7 @@ export async function getTotalRevenueStatisticsAction(): Promise<
         "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,
       },
+      next: { revalidate: 3600 },
     });
 
     if (!res.ok) {
@@ -107,6 +112,7 @@ export async function getNewClientsTrendAction(): Promise<
         "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,
       },
+      next: { revalidate: 3600 },
     });
 
     if (!res.ok) {
@@ -114,7 +120,7 @@ export async function getNewClientsTrendAction(): Promise<
       throw new Error(resErrorMessage);
     }
 
-    const data = await res.json(); 
+    const data = await res.json();
     return data;
   } catch (error) {
     const errorMessage = getErrorMessage(error);
@@ -136,7 +142,7 @@ export async function getBlogPostViewsStatsAction(): Promise<
       );
     }
 
-    const url = `${process.env.BACKEND_API_URL}/statistics/blog-post-views-stats`;
+    const url = `${process.env.BACKEND_API_URL}/statistics/blog-posts-views`;
     const accessToken = token.userTokens.accessToken;
 
     const res = await fetch(url, {
@@ -145,6 +151,7 @@ export async function getBlogPostViewsStatsAction(): Promise<
         "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,
       },
+      next: { revalidate: 3600 },
     });
 
     if (!res.ok) {
@@ -152,7 +159,7 @@ export async function getBlogPostViewsStatsAction(): Promise<
       throw new Error(resErrorMessage);
     }
 
-    const data = await res.json(); 
+    const data = await res.json();
     return data;
   } catch (error) {
     const errorMessage = getErrorMessage(error);

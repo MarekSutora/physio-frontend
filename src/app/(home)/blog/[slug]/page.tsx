@@ -92,7 +92,6 @@ const Page = async ({ params }: { params: { slug: string } }) => {
           {formattedDate} - {author}
         </p>
       </header>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
       {mainImageUrl && (
         <div className="relative h-[430px] w-full overflow-hidden">
           <Image
@@ -100,7 +99,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
             alt={title}
             quality={80}
             fill
-            style={{ objectFit: "cover", objectPosition: "10% 10%" }}
+            style={{ objectFit: "cover" }}
             className="rounded-t-lg"
           />
         </div>

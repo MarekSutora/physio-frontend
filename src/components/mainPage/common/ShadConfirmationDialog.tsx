@@ -66,11 +66,11 @@ const ShadConfirmationDialog = ({
                   {dialogDescription}
                 </AlertDialogDescription>
               </AlertDialogHeader>
-              <AlertDialogFooter className="m-auto flex w-full flex-row gap-4 sm:items-center sm:justify-center">
+              <AlertDialogFooter className="m-auto flex w-full flex-row gap-4 items-center justify-center">
                 <AlertDialogCancel
                   onClick={() => setOpen(false)}
                   disabled={isLoading}
-                  className="border-[1px] border-gray-500 text-black"
+                  className="border-[1px] mt-0 border-gray-500 text-black"
                 >
                   Zrušiť
                 </AlertDialogCancel>

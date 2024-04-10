@@ -16,6 +16,8 @@ type YearOption = {
 };
 
 const BlogPostViewsStatsChart = ({ blogPostViewsStats }: Props) => {
+  console.log("blogPostViewsStats", blogPostViewsStats);
+
   const currentYear = new Date().getFullYear();
   const uniqueYears = Array.from(
     new Set(blogPostViewsStats.map((stat) => stat.year)),
@@ -46,10 +48,10 @@ const BlogPostViewsStatsChart = ({ blogPostViewsStats }: Props) => {
             return selectedYear === "all"
               ? filteredData
                   .filter((stat) => stat.year.toString() === label)
-                  .reduce((sum, { viewsCount }) => sum + viewsCount, 0)
+                  .reduce((sum, { totalViews }) => sum + totalViews, 0)
               : filteredData
                   .filter((stat) => SlovakMonths[stat.month - 1] === label)
-                  .reduce((sum, { viewsCount }) => sum + viewsCount, 0);
+                  .reduce((sum, { totalViews }) => sum + totalViews, 0);
           }),
         },
       ],
@@ -70,7 +72,7 @@ const BlogPostViewsStatsChart = ({ blogPostViewsStats }: Props) => {
         beginAtZero: true,
         title: {
           display: true,
-          text: "Počet zhliadnutí",
+          text: "Noví klienti",
         },
       },
     },
@@ -92,7 +94,7 @@ const BlogPostViewsStatsChart = ({ blogPostViewsStats }: Props) => {
           onSelect={handleYearChange}
         />
       </div>
-      <div className="m-auto md:w-[87%]">
+      <div className="m-auto w-full  md:w-[87%]">
         <Chart type="line" data={getChartData()} options={chartOptions} />
       </div>
     </div>

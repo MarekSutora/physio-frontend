@@ -169,12 +169,12 @@ const WorkoutPlanForm = ({
   };
 
   return (
-    <div className="flex flex-col gap-2 px-2">
+    <div className="flex w-full flex-col gap-2 px-2">
       <PlannedExercisesList />
-      <div className="flex flex-col gap-2">
+      <div className="flex w-full flex-col gap-2">
         {isAdmin && (
           <>
-            <div className="flex flex-row flex-wrap items-end gap-2">
+            <div className="flex flex-row items-end gap-2 overflow-x-auto flex-nowrap">
               <Popover open={open} onOpenChange={setOpen}>
                 <PopoverTrigger asChild>
                   <Button

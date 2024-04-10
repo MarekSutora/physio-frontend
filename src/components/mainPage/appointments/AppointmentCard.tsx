@@ -29,14 +29,6 @@ const AppointmentCard = ({
     selectedServiceTypeNames.includes(asti.name),
   );
 
-  const removeAppointmentByAppId = useAppointmentsStore(
-    (state) => state.removeAppointmentByAppId,
-  );
-
-  const removeAppointmentByAstdcId = useAppointmentsStore(
-    (state) => state.removeAppointmentByAstdcId,
-  );
-
   const handleDeleteAppointment = async (appId: number) => {
     try {
       await deleteAppointmentAction(appId);
@@ -46,7 +38,6 @@ const AppointmentCard = ({
         title: "Termín úspešne zrušený.",
         className: "text-lg",
       });
-      //removeAppointmentByAppId(appId);
     } catch (error) {
       toast({
         variant: "destructive",
@@ -60,7 +51,6 @@ const AppointmentCard = ({
     if (isAuthenticated && session?.user.roles.includes("Client")) {
       try {
         await createBookedAppointmentAction(astdcId);
-        //removeAppointmentByAstdcId(astdcId);
         toast({
           variant: "success",
           title: "Termín úspešne zarezervovaný.",
@@ -94,10 +84,10 @@ const AppointmentCard = ({
         ) : (
           !session?.user && (
             <div className="flex flex-row items-center justify-center">
-              <p className="w-full pr-3 text-sm font-medium text-destructive">
+              <p className="text-sm w-full pr-3 font-medium text-destructive md:text-sm">
                 Na rezervovanie termínu musíte byť prihlásený
               </p>
-              <AuthButtons />
+              <AuthButtons additionalClassnames="flex-col" />
             </div>
           )
         )}

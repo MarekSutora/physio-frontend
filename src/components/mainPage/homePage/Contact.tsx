@@ -140,7 +140,7 @@ const Contact = () => {
                     Email <span className="text-red-500">*</span>
                   </FormLabel>
                   <FormControl>
-                    <Input type="email" autoComplete="email" {...field} />
+                    <Input autoComplete="email" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

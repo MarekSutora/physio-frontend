@@ -28,6 +28,7 @@ const DatePickerComponent = ({ startTime, setStartTime }: Props) => {
         minTime={new Date(new Date().setHours(6, 0))}
         maxTime={new Date(new Date().setHours(23, 45))}
         required
+        popperPlacement="top-start"
       />
       <style>{`
         .react-datepicker {

@@ -16,6 +16,8 @@ type YearOption = {
 };
 
 const NewClientsTrendStatsChart = ({ newClientsStats }: Props) => {
+  console.log("NewClientsTrendStatsChart", newClientsStats);
+
   const currentYear = new Date().getFullYear();
   const uniqueYears = Array.from(
     new Set(newClientsStats.map((stat) => stat.year)),
@@ -98,7 +100,7 @@ const NewClientsTrendStatsChart = ({ newClientsStats }: Props) => {
           onSelect={handleYearChange}
         />
       </div>
-      <div className="m-auto md:w-[87%]">
+      <div className="m-auto md:w-[87%]  w-full">
         <Chart type="line" data={getChartData()} options={chartOptions} />
       </div>
     </div>

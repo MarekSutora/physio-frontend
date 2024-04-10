@@ -40,11 +40,6 @@ const AppointmentsCalendar = ({
     format(startOfToday(), "MMM-yyyy", { locale: enUS }),
   );
 
-  // const setAppointments = useAppointmentsStore(
-  //   (state) => state.setAppointments,
-  // );
-
-  // const appointments = useAppointmentsStore((state) => state.appointments);
   const appointments = appointmentsData;
 
   useEffect(() => {
@@ -61,10 +56,6 @@ const AppointmentsCalendar = ({
     setCurrentMonth(format(initialSelectedDay, "MMM-yyyy", { locale: enUS }));
     setSelectedDay(initialSelectedDay);
   }, [appointments]);
-
-  // useEffect(() => {
-  //   setAppointments(appointmentsData);
-  // }, [appointmentsData, setAppointments]);
 
   let firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
 
@@ -102,7 +93,7 @@ const AppointmentsCalendar = ({
       <div
         className={cn(
           "pt-12 lg:w-[40%]",
-          columnLayout && "m-auto p-2 lg:w-10/12",
+          columnLayout && "m-auto p-2 lg:w-11/12",
         )}
       >
         <div className="flex items-center">
