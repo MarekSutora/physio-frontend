@@ -23,14 +23,15 @@ export async function registerClientAction(
     );
 
     if (!res.ok) {
-      const errorMessage = (await res.text()) ?? "Skúste to prosím znova. 🙄";
-      return { message: errorMessage, success: false };
+      const resErrorMessage = (await res.text()) ?? "Skúste to prosím znova. 🙄";
+      return { message: resErrorMessage, success: false };
     }
 
     return { message: "Registrácia prebehla úspešne. 🎉", success: true };
   } catch (error) {
-    console.error("registerClientAction:", error);
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("registerClientAction", errorMessage);
+    throw new Error(errorMessage);
   }
 }
 
@@ -48,12 +49,13 @@ export async function forgotPasswordAction(email: string) {
     );
 
     if (!res.ok) {
-      const errorMessage = (await res.text()) ?? "Skúste to prosím znova. 🙄";
-      throw new Error(errorMessage);
+      const resErrorMessage = (await res.text()) ?? "Skúste to prosím znova. 🙄";
+      throw new Error(resErrorMessage);
     }
   } catch (error) {
-    console.error("forgotPasswordAction:", error);
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("forgotPasswordAction", errorMessage);
+    throw new Error(errorMessage);
   }
 }
 
@@ -73,12 +75,13 @@ export async function resetPasswordAction(
     );
 
     if (!res.ok) {
-      console.log("Error:", res);
-      const errorMessage = (await res.text()) ?? "Skúste to prosím znova. 🙄";
-      throw new Error(errorMessage);
+      const resErrorMessage = (await res.text()) ?? "Skúste to prosím znova. 🙄";
+      throw new Error(resErrorMessage);
     }
+
   } catch (error) {
-    console.error("resetPasswordAction:", error);
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("resetPasswordAction", errorMessage);
+    throw new Error(errorMessage);
   }
 }

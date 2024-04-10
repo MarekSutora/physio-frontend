@@ -21,12 +21,23 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { TResetPasswordFormData } from "@/lib/shared/types";
 import { resetPasswordAction } from "@/lib/actions/authActions";
 
+const passwordSchema = z
+  .string()
+  .min(7, { message: "Heslo musí obsahovať aspoň 7 znakov. 🙄" })
+  .regex(/\d/, { message: "Heslo musí obsahovať aspoň jednu číslicu. 🙄" })
+  .regex(/[a-z]/, {
+    message: "Heslo musí obsahovať aspoň jedno malé písmeno. 🙄",
+  })
+  .regex(/[A-Z]/, {
+    message: "Heslo musí obsahovať aspoň jedno veľké písmeno. 🙄",
+  })
+  .regex(/\W/, {
+    message: "Heslo musí obsahovať aspoň jeden nealfanumerický znak. 🙄",
+  });
+
 const formSchema = z
   .object({
-    password: z
-      .string()
-      .min(5, "Heslo musí mať aspoň 5 znakov.")
-      .max(256, "Heslo je príliš dlhé."),
+    password: passwordSchema,
     confirmPassword: z.string(),
     token: z.string(),
     email: z.string().email("Neplatná emailová adresa."),
@@ -107,7 +118,6 @@ const ResetPasswordForm = (props: Props) => {
                     <Input
                       type="password"
                       {...field}
-                      placeholder="Enter new password"
                     />
                   </FormControl>
                   <FormMessage>{fieldState.error?.message}</FormMessage>
@@ -124,7 +134,6 @@ const ResetPasswordForm = (props: Props) => {
                     <Input
                       type="password"
                       {...field}
-                      placeholder="Confirm new password"
                     />
                   </FormControl>
                   <FormMessage>{fieldState.error?.message}</FormMessage>

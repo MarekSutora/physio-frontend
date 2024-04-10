@@ -9,7 +9,7 @@ const ServicesWrapper = async () => {
   try {
     serviceTypes = await getServiceTypesAction();
   } catch (error) {
-    console.log(error);
+    serviceTypes = [];
   }
 
   return <Services serviceTypes={serviceTypes} />;

@@ -3,6 +3,7 @@ import DashboardSectionWrapper from "@/components/dashboard/common/DashboardSect
 import BlogPostForm from "@/components/dashboard/admin/blog/BlogPostForm";
 import { TBlogPost } from "@/lib/shared/types";
 import { getBlogPostBySlugAction } from "@/lib/actions/blogActions";
+import { getErrorMessage } from "@/lib/utils/utils";
 
 type Props = {
   params: {};
@@ -17,7 +18,7 @@ const Page = async (props: Props) => {
   try {
     blogPost = await getBlogPostBySlugAction(slug as string);
   } catch (error) {
-    console.log("error", error);
+    console.error(getErrorMessage(error));
   }
 
   return (

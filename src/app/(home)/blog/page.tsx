@@ -20,7 +20,6 @@ const Page = async () => {
     blogPosts = await getNonHiddenBlogPosts();
   } catch (error) {
     blogPosts = [];
-    console.error(error);
   }
 
   // let postsToRender: TBlogPost[] = [];

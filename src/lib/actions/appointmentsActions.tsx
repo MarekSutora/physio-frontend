@@ -14,23 +14,31 @@ import {
 } from "../shared/types";
 import { getTokenForServerAction } from "./getTokenForServerAction";
 
+
 export async function getUnbookedAppointmentsAction(): Promise<
   TG_UnbookedAppointment[]
 > {
-  const url = `${process.env.BACKEND_API_URL}/appointments/unbooked`;
+  try {
+    const url = `${process.env.BACKEND_API_URL}/appointments/unbooked`;
 
-  const res = await fetch(url, {
-    method: "GET",
-    next: { tags: ["unbooked-appointments"] },
-  });
+    const res = await fetch(url, {
+      method: "GET",
+      next: { tags: ["unbooked-appointments"] },
+    });
 
-  if (!res.ok) {
-    throw new Error(`HTTP error! status: ${res.status}`);
+    if (!res.ok) {
+      const errorMessage = await res.text();
+      throw new Error(errorMessage);
+    }
+
+    const data = await res.json();
+
+    return data;
+  } catch (error) {
+    const errorMessage = getErrorMessage(error);
+    console.error("getUnbookedAppointmentsAction", errorMessage);
+    throw new Error(errorMessage);
   }
-
-  const data = await res.json();
-
-  return data;
 }
 
 export async function createAppointmentAction(appointmentData: TC_Appointment) {
@@ -47,7 +55,7 @@ export async function createAppointmentAction(appointmentData: TC_Appointment) {
     const url = `${process.env.BACKEND_API_URL}/appointments/unbooked`;
     const accessToken = token.userTokens.accessToken;
 
-    const response = await fetch(url, {
+    const res = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -56,14 +64,17 @@ export async function createAppointmentAction(appointmentData: TC_Appointment) {
       body: JSON.stringify(appointmentData),
     });
 
-    if (!response.ok) {
-      const errorData = await response.text();
+    if (!res.ok) {
+      const errorData = await res.text();
+
       throw new Error(errorData);
     }
 
     revalidateTag("unbooked-appointments");
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("createAppointmentAction", errorMessage);
+    throw new Error(errorMessage);
   }
 }
 
@@ -85,7 +96,7 @@ export async function createBookedAppointmentAction(
     const accessToken = token.userTokens.accessToken;
 
     const url = `${process.env.BACKEND_API_URL}/appointments/booked/${personIdToUse}`;
-    const response = await fetch(url, {
+    const res = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -94,15 +105,17 @@ export async function createBookedAppointmentAction(
       body: JSON.stringify({ astdcId }),
     });
 
-    if (!response.ok) {
-      const errorData = await response.text();
-      throw new Error(errorData);
+    if (!res.ok) {
+      const resErrorMessage = await res.text();
+      throw new Error(resErrorMessage);
     }
 
     revalidateTag("booked-appointments");
     revalidateTag("unbooked-appointments");
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("createBookedAppointmentAction", errorMessage);
+    throw new Error(errorMessage);
   }
 }
 
@@ -120,7 +133,7 @@ export async function deleteAppointmentAction(appointmentId: number) {
     const url = `${process.env.BACKEND_API_URL}/appointments/${appointmentId}`;
     const accessToken = token.userTokens.accessToken;
 
-    const response = await fetch(url, {
+    const res = await fetch(url, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -128,15 +141,17 @@ export async function deleteAppointmentAction(appointmentId: number) {
       },
     });
 
-    if (!response.ok) {
-      const errorData = await response.text();
-      throw new Error(errorData);
+    if (!res.ok) {
+      const resErrorMessage = await res.text();
+      throw new Error(resErrorMessage);
     }
 
     revalidateTag("unbooked-appointments");
     revalidateTag("booked-appointments");
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("deleteAppointmentAction", errorMessage);
+    throw new Error(errorMessage);
   }
 }
 
@@ -172,9 +187,9 @@ export async function getAllBookedAppointmentsAction(): Promise<
     const data = await res.json();
     return data.length > 0 ? data : [];
   } catch (error) {
-    throw new Error(
-      "getAllBookedAppointmentsAction: " + getErrorMessage(error),
-    );
+    const errorMessage = getErrorMessage(error);
+    console.error("getAllBookedAppointmentsAction", errorMessage);
+    throw new Error(errorMessage);
   }
 }
 
@@ -211,9 +226,9 @@ export async function getBookedAppointmentsForClientAction(
     const data = await res.json();
     return data.length > 0 ? data : [];
   } catch (error) {
-    throw new Error(
-      "getBookedAppointmentsForClientAction: " + getErrorMessage(error),
-    );
+    const errorMessage = getErrorMessage(error);
+    console.error("getBookedAppointmentsForClientAction", errorMessage);
+    throw new Error(errorMessage);
   }
 }
 
@@ -231,8 +246,6 @@ export async function getFinishedAppointmentsForClientAction(
     }
 
     const personIdToUse = personId ? personId : token.user.personId;
-
-    console.log("token", token);
 
     const url = `${process.env.BACKEND_API_URL}/appointments/clients/${personIdToUse}/finished`;
     const accessToken = token.userTokens.accessToken;
@@ -254,9 +267,9 @@ export async function getFinishedAppointmentsForClientAction(
     const data = await res.json();
     return data.length > 0 ? data : [];
   } catch (error) {
-    throw new Error(
-      "getFinishedAppointmentsForClientAction: " + getErrorMessage(error),
-    );
+    const errorMessage = getErrorMessage(error);
+    console.error("getFinishedAppointmentsForClientAction", errorMessage);
+    throw new Error(errorMessage);
   }
 }
 
@@ -286,15 +299,16 @@ export async function getAllFinishedAppointmentsAction(): Promise<
     });
 
     if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`);
+      const resErrorMessage = await res.text();
+      throw new Error(resErrorMessage);
     }
 
     const data = await res.json();
     return data.length > 0 ? data : [];
   } catch (error) {
-    throw new Error(
-      "getAllFinishedAppointmentsAction: " + getErrorMessage(error),
-    );
+    const errorMessage = getErrorMessage(error);
+    console.error("getAllFinishedAppointmentsAction", errorMessage);
+    throw new Error(errorMessage);
   }
 }
 
@@ -314,7 +328,7 @@ export async function deleteBookedAppointmentAction(
     const url = `${process.env.BACKEND_API_URL}/appointments/booked/${bookedAppointmentId}`;
     const accessToken = token.userTokens.accessToken;
 
-    const response = await fetch(url, {
+    const res = await fetch(url, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -322,15 +336,17 @@ export async function deleteBookedAppointmentAction(
       },
     });
 
-    if (!response.ok) {
-      const errorData = await response.text();
+    if (!res.ok) {
+      const errorData = await res.text();
       throw new Error(getErrorMessage(errorData));
     }
 
     revalidateTag("booked-appointments");
     revalidateTag("unbooked-appointments");
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("deleteBookedAppointmentAction", errorMessage);
+    throw new Error(errorMessage);
   }
 }
 
@@ -350,7 +366,7 @@ export async function getAppointmentByIdAction(
     const url = `${process.env.BACKEND_API_URL}/appointments/${appointmentId}`;
     const accessToken = token.userTokens.accessToken;
 
-    const response = await fetch(url, {
+    const res = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -359,15 +375,17 @@ export async function getAppointmentByIdAction(
       cache: "no-store",
     });
 
-    if (!response.ok) {
-      const errorData = await response.text();
-      throw new Error(errorData);
+    if (!res.ok) {
+      const resErrorMessage = await res.text();
+      throw new Error(resErrorMessage);
     }
 
-    const data = await response.json();
+    const data = await res.json();
     return data;
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("getAppointmentByIdAction", errorMessage);
+    throw new Error(errorMessage);
   }
 }
 
@@ -388,7 +406,7 @@ export async function updateAppointmentDetailsAction(
     const url = `${process.env.BACKEND_API_URL}/appointments/${appointmentId}/details`;
     const accessToken = token.userTokens.accessToken;
 
-    const response = await fetch(url, {
+    const res = await fetch(url, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -398,12 +416,14 @@ export async function updateAppointmentDetailsAction(
       body: JSON.stringify(appointmentDetail),
     });
 
-    if (!response.ok) {
-      const errorData = await response.text();
-      throw new Error(errorData);
+    if (!res.ok) {
+      const resErrorMessage = await res.text();
+      throw new Error(resErrorMessage);
     }
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("updateAppointmentDetailsAction", errorMessage);
+    throw new Error(errorMessage);
   }
 }
 
@@ -419,16 +439,17 @@ export async function getAllExerciseTypesAction(): Promise<TExerciseType[]> {
     });
 
     if (!res.ok) {
-      const errorData = await res.text();
-      throw new Error(errorData);
+      const resErrorMessage = await res.text();
+      throw new Error(resErrorMessage);
     }
 
     const data = await res.json();
 
     return data;
   } catch (error) {
-    console.log("error", error);
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("getAllExerciseTypesAction", errorMessage);
+    throw new Error(errorMessage);
   }
 }
 
@@ -448,7 +469,7 @@ export async function markBookedAppointmentAsFinishedAction(
     const url = `${process.env.BACKEND_API_URL}/appointments/booked/${id}/finish`;
     const accessToken = token.userTokens.accessToken;
 
-    const response = await fetch(url, {
+    const res = await fetch(url, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -456,14 +477,16 @@ export async function markBookedAppointmentAsFinishedAction(
       },
     });
 
-    if (!response.ok) {
-      const errorData = await response.text();
-      throw new Error(errorData);
+    if (!res.ok) {
+      const resErrorMessage = await res.text();
+      throw new Error(resErrorMessage);
     }
 
     revalidateTag("booked-appointments");
     revalidateTag("all-finished-appointments");
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("markBookedAppointmentAsFinishedAction", errorMessage);
+    throw new Error(errorMessage);
   }
 }

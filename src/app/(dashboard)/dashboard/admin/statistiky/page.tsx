@@ -23,7 +23,7 @@ const generateServiceTypeStatistics = (
         year,
         month,
         serviceTypeName,
-        finishedAppointmentsCount: Math.floor(Math.random() * 100), // Random count between 0 to 100
+        finishedAppointmentsCount: Math.floor(Math.random() * 100),
         hexColor,
       });
     }
@@ -38,7 +38,7 @@ const generateRevenueStatistics = (): TRevenueStatistics[] => {
       revenueStats.push({
         year,
         month,
-        totalRevenue: Math.floor(Math.random() * 10000), // Random revenue between 0 to 10000
+        totalRevenue: Math.floor(Math.random() * 10000),
       });
     }
   }
@@ -52,7 +52,7 @@ const generateNewClientsStatistics = (): TNewClientsStatistics[] => {
       newClientsStats.push({
         year,
         month,
-        newClientsCount: Math.floor(Math.random() * 50), // Random count between 0 to 50
+        newClientsCount: Math.floor(Math.random() * 50),
       });
     }
   }
@@ -66,7 +66,7 @@ const generateBlogPostViewsStats = (): TBlogPostViewsStats[] => {
       blogPostViewsStats.push({
         year,
         month,
-        viewsCount: Math.floor(Math.random() * 500), // Random count between 0 to 500
+        viewsCount: Math.floor(Math.random() * 500),
       });
     }
   }

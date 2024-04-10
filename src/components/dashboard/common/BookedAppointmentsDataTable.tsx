@@ -108,6 +108,8 @@ const BookedAppointmentsDataTable = ({ bookedAppointments }: Props) => {
     setDynamicStyles(styles);
   }, [bookedAppointments]);
 
+console.log("bookedAppointments", bookedAppointments)
+
   const serviceTypeFilterTemplate = (
     options: ColumnFilterElementTemplateOptions,
   ) => {
@@ -194,6 +196,8 @@ const BookedAppointmentsDataTable = ({ bookedAppointments }: Props) => {
   };
 
   const actionBodyTemplate = (rowData: TG_BookedAppointment) => {
+    const isPastAppointment = new Date(rowData.startTime) < new Date();
+
     return (
       <div className="flex flex-row items-center gap-1">
         {session?.user?.roles.includes("Admin") ? (
@@ -229,14 +233,16 @@ const BookedAppointmentsDataTable = ({ bookedAppointments }: Props) => {
                 Zrušiť termín
               </Button>
             </ShadConfirmationDialog>
-            <ShadConfirmationDialog
-              onConfirm={handleMarkBkedAppAsFinished}
-              confirmArgs={[rowData.id]}
-            >
-              <Button className="h-8 px-2 py-1" variant="default">
-                Vykonané
-              </Button>
-            </ShadConfirmationDialog>
+            {isPastAppointment && (
+              <ShadConfirmationDialog
+                onConfirm={handleMarkBkedAppAsFinished}
+                confirmArgs={[rowData.id]}
+              >
+                <Button className="h-8 px-2 py-1" variant="default">
+                  Vykonané
+                </Button>
+              </ShadConfirmationDialog>
+            )}
           </div>
         )}
       </div>
@@ -260,17 +266,19 @@ const BookedAppointmentsDataTable = ({ bookedAppointments }: Props) => {
       <DataTable
         value={bookedAppointmentsState}
         paginator
-        rows={12}
+        rows={11}
         emptyMessage="Nenašli sa žiadne výsledky"
         rowClassName={rowClassName}
         filters={defaultFilters}
+        sortOrder={-1}
         filterLocale="sk"
         aria-hidden
         dataKey="id"
         size="small"
         groupRowsBy="appointmentId"
-        rowGroupMode="rowspan"
+        rowGroupMode="rowgroup"
         header={header}
+        sortField="appointmentBookedDate"
       >
         <Column
           field="startTime"
@@ -344,10 +352,13 @@ const BookedAppointmentsDataTable = ({ bookedAppointments }: Props) => {
           />
         )}
         <Column
-          field="bookedAppointmentDate"
+          field="appointmentBookedDate"
           header="Dátum zarezervovania"
           filter
-          filterField="bookedAppointmentDate"
+          body={(rowData: TG_BookedAppointment) =>
+            formatDate(rowData.appointmentBookedDate)
+          }
+          filterField="appointmentBookedDate"
           sortable
         />
         {session?.user?.roles.includes("Admin") && (

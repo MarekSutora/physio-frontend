@@ -25,7 +25,7 @@ export async function getServiceTypeFinishedAppointmentsCountsAction(): Promise<
     const url = `${process.env.BACKEND_API_URL}/statistics/appointments-service-types`;
     const accessToken = token.userTokens.accessToken;
 
-    const response = await fetch(url, {
+    const res = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -33,14 +33,17 @@ export async function getServiceTypeFinishedAppointmentsCountsAction(): Promise<
       },
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    if (!res.ok) {
+      const resErrorMessage = await res.text();
+      throw new Error(resErrorMessage);
     }
 
-    const data = await response.json();
+    const data = await res.json();
     return data;
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("getServiceTypeFinishedAppointmentsCountsAction", errorMessage);
+    throw new Error(errorMessage);
   }
 }
 
@@ -60,7 +63,7 @@ export async function getTotalRevenueStatisticsAction(): Promise<
     const url = `${process.env.BACKEND_API_URL}/statistics/revenue`;
     const accessToken = token.userTokens.accessToken;
 
-    const response = await fetch(url, {
+    const res = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -68,14 +71,17 @@ export async function getTotalRevenueStatisticsAction(): Promise<
       },
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    if (!res.ok) {
+      const resErrorMessage = await res.text();
+      throw new Error(resErrorMessage);
     }
 
-    const data = await response.json(); // Adjust the expected type if necessary
+    const data = await res.json();
     return data;
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("getTotalRevenueStatisticsAction", errorMessage);
+    throw new Error(errorMessage);
   }
 }
 
@@ -95,7 +101,7 @@ export async function getNewClientsTrendAction(): Promise<
     const url = `${process.env.BACKEND_API_URL}/statistics/new-clients-trend`;
     const accessToken = token.userTokens.accessToken;
 
-    const response = await fetch(url, {
+    const res = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -103,14 +109,17 @@ export async function getNewClientsTrendAction(): Promise<
       },
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    if (!res.ok) {
+      const resErrorMessage = await res.text();
+      throw new Error(resErrorMessage);
     }
 
-    const data = await response.json(); // Adjust the expected type if necessary
+    const data = await res.json(); 
     return data;
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("getNewClientsTrendAction", errorMessage);
+    throw new Error(errorMessage);
   }
 }
 
@@ -130,7 +139,7 @@ export async function getBlogPostViewsStatsAction(): Promise<
     const url = `${process.env.BACKEND_API_URL}/statistics/blog-post-views-stats`;
     const accessToken = token.userTokens.accessToken;
 
-    const response = await fetch(url, {
+    const res = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -138,13 +147,16 @@ export async function getBlogPostViewsStatsAction(): Promise<
       },
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    if (!res.ok) {
+      const resErrorMessage = await res.text();
+      throw new Error(resErrorMessage);
     }
 
-    const data = await response.json(); // Ensure the type matches what the backend sends
+    const data = await res.json(); 
     return data;
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("getBlogPostViewsStatsAction", errorMessage);
+    throw new Error(errorMessage);
   }
 }

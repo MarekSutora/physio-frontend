@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { DataTable, DataTableFilterMeta } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { TBlogPost } from "@/lib/shared/types"; // Make sure this path is correct
+import { TBlogPost } from "@/lib/shared/types";
 import {
   deleteBlogPostAction,
   updateBlogPostAction,

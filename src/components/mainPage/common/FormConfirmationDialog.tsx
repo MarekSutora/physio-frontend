@@ -32,7 +32,7 @@ const FormConfirmationDialog = ({
 
   useEffect(() => {
     if (!isOpen) {
-      setIsLoading(false); // Reset loading state when dialog is closed
+      setIsLoading(false);
     }
   }, [isOpen]);
 
@@ -42,7 +42,7 @@ const FormConfirmationDialog = ({
       await onConfirm(...confirmArgs);
     } finally {
       setIsLoading(false);
-      onClose(); // Close the dialog after confirmation action
+      onClose();
     }
   };
 

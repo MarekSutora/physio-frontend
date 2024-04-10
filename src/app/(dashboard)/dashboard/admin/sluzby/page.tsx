@@ -13,7 +13,7 @@ const Page = async () => {
   try {
     serviceTypes = await getServiceTypesAction();
   } catch (error) {
-    console.log(error);
+    serviceTypes = [];
   }
 
   return (

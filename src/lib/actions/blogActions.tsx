@@ -20,15 +20,17 @@ export async function getAllBlogPostsAction(): Promise<TBlogPost[]> {
     });
 
     if (!res.ok) {
-      const errorData = await res.text();
-      throw new Error(errorData);
+      const resErrorMessage = await res.text();
+      throw new Error(resErrorMessage);
     }
 
     const data = await res.json();
 
     return data.length > 0 ? data : [];
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("getAllBlogPostsAction", errorMessage);
+    throw new Error(errorMessage);
   }
 }
 
@@ -55,8 +57,9 @@ export async function createBlogPostAction(formData: TBlogPost) {
 
     revalidateTag("blog-posts");
   } catch (error) {
-    console.error(getErrorMessage(error));
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("createBlogPostAction", errorMessage);
+    throw new Error(errorMessage);
   }
 }
 
@@ -84,13 +87,15 @@ export async function updateBlogPostAction(formData: TBlogPost) {
     });
 
     if (!res.ok) {
-      const errorData = await res.text();
-      throw new Error(errorData);
+      const resErrorMessage = await res.text();
+      throw new Error(resErrorMessage);
     }
 
     revalidateTag("blog-posts");
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("updateBlogPostAction", errorMessage);
+    throw new Error(errorMessage);
   }
 }
 
@@ -117,13 +122,15 @@ export async function deleteBlogPostAction(slug: string) {
     });
 
     if (!res.ok) {
-      const errorData = await res.text();
-      throw new Error(errorData);
+      const resErrorMessage = await res.text();
+      throw new Error(resErrorMessage);
     }
 
     revalidateTag("blog-posts");
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("deleteBlogPostAction", errorMessage);
+    throw new Error(errorMessage);
   }
 }
 
@@ -140,15 +147,17 @@ export async function getBlogPostBySlugAction(
     });
 
     if (!res.ok) {
-      const errorData = await res.text();
-      throw new Error(errorData);
+      const resErrorMessage = await res.text();
+      throw new Error(resErrorMessage);
     }
 
     const blogPost: TBlogPost = await res.json();
 
     return blogPost;
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("getBlogPostBySlugAction", errorMessage);
+    throw new Error(errorMessage);
   }
 }
 
@@ -164,13 +173,15 @@ export async function getNonHiddenBlogPosts(): Promise<TBlogPost[]> {
     });
 
     if (!res.ok) {
-      const errorData = await res.text();
-      throw new Error(errorData);
+      const resErrorMessage = await res.text();
+      throw new Error(resErrorMessage);
     }
 
     const blogPosts: TBlogPost[] = await res.json();
     return blogPosts;
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("getNonHiddenBlogPosts", errorMessage);
+    throw new Error(errorMessage);
   }
 }
