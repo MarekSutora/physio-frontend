@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { getServiceTypesAction } from "@/lib/actions/serviceTypesActions";
 import { TG_ServiceType, TMainPageLink } from "@/lib/shared/types";
 import React from "react";
