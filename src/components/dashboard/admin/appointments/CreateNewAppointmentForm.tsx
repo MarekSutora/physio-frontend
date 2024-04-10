@@ -14,12 +14,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { createAppointmentAction } from "@/lib/actions/appointmentsActions";
 import { toast } from "@/components/ui/use-toast";
+import ClipLoader from "react-spinners/ClipLoader";
 
 type Props = {
   serviceTypes: TG_ServiceType[];
 };
 
 const CreateNewAppointmentForm = ({ serviceTypes }: Props) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [startTime, setStartTime] = useState(new Date());
   const [selectedOptions, setSelectedOptions] = useState<
     ServiceTypeOptionType[]
@@ -70,11 +72,11 @@ const CreateNewAppointmentForm = ({ serviceTypes }: Props) => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
+    setIsLoading(true);
     const stdcIds = selectedOptions.map((option) =>
       parseInt(option.value.split("-")[1]),
     );
-    console.log(startTime);
+
     const appointmentData: TC_Appointment = {
       startTime,
       capacity,
@@ -92,54 +94,74 @@ const CreateNewAppointmentForm = ({ serviceTypes }: Props) => {
         description: "Chyba pri vytváraní termínu. Skúste to prosím znova. 🙄",
       });
     }
+    setIsLoading(false);
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="space-y-1">
-        <Label htmlFor="serviceTypes">Typ služby</Label>
-        <Select
-          id="serviceTypes"
-          instanceId="serviceTypes"
-          name="serviceTypes"
-          isMulti
-          closeMenuOnSelect={false}
-          placeholder="Vyberte typ služby"
-          options={serviceTypesOptions}
-          styles={customStyles}
-          components={makeAnimated()}
-          onChange={handleServiceTypesSelectChange}
-          value={selectedOptions}
-          required
-          noOptionsMessage={() => ""}
+      {isLoading ? (
+        <ClipLoader
+          color={"#298294"}
+          loading={true}
+          cssOverride={{
+            width: "100px",
+            height: "100px",
+            display: "block",
+            margin: "0 auto",
+          }}
+          size={100}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+          className="flex h-full w-full items-center justify-center"
         />
-      </div>
-      <div className="mt-4 flex w-[220px] flex-col gap-1 space-y-1">
-        <Label htmlFor="startTime">Dátum a čas</Label>
-        <DatePickerComponent
-          startTime={startTime}
-          setStartTime={setStartTime}
-        />
-      </div>
-      <div className="mt-4">
-        <Label htmlFor="capacity">Kapacita</Label>
-        <Input
-          type="number"
-          required
-          min={1}
-          id="capacity"
-          name="capacity"
-          value={capacity}
-          onChange={handleCapacityChange}
-          disabled={selectedOptions.length > 1}
-          className="input disabled:opacity-50"
-        />
-      </div>
-      <div className="mt-4">
-        <Button type="submit" className="w-full">
-          Vytvoriť
-        </Button>
-      </div>
+      ) : (
+        <>
+          <div className="space-y-1">
+            <Label htmlFor="serviceTypes">Typ služby</Label>
+            <Select
+              id="serviceTypes"
+              instanceId="serviceTypes"
+              name="serviceTypes"
+              isMulti
+              closeMenuOnSelect={false}
+              placeholder="Vyberte typ služby"
+              options={serviceTypesOptions}
+              styles={customStyles}
+              components={makeAnimated()}
+              onChange={handleServiceTypesSelectChange}
+              value={selectedOptions}
+              required
+              noOptionsMessage={() => ""}
+            />
+          </div>
+          <div className="mt-4 flex w-[220px] flex-col gap-1 space-y-1">
+            <Label htmlFor="startTime">Dátum a čas</Label>
+            <DatePickerComponent
+              startTime={startTime}
+              setStartTime={setStartTime}
+            />
+          </div>
+          <div className="mt-4">
+            <Label htmlFor="capacity">Kapacita</Label>
+            <Input
+              type="number"
+              required
+              min={1}
+              id="capacity"
+              name="capacity"
+              value={capacity}
+              onChange={handleCapacityChange}
+              disabled={selectedOptions.length > 1}
+              className="input disabled:opacity-50"
+            />
+          </div>
+          <div className="mt-4">
+            <Button type="submit" className="w-full">
+              Vytvoriť
+            </Button>
+          </div>
+        </>
+      )}
     </form>
   );
 };
