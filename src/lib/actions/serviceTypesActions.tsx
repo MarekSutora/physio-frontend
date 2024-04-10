@@ -69,7 +69,7 @@ export async function createNewServiceTypeAction(formData: TServiceType) {
 
     await res.json();
 
-    revalidatePath("/(home)/sluzby/[slug]", "page");
+    revalidatePath("/(home)", "layout");
     revalidateTag("service-types");
   } catch (error) {
     const errorMessage = getErrorMessage(error);
@@ -108,7 +108,7 @@ export async function updateServiceTypeAction(formData: TServiceType) {
 
     await res.json();
 
-    revalidatePath("/(home)/sluzby/[slug]", "page");
+    revalidatePath("/(home)", "layout");
     revalidateTag("service-types");
   } catch (error) {
     const errorMessage = getErrorMessage(error);
@@ -146,7 +146,7 @@ export async function deleteServiceTypeAction(id: number) {
 
     await res.json();
 
-    revalidatePath("/(home)/sluzby/[slug]", "page");
+    revalidatePath("/(home)", "layout");
     revalidateTag("service-types");
   } catch (error) {
     const errorMessage = getErrorMessage(error);

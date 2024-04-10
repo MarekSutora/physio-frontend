@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import StatisticsWrapper from "@/components/dashboard/admin/statistics/StatisticsWrapper";
 import {
   getBlogPostViewsStatsAction,
