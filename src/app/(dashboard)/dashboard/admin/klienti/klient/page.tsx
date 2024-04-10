@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import ClientPageWrapper from "@/components/dashboard/admin/clients/ClientPageWrapper";
 import {
   getBookedAppointmentsForClientAction,
@@ -8,7 +10,6 @@ import {
   getClientById,
 } from "@/lib/actions/clientsActions";
 import { TClient, TClientNote, TG_BookedAppointment } from "@/lib/shared/types";
-import { getErrorMessage } from "@/lib/utils/utils";
 import React from "react";
 
 type Props = {

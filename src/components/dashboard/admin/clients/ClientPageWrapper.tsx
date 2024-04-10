@@ -1,13 +1,14 @@
 "use client";
 
 import { TClient, TClientNote, TG_BookedAppointment } from "@/lib/shared/types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DashboardSectionWrapper from "../../common/DashboardSectionWrapper";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils/utils";
 import ClientNotesGridForm from "../../common/ClientNotesDataTableForm";
 import FinishedAppointmentsGrid from "../../common/FinishedAppointmentsDataTable";
 import BookedAppointmentsGrid from "../../common/BookedAppointmentsDataTable";
+import { useRouter } from "next/navigation";
 
 type Props = {
   clientData: TClient | undefined;
@@ -22,6 +23,12 @@ const ClientPageWrapper = ({
   clientBookedAppointments,
   clientFinishedAppointments,
 }: Props) => {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.refresh();
+  }, [router]);
+
   const [sectionToggled, setSectionToggled] = useState<string>(
     "bookedAppointmentsSection",
   );

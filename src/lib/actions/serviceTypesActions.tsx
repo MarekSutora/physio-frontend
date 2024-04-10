@@ -67,6 +67,8 @@ export async function createNewServiceTypeAction(formData: TServiceType) {
       throw new Error(resErrorMessage);
     }
 
+    await res.json();
+
     revalidatePath("/sluzby/[slug]", "page");
     revalidateTag("service-types");
   } catch (error) {
@@ -104,6 +106,8 @@ export async function updateServiceTypeAction(formData: TServiceType) {
       throw new Error(resErrorMessage);
     }
 
+    await res.json();
+
     revalidatePath("/sluzby/[slug]", "page");
     revalidateTag("service-types");
   } catch (error) {
@@ -134,10 +138,13 @@ export async function deleteServiceTypeAction(id: number) {
         Authorization: `Bearer ${accessToken}`,
       },
     });
+
     if (!res.ok) {
       const resErrorMessage = await res.text();
       throw new Error(resErrorMessage);
     }
+
+    await res.json();
 
     revalidatePath("/sluzby/[slug]", "page");
     revalidateTag("service-types");
