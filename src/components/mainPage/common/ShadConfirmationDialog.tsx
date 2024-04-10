@@ -65,19 +65,21 @@ const ShadConfirmationDialog = ({
                 <AlertDialogDescription>
                   {dialogDescription}
                 </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter className="m-auto flex w-full flex-row gap-4 items-center justify-center">
-                <AlertDialogCancel
-                  onClick={() => setOpen(false)}
-                  disabled={isLoading}
-                  className="border-[1px] mt-0 border-gray-500 text-black"
-                >
-                  Zrušiť
-                </AlertDialogCancel>
-                <Button onClick={handleConfirm} disabled={isLoading}>
-                  Potvrdiť
-                </Button>
-              </AlertDialogFooter>
+              </AlertDialogHeader>{" "}
+              <div className="m-auto flex flex-row items-center justify-center">
+                <AlertDialogFooter className="sm:m-auto sm:flex sm:w-full sm:flex-row sm:items-center sm:justify-center sm:gap-4">
+                  <AlertDialogCancel
+                    onClick={() => setOpen(false)}
+                    disabled={isLoading}
+                    className="mt-0 border-[1px] border-gray-500 text-black"
+                  >
+                    Zrušiť
+                  </AlertDialogCancel>
+                  <Button onClick={handleConfirm} disabled={isLoading}>
+                    Potvrdiť
+                  </Button>
+                </AlertDialogFooter>
+              </div>
             </>
           )}
         </AlertDialogContent>

@@ -65,6 +65,7 @@ export async function createNewServiceTypeAction(formData: TServiceType) {
       throw new Error(resErrorMessage);
     }
 
+    revalidateTag("/sluzby");
     revalidateTag("service-types");
   } catch (error) {
     const errorMessage = getErrorMessage(error);
