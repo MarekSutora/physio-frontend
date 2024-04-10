@@ -67,7 +67,6 @@ export async function createNewServiceTypeAction(formData: TServiceType) {
       throw new Error(resErrorMessage);
     }
 
-    revalidatePath("/sluzby");
     revalidatePath("/sluzby/[slug]", "page");
     revalidateTag("service-types");
   } catch (error) {
@@ -105,10 +104,8 @@ export async function updateServiceTypeAction(formData: TServiceType) {
       throw new Error(resErrorMessage);
     }
 
-    revalidatePath("/sluzby");
     revalidatePath("/sluzby/[slug]", "page");
     revalidateTag("service-types");
-    revalidateTag("unbooked-appointments");
   } catch (error) {
     const errorMessage = getErrorMessage(error);
     console.error("updateServiceTypeAction", errorMessage);
@@ -142,10 +139,8 @@ export async function deleteServiceTypeAction(id: number) {
       throw new Error(resErrorMessage);
     }
 
-    revalidatePath("/sluzby");
     revalidatePath("/sluzby/[slug]", "page");
     revalidateTag("service-types");
-    revalidateTag("unbooked-appointments");
   } catch (error) {
     const errorMessage = getErrorMessage(error);
     console.error("deleteServiceTypeAction", errorMessage);
@@ -157,7 +152,7 @@ export async function getServiceTypeBySlugAction(
   slug: string,
 ): Promise<TG_ServiceType> {
   try {
-    const url = `${process.env.BACKEND_API_URL}/service-types/${slug}`;
+    const url = `${process.env.BACKEND_API_URL}/service-types/${encodeURIComponent(slug)}`;
     const res = await fetch(url, {
       method: "GET",
       headers: {
@@ -170,7 +165,7 @@ export async function getServiceTypeBySlugAction(
       throw new Error(resErrorMessage);
     }
 
-    const data = await res.json();
+    const data: TG_ServiceType = await res.json();
 
     return data;
   } catch (error) {
