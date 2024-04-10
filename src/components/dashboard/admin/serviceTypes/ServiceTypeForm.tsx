@@ -103,6 +103,7 @@ const ServiceTypeForm = ({ serviceType, children, onSubmit }: Props) => {
   const onConfirmDialog = async (data: TServiceType) => {
     await onSubmit(data);
     setIsConfirmationDialogOpen(false);
+    form.reset();
   };
 
   const handleFormSubmit = async (data: TServiceType) => {
