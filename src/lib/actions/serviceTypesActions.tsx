@@ -59,7 +59,9 @@ export async function createNewServiceTypeAction(formData: TServiceType) {
     if (!res.ok) {
       const resErrorMessage = await res.text();
 
-      if (resErrorMessage.includes("Service type with this name already exists.")) {
+      if (
+        resErrorMessage.includes("Service type with this name already exists.")
+      ) {
         throw new Error("Služba s týmto názvom už existuje.");
       }
       throw new Error(resErrorMessage);
@@ -104,6 +106,7 @@ export async function updateServiceTypeAction(formData: TServiceType) {
 
     revalidatePath("/sluzby");
     revalidateTag("service-types");
+    revalidateTag("unbooked-appointments");
   } catch (error) {
     const errorMessage = getErrorMessage(error);
     console.error("updateServiceTypeAction", errorMessage);
@@ -139,6 +142,7 @@ export async function deleteServiceTypeAction(id: number) {
 
     revalidatePath("/sluzby");
     revalidateTag("service-types");
+    revalidateTag("unbooked-appointments");
   } catch (error) {
     const errorMessage = getErrorMessage(error);
     console.error("deleteServiceTypeAction", errorMessage);
