@@ -58,8 +58,10 @@ export async function createBlogPostAction(formData: TBlogPost) {
       throw new Error(errorMessage);
     }
 
+    await res.json();
+
     revalidatePath("/blog/[slug]", "page");
-    revalidatePath("/blog");
+    revalidatePath("/blog", "page");
     revalidateTag("blog-posts");
   } catch (error) {
     const errorMessage = getErrorMessage(error);
@@ -96,8 +98,10 @@ export async function updateBlogPostAction(formData: TBlogPost) {
       throw new Error(resErrorMessage);
     }
 
+    await res.json();
+
     revalidatePath("/blog/[slug]", "page");
-    revalidatePath("/blog");
+    revalidatePath("/blog", "page");
     revalidateTag("blog-posts");
   } catch (error) {
     const errorMessage = getErrorMessage(error);
@@ -133,8 +137,10 @@ export async function deleteBlogPostAction(slug: string) {
       throw new Error(resErrorMessage);
     }
 
+    await res.json();
+
     revalidatePath("/blog/[slug]", "page");
-    revalidatePath("/blog");
+    revalidatePath("/blog", "page");
     revalidateTag("blog-posts");
   } catch (error) {
     const errorMessage = getErrorMessage(error);
