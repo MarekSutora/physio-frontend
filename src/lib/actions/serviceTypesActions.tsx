@@ -68,6 +68,7 @@ export async function createNewServiceTypeAction(formData: TServiceType) {
     }
 
     revalidatePath("/sluzby");
+    revalidatePath("/sluzby/[slug]", "page");
     revalidateTag("service-types");
   } catch (error) {
     const errorMessage = getErrorMessage(error);
@@ -105,6 +106,7 @@ export async function updateServiceTypeAction(formData: TServiceType) {
     }
 
     revalidatePath("/sluzby");
+    revalidatePath("/sluzby/[slug]", "page");
     revalidateTag("service-types");
     revalidateTag("unbooked-appointments");
   } catch (error) {
@@ -141,6 +143,7 @@ export async function deleteServiceTypeAction(id: number) {
     }
 
     revalidatePath("/sluzby");
+    revalidatePath("/sluzby/[slug]", "page");
     revalidateTag("service-types");
     revalidateTag("unbooked-appointments");
   } catch (error) {
