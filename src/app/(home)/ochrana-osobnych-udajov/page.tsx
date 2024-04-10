@@ -9,7 +9,7 @@ const Page = () => {
   return (
     <div className="h-fit w-full p-10">
       <DashboardSectionWrapper
-        title="Cookies"
+        title="Ochrana osobných údajov"
         height="h-fit min-h-[530px] "
         width="w-full"
       >

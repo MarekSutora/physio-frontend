@@ -8,13 +8,18 @@ import RegisterButton from "./RegisterButton";
 import { userLinks } from "@/lib/shared/constants";
 import LogoutButton from "./LogoutButton";
 import { MdDashboard } from "react-icons/md";
+import { cn } from "@/lib/utils/utils";
 
-const AuthButtons = () => {
+type Props = {
+  additionalClassnames?: string;
+};
+
+const AuthButtons = ({additionalClassnames}: Props) => {
   const { data: session } = useSession();
 
   if (session && session.user) {
     return (
-      <div className="flex flex-row items-center gap-1">
+      <div className={cn("flex flex-row items-center gap-1", additionalClassnames)}>
         <DashboardButton userRoles={session.user.roles} />
         <LogoutButton />
       </div>
@@ -22,7 +27,7 @@ const AuthButtons = () => {
   }
 
   return (
-    <div className="flex flex-row items-center gap-1">
+    <div className={cn("flex flex-row items-center gap-1", additionalClassnames)}>
       <LoginButton text={userLinks[0].text} path={userLinks[0].path} />
       <RegisterButton text={userLinks[1].text} path={userLinks[1].path} />
     </div>

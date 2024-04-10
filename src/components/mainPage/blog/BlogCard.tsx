@@ -41,7 +41,7 @@ const BlogCard = ({ post }: BlogCardProps) => {
           href={`/blog/${post.slug}`}
         >
           <CardItem
-            translateZ="70"
+            translateZ="50"
             className="relative h-80 w-full overflow-hidden"
           >
             <Image
@@ -53,9 +53,14 @@ const BlogCard = ({ post }: BlogCardProps) => {
               className="rounded-t-lg"
             />
           </CardItem>
-          <CardItem className="h-full w-full p-4" translateZ="80">
-            <h1 className="mb-2 pl-1 text-xl font-bold">{post.title}</h1>
-            <div className="flex flex-row flex-wrap gap-1">
+          <CardItem className="h-full w-full pt-4 pl-4" translateZ="70">
+            <h1 className="pl-1 text-xl font-bold">{post.title}</h1>
+          </CardItem>
+          <CardItem
+            className="flex h-full w-full flex-col justify-end"
+            translateZ="20"
+          >
+            <div className="flex flex-row flex-wrap gap-1 p-4">
               {parsedKeywords.map((keyword, index) => (
                 <i
                   key={index}
@@ -67,7 +72,7 @@ const BlogCard = ({ post }: BlogCardProps) => {
             </div>
           </CardItem>
           <CardItem
-            translateZ="40"
+            translateZ="50"
             className="px-6 pb-2 text-sm text-gray-600 "
           >
             <span>{textSnippet}</span>
@@ -75,7 +80,7 @@ const BlogCard = ({ post }: BlogCardProps) => {
 
           <CardItem
             className="flex h-full w-full flex-col justify-end"
-            translateZ="30"
+            translateZ="50"
           >
             <div className="flex flex-row justify-between px-6 pb-2 pt-4">
               <span className="text-sm text-gray-600">{post.author}</span>

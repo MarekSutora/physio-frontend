@@ -21,10 +21,10 @@ const Page = () => {
           </h1>
           <div className="m-auto h-[1px] w-full bg-slate-200"></div>
         </div>
-        <div className="flex-cow flex lg:flex-row">
+        <div className="flex-col flex lg:flex-row gap-6">
           <Contact />
           <section className="flex w-full flex-col gap-2 text-nowrap text-center lg:w-1/3">
-            <h1 className="text-3xl font-bold lg:pt-6">
+            <h1 className="text-3xl font-bold">
               {contactInfo.companyName}
             </h1>
             <section>

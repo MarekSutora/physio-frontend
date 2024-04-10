@@ -8,6 +8,7 @@ import {
   getClientById,
 } from "@/lib/actions/clientsActions";
 import { TClient, TClientNote, TG_BookedAppointment } from "@/lib/shared/types";
+import { getErrorMessage } from "@/lib/utils/utils";
 import React from "react";
 
 type Props = {
@@ -30,27 +31,27 @@ const Page = async (props: Props) => {
   try {
     client = await getClientById(personIdNumber);
   } catch (error) {
-    console.log(error);
+    client = undefined;
   }
 
   try {
     clientsFinishedAppointments =
       await getFinishedAppointmentsForClientAction(personIdNumber);
   } catch (error) {
-    console.log(error);
+    clientsFinishedAppointments = [];
   }
 
   try {
     clientsBookedAppointments =
       await getBookedAppointmentsForClientAction(personIdNumber);
   } catch (error) {
-    console.log(error);
+    clientsBookedAppointments = [];
   }
 
   try {
     clientsNotes = await getAllNotesForClient(personIdNumber);
   } catch (error) {
-    console.log(error);
+    clientsNotes = [];
   }
 
   return (

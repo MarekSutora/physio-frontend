@@ -109,7 +109,7 @@ const ServiceTypesStatsChart = ({ serviceTypeStats }: Props) => {
           onSelect={handleYearChange}
         ></ComboBox>
       </div>
-      <div className="m-auto md:w-[87%]">
+      <div className="m-auto md:w-[87%] w-full">
         <Chart
           type="bar"
           data={getChartData()}

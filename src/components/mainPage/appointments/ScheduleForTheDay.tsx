@@ -40,7 +40,7 @@ const ScheduleForTheDay = ({
 
   const filteredAppointments = selectedDayAppointments.filter((appointment) =>
     appointment.serviceTypeInfos.some(
-      (arst) => selectedOptions.find((option) => option.value === arst.name), // Match based on service type name
+      (arst) => selectedOptions.find((option) => option.value === arst.name),
     ),
   );
 

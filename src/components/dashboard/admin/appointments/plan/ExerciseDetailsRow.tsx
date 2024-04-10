@@ -203,6 +203,8 @@ const ExerciseDetailsRow = ({
                 {labelMapping[key] || key}
               </Label>
               <Input
+                disabled={!isAdmin}
+                className="disabled:opacity-100"
                 id={key + exerciseDetails.order}
                 type="number"
                 min={0}
@@ -246,10 +248,7 @@ const ExerciseDetailsRow = ({
         />
       </div>
       <Button
-        className={cn(
-          !isAdmin && "hidden",
-          "h-7 mb-1",
-        )}
+        className={cn(!isAdmin && "hidden", "mb-1 h-7")}
         variant="destructive"
         onClick={handleDeletePlannedExercise}
       >

@@ -11,7 +11,7 @@ const Page = async () => {
   try {
     finishedAppointments = await getAllFinishedAppointmentsAction();
   } catch (error) {
-    console.log(error);
+    finishedAppointments = [];
   }
 
   return (

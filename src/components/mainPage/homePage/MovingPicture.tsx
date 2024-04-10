@@ -2,8 +2,13 @@
 
 import React from "react";
 import studioImage from "@/root/public/studio11.png"; // Adjust the import path as needed
+import useMediaQuery from "@/lib/hooks/useMediaQuery";
 
 const MovingPicture = () => {
+  const isAboveMediumScreens = useMediaQuery("(min-width: 1280px)");
+
+  if (!isAboveMediumScreens) return null;
+
   return (
     <>
       <style jsx>{`

@@ -56,7 +56,7 @@ export const authOptions: AuthOptions = {
             const user = await res.json();
             return user;
           } else {
-            const error = await res.text(); // Získame chybovú správu ako text
+            const error = await res.text();
             if (error === "Nesprávne prihlasovacie údaje.") {
               throw new Error(error);
             } else {
@@ -64,7 +64,6 @@ export const authOptions: AuthOptions = {
             }
           }
         } catch (error) {
-          console.error("authorize:", error);
           throw new Error(getErrorMessage(error));
         }
       },

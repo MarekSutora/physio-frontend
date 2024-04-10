@@ -12,8 +12,8 @@ export const metadata = {
 
 const Page = () => {
   return (
-    <div className="flex h-full min-h-[600px] items-center justify-center p-7">
-      <DashboardSectionWrapper width="w-5/6">
+    <div className="flex h-full min-h-[600px] items-center justify-center md:p-7">
+      <DashboardSectionWrapper width="md:w-5/6 w-11/12">
         <AppointmentsCalendarWrapper />
       </DashboardSectionWrapper>
     </div>

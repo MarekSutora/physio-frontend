@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons"; // A default icon
+import { faHeart } from "@fortawesome/free-solid-svg-icons"; 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import * as Icons from "@fortawesome/free-solid-svg-icons";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
@@ -77,7 +77,7 @@ const ServiceCard = ({ serviceType }: ServiceCardProps) => {
           </h3>
         </div>
         <div className="flex h-1/2 flex-grow flex-col justify-between p-5">
-          <p className="text-left text-gray-600 md:mb-2">
+          <p className="text-left text-gray-800 md:mb-2">
             {serviceType.description.slice(0, 180) + "..."}
           </p>
           <ul className="self-stretch">

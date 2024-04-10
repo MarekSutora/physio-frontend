@@ -23,6 +23,8 @@ export async function sendContactFormEmail(formData: TContactFormData) {
       throw new Error(errorMessage);
     }
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("sendContactFormEmail", errorMessage);
+    throw new Error(errorMessage);
   }
 }

@@ -19,7 +19,7 @@ import {
   startOfToday,
 } from "date-fns";
 import { enUS } from "date-fns/locale";
-import { TG_UnbookedAppointment, TG_ServiceType } from "@/lib/shared/types"; // Update the import path as needed
+import { TG_UnbookedAppointment, TG_ServiceType } from "@/lib/shared/types";
 import { cn } from "@/lib/utils/utils";
 import ScheduleForTheDay from "./ScheduleForTheDay";
 import { useAppointmentsStore } from "@/lib/stores/useAppointmentsStore";
@@ -40,11 +40,7 @@ const AppointmentsCalendar = ({
     format(startOfToday(), "MMM-yyyy", { locale: enUS }),
   );
 
-  const setAppointments = useAppointmentsStore(
-    (state) => state.setAppointments,
-  );
-
-  const appointments = useAppointmentsStore((state) => state.appointments);
+  const appointments = appointmentsData;
 
   useEffect(() => {
     const today = startOfToday();
@@ -60,10 +56,6 @@ const AppointmentsCalendar = ({
     setCurrentMonth(format(initialSelectedDay, "MMM-yyyy", { locale: enUS }));
     setSelectedDay(initialSelectedDay);
   }, [appointments]);
-
-  useEffect(() => {
-    setAppointments(appointmentsData);
-  }, [appointmentsData, setAppointments]);
 
   let firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
 
@@ -101,7 +93,7 @@ const AppointmentsCalendar = ({
       <div
         className={cn(
           "pt-12 lg:w-[40%]",
-          columnLayout && "m-auto p-2 lg:w-10/12",
+          columnLayout && "m-auto p-2 lg:w-11/12",
         )}
       >
         <div className="flex items-center">

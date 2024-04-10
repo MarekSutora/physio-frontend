@@ -23,7 +23,7 @@ type FormConfirmationDialogProps = {
 const FormConfirmationDialog = ({
   onConfirm,
   confirmArgs = [],
-  dialogTitle = "Are you sure you want to perform this action?",
+  dialogTitle = "Ste si istý, že chcete vykonat túto akciu?",
   dialogDescription = "",
   isOpen,
   onClose,
@@ -32,7 +32,7 @@ const FormConfirmationDialog = ({
 
   useEffect(() => {
     if (!isOpen) {
-      setIsLoading(false); // Reset loading state when dialog is closed
+      setIsLoading(false);
     }
   }, [isOpen]);
 
@@ -42,7 +42,7 @@ const FormConfirmationDialog = ({
       await onConfirm(...confirmArgs);
     } finally {
       setIsLoading(false);
-      onClose(); // Close the dialog after confirmation action
+      onClose();
     }
   };
 
@@ -51,7 +51,7 @@ const FormConfirmationDialog = ({
       <AlertDialogContent className="rounded-sm">
         {isLoading ? (
           <ClipLoader
-            color={"#1f6678"}
+            color={"#298294"}
             loading={isLoading}
             cssOverride={{
               display: "block",
@@ -71,11 +71,11 @@ const FormConfirmationDialog = ({
                 {dialogDescription}
               </AlertDialogDescription>
             </AlertDialogHeader>
-            <AlertDialogFooter className="m-auto flex w-full flex-row gap-4 sm:items-center sm:justify-center">
+            <AlertDialogFooter className="m-auto flex w-full flex-row gap-4 items-center justify-center">
               <AlertDialogCancel
                 onClick={onClose}
                 disabled={isLoading}
-                className="border-[1px] border-gray-500 text-black"
+                className="border-[1px] mt-0 border-gray-500 text-black"
               >
                 Zrušiť
               </AlertDialogCancel>

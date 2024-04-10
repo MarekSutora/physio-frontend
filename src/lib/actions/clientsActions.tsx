@@ -29,15 +29,17 @@ export async function getClientsData(): Promise<TClient[]> {
     });
 
     if (!res.ok) {
-      const errorData = await res.text();
-      throw new Error(errorData);
+      const resErrorMessage = await res.text();
+      throw new Error(resErrorMessage);
     }
 
     const data = await res.json();
 
     return data;
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("getClientsData", errorMessage);
+    throw new Error(errorMessage);
   }
 }
 
@@ -55,7 +57,7 @@ export async function addNoteToClient(note: TClientNote): Promise<number> {
     const url = `${process.env.BACKEND_API_URL}/clients/${note.personId}/notes`;
     const accessToken = token.userTokens.accessToken;
 
-    const response = await fetch(url, {
+    const res = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -64,16 +66,18 @@ export async function addNoteToClient(note: TClientNote): Promise<number> {
       body: JSON.stringify(note),
     });
 
-    if (!response.ok) {
-      const errorData = await response.text();
-      throw new Error(errorData);
+    if (!res.ok) {
+      const resErrorMessage = await res.text();
+      throw new Error(resErrorMessage);
     }
 
-    const data = await response.json();
+    const data = await res.json();
 
     return data;
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("addNoteToClient", errorMessage);
+    throw new Error(errorMessage);
   }
 }
 
@@ -93,7 +97,7 @@ export async function getAllNotesForClient(
     const url = `${process.env.BACKEND_API_URL}/clients/${personId}/notes`;
     const accessToken = token.userTokens.accessToken;
 
-    const response = await fetch(url, {
+    const res = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -101,15 +105,17 @@ export async function getAllNotesForClient(
       },
     });
 
-    if (!response.ok) {
-      const errorData = await response.text();
-      throw new Error(errorData);
+    if (!res.ok) {
+      const resErrorMessage = await res.text();
+      throw new Error(resErrorMessage);
     }
 
-    const data = await response.json();
+    const data = await res.json();
     return data;
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("getAllNotesForClient", errorMessage);
+    throw new Error(errorMessage);
   }
 }
 
@@ -127,7 +133,7 @@ export async function getClientById(personId: number): Promise<TClient> {
     const url = `${process.env.BACKEND_API_URL}/clients/${personId}`;
     const accessToken = token.userTokens.accessToken;
 
-    const response = await fetch(url, {
+    const res = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -135,15 +141,18 @@ export async function getClientById(personId: number): Promise<TClient> {
       },
     });
 
-    if (!response.ok) {
-      const errorData = await response.text();
-      throw new Error(errorData);
+    if (!res.ok) {
+      const resErrorMessage = await res.text();
+      throw new Error(resErrorMessage);
     }
 
-    const data = await response.json();
+
+    const data = await res.json();
     return data;
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("getClientById", errorMessage);
+    throw new Error(errorMessage);
   }
 }
 
@@ -161,7 +170,7 @@ export async function deleteNoteFromClient(noteId: number): Promise<void> {
     const url = `${process.env.BACKEND_API_URL}/clients/notes/${noteId}`;
     const accessToken = token.userTokens.accessToken;
 
-    const response = await fetch(url, {
+    const res = await fetch(url, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -169,12 +178,14 @@ export async function deleteNoteFromClient(noteId: number): Promise<void> {
       },
     });
 
-    if (!response.ok) {
-      const errorData = await response.text();
-      throw new Error(errorData);
+    if (!res.ok) {
+      const resErrorMessage = await res.text();
+      throw new Error(resErrorMessage);
     }
+
   } catch (error) {
-    console.error("Error deleting note", error);
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("deleteNoteFromClient", errorMessage);
+    throw new Error(errorMessage);
   }
 }

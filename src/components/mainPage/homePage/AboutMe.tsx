@@ -5,10 +5,10 @@ import image from "@/root/public/studio11.png";
 
 const AboutMe = () => {
   return (
-    <section className="m-auto flex h-full w-11/12 flex-col gap-6 pb-10 pt-20 md:min-h-[500px] lg:w-[61.8%] lg:flex-row lg:items-center lg:gap-10">
-      <div className="relative m-auto h-[500px] w-full md:w-[500px] lg:m-0">
-        <div className="absolute -bottom-4 -left-4 z-0 h-[500px] w-full rounded-lg bg-primary/50 shadow-lg md:w-[500px] md:block hidden"></div>
-        <div className="relative z-10 h-[500px] w-full shadow-lg md:w-[500px]">
+    <section className="m-auto flex h-full w-11/12 flex-col gap-6 pb-10 md:pt-20 pt-10 md:min-h-[500px] lg:w-[61.8%] lg:flex-row lg:items-center lg:gap-10">
+      <div className="relative m-auto h-[400px] w-[400px] md:h-[500px] md:w-[500px] lg:m-0">
+        <div className="absolute lg:-bottom-4 lg:-left-4 -bottom-2 -left-2 z-0 h-[400px] w-[400px] rounded-lg bg-primary/50 shadow-lg md:block md:h-[500px] md:w-[500px]"></div>
+        <div className="relative z-10 h-[400px] w-[400px] shadow-lg md:h-[500px] md:w-[500px]">
           <Image
             src={image}
             alt="physiotherapist"
@@ -18,7 +18,7 @@ const AboutMe = () => {
           />
         </div>
       </div>
-      <div className="flex w-full flex-col lg:flex-grow">
+      <div className="flex w-full flex-col lg:flex-grow pt-4">
         <h1 className="text-left text-4xl font-semibold">About</h1>
         <hr className="my-4 border-t border-slate-200" />
         <p className="text-justify text-lg lg:text-left">

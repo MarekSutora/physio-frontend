@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { DataTable, DataTableFilterMeta } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { TBlogPost } from "@/lib/shared/types"; // Make sure this path is correct
+import { TBlogPost } from "@/lib/shared/types";
 import {
   deleteBlogPostAction,
   updateBlogPostAction,
@@ -25,6 +25,7 @@ const defaultFilters: DataTableFilterMeta = {
   author: { value: null, matchMode: FilterMatchMode.CONTAINS },
   datePublished: { value: null, matchMode: FilterMatchMode.CONTAINS },
   isHidden: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  ViewCount: { value: null, matchMode: FilterMatchMode.CONTAINS },
 };
 
 const BlogPostsDataTable = ({ _blogPosts }: Props) => {
@@ -37,11 +38,14 @@ const BlogPostsDataTable = ({ _blogPosts }: Props) => {
       await updateBlogPostAction(rowData);
       toast({
         variant: "success",
-        title: `Článok ${rowData.isHidden ? "schovaný" : "zverejnený"} úspešne.`,
+        description: `Článok ${rowData.isHidden ? "schovaný" : "zverejnený"} úspešne.`,
       });
       setBlogPosts([...blogPosts]);
     } catch (error) {
-      toast({ variant: "destructive", title: "Failed to update the post." });
+      toast({
+        variant: "destructive",
+        description: `Článok sa nepodarilo ${!rowData.isHidden ? "publikovať" : "skryť"}`,
+      });
     }
   };
 
@@ -49,9 +53,9 @@ const BlogPostsDataTable = ({ _blogPosts }: Props) => {
     try {
       await deleteBlogPostAction(rowData.slug!);
       setBlogPosts(blogPosts.filter((post) => post.slug !== rowData.slug));
-      toast({ variant: "success", title: "Post deleted successfully." });
+      toast({ variant: "success", title: "Článok úspešne vymazaný." });
     } catch (error) {
-      toast({ variant: "destructive", title: "Failed to delete the post." });
+      toast({ variant: "destructive", title: "Článok sa nepodarilo vymazať." });
     }
   };
 
@@ -119,6 +123,13 @@ const BlogPostsDataTable = ({ _blogPosts }: Props) => {
           filter
           sortable
           filterField="datePublished"
+        ></Column>
+        <Column
+          field="ViewCount"
+          header="Počet zobrazení"
+          filter
+          filterField="ViewCount"
+          sortable
         ></Column>
         <Column
           field="isHidden"

@@ -19,15 +19,17 @@ export async function getServiceTypesAction(): Promise<TG_ServiceType[]> {
     });
 
     if (!res.ok) {
-      const errorData = await res.text();
-      throw new Error(errorData);
+      const resErrorMessage = await res.text();
+      throw new Error(resErrorMessage);
     }
 
     const data = await res.json();
 
     return data.length > 0 ? data : [];
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("getServiceTypesAction", errorMessage);
+    throw new Error(errorMessage);
   }
 }
 
@@ -55,17 +57,19 @@ export async function createNewServiceTypeAction(formData: TServiceType) {
     });
 
     if (!res.ok) {
-      const errorData = await res.text();
+      const resErrorMessage = await res.text();
 
-      if (errorData.includes("Service type with this name already exists.")) {
+      if (resErrorMessage.includes("Service type with this name already exists.")) {
         throw new Error("Služba s týmto názvom už existuje.");
       }
-      throw new Error(errorData);
+      throw new Error(resErrorMessage);
     }
 
     revalidateTag("service-types");
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("createNewServiceTypeAction", errorMessage);
+    throw new Error(errorMessage);
   }
 }
 
@@ -93,14 +97,15 @@ export async function updateServiceTypeAction(formData: TServiceType) {
     });
 
     if (!res.ok) {
-      const errorData = await res.text();
-
-      throw new Error(errorData);
+      const resErrorMessage = await res.text();
+      throw new Error(resErrorMessage);
     }
 
     revalidateTag("service-types");
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("updateServiceTypeAction", errorMessage);
+    throw new Error(errorMessage);
   }
 }
 
@@ -125,15 +130,16 @@ export async function deleteServiceTypeAction(id: number) {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-
     if (!res.ok) {
-      const errorData = await res.json();
-      throw new Error(errorData);
+      const resErrorMessage = await res.text();
+      throw new Error(resErrorMessage);
     }
 
     revalidateTag("service-types");
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("deleteServiceTypeAction", errorMessage);
+    throw new Error(errorMessage);
   }
 }
 
@@ -150,14 +156,16 @@ export async function getServiceTypeBySlugAction(
     });
 
     if (!res.ok) {
-      const errorData = await res.text();
-      throw new Error(errorData);
+      const resErrorMessage = await res.text();
+      throw new Error(resErrorMessage);
     }
 
     const data = await res.json();
 
     return data;
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("getServiceTypeBySlugAction", errorMessage);
+    throw new Error(errorMessage);
   }
 }

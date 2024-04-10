@@ -8,10 +8,9 @@ const Page = async () => {
   let blogPosts: TBlogPost[] = [];
 
   try {
-    let _blogPosts = await getAllBlogPostsAction();
-    blogPosts = _blogPosts;
+    blogPosts = await getAllBlogPostsAction();
   } catch (error) {
-    console.log("error", error);
+    blogPosts = [];
   }
 
   return (

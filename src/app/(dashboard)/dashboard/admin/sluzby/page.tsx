@@ -13,14 +13,14 @@ const Page = async () => {
   try {
     serviceTypes = await getServiceTypesAction();
   } catch (error) {
-    console.log(error);
+    serviceTypes = [];
   }
 
   return (
     <Suspense
       fallback={
         <ClipLoader
-          color={"#1f6678"}
+          color={"#298294"}
           loading={true}
           cssOverride={{
             display: "block",

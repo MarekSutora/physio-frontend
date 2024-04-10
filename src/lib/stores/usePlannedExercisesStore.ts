@@ -9,7 +9,6 @@ type PlannedExerciseState = {
 export const usePlannedExercisesStore = create<PlannedExerciseState>((set) => ({
   plannedExercises: [],
   setPlannedExercises: (plannedExercises) => {
-    console.log("Updating planned exercises in store:", plannedExercises);
     set({ plannedExercises });
   },
 }));

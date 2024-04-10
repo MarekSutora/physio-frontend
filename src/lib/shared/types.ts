@@ -96,6 +96,7 @@ export type TBlogPost = {
   htmlContent: string;
   isHidden: boolean;
   slug?: string;
+  viewCount?: number;
 };
 
 //APPOINTMENT
@@ -156,7 +157,7 @@ export type TNewClientsStatistics = {
 export type TBlogPostViewsStats = {
   year: number;
   month: number;
-  viewsCount: number;
+  totalViews: number;
 };
 
 export type TGeneralStatistics = {

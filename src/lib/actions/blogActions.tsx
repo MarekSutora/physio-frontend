@@ -20,15 +20,17 @@ export async function getAllBlogPostsAction(): Promise<TBlogPost[]> {
     });
 
     if (!res.ok) {
-      const errorData = await res.text();
-      throw new Error(errorData);
+      const resErrorMessage = await res.text();
+      throw new Error(resErrorMessage);
     }
 
     const data = await res.json();
 
     return data.length > 0 ? data : [];
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("getAllBlogPostsAction", errorMessage);
+    throw new Error(errorMessage);
   }
 }
 
@@ -36,19 +38,13 @@ export async function createBlogPostAction(formData: TBlogPost) {
   try {
     const session = await getServerSession(authOptions);
     const token = await getTokenForServerAction();
-    if (!session || !token) {
-      throw new Error(
-        "Session not found. User must be logged in to perform this action.",
-      );
-    }
-    const url = `${process.env.BACKEND_API_URL}/blog-posts`;
-    const accessToken = token.userTokens.accessToken;
+    if (!session || !token) 
+      throw new Error("Session not found. User must be logged in to perform this action.",);
 
-    const res = await fetch(url, {
-      method: "POST",
-      headers: {
+    const res = await fetch(`${process.env.BACKEND_API_URL}/blog-posts`, {
+      method: "POST", headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${token.userTokens.accessToken}`,
       },
       body: JSON.stringify(formData),
     });
@@ -61,7 +57,9 @@ export async function createBlogPostAction(formData: TBlogPost) {
 
     revalidateTag("blog-posts");
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("createBlogPostAction", errorMessage);
+    throw new Error(errorMessage);
   }
 }
 
@@ -89,13 +87,15 @@ export async function updateBlogPostAction(formData: TBlogPost) {
     });
 
     if (!res.ok) {
-      const errorData = await res.text();
-      throw new Error(errorData);
+      const resErrorMessage = await res.text();
+      throw new Error(resErrorMessage);
     }
 
     revalidateTag("blog-posts");
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("updateBlogPostAction", errorMessage);
+    throw new Error(errorMessage);
   }
 }
 
@@ -122,13 +122,15 @@ export async function deleteBlogPostAction(slug: string) {
     });
 
     if (!res.ok) {
-      const errorData = await res.text();
-      throw new Error(errorData);
+      const resErrorMessage = await res.text();
+      throw new Error(resErrorMessage);
     }
 
     revalidateTag("blog-posts");
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("deleteBlogPostAction", errorMessage);
+    throw new Error(errorMessage);
   }
 }
 
@@ -145,15 +147,17 @@ export async function getBlogPostBySlugAction(
     });
 
     if (!res.ok) {
-      const errorData = await res.text();
-      throw new Error(errorData);
+      const resErrorMessage = await res.text();
+      throw new Error(resErrorMessage);
     }
 
     const blogPost: TBlogPost = await res.json();
 
     return blogPost;
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("getBlogPostBySlugAction", errorMessage);
+    throw new Error(errorMessage);
   }
 }
 
@@ -169,13 +173,15 @@ export async function getNonHiddenBlogPosts(): Promise<TBlogPost[]> {
     });
 
     if (!res.ok) {
-      const errorData = await res.text();
-      throw new Error(errorData);
+      const resErrorMessage = await res.text();
+      throw new Error(resErrorMessage);
     }
 
     const blogPosts: TBlogPost[] = await res.json();
     return blogPosts;
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    const errorMessage = getErrorMessage(error);
+    console.error("getNonHiddenBlogPosts", errorMessage);
+    throw new Error(errorMessage);
   }
 }
