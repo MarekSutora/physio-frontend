@@ -125,10 +125,10 @@ const BlogPostsDataTable = ({ _blogPosts }: Props) => {
           filterField="datePublished"
         ></Column>
         <Column
-          field="ViewCount"
+          field="viewCount"
           header="Počet zobrazení"
           filter
-          filterField="ViewCount"
+          filterField="viewCount"
           sortable
         ></Column>
         <Column

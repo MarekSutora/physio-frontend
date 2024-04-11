@@ -16,8 +16,6 @@ type YearOption = {
 };
 
 const NewClientsTrendStatsChart = ({ newClientsStats }: Props) => {
-  console.log("NewClientsTrendStatsChart", newClientsStats);
-
   const currentYear = new Date().getFullYear();
   const uniqueYears = Array.from(
     new Set(newClientsStats.map((stat) => stat.year)),

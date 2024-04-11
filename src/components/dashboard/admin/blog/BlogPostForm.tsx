@@ -75,8 +75,6 @@ const BlogPostForm = ({ createNew, oldData }: BlogFormProps) => {
     },
   });
 
-  console.log(form.formState.errors);
-
   const onSubmit = async (blogPost: TBlogPost) => {
     try {
       if (createNew) {

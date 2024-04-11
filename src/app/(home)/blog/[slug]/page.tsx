@@ -38,7 +38,6 @@ export async function generateMetadata({
   try {
     blogPost = await getBlogPostBySlugAction(params.slug);
   } catch (error) {
-    console.log(error);
     return { title: "Blog", description: "Popis blogu" };
   }
 
@@ -65,7 +64,6 @@ const Page = async ({ params }: { params: { slug: string } }) => {
   try {
     blogPost = await getBlogPostBySlugAction(params.slug);
   } catch (error) {
-    console.log(error);
     return { notFound: true };
   }
 

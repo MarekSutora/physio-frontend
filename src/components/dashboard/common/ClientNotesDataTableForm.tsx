@@ -66,7 +66,6 @@ const ClientNotesGridForm = ({ clientNotes, personId }: Props) => {
   };
 
   const handleDeleteNote = async (noteId: number) => {
-    console.log("Deleting note", noteId);
     try {
       await deleteNoteFromClient(noteId);
 
