@@ -15,7 +15,7 @@ export async function getServiceTypesAction(): Promise<TG_ServiceType[]> {
       headers: {
         "Content-Type": "application/json",
       },
-      cache: "no-store",
+      next: { tags: ["service-types"] },
     });
 
     if (!res.ok) {
@@ -70,7 +70,7 @@ export async function createNewServiceTypeAction(formData: TServiceType) {
     await res.json();
 
     revalidatePath("/(home)/sluzby/[slug]", "page");
-    //revalidateTag("service-types");
+    revalidateTag("service-types");
   } catch (error) {
     const errorMessage = getErrorMessage(error);
     console.error("createNewServiceTypeAction", errorMessage);
@@ -109,7 +109,7 @@ export async function updateServiceTypeAction(formData: TServiceType) {
     await res.json();
 
     revalidatePath("/(home)/sluzby/[slug]", "page");
-    //revalidateTag("service-types");
+    revalidateTag("service-types");
   } catch (error) {
     const errorMessage = getErrorMessage(error);
     console.error("updateServiceTypeAction", errorMessage);
@@ -147,7 +147,7 @@ export async function deleteServiceTypeAction(id: number) {
     await res.json();
 
     revalidatePath("/(home)/sluzby/[slug]", "page");
-    //revalidateTag("service-types");
+    revalidateTag("service-types");
   } catch (error) {
     const errorMessage = getErrorMessage(error);
     console.error("deleteServiceTypeAction", errorMessage);
