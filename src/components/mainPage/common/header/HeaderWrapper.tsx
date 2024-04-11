@@ -1,12 +1,12 @@
-export const dynamic = "force-dynamic";
-
 import { getServiceTypesAction } from "@/lib/actions/serviceTypesActions";
 import { TG_ServiceType, TMainPageLink } from "@/lib/shared/types";
 import React from "react";
 import HeaderMobile from "./HeaderMobile";
 import HeaderDesktop from "./HeaderDesktop";
+import { unstable_noStore as noStore } from "next/cache";
 
 const HeaderWrapper = async () => {
+  noStore();
   let serviceTypes: TG_ServiceType[] = [];
 
   try {

@@ -47,7 +47,6 @@ export default function RootLayout({
                     }}
                     size={100}
                     aria-label="Loading Spinner"
-                    data-testid="loader"
                     className="flex h-full w-full items-center justify-center"
                   />
                 }
