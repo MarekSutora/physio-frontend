@@ -29,7 +29,6 @@ const HeaderWrapper = () => {
         setServiceTypes(data);
       } catch (error) {
         setServiceTypes([]);
-        console.log("Failed to get service types", error);
       }
     };
 

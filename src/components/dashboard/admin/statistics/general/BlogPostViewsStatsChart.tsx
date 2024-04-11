@@ -16,8 +16,6 @@ type YearOption = {
 };
 
 const BlogPostViewsStatsChart = ({ blogPostViewsStats }: Props) => {
-  console.log("blogPostViewsStats", blogPostViewsStats);
-
   const currentYear = new Date().getFullYear();
   const uniqueYears = Array.from(
     new Set(blogPostViewsStats.map((stat) => stat.year)),

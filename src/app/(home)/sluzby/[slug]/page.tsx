@@ -20,7 +20,6 @@ export async function generateStaticParams() {
       },
     }));
   } catch (error) {
-    console.log(error);
     return [
       {
         params: {
@@ -41,7 +40,6 @@ export async function generateMetadata({
   try {
     serviceType = await getServiceTypeBySlugAction(params.slug);
   } catch (error) {
-    console.log(error);
     return { title: "Služba", description: "Popis služby"};
   }
 
@@ -56,7 +54,6 @@ const Page = async ({ params }: { params: { slug: string } }) => {
   try {
     serviceType = await getServiceTypeBySlugAction(params.slug);
   } catch (error) {
-    console.log(error);
     return { notFound: true };
   }
 
