@@ -17,8 +17,6 @@ type HeaderMobileProps = {
 };
 
 const HeaderMobile = ({ links }: HeaderMobileProps) => {
-  const isAboveMediumScreens = useMediaQuery("(min-width: 1280px)");
-
   const containerRef = useRef(null);
   const { height } = useDimensions(containerRef);
   const [isOpen, toggleOpen] = useCycle<boolean>(false, true);
@@ -47,71 +45,64 @@ const HeaderMobile = ({ links }: HeaderMobileProps) => {
   };
 
   return (
-    <>
-      {!isAboveMediumScreens && (
-        <div className="h-14">
-          <div
-            className={cn(
-              isOpen ? "block h-80 bg-black" : "hidden h-0",
-              "w-full",
-            )}
-          ></div>
-          <header
-            className={cn(
-              "top-0 z-50 block h-14 w-screen bg-white xl:hidden",
-              isOpen ? "fixed" : "sticky",
-            )}
-          >
-            <div className="flex justify-end pr-3">
-              <HamburgerWrapper toggle={toggleOpen} toggled={isOpen} />
-            </div>
-            <motion.nav
-              initial={false}
-              animate={isOpen ? "open" : "closed"}
-              custom={height}
-              className={cn(
-                "top-[55px] h-full w-screen xl:hidden",
-                isOpen ? "fixed z-50" : "-z-50 hidden",
-              )}
-              ref={containerRef}
-            >
-              <motion.div
-                variants={sidebar}
-                className="absolute inset-0 right-0 w-full bg-white"
-              />
-              <motion.ul
-                variants={sidebar}
-                className="flex w-full flex-col border-t border-slate-200 bg-white font-semibold"
-              >
-                {links.map((link, index) => (
-                  <MobileMenuItem
-                    key={index}
-                    text={link.text}
-                    path={link.path}
-                    subMenuItems={link.subMenuItems}
-                    closeMenu={closeMenu}
-                  />
-                ))}
-                <div className="m-auto mt-5 flex gap-3" onClick={closeMenu}>
-                  <AuthButtons />
-                </div>
-                <ul className="mt-5 flex h-full justify-center gap-8">
-                  {socialMediaLinks.map((link, index) => (
-                    <li key={index}>
-                      <Link href={link.path}>
-                        <div className="h-auto w-5 text-4xl text-primary transition-all duration-300 ease-in-out hover:scale-125">
-                          {link.icon}
-                        </div>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </motion.ul>
-            </motion.nav>
-          </header>
+    <div className="h-14">
+      <div
+        className={cn(isOpen ? "block h-80 bg-black" : "hidden h-0", "w-full")}
+      ></div>
+      <header
+        className={cn(
+          "top-0 z-50 block h-14 w-screen bg-white xl:hidden",
+          isOpen ? "fixed" : "sticky",
+        )}
+      >
+        <div className="flex justify-end pr-3">
+          <HamburgerWrapper toggle={toggleOpen} toggled={isOpen} />
         </div>
-      )}
-    </>
+        <motion.nav
+          initial={false}
+          animate={isOpen ? "open" : "closed"}
+          custom={height}
+          className={cn(
+            "top-[55px] h-full w-screen xl:hidden",
+            isOpen ? "fixed z-50" : "-z-50 hidden",
+          )}
+          ref={containerRef}
+        >
+          <motion.div
+            variants={sidebar}
+            className="absolute inset-0 right-0 w-full bg-white"
+          />
+          <motion.ul
+            variants={sidebar}
+            className="flex w-full flex-col border-t border-slate-200 bg-white font-semibold"
+          >
+            {links.map((link, index) => (
+              <MobileMenuItem
+                key={index}
+                text={link.text}
+                path={link.path}
+                subMenuItems={link.subMenuItems}
+                closeMenu={closeMenu}
+              />
+            ))}
+            <div className="m-auto mt-5 flex gap-3" onClick={closeMenu}>
+              <AuthButtons />
+            </div>
+            <ul className="mt-5 flex h-full justify-center gap-8">
+              {socialMediaLinks.map((link, index) => (
+                <li key={index}>
+                  <Link href={link.path}>
+                    <div className="h-auto w-5 text-4xl text-primary transition-all duration-300 ease-in-out hover:scale-125">
+                      {link.icon}
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </motion.ul>
+        </motion.nav>
+      </header>
+    </div>
   );
 };
 

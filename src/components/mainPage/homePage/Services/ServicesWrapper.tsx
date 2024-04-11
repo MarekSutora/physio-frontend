@@ -8,6 +8,7 @@ const ServicesWrapper = async () => {
 
   try {
     serviceTypes = await getServiceTypesAction();
+    
   } catch (error) {
     serviceTypes = [];
   }
