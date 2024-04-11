@@ -1,4 +1,4 @@
-export const dynamic = "force-dynamic";
+
 
 import DashboardSectionWrapper from "@/components/dashboard/common/DashboardSectionWrapper";
 import AppointmentsCalendarWrapper from "@/components/mainPage/appointments/AppointmentsCalendarWrapper";

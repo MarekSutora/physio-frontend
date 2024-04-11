@@ -5,6 +5,8 @@ import Providers from "@/components/Providers";
 import { Toaster } from "@/components/ui/toaster";
 import Footer from "@/components/mainPage/common/footer/Footer";
 import HeaderWrapper from "@/components/mainPage/common/header/HeaderWrapper";
+import { Suspense } from "react";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,7 +29,30 @@ export default function RootLayout({
           <div className="h-full w-full">
             <HeaderWrapper />
             <div className="flex h-full min-h-full w-full flex-col justify-between">
-              <main className="h-fit w-full bg-slate-50">{children}</main>
+              <main className="h-fit w-full bg-slate-50">
+                <Suspense
+                  fallback={
+                    <ClipLoader
+                      color={"#298294"}
+                      loading={true}
+                      cssOverride={{
+                        width: "500px",
+                        height: "500px",
+                        display: "block",
+                        margin: "0 auto",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center"
+                      }}
+                      size={100}
+                      aria-label="Loading Spinner"
+                      className="flex h-full w-full items-center justify-center"
+                    />
+                  }
+                >
+                  {children}
+                </Suspense>
+              </main>
               <Footer />
             </div>
 
