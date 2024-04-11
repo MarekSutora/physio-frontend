@@ -5,7 +5,6 @@ import { cn } from "@/lib/utils/utils";
 import NavbarDesktop from "./NavbarDesktop";
 import Link from "next/link";
 import { TMainPageLink } from "@/lib/shared/types";
-import useMediaQuery from "@/lib/hooks/useMediaQuery";
 import LogoText from "../logo/LogoText";
 
 type HeaderDesktopProps = {
@@ -13,8 +12,6 @@ type HeaderDesktopProps = {
 };
 
 const HeaderDesktop = ({ links }: HeaderDesktopProps) => {
-  const isAboveMediumScreens = useMediaQuery("(min-width: 1280px)");
-
   const [isTopOfPage, setIsTopOfPage] = useState<boolean>(true);
 
   useEffect(() => {
@@ -27,9 +24,6 @@ const HeaderDesktop = ({ links }: HeaderDesktopProps) => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  if (!isAboveMediumScreens) 
-    return null;
 
   return (
     <header

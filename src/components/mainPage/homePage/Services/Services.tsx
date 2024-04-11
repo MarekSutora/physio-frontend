@@ -15,6 +15,7 @@ type Props = {
 };
 
 const Services = ({ serviceTypes }: Props) => {
+  
   return (
     <section className="w-full bg-slate-50">
       <div className="flex w-full flex-row gap-3 pb-6">
