@@ -43,11 +43,14 @@ export async function createBlogPostAction(formData: TBlogPost) {
         "Session not found. User must be logged in to perform this action.",
       );
 
-    const res = await fetch(`${process.env.BACKEND_API_URL}/blog-posts`, {
+    const url = `${process.env.BACKEND_API_URL}/blog-posts`;
+    const accessToken = token.userTokens.accessToken;
+
+    const res = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token.userTokens.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify(formData),
     });

@@ -11,7 +11,6 @@ import {
   createBookedAppointmentAction,
   deleteAppointmentAction,
 } from "@/lib/actions/appointmentsActions";
-import { useAppointmentsStore } from "@/lib/stores/useAppointmentsStore";
 
 type AppointmentCardProps = {
   appointment: TG_UnbookedAppointment;

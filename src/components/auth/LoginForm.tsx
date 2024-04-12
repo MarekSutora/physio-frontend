@@ -97,7 +97,7 @@ const LoginForm = ({ searchParams }: Props) => {
   };
 
   return (
-    <div className="flex w-96 flex-col justify-start">
+    <div className="flex w-72 flex-col justify-start md:w-96">
       {isLoading ? (
         <ClipLoader
           color={"#298294"}
