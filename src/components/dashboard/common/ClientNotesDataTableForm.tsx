@@ -134,11 +134,6 @@ const ClientNotesGridForm = ({ clientNotes, personId }: Props) => {
           Poznámka nesmie byť dlhšia ako 10000 znakov.
         </span>
       )}
-      {note.length === 0 && (
-        <span className="text-sm text-red-500">
-          Poznámka nesmie byť prázdna.
-        </span>
-      )}
       <Button className="mt-2 w-full" onClick={handleAddNote}>
         Pridať poznamku
       </Button>
