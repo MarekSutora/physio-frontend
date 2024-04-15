@@ -95,6 +95,9 @@ const ResetPasswordForm = (props: Props) => {
           cssOverride={{
             display: "block",
             margin: "0 auto",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
           }}
           size={100}
           aria-label="Loading Spinner"
@@ -115,10 +118,7 @@ const ResetPasswordForm = (props: Props) => {
                 <FormItem>
                   <FormLabel>Nové heslo</FormLabel>
                   <FormControl>
-                    <Input
-                      type="password"
-                      {...field}
-                    />
+                    <Input type="password" {...field} />
                   </FormControl>
                   <FormMessage>{fieldState.error?.message}</FormMessage>
                 </FormItem>
@@ -131,10 +131,7 @@ const ResetPasswordForm = (props: Props) => {
                 <FormItem>
                   <FormLabel>Potvrdenie hesla</FormLabel>
                   <FormControl>
-                    <Input
-                      type="password"
-                      {...field}
-                    />
+                    <Input type="password" {...field} />
                   </FormControl>
                   <FormMessage>{fieldState.error?.message}</FormMessage>
                 </FormItem>

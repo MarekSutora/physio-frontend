@@ -259,14 +259,14 @@ const BookedAppointmentsDataTable = ({ bookedAppointments }: Props) => {
 
   return (
     <DashboardSectionWrapper
-      title="Rezervované termíny"
+      title="Zarezervované termíny"
       height="max-h-full h-full"
     >
       <style>{dynamicStyles}</style>
       <DataTable
         value={bookedAppointmentsState}
         paginator
-        rows={11}
+        rows={10}
         emptyMessage="Nenašli sa žiadne výsledky"
         rowClassName={rowClassName}
         filters={defaultFilters}
