@@ -57,7 +57,7 @@ export const authOptions: AuthOptions = {
             return user;
           } else {
             const error = await res.text();
-            if (error === "Nesprávne prihlasovacie údaje.") {
+            if (error) {
               throw new Error(error);
             } else {
               throw new Error("Nastala chyba pri prihlasovaní.");
