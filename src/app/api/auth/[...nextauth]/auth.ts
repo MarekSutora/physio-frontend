@@ -27,7 +27,7 @@ async function refreshToken(token: JWT): Promise<JWT> {
 
     return {
       ...token,
-      backendTokens: response,
+      userTokens: response,
     };
   } catch (error) {
     throw new Error(getErrorMessage(error));
