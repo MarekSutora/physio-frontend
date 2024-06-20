@@ -47,7 +47,7 @@ const BlogCard = ({ post }: BlogCardProps) => {
             <Image
               src={post.mainImageUrl}
               alt={post.title}
-              quality={80}
+              quality={100}
               fill
               style={{ objectFit: "cover", objectPosition: "10% 10%" }}
               className="rounded-t-lg"

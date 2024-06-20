@@ -1,18 +1,15 @@
-import {
-  getServiceTypeBySlugAction,
-  getServiceTypesAction,
-} from "@/lib/actions/serviceTypesActions";
-import { TG_ServiceType } from "@/lib/shared/types";
+
 import React from "react";
 import Image from "next/image";
 import { Metadata } from "next";
 import * as Icons from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { serviceTypesToDisplay }  from "@/lib/shared/constants";
 
 export async function generateStaticParams() {
   try {
-    const serviceTypes = await getServiceTypesAction();
+    const serviceTypes = serviceTypesToDisplay;
 
     return serviceTypes.map((st) => ({
       params: {
@@ -35,10 +32,10 @@ export async function generateMetadata({
 }: {
   params: { slug: string };
 }): Promise<Metadata> {
-  let serviceType: TG_ServiceType;
+  let serviceType: any;
 
   try {
-    serviceType = await getServiceTypeBySlugAction(params.slug);
+    serviceType = serviceTypesToDisplay.find((st) => st.slug === params.slug)!; 
   } catch (error) {
     return { title: "Služba", description: "Popis služby"};
   }
@@ -49,10 +46,10 @@ export async function generateMetadata({
   };
 }
 
-const Page = async ({ params }: { params: { slug: string } }) => {
-  let serviceType: TG_ServiceType;
+const Page = ({ params }: { params: { slug: string } }) => {
+  let serviceType: any;
   try {
-    serviceType = await getServiceTypeBySlugAction(params.slug);
+    serviceType = serviceTypesToDisplay.find((st) => st.slug === params.slug)!; 
   } catch (error) {
     return { notFound: true };
   }
@@ -83,7 +80,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
           height={475}
           className="w-full object-cover"
           layout="responsive"
-          quality={50}
+          quality={100}
         />
         {/* Service name */}
         <div className="absolute left-2 top-2 z-10 h-12 w-12 text-gray-100">
@@ -105,7 +102,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
       <div className="rounded-lg bg-gray-100 px-4 py-2">
         <h3 className="mb-2 text-lg font-bold">Ceny</h3>
         <ul>
-          {serviceType.stdcs.map((item, index) => (
+          {serviceType.stdcs.map((item: any, index: any) => (
             <li key={index} className="flex items-center justify-between">
               <span className="text-gray-800">
                 {item.durationMinutes} minút

@@ -79,7 +79,7 @@ const ReviewCard = ({ review }: Props) => {
             width={50}
             height={50}
             className="rounded-full border-2 border-slate-200"
-            quality={50}
+            quality={100}
             loading="lazy"
           />
           <div className="flex flex-col">

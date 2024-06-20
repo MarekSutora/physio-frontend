@@ -95,7 +95,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
           <Image
             src={mainImageUrl}
             alt={title}
-            quality={80}
+            quality={100}
             fill
             style={{ objectFit: "cover" }}
             className="rounded-t-lg"

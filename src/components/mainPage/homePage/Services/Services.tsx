@@ -64,9 +64,9 @@ const ServiceCard = ({ serviceType }: ServiceCardProps) => {
             {renderIcon(serviceType.iconName)}
           </div>
           <Image
-            src={serviceType.imageUrl || "/login.png"}
+            src={serviceType.imageUrl}
             alt={serviceType.name}
-            quality={80}
+            quality={100}
             fill
             style={{ objectFit: "cover" }}
             className="rounded-t-lg object-cover"

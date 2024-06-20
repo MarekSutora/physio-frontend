@@ -1,3 +1,13 @@
+export type TServiceTypeToDisplay = {
+  name: string;
+  slug: string;
+  description: string;
+  hexColor: string;
+  durationCosts: TDurationCost[];
+  imageUrl: string;
+  iconName: string;
+};
+
 export type TDurationCost = {
   durationMinutes: number;
   cost: number;

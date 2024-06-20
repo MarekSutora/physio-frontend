@@ -26,9 +26,9 @@ export default function RootLayout({
         className={`${inter.className} m-0 h-full w-full bg-slate-50 p-0 text-gray-950`}
       >
         <Providers>
-          <div className="h-full w-full">
+          <div className="h-fit w-full">
             <HeaderWrapper />
-            <div className="flex h-full min-h-full w-full flex-col justify-between">
+            <div className="flex h-fit flex-col justify-between">
               <main className="h-fit w-full bg-slate-50">
                 <Suspense
                   fallback={

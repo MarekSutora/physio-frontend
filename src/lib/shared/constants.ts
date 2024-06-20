@@ -11,6 +11,8 @@ import {
   FaHistory,
 } from "react-icons/fa";
 import React from "react";
+import { TServiceTypeToDisplay } from "./types";
+import { id } from "date-fns/locale";
 
 export const userLinks = [
   { text: "Prihlásenie", path: "/prihlasenie" },
@@ -101,6 +103,57 @@ export const dashboardLinks = {
     },
   ],
 };
+
+export const serviceTypesToDisplay = [
+  { 
+    name: "Manuálna terapia",
+    description: "Manuálna terapia je špecializovaná forma fyzikálnej terapie poskytovaná zručnými terapeutmi, ktorí používajú svoje ruky na aplikáciu tlaku na svalové tkanivo a manipuláciu s kĺbmi. Tento prístup zameraný na dotyk má za cieľ znížiť bolesť, zvýšiť rozsah pohybu a zlepšiť celkovú funkciu. Medzi bežne používané techniky patria mobilizácia mäkkých tkanív, mobilizácia kĺbov a myofasciálne uvoľňovanie. Manuálna terapia je účinná pri liečbe rôznych stavov, ako je bolesť chrbta, bolesť krku a športové zranenia. Zameriava sa na obnovenie pohybu a funkcie pohybového systému. Terapia často zahŕňa personalizovaný liečebný plán prispôsobený špecifickým potrebám a fyzickému stavu jednotlivca.",
+    slug: "manualna-terapia",
+    hexColor: "#92A758",
+    stdcs: [
+      { id: 1, durationMinutes: 35, cost: 45 },
+      { id: 2, durationMinutes: 40, cost: 60 },
+    ],
+    imageUrl: "/manual-therapy.webp",
+    iconName: "FaDiagnoses",
+  },
+  { 
+    name: "Vstupná diagnostika",
+    slug: "vstupna-diagnostika",
+    description: "Vstupná diagnostika zahŕňa klinické vyšetrenie, pri ktorom fyzioterapeut hodnotí pacienta vykonávajúceho rôzne pohyby a strečingy. Miestnosť je vybavená diagnostickými nástrojmi, ako je goniometer, anatomické grafy a počítač na zaznamenávanie údajov. Terapeut si robí poznámky na klipbord a pozoruje pacientovu postúru a pohyby. Prostredie je profesionálne a dobre organizované, s plagátmi ľudského pohybového aparátu na stenách a blízko umiestneným liečebným stolom. Celková atmosféra je zameraná na klinické hodnotenie a presnú diagnostiku.",
+    hexColor: "#4f519c",
+    stdcs: [
+      { id: 3, durationMinutes: 45, cost: 60 },
+    ],
+    imageUrl: "/assesment.webp",
+    iconName: "FaClipboard",
+  },
+  { 
+    name: "Bankovanie",
+    slug: "bankovanie",
+    description: "Bankovanie je terapeutická metóda, ktorá sa vykonáva v pokojnom prostredí terapii. Miestnosť je mäkko osvetlená prirodzeným svetlom a zdobená upokojujúcimi prvkami ako sú črepníkové rastliny a difúzory éterických olejov. Pacient leží tvárou nadol na masážnom stole a na chrbte má niekoľko sklenených pohárov. Terapeut používa plameň na vytvorenie vákua v jednom z pohárov pred jeho umiestnením na pokožku pacienta. V pozadí sú viditeľné police s úhľadne usporiadanými uterákmi a terapeutickými nástrojmi. Celková atmosféra je pokojná a prispieva k relaxácii a liečeniu.",
+    hexColor: "#666699",
+    stdcs: [
+      { id: 5, durationMinutes: 30, cost: 25 },
+    ],
+    imageUrl: "/bank.webp",
+    iconName: "FaHeart",
+  },
+  { 
+    name: "Cvičenie",
+    slug: "cvicenie",
+    description: "Cvičenie je kľúčovým prvkom fyzioterapie, zameraným na zlepšenie fyzickej kondície, sily, flexibility a celkového zdravia. Počas fyzioterapeutických relácií sa pacienti učia správne techniky vykonávania rôznych cvikov, ktoré sú špecificky navrhnuté na riešenie ich individuálnych potrieb a zdravotných problémov. Terapeut poskytuje podrobný návod a spätnú väzbu, aby zabezpečil, že cviky sú vykonávané správne a bezpečne. Pacienti sa naučia, ako správne držať telo, ako posilniť slabé svalové skupiny, ako zlepšiť rozsah pohybu a ako predchádzať zraneniam. Tieto zručnosti im pomáhajú nielen počas terapie, ale aj v každodennom živote, čím prispievajú k dlhodobému zdraviu a pohode.",
+    hexColor: "#993333",
+    stdcs: [
+      { id: 6, durationMinutes: 60, cost: 55 },
+      { id: 7, durationMinutes: 45, cost: 50 },
+    ],
+    imageUrl: "/exercise.webp",
+    iconName: "FaDumbbell",
+  },
+] as const;
+  
+
 
 export const PrimeReactLocaleSk = {
   startsWith: "Začína na",
