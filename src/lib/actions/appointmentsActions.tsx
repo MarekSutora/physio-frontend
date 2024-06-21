@@ -22,7 +22,7 @@ export async function getUnbookedAppointmentsAction(): Promise<
 
     const res = await fetch(url, {
       method: "GET",
-      next: { tags: ["unbooked-appointments"] },
+      cache: "no-store",
     });
 
     if (!res.ok) {
@@ -69,7 +69,6 @@ export async function createAppointmentAction(appointmentData: TC_Appointment) {
       throw new Error(errorData);
     }
 
-    revalidateTag("unbooked-appointments");
   } catch (error) {
     const errorMessage = getErrorMessage(error);
     console.error("createAppointmentAction", errorMessage);
@@ -110,7 +109,6 @@ export async function createBookedAppointmentAction(
     }
 
     revalidateTag("booked-appointments");
-    revalidateTag("unbooked-appointments");
   } catch (error) {
     const errorMessage = getErrorMessage(error);
     console.error("createBookedAppointmentAction", errorMessage);
@@ -145,7 +143,6 @@ export async function deleteAppointmentAction(appointmentId: number) {
       throw new Error(resErrorMessage);
     }
 
-    revalidateTag("unbooked-appointments");
     revalidateTag("booked-appointments");
   } catch (error) {
     const errorMessage = getErrorMessage(error);
