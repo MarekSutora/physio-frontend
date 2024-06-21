@@ -78,12 +78,12 @@ export const dashboardLinks = {
       text: "Klienti",
       path: "/dashboard/admin/klienti",
       icon: React.createElement(FaUsers),
-    },
-    {
-      text: "Služby",
-      path: "/dashboard/admin/sluzby",
-      icon: React.createElement(FaTools),
-    },
+    }
+    // ,{
+    //   text: "Služby",
+    //   path: "/dashboard/admin/sluzby",
+    //   icon: React.createElement(FaTools),
+    // },
   ],
   client: [
     {

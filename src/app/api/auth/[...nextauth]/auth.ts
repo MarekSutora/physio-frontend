@@ -51,7 +51,7 @@ export const authOptions: AuthOptions = {
             body: JSON.stringify(credentials),
             headers: { "Content-Type": "application/json" },
           });
-
+            console.log(res);
           if (res.ok) {
             const user = await res.json();
             return user;
@@ -64,6 +64,7 @@ export const authOptions: AuthOptions = {
             }
           }
         } catch (error) {
+          console.log(error);
           throw new Error(getErrorMessage(error));
         }
       },
