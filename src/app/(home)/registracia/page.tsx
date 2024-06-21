@@ -10,7 +10,7 @@ export const metadata = {
 
 const Page = () => {
   return (
-    <section className="min-h-[700px] h-full w-full bg-white py-20">
+    <section className="min-h-[700px] h-full w-full py-20">
       <div className="flex h-full items-center justify-center gap-7 md:flex-row">
         <Image
           src={registerPic}
