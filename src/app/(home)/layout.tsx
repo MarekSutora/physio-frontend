@@ -29,8 +29,8 @@ export default function RootLayout({
           <div className="h-fit w-full">
             <HeaderWrapper />
             <div className="flex h-fit flex-col justify-between">
-              <main className="h-fit w-full bg-slate-50">
-                <Suspense
+              <main className="h-fit w-full bg-slate-50" style={{ height: "calc(100vh - 18rem - 3.5rem)" }}>
+                {/* <Suspense
                   fallback={
                     <ClipLoader
                       color={"#298294"}
@@ -49,9 +49,9 @@ export default function RootLayout({
                       className="flex h-full w-full items-center justify-center"
                     />
                   }
-                >
-                  {children}
-                </Suspense>
+                > */}
+                {children}
+                {/* </Suspense> */}
               </main>
               <Footer />
             </div>

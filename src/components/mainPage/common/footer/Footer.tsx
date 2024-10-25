@@ -82,7 +82,7 @@ const Footer = () => {
           </ul>
         </nav>
 
-        <nav className="mt-1 flex flex-col items-center justify-center text-center text-sm text-slate-400 md:flex-row md:gap-2">
+        <nav className="mt-1 flex flex-col items-center justify-center text-center text-sm text-slate-400 md:flex-row md:gap-2 pb-6">
           <Link className="hover:underline" href="/obchodne-podmienky">
             Všeobecné obchodné podmienky
           </Link>
