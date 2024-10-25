@@ -18,7 +18,7 @@ const Footer = () => {
       <div className="mx-auto flex h-5/6 w-5/6 flex-col gap-2 md:pt-2">
         <section className="flex w-full flex-col items-center justify-center gap-2 md:flex-row md:pt-4">
           <div className="w-52">
-            <h1 className="md:text pb-2 text-center text-xl font-bold md:text-left">
+            <h1 className="md:text pb-2 text-center text-xl font-bold md:text-left pt-3">
               NAVIGÁCIA
             </h1>
             <nav>

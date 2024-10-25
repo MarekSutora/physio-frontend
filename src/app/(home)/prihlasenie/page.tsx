@@ -13,8 +13,8 @@ type Props = {
 
 const Page = async (props: Props) => {
   return (
-    <section className="h-full w-full flex items-center justify-center">
-      <div className="flex h-full items-center justify-center gap-7 md:flex-row">
+    <section className="w-full m-auto h-[700px] flex items-center justify-center">
+      <div className="flex items-center justify-center gap-7 md:flex-row">
         <Image
           src={loginPic}
           alt="LoginImage"

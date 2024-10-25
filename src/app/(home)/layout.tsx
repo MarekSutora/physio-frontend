@@ -29,7 +29,7 @@ export default function RootLayout({
           <div className="h-fit w-full">
             <HeaderWrapper />
             <div className="flex h-fit flex-col justify-between">
-              <main className="h-fit w-full bg-slate-50" style={{ height: "calc(100vh - 18rem - 3.5rem)" }}>
+              <main className="h-full w-full bg-slate-50" style={{ minHeight: "calc(100vh - 18rem - 3.5rem)" }}>
                 {/* <Suspense
                   fallback={
                     <ClipLoader
