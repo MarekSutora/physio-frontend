@@ -20,6 +20,8 @@ const HeaderDesktop = ({ links }: HeaderDesktopProps) => {
         setIsTopOfPage(true);
       }
       if (window.scrollY !== 0) setIsTopOfPage(false);
+
+      console.log("scrollY", window.scrollY);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -28,7 +30,7 @@ const HeaderDesktop = ({ links }: HeaderDesktopProps) => {
   return (
     <header
       className={cn(
-        `sticky top-0 z-30 h-14 w-full bg-slate-50 transition-all duration-200 ease-in`,
+        `sticky top-0 z-30 h-14 w-full bg-slate-50 transition-all`,
         !isTopOfPage && "h-16 bg-white shadow-sm",
       )}
     >

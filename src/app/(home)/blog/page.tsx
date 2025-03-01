@@ -18,6 +18,7 @@ const Page = async () => {
 
   try {
     blogPosts = await getNonHiddenBlogPosts();
+    blogPosts = blogPosts.slice(0, 1).concat(Array(9).fill(blogPosts[0]));
   } catch (error) {
     blogPosts = [];
   }

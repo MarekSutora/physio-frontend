@@ -53,7 +53,7 @@ const BlogCard = ({ post }: BlogCardProps) => {
               className="rounded-t-lg"
             />
           </CardItem>
-          <CardItem className="h-full w-full pt-4 pl-4" translateZ="70">
+          <CardItem className="h-full w-full pl-4 pt-4" translateZ="70">
             <h1 className="pl-1 text-xl font-bold">{post.title}</h1>
           </CardItem>
           <CardItem
