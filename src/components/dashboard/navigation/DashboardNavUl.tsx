@@ -17,6 +17,8 @@ const DashboardNavUl = ({ mobileCloseFunction }: Props) => {
 
   const router = useRouter();
 
+  console.log("DashboardNavUl - user:", user);
+
   useEffect(() => {
     if (status === "loading") return;
 
@@ -28,7 +30,7 @@ const DashboardNavUl = ({ mobileCloseFunction }: Props) => {
   return (
     <>
       <ul className="flex h-full flex-col">
-        {user?.roles.includes("Admin") &&
+        {user?.roles.includes("ADMIN") &&
           dashboardLinks.admin.map((link) => (
             <li key={link.text}>
               <DashboardMenuItem
@@ -37,7 +39,7 @@ const DashboardNavUl = ({ mobileCloseFunction }: Props) => {
               />
             </li>
           ))}
-        {user?.roles.includes("Client") &&
+        {user?.roles.includes("CLIENT") &&
           dashboardLinks.client.map((link) => (
             <li key={link.text}>
               <DashboardMenuItem

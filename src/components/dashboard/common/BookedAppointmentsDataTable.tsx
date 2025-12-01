@@ -200,7 +200,7 @@ const BookedAppointmentsDataTable = ({ bookedAppointments }: Props) => {
 
     return (
       <div className="flex flex-row items-center gap-1">
-        {session?.user?.roles.includes("Admin") ? (
+        {session?.user?.roles.includes("ADMIN") ? (
           <Link
             href={`../../termin?appId=${rowData.appointmentId}`}
             className="flex h-8 flex-row items-center rounded-sm bg-primary px-2 text-center text-sm font-medium text-white hover:bg-primary/85"
@@ -215,7 +215,7 @@ const BookedAppointmentsDataTable = ({ bookedAppointments }: Props) => {
             Otvoriť
           </Link>
         )}
-        {session?.user?.roles.includes("Admin") && (
+        {session?.user?.roles.includes("ADMIN") && (
           <div className="flex flex-row items-center gap-1">
             <ShadConfirmationDialog
               onConfirm={handleDeleteBookedAppointment}
@@ -249,7 +249,7 @@ const BookedAppointmentsDataTable = ({ bookedAppointments }: Props) => {
     );
   };
 
-  const header = session?.user?.roles.includes("Admin") && (
+  const header = session?.user?.roles.includes("ADMIN") && (
     <div className="flex items-center justify-end gap-2">
       <Button onClick={exportCSV} className="h-8 px-2 py-1" variant="default">
         Exportovať do CSV <FaFileExcel />
@@ -310,7 +310,7 @@ const BookedAppointmentsDataTable = ({ bookedAppointments }: Props) => {
           filter
           filterField="durationMinutes"
         />
-        {session?.user?.roles.includes("Admin") && (
+        {session?.user?.roles.includes("ADMIN") && (
           <Column
             field="cost"
             header="Cena"
@@ -321,7 +321,7 @@ const BookedAppointmentsDataTable = ({ bookedAppointments }: Props) => {
             hidden
           />
         )}
-        {session?.user?.roles.includes("Admin") && (
+        {session?.user?.roles.includes("ADMIN") && (
           <Column
             field="personId"
             header="ID klienta"
@@ -331,7 +331,7 @@ const BookedAppointmentsDataTable = ({ bookedAppointments }: Props) => {
             filterField="personId"
           />
         )}
-        {session?.user?.roles.includes("Admin") && (
+        {session?.user?.roles.includes("ADMIN") && (
           <Column
             field="clientFirstName"
             header="Meno"
@@ -341,7 +341,7 @@ const BookedAppointmentsDataTable = ({ bookedAppointments }: Props) => {
             filterField="clientFirstName"
           />
         )}
-        {session?.user?.roles.includes("Admin") && (
+        {session?.user?.roles.includes("ADMIN") && (
           <Column
             field="clientSecondName"
             header="Priezvisko"
@@ -361,7 +361,7 @@ const BookedAppointmentsDataTable = ({ bookedAppointments }: Props) => {
           filterField="appointmentBookedDate"
           sortable
         />
-        {session?.user?.roles.includes("Admin") && (
+        {session?.user?.roles.includes("ADMIN") && (
           <Column
             field="capacity"
             header="Kapacita"

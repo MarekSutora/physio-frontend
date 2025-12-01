@@ -124,7 +124,7 @@ const AdminFinishedAppointmentsDataTable = ({
   const actionBodyTemplate = (rowData: TG_BookedAppointment) => {
     return (
       <div className="flex flex-row gap-1">
-        {session?.user?.roles.includes("Admin") ? (
+        {session?.user?.roles.includes("ADMIN") ? (
           <Link
             href={`../../termin?appId=${rowData.appointmentId}`}
             className="flex h-8 flex-row items-center rounded-sm bg-primary px-2 text-center text-sm font-medium text-white hover:bg-primary/85"
@@ -143,7 +143,7 @@ const AdminFinishedAppointmentsDataTable = ({
     );
   };
 
-  const header = session?.user?.roles.includes("Admin") && (
+  const header = session?.user?.roles.includes("ADMIN") && (
     <div className="flex items-center justify-end gap-2">
       <Button onClick={exportCSV} className="h-8 px-2 py-1" variant="default">
         Exportovať do CSV <FaFileExcel />
@@ -214,7 +214,7 @@ const AdminFinishedAppointmentsDataTable = ({
           filter
           filterField="appointmentBookedDate"
         />
-        {session?.user?.roles.includes("Admin") && (
+        {session?.user?.roles.includes("ADMIN") && (
           <Column
             field="cost"
             header="Cena"
@@ -225,7 +225,7 @@ const AdminFinishedAppointmentsDataTable = ({
             hidden
           />
         )}
-        {session?.user?.roles.includes("Admin") && (
+        {session?.user?.roles.includes("ADMIN") && (
           <Column
             field="personId"
             header="ID klienta"
@@ -235,7 +235,7 @@ const AdminFinishedAppointmentsDataTable = ({
             filterField="personId"
           />
         )}
-        {session?.user?.roles.includes("Admin") && (
+        {session?.user?.roles.includes("ADMIN") && (
           <Column
             field="clientFirstName"
             header="Meno"
@@ -245,7 +245,7 @@ const AdminFinishedAppointmentsDataTable = ({
             filterField="clientFirstName"
           />
         )}
-        {session?.user?.roles.includes("Admin") && (
+        {session?.user?.roles.includes("ADMIN") && (
           <Column
             field="clientSecondName"
             header="Priezvisko"
@@ -255,7 +255,7 @@ const AdminFinishedAppointmentsDataTable = ({
             filterField="clientSecondName"
           />
         )}
-        {session?.user?.roles.includes("Admin") && (
+        {session?.user?.roles.includes("ADMIN") && (
           <Column
             field="capacity"
             header="Kapacita"

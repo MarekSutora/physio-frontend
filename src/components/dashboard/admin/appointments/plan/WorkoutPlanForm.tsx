@@ -58,7 +58,7 @@ const WorkoutPlanForm = ({
   const router = useRouter();
   const { data: session } = useSession();
 
-  const isAdmin = session?.user.roles.includes("Admin");
+  const isAdmin = session?.user.roles.includes("ADMIN");
 
   useEffect(() => {
     router.refresh();

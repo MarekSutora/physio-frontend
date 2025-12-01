@@ -10,7 +10,7 @@ export async function middleware(req: NextRequest) {
   }
 
   if (req.nextUrl.pathname.startsWith("/prihlasenie") && token) {
-    const redirectUrl = token.user.roles.includes("Admin")
+    const redirectUrl = token.user.roles.includes("ADMIN")
       ? "/dashboard/admin/statistiky"
       : "/dashboard/klient/rezervacia";
     return NextResponse.redirect(new URL(redirectUrl, req.nextUrl.origin));
@@ -19,7 +19,7 @@ export async function middleware(req: NextRequest) {
   if (
     req.nextUrl.pathname.startsWith("/dashboard/admin") &&
     token &&
-    token.user.roles.includes("Client")
+    token.user.roles.includes("CLIENT")
   ) {
     return NextResponse.redirect(
       new URL("/dashboard/klient/rezervacia", req.nextUrl.origin),
@@ -29,7 +29,7 @@ export async function middleware(req: NextRequest) {
   if (
     req.nextUrl.pathname === "/dashboard" &&
     token &&
-    token.user.roles.includes("Admin")
+    token.user.roles.includes("ADMIN")
   ) {
     return NextResponse.redirect(
       new URL("/dashboard/admin/statistiky", req.nextUrl.origin),
@@ -39,7 +39,7 @@ export async function middleware(req: NextRequest) {
   if (
     req.nextUrl.pathname === "/dashboard" &&
     token &&
-    token.user.roles.includes("Client")
+    token.user.roles.includes("CLIENT")
   ) {
     return NextResponse.redirect(
       new URL("/dashboard/klient/rezervacia", req.nextUrl.origin),

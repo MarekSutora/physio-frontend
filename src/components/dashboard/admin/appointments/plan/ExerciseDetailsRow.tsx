@@ -56,7 +56,7 @@ const ExerciseDetailsRow = ({
 
   const isLast = index === plannedExercises.length - 1;
 
-  const isAdmin = session?.user.roles.includes("Admin");
+  const isAdmin = session?.user.roles.includes("ADMIN");
 
   const handleInputChange = (
     order: number,

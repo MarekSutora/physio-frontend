@@ -47,7 +47,7 @@ const AppointmentCard = ({
   };
 
   const bookAppointment = async (astdcId: number) => {
-    if (isAuthenticated && session?.user.roles.includes("Client")) {
+    if (isAuthenticated && session?.user.roles.includes("CLIENT")) {
       try {
         await createBookedAppointmentAction(astdcId);
         toast({
@@ -71,7 +71,7 @@ const AppointmentCard = ({
         <time className="pr-5 pt-1 text-lg font-semibold">
           {format(new Date(appointment.startTime), "HH:mm", { locale: sk })}
         </time>
-        {session?.user.roles.includes("Admin") ? (
+        {session?.user.roles.includes("ADMIN") ? (
           <ShadConfirmationDialog
             onConfirm={handleDeleteAppointment}
             confirmArgs={[appointment.id]}
@@ -115,7 +115,7 @@ const AppointmentCard = ({
               )}
             </div>
 
-            {session?.user.roles.includes("Client") && session?.user && (
+            {session?.user.roles.includes("CLIENT") && session?.user && (
               <ShadConfirmationDialog
                 onConfirm={bookAppointment}
                 confirmArgs={[item.astdcId]}
