@@ -51,8 +51,9 @@ export const authOptions: AuthOptions = {
             body: JSON.stringify(credentials),
             headers: { "Content-Type": "application/json" },
           });
-            console.log(res);
+          console.log(res);
           if (res.ok) {
+            console.log("Login successful", res);
             const user = await res.json();
             return user;
           } else {
