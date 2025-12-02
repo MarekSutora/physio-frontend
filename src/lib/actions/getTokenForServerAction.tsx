@@ -14,9 +14,13 @@ export async function getTokenForServerAction() {
     cookieName = "next-auth.session-token";
   }
 
+  console.log("Using cookie name:", cookieName);
+
   const encodedToken = cookieStore.find(
     (cookie) => cookie.name === cookieName,
   )?.value;
+
+  console.log("Encoded token:", encodedToken);
 
   if (!encodedToken) {
     return null;
@@ -26,6 +30,8 @@ export async function getTokenForServerAction() {
     token: encodedToken,
     secret: `${process.env.NEXTAUTH_SECRET}`,
   });
+
+  console.log("Decoded token:", decoded);
 
   if (!decoded) {
     return null;
