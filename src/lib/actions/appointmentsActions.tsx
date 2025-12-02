@@ -46,6 +46,8 @@ export async function createAppointmentAction(appointmentData: TC_Appointment) {
     const token = await getTokenForServerAction();
 
     if (!session || !token) {
+      console.error("Session or token not found in createAppointmentAction");
+
       throw new Error(
         "Session not found. User must be logged in to perform this action.",
       );
@@ -65,10 +67,8 @@ export async function createAppointmentAction(appointmentData: TC_Appointment) {
 
     if (!res.ok) {
       const errorData = await res.text();
-
       throw new Error(errorData);
     }
-
   } catch (error) {
     const errorMessage = getErrorMessage(error);
     console.error("createAppointmentAction", errorMessage);

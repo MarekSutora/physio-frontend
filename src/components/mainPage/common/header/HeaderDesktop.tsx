@@ -20,8 +20,6 @@ const HeaderDesktop = ({ links }: HeaderDesktopProps) => {
         setIsTopOfPage(true);
       }
       if (window.scrollY !== 0) setIsTopOfPage(false);
-
-      console.log("scrollY", window.scrollY);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);

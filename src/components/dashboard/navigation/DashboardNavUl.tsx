@@ -17,8 +17,6 @@ const DashboardNavUl = ({ mobileCloseFunction }: Props) => {
 
   const router = useRouter();
 
-  console.log("user:", user);
-
   useEffect(() => {
     if (status === "loading") return;
 
