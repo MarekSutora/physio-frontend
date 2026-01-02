@@ -18,7 +18,7 @@ const Footer = () => {
       <div className="mx-auto flex h-5/6 w-5/6 flex-col gap-2 md:pt-2">
         <section className="flex w-full flex-col items-center justify-center gap-2 md:flex-row md:pt-4">
           <div className="w-52">
-            <h1 className="md:text pb-2 text-center text-xl font-bold md:text-left pt-3">
+            <h1 className="md:text pb-2 pt-3 text-center text-xl font-bold md:text-left">
               NAVIGÁCIA
             </h1>
             <nav>
@@ -82,7 +82,7 @@ const Footer = () => {
           </ul>
         </nav>
 
-        <nav className="mt-1 flex flex-col items-center justify-center text-center text-sm text-slate-400 md:flex-row md:gap-2 pb-6">
+        <nav className="mt-1 flex flex-col items-center justify-center pb-6 text-center text-sm text-slate-400 md:flex-row md:gap-2">
           <Link className="hover:underline" href="/obchodne-podmienky">
             Všeobecné obchodné podmienky
           </Link>
@@ -102,10 +102,7 @@ const Footer = () => {
           </div>
           <div>
             Vytvoril{" "}
-            <a
-              className="underline"
-              href="https://www.linkedin.com/in/marek-%C5%A1%C3%BAtora-9867b4269/"
-            >
+            <a className="underline" href="https://mareksutora.sk">
               Marek Šútora
             </a>
           </div>
