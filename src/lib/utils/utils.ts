@@ -21,5 +21,13 @@ export const getErrorMessage = (
     return defaultMessage;
   }
 
-  return message;
+  const normalizedMessage = message.trim();
+  const looksLikeHtmlError =
+    !normalizedMessage ||
+    /<!doctype html|<html|<body|<div|<span|bad gateway|error code 502/i.test(
+      normalizedMessage,
+    ) ||
+    normalizedMessage.length > 300;
+
+  return looksLikeHtmlError ? defaultMessage : normalizedMessage;
 };

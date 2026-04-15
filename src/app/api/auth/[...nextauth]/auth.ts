@@ -4,6 +4,9 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import NextAuth from "next-auth/next";
 import { getErrorMessage } from "@/lib/utils/utils";
 
+const AUTH_UNAVAILABLE_MESSAGE =
+  "Prihlasovanie je momentálne nedostupné. Skúste to prosím neskôr.";
+
 async function refreshToken(token: JWT): Promise<JWT> {
   try {
     const res = await fetch(
@@ -20,7 +23,7 @@ async function refreshToken(token: JWT): Promise<JWT> {
     if (!res.ok) {
       const error = await res.text();
 
-      throw new Error(getErrorMessage(error));
+      throw new Error(getErrorMessage(error, AUTH_UNAVAILABLE_MESSAGE));
     }
 
     const response = await res.json();
@@ -30,7 +33,7 @@ async function refreshToken(token: JWT): Promise<JWT> {
       backendTokens: response,
     };
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    throw new Error(getErrorMessage(error, AUTH_UNAVAILABLE_MESSAGE));
   }
 }
 
@@ -56,15 +59,11 @@ export const authOptions: AuthOptions = {
             return user;
           } else {
             const error = await res.text();
-            if (error) {
-              throw new Error(error);
-            } else {
-              throw new Error("Nastala chyba pri prihlasovaní.");
-            }
+
+            throw new Error(getErrorMessage(error, AUTH_UNAVAILABLE_MESSAGE));
           }
         } catch (error) {
-          console.log(error);
-          throw new Error(getErrorMessage(error));
+          throw new Error(getErrorMessage(error, AUTH_UNAVAILABLE_MESSAGE));
         }
       },
     }),
@@ -90,6 +89,11 @@ export const authOptions: AuthOptions = {
 
       return session;
     },
+  },
+  logger: {
+    error() {},
+    warn() {},
+    debug() {},
   },
   pages: {
     signIn: "/prihlasenie",
